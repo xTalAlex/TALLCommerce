@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +11,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasFactory;
@@ -58,4 +59,33 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function canAccessFilament(): bool
+    {
+        return $this->is_admin;
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public function shippingAddresses()
+    {
+        return $this->hasMany(Address::class)->where('billing',0);
+    }
+
+    public function billingAddresses()
+    {
+        return $this->hasMany(Address::class)->where('billing',1);
+    }
+
+    public function defaultAddress()
+    {
+        return $this->hasOne(Address::class)->where('default',1)->latest();
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
 }

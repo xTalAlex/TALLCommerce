@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     const PATH = "categories";
 
@@ -24,16 +26,16 @@ class Category extends Model implements HasMedia
      * @var array
      */
     protected $casts = [
-        'created_at'    => 'datetime:d/m/Y',
-        'updated_at'    => 'datetime:d/m/y',
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
     ];
 
 
-    // public function registerMediaCollections(): void
-    // {
-    //     $this->addMediaCollection('hero')
-    //         ->singleFile();
-    // }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('hero')
+            ->singleFile();
+    }
 
     public function scopeMain($query){
         $query->whereDoesntHave('parent');
@@ -51,16 +53,16 @@ class Category extends Model implements HasMedia
         return $this->hasMany(Category::class,'parent_id');
     }
 
-    // public function getHeroAttribute()
-    // {
-    //     return $this->getFirstMediaUrl('hero');
-    // }
+    public function getHeroAttribute()
+    {
+        return $this->getFirstMediaUrl('hero');
+    }
 
-    // public function setHeroAttribute($value)
-    // {
-    //     if($value)
-    //     $this->addMediaFromDisk( str_replace("storage/","",$value) , config('platform.attachment.disk') )
-    //         ->toMediaCollection('hero');
-    // }
+    public function setHeroAttribute($value)
+    {
+        if($value)
+        $this->addMediaFromDisk( str_replace("storage/","",$value) , config('platform.attachment.disk') )
+            ->toMediaCollection('hero');
+    }
 
 }

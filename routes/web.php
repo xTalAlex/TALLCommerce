@@ -45,7 +45,7 @@ Route::middleware([
     'platform'
 ])->group(function () {
     //non usato al momento
-    Route::get('storage/orchid-temp/{filename}', function ($filename)
+    Route::get('storage/livewire-temp/{filename}', function ($filename)
     {
         return Image::make(storage_path('app/orchid-temp/'.$filename))->response();
     });

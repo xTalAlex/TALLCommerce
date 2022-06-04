@@ -123,8 +123,8 @@
                                 </x-jet-dropdown-link>
                             @endif
 
-                            @if(Auth::user()->hasAccess('platform.index'))
-                                <x-jet-responsive-nav-link href="{{ route('platform.index') }}" :active="request()->routeIs('platform.index')">
+                            @if(Auth::user()->canAccessFilament())
+                                <x-jet-responsive-nav-link href="{{ route('filament.pages.dashboard') }}" :active="request()->routeIs('filament.pages.dashboard')">
                                     {{ __('Admin Panel') }}
                                 </x-jet-responsive-nav-link>
                             @endif
@@ -222,8 +222,8 @@
                     {{ __('Profile') }}
                 </x-jet-responsive-nav-link>
 
-                @if(Auth::user()->hasAccess('platform.index'))
-                <x-jet-responsive-nav-link href="{{ route('platform.index') }}" :active="request()->routeIs('platform.index')">
+                @if(Auth::user()->canAccessFilament())
+                <x-jet-responsive-nav-link href="{{ route('filament.pages.dashboard') }}" :active="request()->routeIs('filament.pages.dashboard')">
                     {{ __('Admin Panel') }}
                 </x-jet-responsive-nav-link>
                 @endif
