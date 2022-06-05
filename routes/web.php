@@ -42,13 +42,15 @@ Route::middleware([
 });
 
 Route::middleware([
-    'platform'
-])->group(function () {
-    //non usato al momento
-    Route::get('storage/livewire-temp/{filename}', function ($filename)
-    {
-        return Image::make(storage_path('app/orchid-temp/'.$filename))->response();
-    });
+    //admin
+])
+->prefix('admin')
+->group(function () {
+    Route::get('login', fn() => redirect('login') );
+    // Route::get('storage/livewire-temp/{filename}', function ($filename)
+    // {
+    //     return Image::make(storage_path('app/orchid-temp/'.$filename))->response();
+    // });
 });
 
 Route::stripeWebhooks('stripe-webhook');

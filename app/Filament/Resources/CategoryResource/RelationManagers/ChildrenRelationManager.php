@@ -20,6 +20,8 @@ class ChildrenRelationManager extends HasManyRelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $inverseRelationship = 'children';
+
     protected static bool $hasAssociateAction = true;
     
     protected static bool $hasDissociateAction = true;
