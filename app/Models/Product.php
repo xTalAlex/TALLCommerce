@@ -35,7 +35,8 @@ class Product extends Model implements Buyable , HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('gallery');
+        $this->addMediaCollection('gallery')
+            ->useDisk(config('media-library.disk_name'));
     }
 
     public function scopeFeatured($query)

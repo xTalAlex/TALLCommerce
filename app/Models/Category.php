@@ -34,6 +34,7 @@ class Category extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('hero')
+            ->useDisk(config('media-library.disk_name'))
             ->singleFile();
     }
 
