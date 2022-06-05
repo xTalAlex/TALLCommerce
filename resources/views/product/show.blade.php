@@ -9,7 +9,7 @@
 
             <div class="flex flex-col md:w-1/2"
                 x-data="{
-                    curImage : '{{ $product->galleryPaths() ? $product->galleryPaths()->first() : $product->imagePath() }}',
+                    curImage : '{{ $product->image }}',
                     show : true,
                     transitionTotalTime : 500,
                     changeImage(src){
@@ -31,9 +31,9 @@
                     x-show = "show "
                 />
 
-                @if($product->galleryPaths())
+                @if($product->gallery->count() > 1)
                     <div class="inline-flex mx-auto mt-6 space-x-2">
-                    @foreach ($product->galleryPaths() as $image )
+                    @foreach ($product->gallery as $image )
                         <div class="border">
                             <img class="object-cover w-24 h-24" src="{{ $image }}" 
                                 @click="changeImage('{{ $image }}')"

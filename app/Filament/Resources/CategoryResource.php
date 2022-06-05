@@ -25,6 +25,8 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
+    protected static ?int $navigationSort = 3;
+
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     public static function form(Form $form): Form
@@ -39,7 +41,7 @@ class CategoryResource extends Resource
                 SpatieMediaLibraryFileUpload::make('hero')
                     ->collection('hero'),
                 DateTimePicker::make('updated_at')
-                    ->visible(Pages\ViewCategory::class),
+                    ->visibleOn(Pages\ViewCategory::class),
             ]);
     }
 

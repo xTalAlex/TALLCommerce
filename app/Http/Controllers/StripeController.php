@@ -65,7 +65,7 @@ class StripeController extends Controller
                     'product_data' => [
                         'name' => $product->model->name,
                         'images' => [
-                            $product->model->imagePath(),
+                            $product->model->image,
                         ],
                     ],
                     'unit_amount' => $product->model->price * 100,

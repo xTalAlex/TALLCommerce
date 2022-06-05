@@ -50,7 +50,7 @@
                                 </a>
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                <img class="h-20" src="{{ $item->model->imagePath() }}"/>
+                                <img class="h-20" src="{{ $item->model->image }}"/>
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                 {{ $item->model->name }}
@@ -71,7 +71,7 @@
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                    wire:click.prevent="moveToCart({{$item->model}})"
+                                    wire:click.prevent="move({{$item->model}})"
                                 >
                                     Add to Cart
                                 </a>

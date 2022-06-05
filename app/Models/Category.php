@@ -60,9 +60,7 @@ class Category extends Model implements HasMedia
 
     public function setHeroAttribute($value)
     {
-        if($value)
-        $this->addMediaFromDisk( str_replace("storage/","",$value) , config('platform.attachment.disk') )
-            ->toMediaCollection('hero');
+        if($value) $this->addMedia($value)->toMediaCollection('hero');
     }
 
 }

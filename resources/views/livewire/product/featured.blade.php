@@ -1,6 +1,6 @@
 <div class="max-w-sm mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
     <a href="{{ route('product.show', $product->id) }}">
-        <img class="object-contain w-full p-8 rounded-t-lg h-96" src="{{ $product->imagePath() }}" alt="product image">
+        <img class="object-contain w-full p-8 rounded-t-lg h-96" src="{{ $product->image }}" alt="product image">
     </a>
     <div class="px-5 pb-5">
         <a href="{{ route('product.show', $product->id) }}">

@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Product extends Model implements Buyable
+class Product extends Model implements Buyable , HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     const PATH = "products";
     
@@ -30,6 +32,11 @@ class Product extends Model implements Buyable
         'selling_price' => 'decimal:2',
         'price'         => 'decimal:2',
     ];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('gallery');
+    }
 
     public function scopeFeatured($query)
     {
@@ -81,15 +88,25 @@ class Product extends Model implements Buyable
         return $this->price;
     }
 
-    // public function imagePath()
-    // {
-    //     return $this->getFirstMediaUrl();
-    // }
+    public function getImageAttribute()
+    {
+        return $this->getFirstMediaUrl('gallery');
+    }
 
-    // public function galleryPaths()
-    // {
-    //     return $this->getMediaUrl();
-    // }
+    public function getGalleryAttribute()
+    {
+        return $this->getMedia('gallery')->map( fn($media) => $media->getMediaUrl() );
+    }
+
+    public function setGalleryAttribute($value)
+    {
+        if ($value) {
+            $fileAdders = $this->addMultipleMediaFromRequest($value);
+            foreach ($fileAdders as $fileAdder) {
+                $fileAdder->toMediaCollection('gallery');
+            }
+        }
+    }
 
     protected function sellingPrice(): Attribute
     {

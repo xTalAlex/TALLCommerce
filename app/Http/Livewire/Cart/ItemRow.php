@@ -29,6 +29,12 @@ class ItemRow extends Component
         $this->emitUp('updatedTotal');
     }
 
+    public function move(Product $product)
+    {
+        $this->moveToWishlist($product);
+        $this->emitUp('updatedTotal');
+    }
+
     public function render()
     {
         return view('cart.item-row');

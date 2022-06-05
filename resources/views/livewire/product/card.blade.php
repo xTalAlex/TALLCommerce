@@ -1,7 +1,7 @@
 <div class="max-w-sm mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
 
     <a class="relative" href="{{ route('product.show', $product) }}">
-        <img class="object-contain w-full h-48 p-8 rounded-t-lg" src="{{ $product->imagePath() }}" alt="product image">
+        <img class="object-contain w-full h-48 p-8 rounded-t-lg" src="{{ $product->image }}" alt="product image">
 
         <div class="absolute flex items-center justify-between bottom-2 right-2">
             <form wire:submit.prevent="addToWishlist">

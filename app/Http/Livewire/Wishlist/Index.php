@@ -20,6 +20,12 @@ class Index extends Component
         $this->count = Cart::instance('wishlist')->count();
     }
 
+    public function move(Product $product)
+    {
+        $this->moveToCart($product);
+        $this->mount();
+    }
+
     public function render()
     {
         return view('wishlist.index');
