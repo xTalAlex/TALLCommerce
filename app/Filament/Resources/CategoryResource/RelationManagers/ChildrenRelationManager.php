@@ -26,6 +26,8 @@ class ChildrenRelationManager extends HasManyRelationManager
     
     protected static bool $hasDissociateAction = true;
 
+    protected static bool $shouldPreloadAssociateFormRecordSelectOptions = true;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -33,6 +35,8 @@ class ChildrenRelationManager extends HasManyRelationManager
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('description'),
+                BelongsToSelect::make('parent_id')
+                    ->relationship('parent', 'name'),
                 SpatieMediaLibraryFileUpload::make('hero')
                     ->collection('hero'),
                 DateTimePicker::make('updated_at')
@@ -58,6 +62,7 @@ class ChildrenRelationManager extends HasManyRelationManager
             ])
             ->filters([
                 //
-            ]);
+            ])
+            ->bulkActions([]);
     }
 }
