@@ -94,4 +94,18 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     public function orders(){
         return $this->hasMany(Order::class);
     }
+
+    /**
+     * Get the default profile photo URL if no profile photo has been uploaded.
+     *
+     * @return string
+     */
+    protected function defaultProfilePhotoUrl()
+    {
+        $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
+            return mb_substr($segment, 0, 1);
+        })->join(' '));
+
+        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=000000&background=EAB308';
+    }
 }
