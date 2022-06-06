@@ -12,7 +12,7 @@
                     @foreach($categories as $category)
                     <li>
                         <div class="flex">
-                            <a href="{{ route('product.index', [ 'category' => $category->id, 'orderby' => request()->orderby ]) }}" class="flex items-center w-full p-2 text-sm @if(request()->category == $category->id) font-bold @else font-normal @endif text-gray-900 capitalize transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <a href="{{ route('product.index', [ 'category' => $category->id, 'orderby' => request()->orderby ]) }}" class="flex items-center w-full p-2 text-sm @if(request()->category == $category->id || $category->children->contains(request()->category) ) font-bold @else font-normal @endif text-gray-900 capitalize transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 {{ $category->name }}
                             </a>
                             @if($category->children->count())
@@ -22,7 +22,7 @@
                             @endif
                         </div>
                         @if($category->children->count())
-                            <ul id="dropdown-{{ strtolower($category->name) }}" class="ml-4 @if(!request()->category) hidden @endif py-2 space-y-2"> 
+                            <ul id="dropdown-{{ strtolower($category->name) }}" class="ml-4 @if( !request()->category || !$category->children->contains(request()->category) ) hidden @endif py-2 space-y-2"> 
                         @endif
                             @foreach($category->children as $child)
                                 <li><a href="{{ route('product.index', [ 'category' => $child->id, 'orderby' => request()->orderby ]) }}" class="flex items-center w-full p-2 text-sm @if(request()->category == $child->id) font-bold @else font-normal @endif text-gray-900 capitalize transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
