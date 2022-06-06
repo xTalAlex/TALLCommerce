@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\User;
 use Filament\Forms;
+use App\Models\User;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Fieldset;
@@ -72,6 +74,23 @@ class UserResource extends Resource
                 Filter::make('is_admin')
                     ->query(fn (Builder $query): Builder => $query->where('is_admin', true))
                     ->label('Admin'),
+            ])
+            ->prependActions([
+                Action::make('Email')
+                    ->color('success')
+                    ->icon('heroicon-o-mail')
+                    ->action(function (Model $record, array $data): void {
+                        $record->notify(new \App\Notifications\AdminMessage($data['subject'], $data['message']));
+                        Filament::notify('success', 'Email sent');
+                    })
+                    ->form([
+                        Forms\Components\TextInput::make('subject')
+                            ->label('Subject')
+                            ->required(),
+                        Forms\Components\RichEditor::make('message')
+                            ->label('Message')
+                            ->required(),
+                    ]),
             ]);
     }
     
