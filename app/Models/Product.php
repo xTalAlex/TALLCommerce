@@ -96,7 +96,7 @@ class Product extends Model implements Buyable , HasMedia
 
     public function getGalleryAttribute()
     {
-        return $this->getMedia('gallery')->map( fn($media) => $media->getMediaUrl() );
+        return $this->getMedia('gallery')->map( fn($media) => $media->getFullUrl() );
     }
 
     public function setGalleryAttribute($value)
@@ -109,6 +109,16 @@ class Product extends Model implements Buyable , HasMedia
         }
     }
 
+    protected function originalPrice(): Attribute
+    {
+        return Attribute::make(
+            set: function ($value) {
+                return number_format( $value , 2);
+            },
+        );
+    }
+
+
     protected function sellingPrice(): Attribute
     {
         return Attribute::make(
@@ -117,7 +127,9 @@ class Product extends Model implements Buyable , HasMedia
             },
             set: function ($value, $attributes) {
                 
-                return $value ?? $attributes['original_price'];
+                return $value ?
+                    number_format( $value , 2)
+                    : $attributes['original_price'];
             },
         );
     }

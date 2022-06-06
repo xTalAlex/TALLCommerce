@@ -64,29 +64,23 @@ class ProductResource extends Resource
                                 ->schema([
                                     TextInput::make('original_price')
                                         ->required()
-                                        ->numeric()
                                         ->suffix('€')
                                         ->mask(fn (TextInput\Mask $mask) => $mask
                                             ->numeric()
                                             ->decimalPlaces(2)
                                             ->decimalSeparator('.')
-                                            ->mapToDecimalSeparator([','])
+                                            ->mapToDecimalSeparator([',','.'])
                                             ->thousandsSeparator(',')
-                                            ->normalizeZeros()
-                                            ->padFractionalZeros()
                                             ->maxValue(999999)
                                         ),
                                     TextInput::make('selling_price')
-                                        ->numeric()
                                         ->suffix('€')
                                         ->mask(fn (TextInput\Mask $mask) => $mask
                                             ->numeric()
                                             ->decimalPlaces(2)
                                             ->decimalSeparator('.')
-                                            ->mapToDecimalSeparator([','])
+                                            ->mapToDecimalSeparator([',','.'])
                                             ->thousandsSeparator(',')
-                                            ->normalizeZeros()
-                                            ->padFractionalZeros()
                                             ->maxValue(999999)
                                         ),
                                     TextInput::make('tax')
