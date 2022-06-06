@@ -13,4 +13,14 @@ class OrderProduct extends Model
         'price',
         'quantity',
     ];
+
+    protected $casts = [
+        'price' => 'decimal:2',
+        'total' => 'decimal:2'
+    ];
+
+    public function getTotalAttribute()
+    {
+        return number_format( $this->price * $this->quantity , 2) ;
+    }
 }

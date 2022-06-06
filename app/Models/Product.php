@@ -154,8 +154,8 @@ class Product extends Model implements Buyable , HasMedia
         return $percent;
     }
 
-    public function pricePerQuantity(int $quantity)
+    public function pricePerQuantity(int $quantity, ?float $newPrice )
     {
-        return number_format( $this->price * $quantity , 2) ;
+        return number_format( ($newPrice ?? $this->price) * $quantity , 2) ;
     }
 }

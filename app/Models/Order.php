@@ -22,6 +22,16 @@ class Order extends Model
         'user_id',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     public function status()
     {
         return $this->belongsTo(OrderStatus::class,'order_status_id');
@@ -29,7 +39,7 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot('price', 'quantity');
     }
 
     public function user()
