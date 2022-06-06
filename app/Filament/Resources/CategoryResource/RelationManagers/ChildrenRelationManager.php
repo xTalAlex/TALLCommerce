@@ -35,8 +35,8 @@ class ChildrenRelationManager extends HasManyRelationManager
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('description'),
-                BelongsToSelect::make('parent_id')
-                    ->relationship('parent', 'name'),
+                // BelongsToSelect::make('parent_id')
+                //     ->relationship('parent', 'name'),
                 SpatieMediaLibraryFileUpload::make('hero')
                     ->collection('hero')
                     ->disk(config('media-library.disk_name')),
@@ -51,8 +51,8 @@ class ChildrenRelationManager extends HasManyRelationManager
             ->columns([
                 TextColumn::make('name')->sortable()
                     ->searchable(),
-                TextColumn::make('parent.name')->sortable()
-                    ->searchable(),
+                // TextColumn::make('parent.name')->sortable()
+                //     ->searchable(),
                 TextColumn::make('description')
                     ->wrap()
                     ->visibleFrom('md')

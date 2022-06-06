@@ -23,6 +23,16 @@ class Address extends Model
         'billing',
         'default',
         'user_id',
+        'label',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'label',
     ];
 
     public function user()
@@ -35,7 +45,7 @@ class Address extends Model
      *      Print with {!!  !!}
      * 
      */
-    public function label()
+    public function getLabelAttribute()
     {
         $label="$this->full_name";
         if($this->full_name && $this->company) $label.="($this->company)";
@@ -50,7 +60,7 @@ class Address extends Model
         $label.="$this->city ($this->province), $this->postal_code";
 
         $label.="\n";
-        $label.="";
+        $label.="$this->country_region";
 
         return nl2br(e($label));
     }
