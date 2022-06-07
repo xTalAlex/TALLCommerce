@@ -125,7 +125,7 @@ class StripeController extends Controller
         }
 
         $checkout_session = \Stripe\Checkout\Session::create([
-            'customer_email' => Auth::user()->email ?? null,
+            'customer_email' => Auth::user()->email ?? $order->email,
             'line_items' => $line_items,
             'metadata' => [
                 'order' => $order->id,

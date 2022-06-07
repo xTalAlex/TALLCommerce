@@ -83,7 +83,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        if(Auth::user()->id == $order->user->id)
+        if(Auth::user()->id !== $order->user->id)
             abort(403);
 
         $order->delete();

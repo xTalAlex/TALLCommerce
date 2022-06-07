@@ -34,9 +34,9 @@ class Create extends Component
     public function mount()
     {
         $this->step = 'shipping';
+        $this->email = Auth::user() ? Auth::user()->email : null;
         if(Auth::user() && Auth::user()->defaultAddress){
             $address = Auth::user()->defaultAddress;
-            $this->email = Auth::user()->email;
             $this->full_name = $address->full_name;
             $this->company = $address->company;
             $this->address = $address->address;
