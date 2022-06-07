@@ -116,8 +116,7 @@ class ProductResource extends Resource
                             SpatieMediaLibraryFileUpload::make('gallery')
                             ->collection('gallery')
                             ->multiple()
-                            ->enableReordering()
-                            ->disk(config('media-library.disk_name')),
+                            ->enableReordering(),
                         ])
                         ->columns(1)
                         ->columnSpan(1),

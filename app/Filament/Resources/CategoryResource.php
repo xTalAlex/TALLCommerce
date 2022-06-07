@@ -36,8 +36,7 @@ class CategoryResource extends Resource
                 BelongsToSelect::make('parent_id')
                     ->relationship('parent', 'name'),
                 SpatieMediaLibraryFileUpload::make('hero')
-                    ->collection('hero')
-                    ->disk(config('media-library.disk_name')),
+                    ->collection('hero'),
                 DateTimePicker::make('updated_at')
                     ->visibleOn(Pages\ViewCategory::class),
             ]);
