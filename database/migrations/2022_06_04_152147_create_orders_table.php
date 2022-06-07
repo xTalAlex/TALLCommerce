@@ -26,6 +26,7 @@ return new class extends Migration
             $table->json('billing_address');
             $table->text('message')->nullable();
             $table->text('tracking_number')->nullable();
+            $table->decimal('total',8,2)->default(0);
             $table->string('payment_type');
             $table->string('payment_id')->nullable();
             $table->unsignedBigInteger('order_status_id');

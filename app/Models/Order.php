@@ -20,6 +20,17 @@ class Order extends Model
         'phone',
         'order_status_id',
         'user_id',
+        'total',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'shipping_label',
+        'billing_label',
     ];
 
     /**
@@ -30,6 +41,7 @@ class Order extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'total'      => 'decimal:2',
     ];
 
     public function status()
@@ -63,5 +75,15 @@ class Order extends Model
                 json_decode($this->billing_address)
             )->toArray()
         );
+    }
+
+    public function getShippingLabelAttribute()
+    {
+        return $this->shippingAddress()->label;
+    }
+
+    public function getBillingLabelAttribute()
+    {
+        return $this->billingAddress()->label;
     }
 }

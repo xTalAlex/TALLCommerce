@@ -36,14 +36,14 @@ class StripeController extends Controller
         ]);
 
         $billing_address = new Address([
-            'full_name' => $request->billing_full_name,
-            'company' => $request->billing_company,
-            'address' => $request->billing_address,
-            'address2' => $request->billing_address2,
-            'city' => $request->billing_city,
-            'province' => $request->billing_province,
-            'country_region' => $request->billing_country_region,
-            'postal_code' => $request->billing_postal_code,
+            'full_name' => $request->same_address ? $request->full_name : $request->billing_full_name,
+            'company' => $request->same_address ? $request->billing_company : $request->billing_company,
+            'address' => $request->same_address ? $request->billing_address : $request->billing_address,
+            'address2' => $request->same_address ? $request->billing_address2 : $request->billing_address2,
+            'city' => $request->same_address ? $request->billing_city : $request->billing_city,
+            'province' => $request->same_address ? $request->billing_province : $request->billing_province,
+            'country_region' => $request->same_address ? $request->billing_country_region : $request->billing_country_region,
+            'postal_code' => $request->same_address ? $request->billing_postal_code : $request->billing_postal_code,
         ]);
 
         $order = Order::create([
@@ -51,10 +51,12 @@ class StripeController extends Controller
             'billing_address' => $billing_address->toJson(),
             'email' => $request->email,
             'phone' => $request->phone,
-            'message' => $request->message,            
+            'message' => $request->message,    
+            'total' => 0,        
             'order_status_id' => OrderStatus::where('name','pending')->first()->id,
             'payment_type' => 'stripe',
             'user_id' => Auth::user() ? Auth::user()->id : null,
+
         ]);
 
         $line_items = [];
@@ -77,10 +79,14 @@ class StripeController extends Controller
                 'price' => $product->model->price,
                 'quantity' => $product->qty,
             ]);
+
+            $order->total = $order->total + ($product->model->price * $product->qty );
         }
 
+        $order->save();
+
         $checkout_session = \Stripe\Checkout\Session::create([
-            'customer_email' => Auth::user()->email ?? null,
+            'customer_email' => $request->email,
             'line_items' => $line_items,
             'metadata' => [
                 'order' => $order->id,
@@ -145,7 +151,7 @@ class StripeController extends Controller
         $request->session()->flash('flash.banner', 'Payment succeeded.');
         $request->session()->flash('flash.bannerStyle', 'success');
 
-        return redirect()->route('order.index');
+        return Auth::user() ? redirect()->route('order.index') : redirect()->route('product.index');
     }
 
     public function cancel(Request $request)
@@ -157,6 +163,6 @@ class StripeController extends Controller
         // $request->session()->flash('flash.banner', 'Payment cancelled.');
         // $request->session()->flash('flash.bannerStyle', 'danger');
 
-        return redirect()->route('order.index');
+        return Auth::user() ? redirect()->route('order.index') : redirect()->route('cart.index');
     }
 }

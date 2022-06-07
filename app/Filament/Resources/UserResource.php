@@ -68,7 +68,9 @@ class UserResource extends Resource
                     ])
                     ->dateTime(),
                 TextColumn::make('orders_count')->counts('orders'),
-                //send email
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 Filter::make('is_admin')
