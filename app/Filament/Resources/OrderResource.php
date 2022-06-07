@@ -7,7 +7,9 @@ use Filament\Tables;
 use App\Models\Order;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
 use Filament\Tables\Columns\TextColumn;
@@ -68,7 +70,12 @@ class OrderResource extends Resource
                         'danger' => 'Cancelled',
                     ]),
                 TextColumn::make('user.name')
-                    ->searchable(),
+                    ->searchable()
+                    ->url(fn (Order $record): string => 
+                        $record->user ?
+                            route('filament.resources.users.view', $record->user->id )
+                            : route('filament.resources.users.index')
+                    ),
                 TextColumn::make('email')
                     ->searchable(),
                 TextColumn::make('total')->money('eur')
@@ -77,8 +84,6 @@ class OrderResource extends Resource
                     ->dateTime()
                     ->sortable(), 
             ])
-            //action send email
-            //action go to user page
             ->filters([
                 SelectFilter::make('status')
                     ->relationship('status', 'name'),
@@ -97,7 +102,24 @@ class OrderResource extends Resource
                     }),
                 ],
                 layout: Layout::AboveContent,
-            );
+            )
+            ->prependActions([
+                Action::make('Email')
+                    ->color('success')
+                    ->icon('heroicon-o-mail')
+                    ->action(function (Model $record, array $data): void {
+                        $record->notify(new \App\Notifications\AdminMessage($data['subject'], $data['message']));
+                        Filament::notify('success', 'Email sent');
+                    })
+                    ->form([
+                        Forms\Components\TextInput::make('subject')
+                            ->label('Subject')
+                            ->required(),
+                        Forms\Components\RichEditor::make('message')
+                            ->label('Message')
+                            ->required(),
+                    ]),
+            ]);
     }
     
     public static function getRelations(): array

@@ -247,7 +247,8 @@ return [
     |
     */
 
-    'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DRIVER', 'public'),
+    'default_filesystem_disk' => env('MEDIA_DISK', 'public'),
+                                //env('FILAMENT_FILESYSTEM_DRIVER', 'public'),
 
     /*
     |--------------------------------------------------------------------------
