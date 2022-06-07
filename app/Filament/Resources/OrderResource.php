@@ -39,16 +39,19 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                // status
-                //shipping address
-                //billing address
-                // message
-                //tracking number
-                //payment_type
-                //payment_id
                 //user
                 //email
                 //phone 
+                //billing address
+                
+                //message
+                //shipping address
+
+                //status
+                //tracking number
+                //payment_type
+                //payment_id
+                
                 //created_at
                 //updated_at
             ]);
