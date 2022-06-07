@@ -104,7 +104,7 @@ class StripeController extends Controller
 
     public function resume(Request $request, Order $order)
     {
-        if($order->status->name !== 'pending')
+        if(strtolower($order->status->name) !== 'pending')
             return abort(403);
 
         $line_items = [];
