@@ -30,8 +30,10 @@ Route::get('/wishlist', App\Http\Livewire\Wishlist\Index::class )->name('wishlis
 Route::post('/checkout/stripe', [App\Http\Controllers\StripeController::class , 'checkout'] )->name('stripe.checkout');
 Route::get('/checkout/stripe/success', [App\Http\Controllers\StripeController::class , 'success'] )->name('stripe.success');
 Route::get('/checkout/stripe/cancel', [App\Http\Controllers\StripeController::class , 'cancel'] )->name('stripe.cancel');
+Route::get('/checkout/stripe/{order}', [App\Http\Controllers\StripeController::class , 'resume' ] )->name('stripe.resume');
 
 Route::get('/order/create', App\Http\Livewire\Order\Create::class )->name('order.create');
+Route::get('/order/delete/{order}', [App\Http\Controllers\OrderController::class , 'destroy' ] )->name('order.destroy');
 
 Route::middleware([
     'auth:sanctum',

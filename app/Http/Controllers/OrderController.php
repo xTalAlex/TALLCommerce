@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Auth::user()->orders;
+        $orders = Auth::user()->orders()->latest()->get();
 
         return view('order.index', compact('orders'));
     }
@@ -80,8 +81,13 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Order $order)
     {
-        //
+        if(Auth::user()->id == $order->user->id)
+            abort(403);
+
+        $order->delete();
+
+        return redirect()->back();
     }
 }

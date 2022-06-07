@@ -89,6 +89,45 @@ class StripeController extends Controller
             'success_url' => route('stripe.success').'?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('stripe.cancel').'?session_id={CHECKOUT_SESSION_ID}',
           ]);
+
+        Cart::instance('default')->destroy();
+        
+        return redirect($checkout_session->url);
+          
+    }
+
+    public function resume(Request $request, Order $order)
+    {
+        if($order->status->name !== 'pending')
+            return abort(403);
+
+        $line_items = [];
+        foreach( $order->products as $product){
+            array_push($line_items, [ 
+                'price_data' => [
+                    'currency' => 'EUR',
+                    'product_data' => [
+                        'name' => $product->name,
+                        'images' => [
+                            $product->image,
+                        ],
+                    ],
+                    'unit_amount' => $product->pivot->price * 100,
+                ],
+                'quantity' => $product->pivot->quantity,
+            ]);
+        }
+
+        $checkout_session = \Stripe\Checkout\Session::create([
+            'customer_email' => Auth::user()->email ?? null,
+            'line_items' => $line_items,
+            'metadata' => [
+                'order' => $order->id,
+            ],
+            'mode' => 'payment',
+            'success_url' => route('stripe.success').'?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('stripe.cancel').'?session_id={CHECKOUT_SESSION_ID}',
+          ]);
         
         return redirect($checkout_session->url);
           
@@ -102,23 +141,22 @@ class StripeController extends Controller
             'payment_id' => $session->payment_intent,
             'order_status_id' => OrderStatus::where('name','paied')->first()->id,
         ]);
-        Cart::instance('default')->destroy();
         
         $request->session()->flash('flash.banner', 'Payment succeeded.');
         $request->session()->flash('flash.bannerStyle', 'success');
 
-        return redirect()->route('home');
+        return redirect()->route('order.index');
     }
 
     public function cancel(Request $request)
     {
         $session = \Stripe\Checkout\Session::retrieve($request->get('session_id'));
 
-        Order::find($session->metadata['order'])->delete();
+        // Order::find($session->metadata['order'])->delete();
         
-        $request->session()->flash('flash.banner', 'Payment cancelled.');
-        $request->session()->flash('flash.bannerStyle', 'danger');
+        // $request->session()->flash('flash.banner', 'Payment cancelled.');
+        // $request->session()->flash('flash.bannerStyle', 'danger');
 
-        return redirect()->back();
+        return redirect()->route('order.index');
     }
 }
