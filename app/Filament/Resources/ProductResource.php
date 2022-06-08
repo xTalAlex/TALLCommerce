@@ -64,7 +64,7 @@ class ProductResource extends Resource
                                 ->schema([
                                     TextInput::make('original_price')
                                         ->required()
-                                        ->suffix('€')
+                                        ->prefix('€')
                                         ->mask(fn (TextInput\Mask $mask) => $mask
                                             ->numeric()
                                             ->decimalPlaces(2)
@@ -74,7 +74,7 @@ class ProductResource extends Resource
                                             ->maxValue(999999)
                                         ),
                                     TextInput::make('selling_price')
-                                        ->suffix('€')
+                                        ->prefix('€')
                                         ->mask(fn (TextInput\Mask $mask) => $mask
                                             ->numeric()
                                             ->decimalPlaces(2)

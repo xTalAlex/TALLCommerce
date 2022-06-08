@@ -17,25 +17,13 @@ class AddressesRelationManager extends HasManyRelationManager
 
     protected static ?string $recordTitleAttribute = 'id';
 
-    protected function canCreate(): bool
-    {
-        return false;
-    }
+    protected function canCreate(): bool { return false; }
 
-    protected function canEdit(Model $record): bool
-    {
-        return false;
-    }
+    protected function canEdit(Model $record): bool { return false; }
 
-    protected function canDelete(Model $record): bool
-    {
-        return false;
-    }
+    protected function canDelete(Model $record): bool { return false; }
 
-    protected function canDeleteAny(): bool
-    {
-        return false;
-    }
+    protected function canDeleteAny(): bool { return false; }
 
     public static function form(Form $form): Form
     {

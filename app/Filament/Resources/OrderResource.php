@@ -12,14 +12,21 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\BelongsToSelect;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use Filament\Resources\RelationManagers\RelationManager;
 
 class OrderResource extends Resource
 {
@@ -35,25 +42,47 @@ class OrderResource extends Resource
 
     public static function canDeleteAny(): bool { return false; }
 
+    // manual > paid (con method e id), disputed, refunded
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //user
-                //email
-                //phone 
-                //billing address
-                
-                //message
-                //shipping address
-
-                //status
-                //tracking number
-                //payment_type
-                //payment_id
-                
-                //created_at
-                //updated_at
+                BelongsToSelect::make('status')
+                    ->disabled()
+                    ->dehydrated(false)
+                    ->relationship('status', 'name'),
+                TextInput::make('tracking_number'),
+                RichEditor::make('shipping_label')
+                    ->columnSpan(2)
+                    ->visibleOn(Pages\ViewOrder::class),
+                Fieldset::make('Payment')
+                    ->schema([
+                        Select::make('payment_type')
+                            ->options(config('custom.payment_gateways'))
+                            ->disablePlaceholderSelection(),
+                        TextInput::make('payment_id'),
+                        TextInput::make('total')
+                            ->prefix('€')
+                            ->visibleOn(Pages\ViewOrder::class),
+                        RichEditor::make('billing_label')
+                            ->columnSpan(2)
+                            ->visibleOn(Pages\ViewOrder::class),
+                    ]),
+                Fieldset::make('User')
+                    ->schema([
+                        TextInput::make('user.name'),
+                        TextInput::make('email')->email(),
+                        TextInput::make('phone'),
+                    ])->visibleOn(Pages\ViewOrder::class),
+                Textarea::make('message')
+                    ->hidden(fn ($state) => $state==null)
+                    ->columnSpan(2)
+                    ->visibleOn(Pages\ViewOrder::class),                
+                DateTimePicker::make('created_at')
+                    ->visibleOn(Pages\ViewOrder::class),
+                DateTimePicker::make('updated_at')
+                    ->visibleOn(Pages\ViewOrder::class),
             ]);
     }
 
@@ -64,7 +93,6 @@ class OrderResource extends Resource
                 TextColumn::make('id')
                     ->searchable(),
                 BadgeColumn::make('status.name')
-                    //->formatStateUsing(fn (string $state): string => ucfirst($state) )
                     ->colors([
                         'secondary',
                         'primary' => 'Shipped',
@@ -110,7 +138,7 @@ class OrderResource extends Resource
                 Action::make('Email')
                     ->color('success')
                     ->icon('heroicon-o-mail')
-                    ->action(function (Model $record, array $data): void {
+                    ->action(function (Order $record, array $data): void {
                         $record->notify(new \App\Notifications\AdminMessage($data['subject'], $data['message']));
                         Filament::notify('success', 'Email sent');
                     })
@@ -128,7 +156,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //products + pivot price,quantity
+            RelationManagers\ProductsRelationManager::class,
         ];
     }
     

@@ -33,6 +33,16 @@ class Product extends Model implements Buyable , HasMedia
         'price'         => 'decimal:2',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'image',
+        'gallery',
+    ];
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('gallery')
@@ -74,7 +84,7 @@ class Product extends Model implements Buyable , HasMedia
     }
 
     public function orders(){
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Order::class)->withPivot('price','quantity');
     }
 
     public function getBuyableIdentifier($options = null){
@@ -158,4 +168,5 @@ class Product extends Model implements Buyable , HasMedia
     {
         return number_format( ($newPrice ?? $this->price) * $quantity , 2) ;
     }
+
 }

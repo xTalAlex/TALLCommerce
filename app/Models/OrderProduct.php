@@ -9,6 +9,8 @@ class OrderProduct extends Model
 {
     use HasFactory;
 
+    protected $table = 'order_product';
+
     protected $fillable = [
         'price',
         'quantity',
@@ -17,6 +19,15 @@ class OrderProduct extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'total' => 'decimal:2'
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'total',
     ];
 
     public function getTotalAttribute()
