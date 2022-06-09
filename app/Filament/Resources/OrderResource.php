@@ -42,8 +42,6 @@ class OrderResource extends Resource
 
     public static function canDeleteAny(): bool { return false; }
 
-    // manual > paid (con method e id), disputed, refunded
-
     public static function form(Form $form): Form
     {
         return $form

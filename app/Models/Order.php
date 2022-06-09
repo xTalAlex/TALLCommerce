@@ -86,4 +86,30 @@ class Order extends Model
     {
         return $this->billingAddress()->label;
     }
+
+    public function statusCanBecome(String $status)
+    {
+        $can = false;
+
+        switch(ucfirst(strtolower($status)))
+        {
+            case('Paied'):
+                $can = $this->status->name == 'Pending';
+                break;
+            case('Shipped'):
+                $can = $this->status->name == 'Paied';
+                break;
+            case('Completed'):
+                $can = $this->status->name == 'Paied' || $this->status->name == 'Shipped';
+                break;
+            case('Refunded'):
+                $can = $this->status->name == 'Completed' || $this->status->name == 'Shipped'  || $this->status->name == 'Paied';
+                break;
+            case('Cancelled'):
+                $can = $this->status->name == 'Paid';
+                break;
+        }
+
+        return $can;
+    }
 }

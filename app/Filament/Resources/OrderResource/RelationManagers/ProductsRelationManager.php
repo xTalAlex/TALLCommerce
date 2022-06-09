@@ -26,9 +26,9 @@ class ProductsRelationManager extends BelongsToManyRelationManager
                     'order_product.product_id',
                     'order_product.order_id',
                     'order_product.price as pivot_price',
-                    'order_product.quantity as pivot_quantity'
+                    'order_product.quantity as pivot_quantity',
                 );
-
+                
         return $query;
     }
 
@@ -68,7 +68,7 @@ class ProductsRelationManager extends BelongsToManyRelationManager
                 SpatieMediaLibraryImageColumn::make('image'),
                 TextColumn::make('pivot_quantity')->label('Quantity'),
                 TextColumn::make('pivot_price')->label('Price')->money('eur'),
-                TextColumn::make('total'),
+                //TextColumn::make('total'),
             ])
             ->filters([
                 //

@@ -3,7 +3,7 @@
 return [
 
     'payment_gateways' => [
-        'stripe' => 'stripe'
+        'stripe' => 'Stripe',
     ],
 
 ];
