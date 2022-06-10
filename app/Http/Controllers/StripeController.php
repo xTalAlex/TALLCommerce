@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Stripe\Stripe;
-use App\Models\{ Order, OrderStatus, Address };
+use App\Models\{ Order, OrderStatus, Address, Coupon};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -59,6 +59,12 @@ class StripeController extends Controller
 
         ]);
 
+        $coupon = null;
+        if($request->coupon_code)
+        {
+            $coupon = Coupon::where('code',$request->coupon_code)->first();
+        }
+
         $line_items = [];
         foreach( Cart::content() as $product){
             array_push($line_items, [ 
@@ -71,6 +77,7 @@ class StripeController extends Controller
                         ],
                     ],
                     'unit_amount' => $product->model->price * 100,
+                    'tax_behavior' => 'exclusive',
                 ],
                 'quantity' => $product->qty,
             ]);
@@ -82,6 +89,9 @@ class StripeController extends Controller
 
             $order->total = $order->total + ($product->model->price * $product->qty );
         }
+
+        if($coupon)
+            $order->total -= $coupon->discount($order->total);
 
         $order->save();
 
@@ -97,6 +107,7 @@ class StripeController extends Controller
           ]);
 
         Cart::instance('default')->destroy();
+        session()->remove('coupon');
         
         return redirect($checkout_session->url);
           

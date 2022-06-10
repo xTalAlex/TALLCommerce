@@ -32,4 +32,20 @@ class Coupon extends Model
     {
         return ($this->fixed_amount ? '€' : '').$this->amount.($this->fixed_amount ? '' : '%');
     }
+
+    public function discount($total)
+    {
+        $discount = 0;
+
+        if($this->fixed_amount)
+        {
+            $discount = $this->total > $this->amount ? $this->amount : $total;
+        }
+        else
+        {
+            $discount = round($total * ($this->amount/100));
+        }
+
+        return $discount;
+    }
 }

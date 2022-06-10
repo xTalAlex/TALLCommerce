@@ -17,22 +17,11 @@ class ItemRow extends Component
     {
         $this->item = $item;
         $this->product = Product::find($item['id']);
-        $this->dispatchBrowserEvent('banner-message', [
-            'message' => 'mount called',
-            'style' => 'success',
-        ]);
     }
 
     public function updatedItemQty()
     {
         $this->updateCartProductQty($this->item['rowId'], $this->item['qty']);
-        $this->emitUp('updatedTotal');
-    }
-
-    public function move(Product $product)
-    {
-        $this->moveToWishlist($product);
-        $this->emitUp('updatedTotal');
     }
 
     public function render()

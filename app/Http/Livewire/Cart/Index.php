@@ -18,7 +18,7 @@ class Index extends Component
     public $total;
 
     protected $listeners = [
-        'updatedTotal' => 'mount',
+        'updatedCart' => 'mount',
     ];
 
     public function mount()

@@ -14,16 +14,14 @@ class Index extends Component
     public $content;
     public $count;
 
+    protected $listeners = [
+        'updatedWishlist' => 'mount',
+    ];
+
     public function mount()
     {  
         $this->content = Cart::instance('wishlist')->content();
         $this->count = Cart::instance('wishlist')->count();
-    }
-
-    public function move(Product $product)
-    {
-        $this->moveToCart($product);
-        $this->mount();
     }
 
     public function render()

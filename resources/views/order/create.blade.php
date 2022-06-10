@@ -186,9 +186,50 @@
                     
                 </div>
 
-                <div class="px-6 py-12"
+                <div class="flex justify-between px-6 py-12"
                     x-show="step=='payment'"
                 >
+                    <div class="flex flex-col">
+                        <span>SUBTOTAL: 
+                            <span wire:loading.remove>
+                                {{ $subtotal }}
+                            </span>
+                            @if($coupon)
+                            <span wire:loading.remove>
+                                - {{ $coupon->label }} = {{ $newSubtotal }}
+                            </span>
+                            @endif
+                            <span wire:loading>
+                                ...
+                            </span>
+                        </span>
+                        <span>TAX: {{ $tax }}
+                        </span>
+                        <span>TOTAL: 
+                            <span wire:loading.remove>
+                                {{ $total }}
+                            </span>
+                            <span wire:loading>
+                                ...
+                            </span>
+                        </span>
+
+                        <div>
+                            @if($coupon)
+                                <span>{{ $coupon->code }}</span>
+                                <x-jet-button type="button" wire:click="removeCoupon">
+                                    {{ __('X') }}
+                                </x-jet-button>
+                            @endif
+                            <input class="@if($this->coupon_error) text-red-500  bg-red-300 @endif" type="text" name="coupon_code" placeholder="Coupon Code"
+                                wire:model.lazy="coupon_code"
+                            />
+                            <x-jet-button type="button" wire:click="checkCoupon">
+                                {{ __('Check') }}
+                            </x-jet-button>
+                        </div>
+                    </div>
+                    
                     <x-jet-button type="submit">
                         {{ __('Pay with Stripe') }}
                     </x-jet-button>

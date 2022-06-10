@@ -150,6 +150,7 @@ trait WithCart
 
     public function notifyCart()
     {
+        $this->emit('updatedCart');
         $this->dispatchBrowserEvent(
             'cart-updated', [
                 'count' => Cart::instance($this->cartInstance)->count(),
@@ -158,6 +159,7 @@ trait WithCart
 
     public function notifyWishlist()
     {
+        $this->emit('notifyWishlist');
         $this->dispatchBrowserEvent(
             'wishlist-updated', [
                 'count' => Cart::instance($this->wishlistInstance)->count(),

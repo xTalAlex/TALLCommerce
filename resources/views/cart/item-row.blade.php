@@ -34,7 +34,7 @@
     </td>
     <td class="px-6 py-4 text-right">
         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-            wire:click.prevent="move({{$product}})"
+            wire:click.prevent="moveToWishlist({{$product}})"
         >
             Move to Wishlist
         </a>
