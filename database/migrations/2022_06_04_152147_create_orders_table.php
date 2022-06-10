@@ -47,7 +47,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->decimal('price',6,2);
             $table->unsignedInteger('quantity');
-            $table->decimal('total',8,2)->virtualAs('price * quantity');
+            $table->decimal('total',8,2)->storedAs('price * quantity');
 
             $table->foreign('order_id')->references('id')->on('orders')
                 ->onDelete('cascade')->onUpdate('cascade');
