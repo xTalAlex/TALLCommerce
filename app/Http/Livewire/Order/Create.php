@@ -2,16 +2,20 @@
 
 namespace App\Http\Livewire\Order;
 
+use App\Models\Order;
 use App\Models\Coupon;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Models\Address;
 use Livewire\Component;
+use App\Models\OrderStatus;
 use Illuminate\Support\Facades\Auth;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class Create extends Component
 {
     public $step;
 
     public $email;
+   
     public $full_name;
     public $company;
     public $address;
@@ -34,11 +38,16 @@ class Create extends Component
     public $message;
 
     public $subtotal;
+    public $discountedSubtotal;
     public $tax;
     public $total;
     public $coupon_code;
     public $coupon;
     public $coupon_error;
+
+    public $order;
+
+    protected $listeners = ['createOrder'];
 
     public function mount()
     {
@@ -63,9 +72,9 @@ class Create extends Component
         
         if ($this->coupon) {
             $this->subtotal = Cart::instance('default')->subtotal(); 
-            $this->newSubtotal = Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal());
+            $this->discountedSubtotal = Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal());
             $this->tax = round(config('cart.tax')/100);
-            $this->total = $this->newSubtotal + $this->tax;
+            $this->total = $this->discountedSubtotal + $this->tax;
         }
         else{
             $this->subtotal = Cart::instance('default')->subtotal();
@@ -134,6 +143,46 @@ class Create extends Component
             $this->tax = Cart::instance('default')->tax();
             $this->total = Cart::instance('default')->total();
         }
+    }
+
+    public function createOrder($payment_id)
+    {
+        $shipping_address = new Address([
+            'email' => $this->email,
+            //'phone' => $this->phone,
+            'full_name' => $this->full_name,
+            'company' => $this->company,
+            'address' => $this->address,
+            'address2' => $this->address2,
+            'city' => $this->city,
+            'province' => $this->province,
+            'country_region' => $this->country_region,
+            'postal_code' => $this->postal_code,
+        ]);
+
+        $billing_address = new Address([
+            'full_name' => $this->same_address ? $this->full_name : $this->billing_full_name,
+            'company' => $this->same_address ? $this->billing_company : $this->billing_company,
+            'address' => $this->same_address ? $this->billing_address : $this->billing_address,
+            'address2' => $this->same_address ? $this->billing_address2 : $this->billing_address2,
+            'city' => $this->same_address ? $this->billing_city : $this->billing_city,
+            'province' => $this->same_address ? $this->billing_province : $this->billing_province,
+            'country_region' => $this->same_address ? $this->billing_country_region : $this->billing_country_region,
+            'postal_code' => $this->same_address ? $this->billing_postal_code : $this->billing_postal_code,
+        ]);
+
+        $this->order = Order::create([
+            'shipping_address' => $shipping_address->toJson(),
+            'billing_address' => $billing_address->toJson(),
+            'email' => $this->email,
+            //'phone' => $this->phone,
+            'message' => $this->message,    
+            'total' => $this->total,        
+            'order_status_id' => OrderStatus::where('name','pending')->first()->id,
+            'payment_type' => 'stripe',
+            'payment_id' => $payment_id,
+            'user_id' => auth()->user() ? auth()->user()->id : null,
+        ]);
     }
    
     public function render()

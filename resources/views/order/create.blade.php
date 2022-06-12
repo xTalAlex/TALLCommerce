@@ -33,7 +33,8 @@
 
         <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 
-            <form action="{{ route('stripe.checkout') }}" method="POST">
+            {{-- <form action="{{ route('stripe.checkout') }}" method="POST"> --}}
+            <form action="" method="POST">
             @csrf
                 <div class="px-6 py-12"
                     x-show="step=='shipping'"
@@ -196,7 +197,7 @@
                             </span>
                             @if($coupon)
                             <span wire:loading.remove>
-                                - {{ $coupon->label }} = {{ $newSubtotal }}
+                                - {{ $coupon->label }} = {{ $discountedSubtotal }}
                             </span>
                             @endif
                             <span wire:loading>
@@ -230,9 +231,11 @@
                         </div>
                     </div>
                     
-                    <x-jet-button type="submit">
+                    {{-- <x-jet-button type="submit">
                         {{ __('Pay with Stripe') }}
-                    </x-jet-button>
+                    </x-jet-button> --}}
+
+                    <livewire:stripe.checkout :total="$total"/>
                 </div>
             </form>
             

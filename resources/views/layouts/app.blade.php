@@ -22,6 +22,8 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+        <script src="https://js.stripe.com/v3/"></script>
+        
     </head>
     <body class="font-serif antialiased">
         <x-jet-banner />
@@ -46,8 +48,10 @@
 
         @stack('modals')
 
-        <script src="https://unpkg.com/flowbite@1.4.5/dist/flowbite.js"></script>
+        @stack('scripts')
 
+        <script src="https://unpkg.com/flowbite@1.4.5/dist/flowbite.js"></script>
+        
         @livewireScripts
     </body>
 </html>

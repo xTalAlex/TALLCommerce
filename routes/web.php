@@ -31,7 +31,7 @@ Route::post('/checkout/stripe', [App\Http\Controllers\StripeController::class , 
 Route::get('/checkout/stripe/success', [App\Http\Controllers\StripeController::class , 'success'] )->name('stripe.success');
 Route::get('/checkout/stripe/cancel', [App\Http\Controllers\StripeController::class , 'cancel'] )->name('stripe.cancel');
 Route::get('/checkout/stripe/{order}', [App\Http\Controllers\StripeController::class , 'resume' ] )->name('stripe.resume');
-
+Route::get('/checkout/response', [App\Http\Controllers\StripeController::class , 'checkoutResponse'] )->name('stripe.checkout.response');
 Route::get('/order/create', App\Http\Livewire\Order\Create::class )->name('order.create');
 Route::get('/order/delete/{order}', [App\Http\Controllers\OrderController::class , 'destroy' ] )->name('order.destroy');
 

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Stripe\Stripe;
-use App\Models\{ Order, OrderStatus, Address, Coupon};
+use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Models\{ Order, OrderStatus, Address, Coupon};
 
 class StripeController extends Controller
 {
+    protected $stripe;
+
     /**
      * Create a new controller instance.
      *
@@ -90,8 +92,11 @@ class StripeController extends Controller
             $order->total = $order->total + ($product->model->price * $product->qty );
         }
 
-        if($coupon)
+        $total = $order->total;
+        if ($coupon) {
             $order->total -= $coupon->discount($order->total);
+            $total -= $coupon->discount($order->total);
+        }
 
         $order->save();
 
@@ -175,5 +180,44 @@ class StripeController extends Controller
         // $request->session()->flash('flash.bannerStyle', 'danger');
 
         return Auth::user() ? redirect()->route('order.index') : redirect()->route('cart.index');
+    }
+
+    public function checkoutResponse(Request $request)
+    {
+        $paymentIntent = Stripe::paymentIntents()->find($request->payment_intent);
+
+        $banner_message="";
+        $banner_style="danger";
+        $route_name='order.index';
+
+        switch ($paymentIntent['status']) {
+            case 'succeeded':
+              $banner_message='Success! Payment received.';
+              $banner_style="success";
+              break;
+        
+            case 'processing':
+              $banner_message="Payment processing. We'll update you when payment is received.";
+              $banner_style="success";
+              break;
+        
+            case 'requires_payment_method':
+              $banner_message='Payment failed. Please try another payment method.';
+              $route_name='order.create';
+              $banner_style="danger";
+              // Redirect your user back to your payment page to attempt collecting
+              // payment again
+              break;
+        
+            default:
+              $banner_message='Something went wrong.';
+              $banner_style="danger";
+              break;
+        }
+
+        $request->session()->flash('flash.banner', $banner_message );
+        $request->session()->flash('flash.bannerStyle', $banner_style);
+
+        return redirect()->route($route_name);
     }
 }

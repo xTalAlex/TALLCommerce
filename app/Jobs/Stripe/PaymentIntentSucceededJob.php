@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Stripe;
 
+use App\Models\{Order, OrderStatus};
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\WebhookClient\Models\WebhookCall;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 
-class ChargeSucceededJob implements ShouldQueue
+class PaymentIntentSucceededJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,9 +36,10 @@ class ChargeSucceededJob implements ShouldQueue
      */
     public function handle()
     {
-        // do your work here
-
-        // you can access the payload of the webhook call with `$this->webhookCall->payload`
-        //Log::info($this->webhookCall->payload);
+        $payment_intent=$this->webhookCall->payload['data']['object']['id'];
+        Log::info($payment_intent);
+        Order::where('payment_type','stripe')->where('payment_id',$payment_intent)->first()
+            ->status()->associate(OrderStatus::where('name','paied')->first())->save();
+        
     }
 }

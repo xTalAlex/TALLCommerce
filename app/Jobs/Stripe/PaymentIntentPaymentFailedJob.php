@@ -3,7 +3,6 @@
 namespace App\Jobs\Stripe;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\WebhookClient\Models\WebhookCall;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 
-class ChargeSucceededJob implements ShouldQueue
+class PaymentIntentPaymentFailedJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,9 +34,6 @@ class ChargeSucceededJob implements ShouldQueue
      */
     public function handle()
     {
-        // do your work here
-
-        // you can access the payload of the webhook call with `$this->webhookCall->payload`
-        //Log::info($this->webhookCall->payload);
+        //
     }
 }
