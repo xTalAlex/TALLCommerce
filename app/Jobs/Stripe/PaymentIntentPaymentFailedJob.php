@@ -3,6 +3,8 @@
 namespace App\Jobs\Stripe;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
+use App\Models\{Order, OrderStatus};
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,6 +36,17 @@ class PaymentIntentPaymentFailedJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $payment_intent=$this->webhookCall->payload['data']['object']['id'];
+        $order = Order::where('payment_gateway','stripe')->where('payment_id',$payment_intent)->first();
+        if ($order) 
+        {
+            $status = OrderStatus::where('name','payment_failed')->first();
+            if($status)
+                $order->status()->associate($status)->save();
+            else
+                Log::error('Couldn\'t update status to "payment_failed" for order #'.$order->id .' (Payment Failed)');
+        }
+        else
+            Log::error('Order not found for payment intent '.$payment_intent .' (Payment Failed)');
     }
 }

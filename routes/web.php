@@ -27,13 +27,10 @@ Route::get('/cart', App\Http\Livewire\Cart\Index::class )->name('cart.index');
 
 Route::get('/wishlist', App\Http\Livewire\Wishlist\Index::class )->name('wishlist.index');
 
-Route::post('/checkout/stripe', [App\Http\Controllers\StripeController::class , 'checkout'] )->name('stripe.checkout');
-Route::get('/checkout/stripe/success', [App\Http\Controllers\StripeController::class , 'success'] )->name('stripe.success');
-Route::get('/checkout/stripe/cancel', [App\Http\Controllers\StripeController::class , 'cancel'] )->name('stripe.cancel');
-Route::get('/checkout/stripe/{order}', [App\Http\Controllers\StripeController::class , 'resume' ] )->name('stripe.resume');
-Route::get('/checkout/response', [App\Http\Controllers\StripeController::class , 'checkoutResponse'] )->name('stripe.checkout.response');
 Route::get('/order/create', App\Http\Livewire\Order\Create::class )->name('order.create');
-Route::get('/order/delete/{order}', [App\Http\Controllers\OrderController::class , 'destroy' ] )->name('order.destroy');
+Route::get('/order/edit/{order}', [App\Http\Controllers\OrderController::class , 'edit' ] )->name('order.edit');
+
+Route::get('/checkout/response/stripe', [App\Http\Controllers\StripeController::class , 'handleCheckoutResponse'] )->name('stripe.handle.checkout.response');
 
 Route::middleware([
     'auth:sanctum',
@@ -49,6 +46,13 @@ Route::middleware([
 ->prefix('admin')
 ->group(function () {
     Route::get('login', fn() => redirect('login') )->name('filament.auth.login');
+
+    Route::prefix('mail')->group( function() {
+        Route::get('order/placed', function() {
+            return "Email";
+        });
+    });
+
 });
 
 Route::stripeWebhooks('stripe-webhook');

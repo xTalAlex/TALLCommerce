@@ -37,9 +37,17 @@ class PaymentIntentSucceededJob implements ShouldQueue
     public function handle()
     {
         $payment_intent=$this->webhookCall->payload['data']['object']['id'];
-        Log::info($payment_intent);
-        Order::where('payment_type','stripe')->where('payment_id',$payment_intent)->first()
-            ->status()->associate(OrderStatus::where('name','paied')->first())->save();
+        $order = Order::where('payment_gateway','stripe')->where('payment_id',$payment_intent)->first();
+        if($order)
+        {
+            $status = OrderStatus::where('name','paied')->first();
+            if($status)
+                $order->status()->associate($status)->save();
+            else
+                Log::error('Couldn\'t update status to "paied" for order #'.$order->id .' (Payment Failed)');
+        }
+        else
+            Log::error('Order not found for payment intent '.$payment_intent. ' (Payment Succeeded)');
         
     }
 }

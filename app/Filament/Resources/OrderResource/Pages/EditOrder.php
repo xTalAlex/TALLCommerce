@@ -28,7 +28,7 @@ class EditOrder extends EditRecord
                     $this->notify('success','Set as Paied');
                 })
                 ->form([
-                    Select::make('payment_type')
+                    Select::make('payment_gateway')
                         ->options(config('custom.payment_gateways'))
                         ->default('stripe')
                         ->disablePlaceholderSelection()

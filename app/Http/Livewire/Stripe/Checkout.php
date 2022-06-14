@@ -2,10 +2,9 @@
 
 namespace App\Http\Livewire\Stripe;
 
-use App\Models\Order;
-use App\Models\Address;
+use App\Models\Coupon;
 use Livewire\Component;
-use App\Models\OrderStatus;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 
 class Checkout extends Component
@@ -22,15 +21,16 @@ class Checkout extends Component
     public function confirmPayment()
     {
         $this->confirmingPayment = true;
+
+        $metadata = array();
+
         $this->intent = Stripe::paymentIntents()->create([
             'amount' => $this->total,
             'currency' => 'eur',
             'automatic_payment_methods' => [
                 'enabled' => 'true',
             ],
-            // 'metadata' => [
-            //     'order' => $this->order->id,
-            // ],
+            'metadata' => $metadata,
         ]);
     }
 

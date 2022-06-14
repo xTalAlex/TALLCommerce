@@ -17,6 +17,7 @@ class OrderStatusesTableSeeder extends Seeder
     {
         $statuses = [
             'pending',
+            'paymend_failed',
             'paied',
             'shipped',
             'completed',

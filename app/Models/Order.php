@@ -14,13 +14,17 @@ class Order extends Model
         'billing_address',
         'message',
         'tracking_number',
-        'payment_type',
+        'payment_gateway',
         'payment_id',
         'email',
         'phone',
         'order_status_id',
         'user_id',
+        'subtotal',
+        'tax',
         'total',
+        'coupon_id',
+        'coupon_discount',
     ];
 
     /**
@@ -59,6 +63,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
+    }
+
     public function shippingAddress()
     {
         return Address::make(
@@ -93,6 +102,9 @@ class Order extends Model
 
         switch(ucfirst(strtolower($status)))
         {
+            case('Payment_failed'):
+                $can = $this->status->name == 'Pending';
+                break;
             case('Paied'):
                 $can = $this->status->name == 'Pending';
                 break;
@@ -111,5 +123,17 @@ class Order extends Model
         }
 
         return $can;
+    }
+
+    public function canBeDeleted()
+    {
+        $deletable_statuses = OrderStatus::whereIn('name',['payment_failed'])->get();
+
+        return $deletable_statuses->contains($this->status);
+    }
+
+    public function canBeInvoiced()
+    {
+        strtolower($this->status->name) !='pending' && strtolower($this->status->name) !='payment_failed';
     }
 }

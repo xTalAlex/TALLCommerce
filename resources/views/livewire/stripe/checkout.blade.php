@@ -25,7 +25,7 @@
                             error = (await this.stripe.confirmPayment({
                                 elements : this.elements,
                                 confirmParams: {
-                                    return_url: '{{ route('stripe.checkout.response') }}',
+                                    return_url: '{{ route('stripe.handle.checkout.response') }}',
                                 },
                             })).error;
                             if(error) {

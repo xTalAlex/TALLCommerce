@@ -16,9 +16,18 @@ return new class extends Migration
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->boolean('fixed_amount');
-            $table->decimal('amount',6,2)->nullable();
+            $table->boolean('is_fixed_amount');
+            $table->decimal('amount',6,2);
+            $table->unsignedInteger('max_redemptions')->nullable();
+            $table->dateTime('expires_on')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('orders', function (Blueprint $table) {
+            $table->unsignedBigInteger('coupon_id')->nullable();
+            $table->decimal('coupon_discount',8,2)->nullable();
+            $table->foreign('coupon_id')->references('id')->on('coupons')
+                ->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
@@ -29,6 +38,10 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign(['coupon_id']);
+            $table->dropColumn('coupon_id');
+        });
         Schema::dropIfExists('coupons');
     }
 };

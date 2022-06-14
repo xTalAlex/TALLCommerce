@@ -73,7 +73,7 @@ class Create extends Component
         if ($this->coupon) {
             $this->subtotal = Cart::instance('default')->subtotal(); 
             $this->discountedSubtotal = Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal());
-            $this->tax = round(config('cart.tax')/100);
+            $this->tax = round(config('cart.tax')/100 * $this->discountedSubtotal, 2);
             $this->total = $this->discountedSubtotal + $this->tax;
         }
         else{
@@ -82,11 +82,6 @@ class Create extends Component
             $this->total = Cart::instance('default')->total();
         }
         
-    }
-
-    public function updatedCouponCode($value)
-    {
-        $this->coupon_code = strtoupper(trim($value));
     }
 
     public function submitShipping()
@@ -116,7 +111,7 @@ class Create extends Component
 
             if ($this->coupon) {
                 $this->subtotal = Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal());
-                $this->tax = round(config('cart.tax')/100);
+                $this->tax = round(config('cart.tax')/100 * $this->subtotal, 2 );
                 $this->total = $this->subtotal + $this->tax;
             } else {
                 $this->subtotal = Cart::instance('default')->subtotal();
@@ -131,7 +126,7 @@ class Create extends Component
     {
         $this->coupon=null;
         $this->coupon_code=null;
-        session()->remove('coupon');
+        session()->forget('coupon');
 
         if ($this->coupon) {
             $this->subtotal = Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal());
@@ -148,7 +143,7 @@ class Create extends Component
     public function createOrder($payment_id)
     {
         $shipping_address = new Address([
-            'email' => $this->email,
+            'email' => Auth::user() ? Auth::user()->email : $this->email,
             //'phone' => $this->phone,
             'full_name' => $this->full_name,
             'company' => $this->company,
@@ -176,13 +171,20 @@ class Create extends Component
             'billing_address' => $billing_address->toJson(),
             'email' => $this->email,
             //'phone' => $this->phone,
-            'message' => $this->message,    
-            'total' => $this->total,        
+            'message' => $this->message,  
+            'subtotal' => $this->subtotal,
+            'tax'   => $this->tax,  
+            'total' => $this->total,   
+            'coupon_id' => $this->coupon ? $this->coupon->id : null,
+            'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,    
             'order_status_id' => OrderStatus::where('name','pending')->first()->id,
-            'payment_type' => 'stripe',
+            'payment_gateway' => 'stripe',
             'payment_id' => $payment_id,
             'user_id' => auth()->user() ? auth()->user()->id : null,
         ]);
+
+        Cart::instance('default')->destroy();
+        session()->forget('coupon');
     }
    
     public function render()

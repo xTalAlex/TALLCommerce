@@ -28,12 +28,13 @@ class CouponResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('code'),
-                Toggle::make('fixed_amount')
+                TextInput::make('code')
+                    ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                Toggle::make('is_fixed_amount')
                     ->reactive(),
                 TextInput::make('amount')
-                    ->prefix(fn (Closure $get) => $get('fixed_amount') ? '€' : null )
-                    ->suffix(fn (Closure $get) => $get('fixed_amount') ? null : '%' )
+                    ->prefix(fn (Closure $get) => $get('is_fixed_amount') ? '€' : null )
+                    ->suffix(fn (Closure $get) => $get('is_fixed_amount') ? null : '%' )
                     ->mask(fn (TextInput\Mask $mask) => $mask
                             ->numeric()
                             ->decimalPlaces(2)
@@ -42,6 +43,10 @@ class CouponResource extends Resource
                             ->thousandsSeparator(',')
                             ->maxValue(999999)
                         ),
+                TextInput::make('max_redemption')
+                    ->numeric()
+                    ->minValue(1),
+                DateTimePicker::make('expires_on'),
                 DateTimePicker::make('created_at')
                     ->visibleOn(Pages\ViewCoupon::class),
                 DateTimePicker::make('updated_at')

@@ -27,6 +27,7 @@ use Filament\Forms\Components\BelongsToSelect;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use Filament\Resources\RelationManagers\RelationManager;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderResource extends Resource
 {
@@ -56,10 +57,22 @@ class OrderResource extends Resource
                     ->visibleOn(Pages\ViewOrder::class),
                 Fieldset::make('Payment')
                     ->schema([
-                        Select::make('payment_type')
+                        Select::make('payment_gateway')
                             ->options(config('custom.payment_gateways'))
                             ->disablePlaceholderSelection(),
                         TextInput::make('payment_id'),
+                        BelongsToSelect::make('coupon')
+                            ->relationship('coupon','code')
+                            ->visibleOn(Pages\ViewOrder::class),
+                        TextInput::make('coupon_discount')
+                            ->prefix('€')
+                            ->visibleOn(Pages\ViewOrder::class),
+                        TextInput::make('subtotal')
+                            ->prefix('€')
+                            ->visibleOn(Pages\ViewOrder::class),
+                        TextInput::make('tax')
+                            ->prefix('%')
+                            ->visibleOn(Pages\ViewOrder::class),
                         TextInput::make('total')
                             ->prefix('€')
                             ->visibleOn(Pages\ViewOrder::class),

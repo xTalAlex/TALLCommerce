@@ -224,6 +224,7 @@
                             @endif
                             <input class="@if($this->coupon_error) text-red-500  bg-red-300 @endif" type="text" name="coupon_code" placeholder="Coupon Code"
                                 wire:model.lazy="coupon_code"
+                                x-on:input="$event.target.value=$event.target.value.toUpperCase()"
                             />
                             <x-jet-button type="button" wire:click="checkCoupon">
                                 {{ __('Check') }}

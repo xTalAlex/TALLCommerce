@@ -47,21 +47,30 @@ class Address extends Model
      */
     public function getLabelAttribute()
     {
-        $label="$this->full_name";
-        if($this->full_name && $this->company) $label.="($this->company)";
-        elseif(!$this->full_name) $label.="$this->company";
+        $label=null;
 
-        $label.="\n";
-        $label.="$this->address";
-        if($this->address2) $label.="($this->address2)";
-        $label.="";
+        if ($this->address) {
+            $label="$this->full_name";
+            if ($this->full_name && $this->company) {
+                $label.="($this->company)";
+            } elseif (!$this->full_name) {
+                $label.="$this->company";
+            }
 
-        $label.="\n";
-        $label.="$this->city ($this->province), $this->postal_code";
+            $label.="\n";
+            $label.="$this->address";
+            if ($this->address2) {
+                $label.="($this->address2)";
+            }
+            $label.="";
 
-        $label.="\n";
-        $label.="$this->country_region";
+            $label.="\n";
+            $label.="$this->city ($this->province), $this->postal_code";
 
-        return nl2br(e($label));
+            $label.="\n";
+            $label.="$this->country_region";
+        }
+
+        return $label ? nl2br(e($label)) : null;
     }
 }

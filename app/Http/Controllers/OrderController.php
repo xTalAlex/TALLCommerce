@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,12 +83,7 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Order $order)
-    {
-        if(Auth::user()->id !== $order->user->id)
-            abort(403);
+    {  
 
-        $order->delete();
-
-        return redirect()->back();
     }
 }
