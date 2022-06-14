@@ -9,7 +9,7 @@
     </x-slot>
 
     <div class="flex justify-center py-8">
-        <div class="inline-flex w-full mx-auto space-x-3 max-w-7xl sm:px-6 lg:px-8">
+        <div class="flex flex-col w-full mx-auto md:space-x-3 md:flex-row md:inline-flex max-w-7xl sm:px-6 lg:px-8">
 
             <x-sidebar></x-sidebar>
             

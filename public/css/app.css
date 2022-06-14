@@ -4078,12 +4078,20 @@ input[type="range"]::-ms-fill-lower {
     margin-right: 0.5rem;
   }
 
+  .md\:mb-auto {
+    margin-bottom: auto;
+  }
+
   .md\:block {
     display: block;
   }
 
   .md\:flex {
     display: flex;
+  }
+
+  .md\:inline-flex {
+    display: inline-flex;
   }
 
   .md\:table-cell {
@@ -4110,8 +4118,16 @@ input[type="range"]::-ms-fill-lower {
     width: 33.333333%;
   }
 
+  .md\:w-64 {
+    width: 16rem;
+  }
+
   .md\:max-w-md {
     max-width: 28rem;
+  }
+
+  .md\:flex-none {
+    flex: none;
   }
 
   .md\:grid-cols-3 {
@@ -4180,6 +4196,12 @@ input[type="range"]::-ms-fill-lower {
 
   .md\:gap-6 {
     gap: 1.5rem;
+  }
+
+  .md\:space-x-3 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(0.75rem * var(--tw-space-x-reverse));
+    margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
   .md\:border-t-0 {

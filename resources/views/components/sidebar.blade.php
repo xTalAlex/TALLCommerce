@@ -1,4 +1,4 @@
-<aside class="w-64" aria-label="Sidebar">
+<aside class="w-full mb-2 md:w-64 md:mb-auto" aria-label="Sidebar">
     <div class="px-3 py-4 overflow-y-auto rounded bg-gray-50 dark:bg-gray-800">
         <ul class="space-y-2">
 
