@@ -7,5 +7,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListCategories extends ListRecords
 {
+    use ListRecords\Concerns\CanDeleteRecords;
+    
     protected static string $resource = CategoryResource::class;
 }

@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Scopes\NotHiddenScope;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model implements Buyable , HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     const PATH = "products";
     
@@ -47,6 +49,16 @@ class Product extends Model implements Buyable , HasMedia
     {
         $this->addMediaCollection('gallery')
             ->useDisk(config('media-library.disk_name'));
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new NotHiddenScope);
     }
 
     public function scopeFeatured($query)
@@ -101,7 +113,7 @@ class Product extends Model implements Buyable , HasMedia
 
     public function getImageAttribute()
     {
-        return $this->getFirstMediaUrl('gallery');
+        return $this->getFirstMediaUrl('gallery') !="" ? $this->getFirstMediaUrl('gallery') : asset('img/no_image.jpg');
     }
 
     public function getGalleryAttribute()

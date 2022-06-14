@@ -126,16 +126,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.225.1",
+            "version": "3.225.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "b795c9c14997dac771f66d1f6cbadb62c742373a"
+                "reference": "ee717ffeb6d7c6bd0278b51b9f070b3571ac4eb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b795c9c14997dac771f66d1f6cbadb62c742373a",
-                "reference": "b795c9c14997dac771f66d1f6cbadb62c742373a",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ee717ffeb6d7c6bd0278b51b9f070b3571ac4eb0",
+                "reference": "ee717ffeb6d7c6bd0278b51b9f070b3571ac4eb0",
                 "shasum": ""
             },
             "require": {
@@ -211,9 +211,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.225.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.225.3"
             },
-            "time": "2022-06-09T18:19:43+00:00"
+            "time": "2022-06-13T18:56:48+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1128,16 +1128,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.12.28",
+            "version": "v2.12.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "98e5ae37fb924a377fbb844837d9c7bc30feb475"
+                "reference": "a2c1dc0e47af29beeba3ba20836f6ed0aed1e61c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/98e5ae37fb924a377fbb844837d9c7bc30feb475",
-                "reference": "98e5ae37fb924a377fbb844837d9c7bc30feb475",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/a2c1dc0e47af29beeba3ba20836f6ed0aed1e61c",
+                "reference": "a2c1dc0e47af29beeba3ba20836f6ed0aed1e61c",
                 "shasum": ""
             },
             "require": {
@@ -1185,20 +1185,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-06-08T15:11:02+00:00"
+            "time": "2022-06-13T16:26:42+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.12.28",
+            "version": "v2.12.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "dd6efd9daf6c62e583480c99b62cee1166c1f6f1"
+                "reference": "71bf7581fbe82f35ad1bf082bdcf794af8cafee6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/dd6efd9daf6c62e583480c99b62cee1166c1f6f1",
-                "reference": "dd6efd9daf6c62e583480c99b62cee1166c1f6f1",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/71bf7581fbe82f35ad1bf082bdcf794af8cafee6",
+                "reference": "71bf7581fbe82f35ad1bf082bdcf794af8cafee6",
                 "shasum": ""
             },
             "require": {
@@ -1242,11 +1242,11 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-06-08T15:10:59+00:00"
+            "time": "2022-06-13T14:47:09+00:00"
         },
         {
             "name": "filament/spatie-laravel-media-library-plugin",
-            "version": "v2.12.28",
+            "version": "v2.12.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/spatie-laravel-media-library-plugin.git",
@@ -1283,16 +1283,16 @@
         },
         {
             "name": "filament/support",
-            "version": "v2.12.28",
+            "version": "v2.12.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/support.git",
-                "reference": "512caf82b0e49fcf4cd21996bf0adb5088c48589"
+                "reference": "f76c0f100b45d364b2bd40a89849a49ffbc21c7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/support/zipball/512caf82b0e49fcf4cd21996bf0adb5088c48589",
-                "reference": "512caf82b0e49fcf4cd21996bf0adb5088c48589",
+                "url": "https://api.github.com/repos/laravel-filament/support/zipball/f76c0f100b45d364b2bd40a89849a49ffbc21c7a",
+                "reference": "f76c0f100b45d364b2bd40a89849a49ffbc21c7a",
                 "shasum": ""
             },
             "require": {
@@ -1328,20 +1328,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-06-08T15:10:59+00:00"
+            "time": "2022-06-12T13:04:15+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v2.12.28",
+            "version": "v2.12.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
-                "reference": "46a6a45a781a7cfe49c08bb2caf810f8ccdea251"
+                "reference": "cfc6513230faa999df03bbbb22ffa88687180d90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/46a6a45a781a7cfe49c08bb2caf810f8ccdea251",
-                "reference": "46a6a45a781a7cfe49c08bb2caf810f8ccdea251",
+                "url": "https://api.github.com/repos/laravel-filament/tables/zipball/cfc6513230faa999df03bbbb22ffa88687180d90",
+                "reference": "cfc6513230faa999df03bbbb22ffa88687180d90",
                 "shasum": ""
             },
             "require": {
@@ -1382,7 +1382,7 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-06-08T15:11:01+00:00"
+            "time": "2022-06-13T16:26:31+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -2813,16 +2813,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.0.20",
+            "version": "3.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "42a2f47dcf39944e2aee1b660ee55ab6ef69b535"
+                "reference": "8f1fcf9d2304ff77a006aa36dd2cb5f236999b12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/42a2f47dcf39944e2aee1b660ee55ab6ef69b535",
-                "reference": "42a2f47dcf39944e2aee1b660ee55ab6ef69b535",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8f1fcf9d2304ff77a006aa36dd2cb5f236999b12",
+                "reference": "8f1fcf9d2304ff77a006aa36dd2cb5f236999b12",
                 "shasum": ""
             },
             "require": {
@@ -2883,7 +2883,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.0.20"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.0.21"
             },
             "funding": [
                 {
@@ -2899,20 +2899,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-25T19:18:39+00:00"
+            "time": "2022-06-12T17:54:28+00:00"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
-            "version": "3.0.13",
+            "version": "3.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
-                "reference": "0074cf016e21a6d1eb99b6db70acdd23743fc371"
+                "reference": "f4ee238279f1eb39a32539a18ef845db7251fd05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/0074cf016e21a6d1eb99b6db70acdd23743fc371",
-                "reference": "0074cf016e21a6d1eb99b6db70acdd23743fc371",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/f4ee238279f1eb39a32539a18ef845db7251fd05",
+                "reference": "f4ee238279f1eb39a32539a18ef845db7251fd05",
                 "shasum": ""
             },
             "require": {
@@ -2953,9 +2953,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem-aws-s3-v3/issues",
-                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/3.0.13"
+                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/3.0.21"
             },
-            "time": "2022-04-01T22:05:11+00:00"
+            "time": "2022-06-12T17:34:31+00:00"
         },
         {
             "name": "league/glide",
@@ -3807,16 +3807,16 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.6.0",
+            "version": "v2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "3f3bf06406244a94aeffd5818ba05b41a1754ae5"
+                "reference": "58c3f47f650c94ec05a151692652a868995d2938"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/3f3bf06406244a94aeffd5818ba05b41a1754ae5",
-                "reference": "3f3bf06406244a94aeffd5818ba05b41a1754ae5",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/58c3f47f650c94ec05a151692652a868995d2938",
+                "reference": "58c3f47f650c94ec05a151692652a868995d2938",
                 "shasum": ""
             },
             "require": {
@@ -3870,7 +3870,7 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2022-06-10T07:38:28+00:00"
+            "time": "2022-06-14T06:56:20+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -3945,16 +3945,16 @@
         },
         {
             "name": "pragmarx/google2fa",
-            "version": "8.0.0",
+            "version": "v8.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/antonioribeiro/google2fa.git",
-                "reference": "26c4c5cf30a2844ba121760fd7301f8ad240100b"
+                "reference": "80c3d801b31fe165f8fe99ea085e0a37834e1be3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/antonioribeiro/google2fa/zipball/26c4c5cf30a2844ba121760fd7301f8ad240100b",
-                "reference": "26c4c5cf30a2844ba121760fd7301f8ad240100b",
+                "url": "https://api.github.com/repos/antonioribeiro/google2fa/zipball/80c3d801b31fe165f8fe99ea085e0a37834e1be3",
+                "reference": "80c3d801b31fe165f8fe99ea085e0a37834e1be3",
                 "shasum": ""
             },
             "require": {
@@ -3991,9 +3991,9 @@
             ],
             "support": {
                 "issues": "https://github.com/antonioribeiro/google2fa/issues",
-                "source": "https://github.com/antonioribeiro/google2fa/tree/8.0.0"
+                "source": "https://github.com/antonioribeiro/google2fa/tree/v8.0.1"
             },
-            "time": "2020-04-05T10:47:18+00:00"
+            "time": "2022-06-13T21:57:56+00:00"
         },
         {
             "name": "psr/container",
@@ -10237,5 +10237,5 @@
         "ext-gd": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedInteger('quantity')->default(0);
             $table->boolean('featured')->default(false);
             $table->boolean('hidden')->default(false);
-
+            $table->softDeletes();
             $table->timestamps();
         });
 

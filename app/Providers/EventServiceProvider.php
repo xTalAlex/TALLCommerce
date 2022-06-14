@@ -21,6 +21,15 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     /**
+     * The model observers for your application.
+     *
+     * @var array
+     */
+    protected $observers = [
+        \App\Models\Product::class => [\App\Observers\ProductObserver::class],
+    ];
+
+    /**
      * Register any events for your application.
      *
      * @return void

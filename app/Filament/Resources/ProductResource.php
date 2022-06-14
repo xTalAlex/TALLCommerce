@@ -25,6 +25,7 @@ use Filament\Forms\Components\BelongsToManyMultiSelect;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Scopes\NotHiddenScope;
 
 class ProductResource extends Resource
 {
@@ -33,6 +34,11 @@ class ProductResource extends Resource
     protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScopes([NotHiddenScope::class]);
+    }
 
     public static function form(Form $form): Form
     {
@@ -131,7 +137,7 @@ class ProductResource extends Resource
                     ->searchable(),
                 TextColumn::make('short_description')
                     ->searchable()
-                    ->wrap(),
+                    ->hidden(),
                 TextColumn::make('description')
                     ->searchable()
                     ->hidden(),
