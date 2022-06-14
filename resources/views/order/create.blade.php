@@ -2,42 +2,48 @@
     $activeClass = 'text-blue-600 bg-gray-100 dark:bg-gray-800 dark:text-blue-500 active';
     $defaultClass = 'text-gray-400 dark:text-gray-500';
 @endphp
-
 <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
         {{ __('Checkout') }}
     </h2>
 </x-slot>
-    
+
 <div class="py-12"
     x-data="{
         step : @entangle('step')
     }"
 >
-    <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="mx-auto md:flex max-w-7xl sm:px-6 lg:px-8">
 
-        <ul class="flex flex-wrap space-x-8 text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-            <li class="cursor-default">
-                <span class="inline-block p-4 rounded-t-lg {{ $step=='shipping' ? $activeClass : $defaultClass }}"
-                >Shipping Info</span>
-            </li>
-            <li class="cursor-default">
-                <span class="inline-block p-4 rounded-t-lg  {{ $step=='billing' ? $activeClass : $defaultClass }}"
-                >Billing Info</span>
-            </li>
-            <li class="cursor-default">
-                <span class="inline-block p-4 rounded-t-lg  {{ $step=='payment' ? $activeClass : $defaultClass }}"
-                >Payment</span>
-            </li>
-        </ul>
+        <div class="w-full overflow-hidden bg-white shadow-xl md:w-2/3 sm:rounded-lg">
 
-        <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
+            <div>
+                <x-jet-validation-errors class="mb-4" />
+
+                @if($errors->has('email'))
+                    <a href="{{ route('login') }}">Forgot to login?</a>
+                @endif
+
+            {{-- <ul class="flex flex-wrap w-full space-x-8 text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+                <li class="cursor-default">
+                    <span class="inline-block p-4 rounded-t-lg {{ $step=='shipping' ? $activeClass : $defaultClass }}"
+                    >Shipping Info</span>
+                </li>
+                <li class="cursor-default">
+                    <span class="inline-block p-4 rounded-t-lg  {{ $step=='billing' ? $activeClass : $defaultClass }}"
+                    >Billing Info</span>
+                </li>
+                <li class="cursor-default">
+                    <span class="inline-block p-4 rounded-t-lg  {{ $step=='payment' ? $activeClass : $defaultClass }}"
+                    >Payment</span>
+                </li>
+            </ul> --}}
                 
             {{-- <form action="{{ route('stripe.checkout') }}" method="POST"> --}}
+            @if(!$addresses_confirmed)
             <form action="" method="POST">
             @csrf
                 <div class="px-6 py-12"
-                    x-show="step=='shipping'"
                 >
                     <div class="@auth hidden @endauth relative z-0 w-full mb-6 group">
                         <input type="text" name="email" id="email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
@@ -114,15 +120,18 @@
                             >
                             <label for="same_address" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Use as billing address</label>
                         </div>
+
+                        @auth
+                            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                wire:click.prevent='updateDefaultAddress'
+                            >Save as default</button>
+                        @endauth
                         
-                        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            wire:click.prevent='submitShipping'
-                        >Submit</button>
                     </div>
                 </div>
 
+                @if(!$same_address)
                 <div class="px-6 py-12"
-                    x-show="step=='billing'"
                 >
                     <div class="grid xl:grid-cols-2 xl:gap-6">
                         <div class="relative z-0 w-full mb-6 group">
@@ -178,68 +187,99 @@
                             >Postal Code</label>
                         </div>
                     </div>
-
-                    <div class="mt-6 md:flex md:justify-end">
-                        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            wire:click.prevent='submitBilling'
-                        >Submit</button>
-                    </div>
                     
                 </div>
-
-                <div class="flex justify-between px-6 py-12"
-                    x-show="step=='payment'"
-                >
-                    <div class="flex flex-col">
-                        <span>SUBTOTAL: 
-                            <span wire:loading.remove>
-                                {{ $subtotal }}
-                            </span>
-                            @if($coupon)
-                            <span wire:loading.remove>
-                                - {{ $coupon->label }} = {{ $discountedSubtotal }}
-                            </span>
-                            @endif
-                            <span wire:loading>
-                                ...
-                            </span>
-                        </span>
-                        <span>TAX: {{ $tax }}
-                        </span>
-                        <span>TOTAL: 
-                            <span wire:loading.remove>
-                                {{ $total }}
-                            </span>
-                            <span wire:loading>
-                                ...
-                            </span>
-                        </span>
-
-                        <div>
-                            @if($coupon)
-                                <span>{{ $coupon->code }}</span>
-                                <x-jet-button type="button" wire:click="removeCoupon">
-                                    {{ __('X') }}
-                                </x-jet-button>
-                            @endif
-                            <input class="@if($this->coupon_error) text-red-500  bg-red-300 @endif" type="text" name="coupon_code" placeholder="Coupon Code"
-                                wire:model.lazy="coupon_code"
-                                x-on:input="$event.target.value=$event.target.value.toUpperCase()"
-                            />
-                            <x-jet-button type="button" wire:click="checkCoupon">
-                                {{ __('Check') }}
-                            </x-jet-button>
-                        </div>
-                    </div>
-                    
-                    {{-- <x-jet-button type="submit">
-                        {{ __('Pay with Stripe') }}
-                    </x-jet-button> --}}
-
-                    <livewire:stripe.checkout :total="$total"/>
-                </div>
+                @endif
+                
             </form>
+            @else
+                <div class="px-6 py-12">
+                        <div class="border-2 border-black">
+                            Shipping Address
+                        </div>
+                        <div class="border-2 border-black">
+                            {!! $addressShipping->label !!}
+                        </div>
+                   
+                        <div class="border-2 border-black">
+                            Billing Address
+                        </div>
+                        <div class="border-2 border-black">
+                            {!! $addressBilling->label !!}
+                        </div>
+
+                        <div class="mx-auto mt-5">
+                            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            wire:click.prevent="$set('addresses_confirmed',false)"
+                            >Modify</button>
+                        </div>
+                </div>
+                
+            @endif
             
+            </div>
         </div>
+
+        <div class="w-full overflow-hidden bg-white shadow-xl md:w-1/3 sm:rounded-lg">
+            <div class="flex px-6 py-12"
+            >
+                <div class="flex flex-col w-full">
+                    <span>SUBTOTAL: 
+                        <span wire:loading.remove>
+                            {{ $subtotal }}
+                        </span>
+                        @if($coupon)
+                        <span wire:loading.remove>
+                            - {{ $coupon->label }} = {{ $discountedSubtotal }}
+                        </span>
+                        @endif
+                        <span wire:loading>
+                            ...
+                        </span>
+                    </span>
+                    <span>TAX: {{ $tax }}
+                    </span>
+                    <span>TOTAL: 
+                        <span wire:loading.remove>
+                            {{ $total }}
+                        </span>
+                        <span wire:loading>
+                            ...
+                        </span>
+                    </span>
+
+                    <div class="mt-5 space-x-2">
+                        @if($coupon)
+                            <span>{{ $coupon->code }}</span>
+                            <x-jet-button type="button" wire:click="removeCoupon">
+                                {{ __('X') }}
+                            </x-jet-button>
+                        @endif
+                        <input class="@if($this->coupon_error) text-red-500  bg-red-300 @endif" type="text" name="coupon_code" placeholder="Coupon Code"
+                            wire:model.lazy="coupon_code"
+                            x-on:input="$event.target.value=$event.target.value.toUpperCase()"
+                        />
+                        <x-jet-button type="button" wire:click="checkCoupon">
+                            {{ __('Check') }}
+                        </x-jet-button>
+                    </div>
+                </div>
+                
+                {{-- <x-jet-button type="submit">
+                    {{ __('Pay with Stripe') }}
+                </x-jet-button> --}}
+            </div>
+
+            <div class="flex justify-center">
+                @if($addresses_confirmed)
+                    <livewire:stripe.checkout :total="$total"/>
+                @else
+                    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        wire:click.prevent='confirmAddresses'
+                    >Confirm Addresses</button>
+                @endif
+            </div>
+        </div>
+    
     </div>
 </div>

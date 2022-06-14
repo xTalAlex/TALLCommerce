@@ -30,6 +30,7 @@
                             })).error;
                             if(error) {
                                 this.errorMessage = error.message;
+                                @this.set('submitDisabled', false);
                             } else {}
                         }
                     }"
@@ -61,7 +62,7 @@
                     {{ __('Cancel') }}
                 </x-jet-secondary-button>
 
-                <x-jet-danger-button wire:click="submitPayment" id="submit" class="ml-3" wire:loading.attr="disabled">
+                <x-jet-danger-button wire:click="submitPayment" :disabled="$submitDisabled" id="submit" class="ml-3" wire:loading.attr="disabled">
                     {{ __('Submit') }}
                 </x-jet-danger-button>
             </x-slot>

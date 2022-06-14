@@ -13,9 +13,11 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 class Create extends Component
 {
     public $step;
+    public $addresses_confirmed;
 
     public $email;
    
+    public Address $addressShipping;
     public $full_name;
     public $company;
     public $address;
@@ -25,6 +27,7 @@ class Create extends Component
     public $country_region;
     public $postal_code;
 
+    public Address $addressBilling;
     public $billing_full_name;
     public $billing_company;
     public $billing_address;
@@ -49,8 +52,37 @@ class Create extends Component
 
     protected $listeners = ['createOrder'];
 
+    protected function rules()
+    {
+        return [
+            'email' => 'required|email'. ( auth()->user() ? '' : '|unique:users,email'),
+    
+            'full_name' => '',        
+            'company' => 'required_if:full_name,null',        
+            'address' => 'required',        
+            'address2' => '',        
+            'city' => 'required',
+            'province' => 'required',
+            'country_region' => 'required',
+            'postal_code' => 'required|min:5',
+
+            'same_address' => '',
+    
+            'billing_full_name' => 'exclude_if:same_address,true',        
+            'billing_company' => 'exclude_if:same_address,true|required_if:billing_full_name,null',        
+            'billing_address' => 'exclude_if:same_address,true|required',        
+            'billing_address2' => 'exclude_if:same_address,true|',        
+            'billing_city' => 'exclude_if:same_address,true|required',
+            'billing_province' => 'exclude_if:same_address,true|required',
+            'billing_country_region' => 'exclude_if:same_address,true|required',
+            'billing_postal_code' => 'exclude_if:same_address,true|required|min:5',
+    
+        ];
+    }
+
     public function mount()
     {
+        $this->addresses_confirmed = false;
         $this->step = 'shipping';
         $this->email = Auth::user() ? Auth::user()->email : null;
         if(Auth::user() && Auth::user()->defaultAddress){
@@ -66,6 +98,11 @@ class Create extends Component
             $this->full_name = $address->full_name;
         }
         $this->same_address = true;
+
+        if((Auth::user() && Auth::user()->defaultAddress)){
+            $this->confirmAddresses();
+            $this->addresses_confirmed = true;
+        }
 
         $this->coupon_code = session()->get('coupon');
         $this->coupon = Coupon::where('code',$this->coupon_code)->first();
@@ -84,11 +121,68 @@ class Create extends Component
         
     }
 
-    public function submitShipping()
+    public function confirmAddresses()
     {
-        $this->same_address ?
-            $this->step = "payment" :
-            $this->step = "billing";
+        $this->validate();
+
+        $this->addressShipping = new Address([
+            'email' => Auth::user() ? Auth::user()->email : $this->email,
+            //'phone' => $this->phone,
+            'full_name' => $this->full_name,
+            'company' => $this->company,
+            'address' => $this->address,
+            'address2' => $this->address2,
+            'city' => $this->city,
+            'province' => $this->province,
+            'country_region' => $this->country_region,
+            'postal_code' => $this->postal_code,
+        ]);
+
+        $this->addressBilling = new Address([
+            'full_name' => $this->same_address ? $this->full_name : $this->billing_full_name,
+            'company' => $this->same_address ? $this->company : $this->billing_company,
+            'address' => $this->same_address ? $this->address : $this->billing_address,
+            'address2' => $this->same_address ? $this->address2 : $this->billing_address2,
+            'city' => $this->same_address ? $this->city : $this->billing_city,
+            'province' => $this->same_address ? $this->province : $this->billing_province,
+            'country_region' => $this->same_address ? $this->country_region : $this->billing_country_region,
+            'postal_code' => $this->same_address ? $this->postal_code : $this->billing_postal_code,
+        ]);
+
+        $this->addresses_confirmed = true;
+    }
+
+    public function updateDefaultAddress()
+    {
+        $defaultAddress = Auth::user()->defaultAddress()->updateOrCreate([
+            'user_id' => Auth::user()->id,
+        ],[
+            'full_name' => $this->full_name,
+            'company' => $this->company,
+            'address' => $this->address,
+            'address2' => $this->address2,
+            'city' => $this->city,
+            'province' => $this->province,
+            'country_region' => $this->country_region,
+            'postal_code' => $this->postal_code,
+            'default' => true,
+        ]);
+
+        if($defaultAddress)
+        {
+            $banner_message = 'Default address saved';
+            $banner_style = 'success';
+        }
+        else
+        {
+            $banner_message = 'Cannot update default address';
+            $banner_style = 'danger';
+        }
+        
+        $this->dispatchBrowserEvent('banner-message', [
+            'message' => $banner_message,
+            'style' => $banner_style,
+        ]);
     }
 
     public function submitBilling()
@@ -142,7 +236,7 @@ class Create extends Component
 
     public function createOrder($payment_id)
     {
-        $shipping_address = new Address([
+        $this->addressShipping = new Address([
             'email' => Auth::user() ? Auth::user()->email : $this->email,
             //'phone' => $this->phone,
             'full_name' => $this->full_name,
@@ -155,20 +249,24 @@ class Create extends Component
             'postal_code' => $this->postal_code,
         ]);
 
-        $billing_address = new Address([
+        $this->addressBilling = new Address([
             'full_name' => $this->same_address ? $this->full_name : $this->billing_full_name,
-            'company' => $this->same_address ? $this->billing_company : $this->billing_company,
-            'address' => $this->same_address ? $this->billing_address : $this->billing_address,
-            'address2' => $this->same_address ? $this->billing_address2 : $this->billing_address2,
-            'city' => $this->same_address ? $this->billing_city : $this->billing_city,
-            'province' => $this->same_address ? $this->billing_province : $this->billing_province,
-            'country_region' => $this->same_address ? $this->billing_country_region : $this->billing_country_region,
-            'postal_code' => $this->same_address ? $this->billing_postal_code : $this->billing_postal_code,
+            'company' => $this->same_address ? $this->company : $this->billing_company,
+            'address' => $this->same_address ? $this->address : $this->billing_address,
+            'address2' => $this->same_address ? $this->address2 : $this->billing_address2,
+            'city' => $this->same_address ? $this->city : $this->billing_city,
+            'province' => $this->same_address ? $this->province : $this->billing_province,
+            'country_region' => $this->same_address ? $this->country_region : $this->billing_country_region,
+            'postal_code' => $this->same_address ? $this->postal_code : $this->billing_postal_code,
         ]);
 
-        $this->order = Order::create([
-            'shipping_address' => $shipping_address->toJson(),
-            'billing_address' => $billing_address->toJson(),
+        $this->order = Order::firstOrCreate([
+            'payment_gateway' => 'stripe',
+            'payment_id' => $payment_id,
+        ],
+        [
+            'shipping_address' => $this->addressShipping->toJson(),
+            'billing_address' => $this->addressBilling->toJson(),
             'email' => $this->email,
             //'phone' => $this->phone,
             'message' => $this->message,  
@@ -178,8 +276,6 @@ class Create extends Component
             'coupon_id' => $this->coupon ? $this->coupon->id : null,
             'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,    
             'order_status_id' => OrderStatus::where('name','pending')->first()->id,
-            'payment_gateway' => 'stripe',
-            'payment_id' => $payment_id,
             'user_id' => auth()->user() ? auth()->user()->id : null,
         ]);
 

@@ -10,12 +10,15 @@ use Cartalyst\Stripe\Laravel\Facades\Stripe;
 class Checkout extends Component
 {
     public $intent;
-    public $confirmingPayment = false;
+    public $confirmingPayment;
     public $total;
+    public $submitDisabled;
 
     public function mount($total)
     {
         $this->total = $total;
+        $this->confirmingPayment = false;
+        $this->submitDisabled = false;
     }
 
     public function confirmPayment()
@@ -36,6 +39,7 @@ class Checkout extends Component
 
     public function submitPayment()
     {
+        $this->submitDisabled = true;
         $this->emit('createOrder',$this->intent['id']);
         $this->emit('paymentConfirmed');
     }
