@@ -20,6 +20,17 @@ class CouponResource extends Resource
 {
     protected static ?string $model = Coupon::class;
 
+    public static function getModelLabel(): string
+    {
+        return __('Coupon');
+    }
+
+    public static function getPluralLabel(): string
+    {
+        return __('Coupons');
+    }
+
+
     protected static ?int $navigationSort = 5;
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
@@ -29,10 +40,13 @@ class CouponResource extends Resource
         return $form
             ->schema([
                 TextInput::make('code')
+                    ->label(__('Code'))
                     ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                 Toggle::make('is_fixed_amount')
+                    ->label(__('Is Fixed Amount'))
                     ->reactive(),
                 TextInput::make('amount')
+                    ->label(__('Amount'))
                     ->prefix(fn (Closure $get) => $get('is_fixed_amount') ? '€' : null )
                     ->suffix(fn (Closure $get) => $get('is_fixed_amount') ? null : '%' )
                     ->mask(fn (TextInput\Mask $mask) => $mask
@@ -44,12 +58,16 @@ class CouponResource extends Resource
                             ->maxValue(999999)
                         ),
                 TextInput::make('max_redemption')
+                    ->label(__('Max Redemptions'))
                     ->numeric()
                     ->minValue(1),
-                DateTimePicker::make('expires_on'),
+                DateTimePicker::make('expires_on')
+                    ->label(__('Expires on')),
                 DateTimePicker::make('created_at')
+                    ->label(__('Created at'))
                     ->visibleOn(Pages\ViewCoupon::class),
                 DateTimePicker::make('updated_at')
+                    ->label(__('Updated at'))
                     ->visibleOn(Pages\ViewCoupon::class),
             ]);
     }
@@ -59,11 +77,15 @@ class CouponResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('code')
+                    ->label(__('Code'))
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('label')
+                    ->label(__('Label'))
                     ->searchable(['amount']),
-                TextColumn::make('updated_at')->dateTime()
+                TextColumn::make('updated_at')
+                    ->label(__('Updated at'))
+                    ->dateTime()
                     ->sortable(),
             ])
             ->filters([

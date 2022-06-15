@@ -17,6 +17,11 @@ class ProductsRelationManager extends BelongsToManyRelationManager
 {
     protected static string $relationship = 'products';
 
+    public static function getTitle(): string
+    {
+        return __('Products');
+    }
+
     protected static ?string $recordTitleAttribute = 'name';
 
     protected function getTableQuery(): Builder
@@ -64,12 +69,12 @@ class ProductsRelationManager extends BelongsToManyRelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('short_description'),
-                SpatieMediaLibraryImageColumn::make('image'),
+                TextColumn::make('name')->label(__('Name')),
+                TextColumn::make('short_description')->label(__('Short Description')),
+                SpatieMediaLibraryImageColumn::make('image')->label(__('Image')),
                 TextColumn::make('pivot_quantity')->label('Quantity'),
                 TextColumn::make('pivot_price')->label('Price')->money('eur'),
-                TextColumn::make('total'),
+                TextColumn::make('total')->label(__('Total')),
             ])
             ->filters([
                 //

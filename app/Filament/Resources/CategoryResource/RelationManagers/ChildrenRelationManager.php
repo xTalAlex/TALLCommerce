@@ -18,6 +18,11 @@ class ChildrenRelationManager extends HasManyRelationManager
 {
     protected static string $relationship = 'children';
 
+    public static function getTitle(): string
+    {
+        return __('Children Categories');
+    }
+
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?string $inverseRelationship = 'children';
@@ -33,13 +38,17 @@ class ChildrenRelationManager extends HasManyRelationManager
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->label(__('Name'))
                     ->required(),
-                TextInput::make('description'),
+                TextInput::make('description')
+                    ->label(__('Description')),
                 // BelongsToSelect::make('parent_id')
                 //     ->relationship('parent', 'name'),
                 SpatieMediaLibraryFileUpload::make('hero')
+                    ->label(__('Hero'))
                     ->collection('hero'),
                 DateTimePicker::make('updated_at')
+                    ->label(__('Update at')) 
                     ->visibleOn(Pages\ViewCategory::class),
             ]);
     }
@@ -48,15 +57,19 @@ class ChildrenRelationManager extends HasManyRelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()
+                TextColumn::make('name')
+                ->label(__('Name'))
+                    ->sortable()
                     ->searchable(),
                 // TextColumn::make('parent.name')->sortable()
                 //     ->searchable(),
                 TextColumn::make('description')
+                    ->label(__('Description'))
                     ->wrap()
                     ->visibleFrom('md')
                     ->searchable(),
                 TextColumn::make('updated_at')
+                    ->label(__('Updated at'))
                     ->dateTime()
                     ->sortable(),
             ])

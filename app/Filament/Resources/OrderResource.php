@@ -33,6 +33,17 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
+    public static function getModelLabel(): string
+    {
+        return __('Order');
+    }
+
+    public static function getPluralLabel(): string
+    {
+        return __('Orders');
+    }
+
+
     protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
@@ -48,51 +59,70 @@ class OrderResource extends Resource
         return $form
             ->schema([
                 BelongsToSelect::make('status')
+                    ->label(__('Status'))
                     ->disabled()
                     ->dehydrated(false)
                     ->relationship('status', 'name'),
-                TextInput::make('tracking_number'),
+                TextInput::make('tracking_number')
+                    ->label(__('Tracking Number')),
                 RichEditor::make('shipping_label')
+                    ->label(__('Shipping Label'))
                     ->columnSpan(2)
                     ->visibleOn(Pages\ViewOrder::class),
                 Fieldset::make('Payment')
+                    ->label(__('Payment'))
                     ->schema([
                         Select::make('payment_gateway')
+                            ->label(__('Payment Gateway'))
                             ->options(config('custom.payment_gateways'))
                             ->disablePlaceholderSelection(),
-                        TextInput::make('payment_id'),
+                        TextInput::make('payment_id')
+                            ->label(__('Payment ID')),
                         BelongsToSelect::make('coupon')
+                            ->label(__('Coupon'))
                             ->relationship('coupon','code')
                             ->visibleOn(Pages\ViewOrder::class),
                         TextInput::make('coupon_discount')
+                            ->label(__('Coupon Discount'))
                             ->prefix('€')
                             ->visibleOn(Pages\ViewOrder::class),
                         TextInput::make('subtotal')
+                            ->label(__('Subtotal'))
                             ->prefix('€')
                             ->visibleOn(Pages\ViewOrder::class),
                         TextInput::make('tax')
+                            ->label(__('Tax'))
                             ->prefix('%')
                             ->visibleOn(Pages\ViewOrder::class),
                         TextInput::make('total')
+                            ->label(__('Total'))
                             ->prefix('€')
                             ->visibleOn(Pages\ViewOrder::class),
                         RichEditor::make('billing_label')
+                            ->label(__('Billing Label'))
                             ->columnSpan(2)
                             ->visibleOn(Pages\ViewOrder::class),
                     ]),
                 Fieldset::make('User')
                     ->schema([
-                        TextInput::make('user.name'),
-                        TextInput::make('email')->email(),
-                        TextInput::make('phone'),
+                        TextInput::make('user.name')
+                            ->label(__('Name')),
+                        TextInput::make('email')
+                            ->label(__('Email'))
+                            ->email(),
+                        TextInput::make('phone')
+                            ->label(__('Telefono')),
                     ])->visibleOn(Pages\ViewOrder::class),
                 Textarea::make('message')
+                    ->label(__('Message'))
                     ->hidden(fn ($state) => $state==null)
                     ->columnSpan(2)
                     ->visibleOn(Pages\ViewOrder::class),                
                 DateTimePicker::make('created_at')
+                    ->label(__('Created at'))    
                     ->visibleOn(Pages\ViewOrder::class),
                 DateTimePicker::make('updated_at')
+                    ->label(__('Updated at'))
                     ->visibleOn(Pages\ViewOrder::class),
             ]);
     }
@@ -104,6 +134,7 @@ class OrderResource extends Resource
                 TextColumn::make('id')
                     ->searchable(),
                 BadgeColumn::make('status.name')
+                    ->label(__('Status'))
                     ->colors([
                         'secondary',
                         'primary' => 'Shipped',
@@ -112,6 +143,7 @@ class OrderResource extends Resource
                         'danger' => 'Cancelled',
                     ]),
                 TextColumn::make('user.name')
+                    ->label(__('Name'))
                     ->searchable()
                     ->url(fn (Order $record): string => 
                         $record->user ?
@@ -119,19 +151,25 @@ class OrderResource extends Resource
                             : route('filament.resources.users.index')
                     ),
                 TextColumn::make('email')
+                    ->label(__('Email'))
                     ->searchable(),
-                TextColumn::make('total')->money('eur')
+                TextColumn::make('total')
+                    ->label(__('Total'))
+                    ->money('eur')
                     ->sortable(),
                 TextColumn::make('updated_at')
+                    ->label(__('Updated at'))
                     ->dateTime()
                     ->sortable(), 
             ])
             ->filters([
                 SelectFilter::make('status')
+                    ->label(__('Status'))
                     ->relationship('status', 'name'),
                 Filter::make('total')
                     ->form([
                         TextInput::make('total')
+                            ->label(__('Total'))
                             ->numeric()
                             ->suffix('or more'),
                     ])
@@ -155,10 +193,10 @@ class OrderResource extends Resource
                     })
                     ->form([
                         Forms\Components\TextInput::make('subject')
-                            ->label('Subject')
+                            ->label(__('Subject'))
                             ->required(),
                         Forms\Components\RichEditor::make('message')
-                            ->label('Message')
+                            ->label(__('Message'))
                             ->required(),
                     ]),
             ]);

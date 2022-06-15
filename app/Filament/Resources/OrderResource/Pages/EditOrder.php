@@ -20,7 +20,7 @@ class EditOrder extends EditRecord
         if ($this->record->statusCanBecome('Paied')) 
         {
             $paied= Action::make('paied')
-                ->label('Set as Paied')
+                ->label(__('Set as Paied'))
                 ->action(function (array $data): void {
                     $this->record->status()->associate(\App\Models\OrderStatus::where('name', 'Paied')->first()->id);
                     $this->record->save();
@@ -29,11 +29,13 @@ class EditOrder extends EditRecord
                 })
                 ->form([
                     Select::make('payment_gateway')
+                        ->label(__('Payment Gateway'))
                         ->options(config('custom.payment_gateways'))
                         ->default('stripe')
                         ->disablePlaceholderSelection()
                         ->required(),
                     TextInput::make('payment_id')
+                        ->label(__('Payment ID'))
                         ->default($this->record->payment_id)
                         ->required(),
                 ]);
@@ -42,7 +44,7 @@ class EditOrder extends EditRecord
         if($this->record->statusCanBecome('Shipped'))
         {
             $shipped= Action::make('shipped')
-                ->label('Set as Shipped')
+                ->label(__('Set as Shipped'))
                 ->action(function (array $data): void {
                     $this->record->status()->associate(\App\Models\OrderStatus::where('name','Shipped')->first()->id);
                     $this->record->tracking_number= $data['tracking_number'];
@@ -52,6 +54,7 @@ class EditOrder extends EditRecord
                 })
                 ->form([
                     TextInput::make('tracking_number')
+                        ->label(__('Tracking Number'))
                         ->default($this->record->tracking_number),
                 ]);
             array_push( $actions , $shipped);
@@ -59,7 +62,7 @@ class EditOrder extends EditRecord
         if($this->record->statusCanBecome('Refunded'))
         {
             $refunded= Action::make('refunded')
-                ->label('Set as Refunded')
+                ->label(__('Set as Refunded'))
                 ->color('danger')
                 ->action(function (array $data): void {
                     $this->record->status()->associate(\App\Models\OrderStatus::where('name','Refunded')->first()->id);

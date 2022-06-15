@@ -26,6 +26,16 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    public static function getModelLabel(): string
+    {
+        return __('User');
+    }
+
+    public static function getPluralLabel(): string
+    {
+        return __('Users');
+    }
+
     protected static ?int $navigationSort = 4;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
@@ -40,8 +50,8 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Toggle::make('is_admin'),
-                Fieldset::make('Default Address')
+                Toggle::make('is_admin')->label(__('Is Admin')),
+                Fieldset::make('Default Address')->label(__('Default Address'))
                     ->relationship('defaultAddress')
                     ->schema([
                         RichEditor::make('label')
@@ -55,30 +65,31 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('profile_photo_url')
+                ImageColumn::make('profile_photo_url')->label(__('Profile Photo'))
                     ->rounded()
                     ->size(40),
-                TextColumn::make('name')
+                TextColumn::make('name')->label(__('Name'))
                     ->searchable(),
-                TextColumn::make('email')
+                TextColumn::make('email')->label(__('Email'))
                     ->searchable(),
-                BadgeColumn::make('email_verified_at')
+                BadgeColumn::make('email_verified_at')->label(__('Email verified at'))
                     ->colors([
                         'success' => fn ($state): bool => $state !== null,
                     ])
                     ->dateTime(),
-                TextColumn::make('orders_count')->counts('orders'),
-                TextColumn::make('created_at')
+                TextColumn::make('orders_count')->label(__('Orders Count'))
+                    ->counts('orders'),
+                TextColumn::make('created_at')->label(__('Created at'))
                     ->dateTime()
                     ->sortable(),
             ])
             ->filters([
                 Filter::make('is_admin')
                     ->query(fn (Builder $query): Builder => $query->where('is_admin', true))
-                    ->label('Admin'),
+                    ->label(__('Admin')),
             ])
             ->prependActions([
-                Action::make('Email')
+                Action::make('Email')->label(__('Email'))
                     ->color('success')
                     ->icon('heroicon-o-mail')
                     ->action(function (Model $record, array $data): void {
@@ -87,10 +98,10 @@ class UserResource extends Resource
                     })
                     ->form([
                         Forms\Components\TextInput::make('subject')
-                            ->label('Subject')
+                            ->label(__('Subject'))
                             ->required(),
                         Forms\Components\RichEditor::make('message')
-                            ->label('Message')
+                            ->label(__('Message'))
                             ->required(),
                     ]),
             ]);

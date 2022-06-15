@@ -22,6 +22,17 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
+    public static function getModelLabel(): string
+    {
+        return __('Category');
+    }
+
+    public static function getPluralLabel(): string
+    {
+        return __('Categories');
+    }
+
+
     protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -31,13 +42,18 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->label(__('Name'))
                     ->required(),
-                TextInput::make('description'),
+                TextInput::make('description')
+                    ->label(__('Description')),
                 BelongsToSelect::make('parent_id')
+                    ->label(__('Parent'))
                     ->relationship('parent', 'name'),
                 SpatieMediaLibraryFileUpload::make('hero')
+                    ->label(__('Hero'))
                     ->collection('hero'),
                 DateTimePicker::make('updated_at')
+                    ->label(__('Updated at'))
                     ->visibleOn(Pages\ViewCategory::class),
             ]);
     }
@@ -46,17 +62,24 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()
+                TextColumn::make('name')
+                    ->label(__('Name'))
+                    ->sortable()
                     ->searchable(),
-                TextColumn::make('parent.name')->sortable()
+                TextColumn::make('parent.name')
+                    ->label(__('Parent'))
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('description')
+                    ->label(__('Description'))
                     ->wrap()
                     ->visibleFrom('lg')
                     ->searchable(),
                 SpatieMediaLibraryImageColumn::make('hero')
+                    ->label(__('Herto'))
                     ->visibleFrom('md'),
                 TextColumn::make('updated_at')
+                    ->label(__('Updated at'))
                     ->dateTime()
                     ->sortable(),
             ])

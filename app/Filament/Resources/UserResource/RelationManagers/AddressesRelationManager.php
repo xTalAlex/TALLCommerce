@@ -17,6 +17,10 @@ class AddressesRelationManager extends HasManyRelationManager
 
     protected static ?string $recordTitleAttribute = 'id';
 
+    public static function getTitle(): string
+    {
+        return __('Addresses');
+    }
     protected function canCreate(): bool { return false; }
 
     protected function canEdit(Model $record): bool { return false; }
@@ -37,9 +41,11 @@ class AddressesRelationManager extends HasManyRelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('label')->html(),
+                TextColumn::make('label')
+                    ->label(__('Etichetta'))
+                    ->html(),
                 BadgeColumn::make('billing')
-                    ->label('Shipping/Billing')
+                    ->label(__('Shipping/Billing'))
                     ->enum([
                         0 => 'Shipping',
                         1 => 'Billing',
