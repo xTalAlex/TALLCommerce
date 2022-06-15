@@ -12,20 +12,23 @@ class ItemRow extends Component
     use WithCart;
 
     public $item;
+    public $invalid;
 
-    public function mount($item)
+    public function mount($item, $invalid)
     {
         $this->item = $item;
+        $this->invalid = $invalid;
         $this->product = Product::find($item['id']);
     }
 
     public function updatedItemQty()
     {
-        $this->updateCartProductQty($this->item['rowId'], $this->item['qty']);
+        $newQty = $this->updateCartProductQty($this->item['rowId'], $this->item['qty']);
+        $this->item['qty'] = $newQty;
     }
 
     public function render()
     {
-        return view('cart.item-row');
+        return view('cart.item-row',['invalid' => $this->invalid]);
     }
 }

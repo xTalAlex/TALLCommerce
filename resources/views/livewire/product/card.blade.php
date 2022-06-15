@@ -38,12 +38,18 @@
             @endif
             <span class="text-xl font-bold text-gray-900 dark:text-white">{{ $product->price }}€</span>
             
+            @if($product->quantity)
             <form wire:submit.prevent="addToCart">
             @csrf
                 <x-jet-button class="px-1 py-2">
                     Add to cart
                 </x-jet-button>
             </form>
+            @else
+                <x-jet-secondary-button disabled class="px-1 py-2">
+                    Out of Stock
+                </x-jet-secondary-button>
+            @endif
 
         </div>
     </div>

@@ -19,7 +19,7 @@ class StripeController extends Controller
 
             $banner_message="";
             $banner_style="danger";
-            $route_name='order.index';
+            $route_name=Auth::user() ? 'order.index' : 'cart.index';
 
             if ($paymentIntent) {
                 switch ($paymentIntent['status']) {
@@ -35,7 +35,7 @@ class StripeController extends Controller
                 
                     case 'requires_payment_method':
                     $banner_message='Payment failed. Please try another payment method.';
-                    $route_name='order.edit';
+                    $route_name=Auth::user() ? 'order.edit' : 'cart.index';
                     $banner_style="danger";
                     break;
                 

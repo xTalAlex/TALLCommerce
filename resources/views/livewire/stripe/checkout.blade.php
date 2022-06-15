@@ -55,7 +55,6 @@
                     "
                     wire:ignore
                 >
-                    <div class="spinner" id="spinner"></div>
                     <div id="payment-element">
                         <!-- Elements will create form elements here -->
                     </div>

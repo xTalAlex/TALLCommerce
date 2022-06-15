@@ -11,6 +11,7 @@ class Index extends Component
 {
     use WithCart;
     
+    public $invalid_quantity_row_ids;
     public $content;
     public $count;
 
@@ -29,8 +30,22 @@ class Index extends Component
         $this->total = Cart::instance('default')->total();
     }
 
+    public function checkProductsQuantity()
+    {
+        $this->invalid_quantity_row_ids = array();
+        foreach($this->content as $item)
+        {
+            if($item->model->quantity < $item->qty)
+            {
+                array_push($this->invalid_quantity_row_ids, $item->rowId);
+            }
+        }
+    }
+
     public function render()
     {       
+        $this->checkProductsQuantity();
+
         return view('cart.index');
     }
 }

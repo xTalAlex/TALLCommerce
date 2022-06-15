@@ -1,4 +1,10 @@
-<tr class="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700"
+<tr class="border-b 
+    @if($invalid)
+    dark:bg-red-600 dark:border-red-500 odd:bg-red-300 even:bg-red-400 odd:dark:bg-red-600 even:dark:bg-red-500
+    @else
+    dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700
+    @endif
+    "
 >
     <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"

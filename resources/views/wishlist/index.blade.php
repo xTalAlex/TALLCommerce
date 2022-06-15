@@ -70,11 +70,15 @@
                                 {{ $item->model->price}}
                             </td>
                             <td class="px-6 py-4 text-right">
+                                @if($item->model->quantity)
                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     wire:click.prevent="moveToCart({{$item->model}})"
                                 >
                                     Add to Cart
                                 </a>
+                                @else
+                                <span>Out of Stock</span>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

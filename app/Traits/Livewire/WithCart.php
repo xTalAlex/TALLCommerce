@@ -19,9 +19,16 @@ trait WithCart
 
     public function addToCart()
     {
-        Cart::add($this->product,1);
-        $this->notifyCart();
-        $this->notifyBanner('Product added to cart');
+        if ($this->product->quantity > 1)
+        {
+            Cart::add($this->product, 1);
+            $this->notifyCart();
+            $this->notifyBanner('Product added to cart');
+        }
+        else
+        {
+            $this->notifyBanner('Sorry, product out of stock!', 'danger');
+        }
     }
 
     public function addToWishlist()
@@ -48,8 +55,20 @@ trait WithCart
 
     public function updateCartProductQty($rowId, $qty)
     {
-        Cart::instance($this->cartInstance)->update($rowId, $qty);
+        $newQty=Cart::instance($this->cartInstance)->get($rowId)->qty;
+        if (Cart::instance($this->cartInstance)->get($rowId)->model->quantity >= $qty)
+        {
+            Cart::instance($this->cartInstance)->update($rowId, $qty);
+            $newQty = $qty;
+        }
+        else
+        {
+            $this->notifyBanner('Only '.Cart::instance($this->cartInstance)->get($rowId)->model->quantity.' units left!', 'danger');
+        }
+
         $this->notifyCart();
+
+        return $newQty;
     }
 
 
@@ -61,17 +80,23 @@ trait WithCart
 
     public function moveToCart(Product $product)
     {
-        Cart::instance($this->cartInstance)->add($product,1);
-        $items = Cart::instance($this->wishlistInstance)->search(function ($item, $rowId) use ($product) {
-            return $item->id === $product->id;
-        });
-        if ($items) {
-            Cart::instance($this->wishlistInstance)->remove($items->first()->rowId);
-        }
+        if ($product->quantity) {
+            Cart::instance($this->cartInstance)->add($product, 1);
+            $items = Cart::instance($this->wishlistInstance)->search(function ($item, $rowId) use ($product) {
+                return $item->id === $product->id;
+            });
+            if ($items) {
+                Cart::instance($this->wishlistInstance)->remove($items->first()->rowId);
+            }
 
-        $this->notifyCart();
-        $this->notifyWishlist();
-        $this->notifyBanner('Product added to cart');
+            $this->notifyCart();
+            $this->notifyWishlist();
+            $this->notifyBanner('Product added to cart');
+        }
+        else
+        {
+            $this->notifyBanner('Sorry, product out of stock!', 'danger'); 
+        }
     }
 
     public function moveToWishlist(Product $product)
@@ -159,7 +184,7 @@ trait WithCart
 
     public function notifyWishlist()
     {
-        $this->emit('notifyWishlist');
+        $this->emit('updatedWishlist');
         $this->dispatchBrowserEvent(
             'wishlist-updated', [
                 'count' => Cart::instance($this->wishlistInstance)->count(),

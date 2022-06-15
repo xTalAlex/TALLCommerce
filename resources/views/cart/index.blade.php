@@ -8,6 +8,9 @@
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                @if(count($invalid_quantity_row_ids))
+                    <div class="px-4 py-2 my-4 text-red-500 bg-red-200"> {{ __('Some items are no more avaiable') }}</div>
+                @endif
                 <x-table title="Cart has {{ $count }} items">
                 
                     <x-slot:heading>
@@ -35,7 +38,7 @@
                     </x-slot:heading>
                     
                     @foreach( $content as $rowId => $item )
-                        <livewire:cart.item-row :item="collect($item)" wire:key="{{ $rowId }}"/>
+                        <livewire:cart.item-row :item="collect($item)" invalid="{{in_array($item->rowId,$invalid_quantity_row_ids)}}" wire:key="{{ $rowId.now() }}"/>
                     @endforeach
                     
                 </x-table>
@@ -66,13 +69,15 @@
                 <div class="flex items-center justify-between">
                     @livewire('cart.destroy-form')
 
-                    <form class="mt-5"
-                        action="{{ route('order.create') }}" method="GET">
-                    @csrf
-                        <x-jet-button>
-                            {{ __('Checkout') }}
-                        </x-jet-button>
-                    </form>
+                    @if(!count($invalid_quantity_row_ids))
+                        <form class="mt-5"
+                            action="{{ route('order.create') }}" method="GET">
+                        @csrf
+                            <x-jet-button>
+                                {{ __('Checkout') }}
+                            </x-jet-button>
+                        </form>
+                    @endif
                 </div>
                 @endif
 

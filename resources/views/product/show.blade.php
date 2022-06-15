@@ -56,22 +56,21 @@
                     @endif
                         <span class="text-xl font-bold text-gray-900 dark:text-white">{{ $product->selling_price }}€</span>
                 </div>
-                <div>
-                    @if($product->quantity > 0)
-                        AVAIABLE    
-                    @else
-                        OUT OF STOCK
-                    @endif
-                </div>
 
                 <div class="inline-flex space-x-4">
 
+                    @if($product->quantity)
                     <form  wire:submit.prevent="addToCart" >
                     @csrf
                         <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Add to cart
                         </button>
                     </form>
+                    @else
+                        <button disabled class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                            Out of Stock
+                        </button>
+                    @endif
 
                     <form wire:submit.prevent="addToWishlist">
                     @csrf

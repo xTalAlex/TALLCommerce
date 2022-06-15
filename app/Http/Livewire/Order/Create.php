@@ -82,6 +82,11 @@ class Create extends Component
 
     public function mount()
     {
+        if(!Cart::instance('default') || !Cart::instance('default')->count())
+        {
+            $this->redirect(route('cart.index'));
+        }
+
         $this->addresses_confirmed = false;
         $this->step = 'shipping';
         $this->email = Auth::user() ? Auth::user()->email : null;
