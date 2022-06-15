@@ -42,7 +42,6 @@
                                 theme: 'stripe',
                                 labels: 'floating',
                                 variables: {
-                                    fontSizeBase : '20px',
                                 }
                             },
                         };
@@ -58,6 +57,7 @@
                     <div id="payment-element">
                         <!-- Elements will create form elements here -->
                     </div>
+                    <div id="submit"></div>
                     <div id="error-message" x-text="errorMessage">
                         <!-- Display error message to your customers here -->
                     </div>
@@ -69,7 +69,7 @@
                     {{ __('Cancel') }}
                 </x-jet-secondary-button>
 
-                <x-jet-danger-button wire:click="submitPayment" :disabled="$submitDisabled" id="submit" class="ml-3" wire:loading.attr="disabled">
+                <x-jet-danger-button wire:click="submitPayment" :disabled="$submitDisabled" class="ml-3" wire:loading.attr="disabled">
                     {{ __('Submit') }}
                 </x-jet-danger-button>
             </x-slot>
