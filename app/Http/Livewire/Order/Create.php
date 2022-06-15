@@ -49,6 +49,7 @@ class Create extends Component
     public $coupon_error;
 
     public $order;
+    public $content;
 
     protected $listeners = ['createOrder'];
 
@@ -87,6 +88,7 @@ class Create extends Component
             $this->redirect(route('cart.index'));
         }
 
+        $this->content = Cart::instance('default')->content();
         $this->addresses_confirmed = false;
         $this->step = 'shipping';
         $this->email = Auth::user() ? Auth::user()->email : null;
@@ -281,6 +283,19 @@ class Create extends Component
             'order_status_id' => OrderStatus::where('name','pending')->first()->id,
             'user_id' => auth()->user() ? auth()->user()->id : null,
         ]);
+
+        $pivots = [];
+        foreach($this->content as $item)
+        {
+            $pivots[$item['id']] = [
+                'price' => $item['price'],
+                'quantity' => $item['qty'],
+            ];
+            $product=\App\Models\Product::find($item['id']);
+            $product->quantity = ($product->quantity >$item['qty']) ? $product->quantity-$item['qty'] : 0;
+            $product->save();
+        }
+        $this->order->products()->attach($pivots);
 
         Cart::instance('default')->destroy();
         session()->forget('coupon');

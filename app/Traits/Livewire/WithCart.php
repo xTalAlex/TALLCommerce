@@ -19,7 +19,7 @@ trait WithCart
 
     public function addToCart()
     {
-        if ($this->product->quantity > 1)
+        if ($this->product->quantity)
         {
             Cart::add($this->product, 1);
             $this->notifyCart();
