@@ -38,6 +38,13 @@
                     x-init="
                         options = {
                             clientSecret: '{{ $intent['client_secret'] }}',
+                            appearance : {
+                                theme: 'stripe',
+                                labels: 'floating',
+                                variables: {
+                                    fontSizeBase : '20px',
+                                }
+                            },
                         };
                         elements = stripe.elements(options);
                         paymentElement = elements.create('payment');
@@ -49,7 +56,7 @@
                     wire:ignore
                 >
                     <div id="payment-element">
-                        Loading
+                        <!-- Elements will create form elements here -->
                     </div>
                     <div id="error-message" x-text="errorMessage">
                         <!-- Display error message to your customers here -->
