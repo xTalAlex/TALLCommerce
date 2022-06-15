@@ -42,8 +42,9 @@
                                 theme: 'stripe',
                                 labels: 'floating',
                                 variables: {
-                                }
+                                },
                             },
+                            loader : 'always',
                         };
                         elements = stripe.elements(options);
                         paymentElement = elements.create('payment');
@@ -54,13 +55,10 @@
                     "
                     wire:ignore
                 >
+                    <div class="spinner" id="spinner"></div>
                     <div id="payment-element">
                         <!-- Elements will create form elements here -->
                     </div>
-                    <button id="submit">
-                        <div class="hidden spinner" id="spinner"></div>
-                        <span id="button-text"></span>
-                    </button>
                     <div id="error-message" x-text="errorMessage">
                         <!-- Display error message to your customers here -->
                     </div>
