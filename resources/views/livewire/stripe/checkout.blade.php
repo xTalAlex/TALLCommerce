@@ -7,14 +7,14 @@
 
     @if($intent)
     <!-- Delete User Confirmation Modal -->
-    <x-jet-dialog-modal wire:model="confirmingPayment">
+    <div wire:model="confirmingPayment">
         <x-slot name="title">
             {{ __('Stripe Checkout') }}
         </x-slot>
 
         <div
         >
-            <x-slot name="content">
+            <div name="content">
                 <form id="payment-form" data-secret="{{ $intent['client_secret'] }}"
                     x-data="{
                         stripe : Stripe('{{ config('services.stripe.key') }}'),
@@ -49,15 +49,15 @@
                     wire:ignore
                 >
                     <div id="payment-element">
-                        Loading
+                        <!-- Elements will create form elements here -->
                     </div>
                     <div id="error-message" x-text="errorMessage">
                         <!-- Display error message to your customers here -->
                     </div>
                 </form>
-            </x-slot>
+            </div>
 
-            <x-slot name="footer">
+            <div name="footer">
                 <x-jet-secondary-button wire:click="$toggle('confirmingPayment')" wire:loading.attr="disabled">
                     {{ __('Cancel') }}
                 </x-jet-secondary-button>
@@ -65,8 +65,8 @@
                 <x-jet-danger-button wire:click="submitPayment" :disabled="$submitDisabled" id="submit" class="ml-3" wire:loading.attr="disabled">
                     {{ __('Submit') }}
                 </x-jet-danger-button>
-            </x-slot>
+            </div>
         </div>
-    </x-jet-dialog-modal>
+    </div>
     @endif
 </div>
