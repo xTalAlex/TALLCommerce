@@ -101,7 +101,6 @@ class Create extends Component
 
         if((Auth::user() && Auth::user()->defaultAddress)){
             $this->confirmAddresses();
-            $this->addresses_confirmed = true;
         }
 
         $this->coupon_code = session()->get('coupon');
@@ -213,7 +212,6 @@ class Create extends Component
                 $this->total = Cart::instance('default')->total();
             }
         }
-
     }
 
     public function removeCoupon()
@@ -285,6 +283,11 @@ class Create extends Component
    
     public function render()
     {
+        if($this->addresses_confirmed)
+        {
+            $this->confirmAddresses();
+        }
+
         return view('order.create');
     }
 }

@@ -49,7 +49,7 @@
                     wire:ignore
                 >
                     <div id="payment-element">
-                        <!-- Elements will create form elements here -->
+                        Loading
                     </div>
                     <div id="error-message" x-text="errorMessage">
                         <!-- Display error message to your customers here -->
