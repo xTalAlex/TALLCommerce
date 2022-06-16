@@ -164,7 +164,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'full_name' => 'nome completo',
+        'company' => 'ragione sociale',
+        'address' => 'indirizzo',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -178,8 +182,11 @@ return [
     */
 
     'values' => [
-        'attribute-name' => [
-            'value' => 'custom-value'
+        'billing_full_name' => [
+            'empty' => 'vuoto'
+        ],
+        'full_name' => [
+            'empty' => 'vuoto'
         ],
     ],
 ];

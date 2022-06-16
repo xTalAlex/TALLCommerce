@@ -59,7 +59,7 @@ class Create extends Component
             'email' => 'required|email'. ( auth()->user() ? '' : '|unique:users,email'),
     
             'full_name' => '',        
-            'company' => 'required_if:full_name,null',        
+            'company' => 'required_without:full_name',        
             'address' => 'required',        
             'address2' => '',        
             'city' => 'required',
@@ -70,7 +70,7 @@ class Create extends Component
             'same_address' => '',
     
             'billing_full_name' => 'exclude_if:same_address,true',        
-            'billing_company' => 'exclude_if:same_address,true|required_if:billing_full_name,null',        
+            'billing_company' => 'exclude_if:same_address,true|required_without:billing_full_name',        
             'billing_address' => 'exclude_if:same_address,true|required',        
             'billing_address2' => 'exclude_if:same_address,true|',        
             'billing_city' => 'exclude_if:same_address,true|required',
