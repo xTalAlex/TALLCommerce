@@ -1,5 +1,4 @@
-{
-    
+{    
     "User" : "Utente",
     "Users" : "Utenti",
     "Is Admin" : "Amministratore",
@@ -10,7 +9,9 @@
     "Email verified at": "Email verificata il",
     "Orders Count": "N. Ordini",
     "Created at": "Creato il",
+    "Created on" : "Creato il",
     "Admin" : "Amministratore",
+    "Admin Panel" : "Admin Panel",
 
     "Address" : "Indirizzo",
     "Addresses" : "Indirizzi",
@@ -55,6 +56,7 @@
     "Set as Shipped" : "Segna come Spedito",
     "Set as Refunded" : "Segna come Rimborsato",
 
+    "Coupon Code" : "Codice Coupon",
     "Code" : "Codice",
     "Is Fixed Amount" : "Valore Fisso",
     "Amount" : "Valore",
@@ -66,6 +68,96 @@
     "Parent" : "Categoria Principale",
     "Hero" : "Hero",
 
-    "Children Categories" : "Sottocategorie"
+    "Children Categories" : "Sottocategorie",
 
+    "Add to cart" : "Aggiungi al carrello",
+    "Out of Stock": "Esaurito",
+    "Avaiable" : "Disponibile|Disponibili",
+    "Discounts" : "Sconti",
+
+    "Cancel" : "Annulla",
+    "Confirm" : "Conferma",
+    "Remove" : "Rimuovi",
+    "Empty" : "Svuota",
+    "Modify" : "Modifica",
+    "Change" : "Cambia",
+    "Save" : "Salva",
+    "Update" : "Aggiorna",
+    "Submit" : "Invia",
+    "Enable" : "Abilita",
+    "Disabled" : "Disabilita",
+
+    "Empty Cart" : "Svuota il carrello",
+    "Empty Wishlist" : "Svuota la wishlist",
+    "Cancel Order": "Anulla ordine",
+
+    "Are you sure you want to empty your cart?" : "Sei sicuro di voler svuotare il tuo carrello?",
+    "Are you sure you want to cancel this order?" : "Sei sicuro di voler annullare questo ordine?",
+    "Are you sure you want to empty your wishlist?" : "Sei sicuro di voler svuota la tua wishlist?",
+
+    "Some products are no more avaiable" : "Alcuni prodotti non sono più disponibili",
+    
+    "Previous" : "Prec.",
+    "Next" : "Succ.",
+
+    "Already registered?" : "Sei già registrato?",
+
+    "Pay Now" : "Paga Ora",
+    "Invoice" : "Fattura",
+
+    "Confirm Addresses" : "Conferma Indirizzi",
+    "Check" : "Controlla",
+    "Shipping Address" : "Indirizzo di spedizione",
+    "Billing Address" : "Indirizzo di fatturazione",
+    "Postal Code": "Codice Postale",
+    "Country/Region" : "Paese",
+    "Province" : "Provincia",
+    "City" : "Città",
+    "Address2" : "Indirizzo Secondario",
+    "Company" : "Ragione Sociale",
+    "Full Name" : "Nome Completo",
+
+    "Save as default" : "Salva come Predefinito",
+
+    "Cart" : "Carrello",
+    "Wishlist" : "Wishlist",
+    "Shop" : "Negozio",
+
+    "Profile" : "Profilo",
+    "Profile Information" : "Informazioni del Profilo",
+    "Update your account's profile information and email address." : "Aggiorna le informazioni legate al tuo account e il tuo indirizzo email.",
+    "Select A New Photo" : "Scegli una nuova immagine",
+    "Update your account's profile default address used for shipping and billing." : "Aggiorna il tuo indirizzo di default per le spedizioni e la fatturazione.",
+    "Photo" : "Foto",
+    "Update Password" : "Gestione Password",
+    "Current Password" : "Password Attuale",
+    "New Password" : "Nuova Password",
+    "Confirm Password" : "Conferma Password",
+    "Ensure your account is using a long, random password to stay secure." : "Assicurati di utilizzare una password efficace.",
+    "Two Factor Authentication" : "Autenticazione A Due Fattori",
+    "Add additional security to your account using two factor authentication." : "Rendi più sicuro il tuo account usando il sistema di two factor authentication (2FA).",
+    "You have not enabled two factor authentication." : "Non hai abilitato l'autenticazione a due fattori.",
+    "When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application." : 
+    "Quando l'autenticazione a due fattori è abilitata, ti verrà richiesto in fase di autenticazione un codice di sicurezza che puoi recuperare dall'applicazione Google Authenticator del tuo telefono.",
+    "For your security, please confirm your password to continue." : "Per potere continuare devi confermare la tua password.",
+    "To finish enabling two factor authentication, scan the following QR code using your phone's authenticator application or enter the setup key and provide the generated OTP code." :
+    "Per completare l'attivazione dell'autentiazione a due fattori, inserisci il codice ottenuto dall'applicazione di autenticazione del tuo telefono scansionando il codice QR o utilizzando la setup key.",
+    "The provided two factor authentication code was invalid." : "Il codice fornito per l'autenticazione a due fattori non è valido.",
+    "Browser Sessions" : "Sessioni di Navigazione",
+    "Manage and log out your active sessions on other browsers and devices." : "Gestisci e disconnetti le tu sessioni attive su tutti i browser e dispositivi.",
+    "If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password." : 
+    "Se necessario, puoi disconnetterti da tutte le sessioni attive sui tuoi dispositivi. In basso sono riportate alcune delle tue recenti sessioni (la lista potrebbe non essere esaustiva). Se credi che il tuo account sia stato compromesso, dovresti aggiornare la password.",
+    "Unknown" : "Sconosciuto",
+    "This device" : "Dispositivo Corrente",
+    "Last Active" : "Ultima Attività",
+    "Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices." : 
+    "Inserisci la tua password per confermare di volere disconnetterte le altre sessioni attive su tutti i tuoi dispositivi.",
+    "This password does not match our records." : "La password non corrisponde.",
+    "Log Out Other Browser Sessions" : "Disconnetti Dalle Altre Sessioni",
+    "Delete Account" : "Elimina Account",
+    "Permanently delete your account." : "Elimina il tuo account permanentemente.",
+    "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain." :
+    "Una volta eliminato, tutti i dati associati saranno eliminati definitivamente. Prima di continuare, assicurati che non ci siano dati o informazioni che vuoi conservare.",
+    "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account." :
+    "Sei sicuro di voler eliminare il tuo account? Una volta eliminato, tutti i dati associati saranno eliminati definitivamente. Inserisci la tua password per confermare di voler eliminare il tuo account."
 }

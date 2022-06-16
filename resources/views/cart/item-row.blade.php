@@ -10,7 +10,7 @@
         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
             wire:click.prevent="removeFromCart({{ $product->id }})"
         >
-            Remove
+            {{ __('Remove') }}
         </a>
     </td>
     <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
@@ -42,7 +42,7 @@
         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
             wire:click.prevent="moveToWishlist({{$product}})"
         >
-            Move to Wishlist
+            {{ __('shopping_cart.move.wishlist') }}
         </a>
     </td>
 </tr>

@@ -9,31 +9,31 @@
         <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 @if(count($invalid_quantity_row_ids))
-                    <div class="px-4 py-2 my-4 text-red-500 bg-red-200"> {{ __('Some items are no more avaiable') }}</div>
+                    <div class="px-4 py-2 my-4 text-red-500 bg-red-200"> {{ __('Some products are no more avaiable') }}</div>
                 @endif
-                <x-table title="Cart has {{ $count }} items">
+                <x-table title="{!! trans_choice('shopping_cart.cart.count', $count) !!}">
                 
                     <x-slot:heading>
                         <x-table.th>
-                            
+                            <span class="sr-only"{{__('Remove')}}</span>
                         </x-table.th>
                         <x-table.th>
-                            
+                            <span class="sr-only"{{__('Image')}}</span>
                         </x-table.th>
                         <x-table.th>
-                            Name
+                            {{ __('Name') }}
                         </x-table.th>
                         <x-table.th>
-                            Categories
+                            {{ __('Categories') }}
                         </x-table.th>
                         <x-table.th>
-                            Quantity
+                            {{ __('Quantity') }}
                         </x-table.th>
                         <x-table.th>
-                            Price
+                            {{ __('Price') }}
                         </x-table.th>
                         <x-table.th>
-                            <span class="sr-only">Move to Wishlist</span>
+                            <span class="sr-only"{{__('shopping_car.move.wishlist')}}</span>
                         </x-table.th>
                     </x-slot:heading>
                     
@@ -46,7 +46,7 @@
                 @if($count)
                 
                 <div class="flex flex-col" >
-                    <span>SUBTOTAL: 
+                    <span>{{ __('Subtotal') }}: 
                         <span wire:loading.remove>
                             {{ $subtotal }}
                         </span>
@@ -54,9 +54,9 @@
                             ...
                         </span>
                     </span>
-                    <span>TAX: {{ Cart::tax() }}
+                    <span>{{ __('Tax')}}: {{ Cart::tax() }}
                     </span>
-                    <span>TOTAL: 
+                    <span>{{ __('Total') }}: 
                         <span wire:loading.remove>
                             {{ $total }}
                         </span>

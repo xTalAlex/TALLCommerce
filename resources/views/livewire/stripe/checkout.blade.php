@@ -70,7 +70,7 @@
                 </x-jet-secondary-button>
 
                 <x-jet-danger-button wire:click="submitPayment" :disabled="$submitDisabled" class="ml-3" wire:loading.attr="disabled">
-                    {{ __('Submit') }}
+                    {{ __('Confirm') }}
                 </x-jet-danger-button>
             </x-slot>
         </div>

@@ -166,4 +166,21 @@ return [
 
     'attributes' => [],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Validation Values
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used to swap our value placeholder
+    | with something more reader friendly such as "credit card" instead
+    | of "cc". This simply helps us make our message more expressive.
+    |
+    */
+
+    'values' => [
+        'attribute-name' => [
+            'value' => 'custom-value'
+        ],
+    ],
+
 ];

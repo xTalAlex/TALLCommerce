@@ -24,7 +24,7 @@
                         </div>
                     @empty
                         <div class="text-center">
-                            No results
+                            {{ __('general.no_results') }}
                         </div>
                     @endforelse 
                 </div>

@@ -15,4 +15,7 @@ return [
 
     'previous' => '&laquo;',
     'next' => '&raquo;',
+    'label.interval' => 'Risultati tra <span class="font-medium">:first</span> e <span class="font-medium">:last</span> di <span class="font-medium">:total</span> results',
+    'label.count' => 'Risultati: <span class="font-medium">:count</span> di <span class="font-medium">:total</span> results',
+
 ];

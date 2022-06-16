@@ -47,7 +47,7 @@ class StripeController extends Controller
             }
             else
             {
-                $banner_message="Eroor while fetching payment info";
+                $banner_message="Error while fetching payment info";
                 $banner_style="danger";
                 $route_name='';
             }

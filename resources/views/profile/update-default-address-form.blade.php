@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Update your account\'s profile default address.') }}
+        {{ __('Update your account\'s profile default address used for shipping and billing.') }}
         <span>
         </span>
     </x-slot>

@@ -9,20 +9,20 @@
 
     <x-jet-confirmation-modal wire:model="confirmingOrderDeletion">
         <x-slot name="title">
-            Cancel Order
+            {{ __('Cancel Order') }}
         </x-slot>
 
         <x-slot name="content">
-            Are you sure you want to cancel this order?
+            {{ __('Are you sure you want to cancel this order?') }}
         </x-slot>
 
         <x-slot name="footer">
             <x-jet-secondary-button wire:click="$toggle('confirmingOrderDeletion')" wire:loading.attr="disabled">
-                Nevermind
+                {{ __('Cancel') }}
             </x-jet-secondary-button>
 
             <x-jet-danger-button class="ml-2" wire:click="deleteOrder" wire:loading.attr="disabled">
-                Confirm
+                {{ __('Confirm') }}
             </x-jet-danger-button>
         </x-slot>
     </x-jet-confirmation-modal>

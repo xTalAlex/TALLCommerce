@@ -14,7 +14,7 @@ return [
             'label' => 'Attiva modalità chiara',
         ],
         'logout' => [
-            'label' => 'Disconnetti',
+            'label' => 'Log Out',
         ],
     ],
 

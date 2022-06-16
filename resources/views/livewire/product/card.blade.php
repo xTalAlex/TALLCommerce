@@ -42,12 +42,12 @@
             <form wire:submit.prevent="addToCart">
             @csrf
                 <x-jet-button class="px-1 py-2">
-                    Add to cart
+                    {{ __('Add to cart') }}
                 </x-jet-button>
             </form>
             @else
                 <x-jet-secondary-button disabled class="px-1 py-2">
-                    Out of Stock
+                    {{ __('Out of Stock') }}
                 </x-jet-secondary-button>
             @endif
 

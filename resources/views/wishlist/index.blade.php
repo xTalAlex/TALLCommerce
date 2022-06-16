@@ -11,30 +11,30 @@
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
-                    <h3 class="my-3 ml-3">Wishlist has {{ $count }} items</h3>
+                    <h3 class="my-3 ml-3">{!! trans_choice('shopping_cart.wishlist.count', $count) !!}</h3>
 
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                
+                                <span class="sr-only">{{ _('Remove') }}</span>
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                
+                                <span class="sr-only">{{ _('Image') }}</span>
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Name
+                                {{ __('Name') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Categories
+                                {{ __('Categories') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Avaiable
+                                {{ trans_choice('Avaiable',1) }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Price
+                                {{ __('Price') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                <span class="sr-only">Add to Cart</span>
+                                <span class="sr-only">{{ __('shopping_cart.move.cart') }}</span>
                             </th>
                         </tr>
                     </thead>
@@ -46,7 +46,7 @@
                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     wire:click.prevent="removeFromWishlist({{ $item->model->id }})"
                                 >
-                                    Remove
+                                    {{ __('Remove') }}
                                 </a>
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
@@ -64,20 +64,20 @@
                                 @endforeach
                             </td>
                             <td class="px-6 py-4">
-                                {{ $item->model->quantity ? 'YES' : 'NO' }}
+                                {{ $item->model->quantity ? trans_choice('Avaiable',1) : __('Out of Stock') }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $item->model->price}}
+                                {{ $item->model->price}}€
                             </td>
                             <td class="px-6 py-4 text-right">
                                 @if($item->model->quantity)
                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     wire:click.prevent="moveToCart({{$item->model}})"
                                 >
-                                    Add to Cart
+                                    {{ __('shopping_cart.move.cart') }}
                                 </a>
                                 @else
-                                <span>Out of Stock</span>
+                                <span>{{ __('Out of Stock') }}</span>
                                 @endif
                             </td>
                         </tr>

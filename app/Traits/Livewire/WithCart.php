@@ -23,11 +23,11 @@ trait WithCart
         {
             Cart::add($this->product, 1);
             $this->notifyCart();
-            $this->notifyBanner('Product added to cart');
+            $this->notifyBanner(__('shopping_cart.added.cart'));
         }
         else
         {
-            $this->notifyBanner('Sorry, product out of stock!', 'danger');
+            $this->notifyBanner(__('shopping_cart.out_of_stock'), 'danger');
         }
     }
 
@@ -42,7 +42,7 @@ trait WithCart
         if (!$duplicates->count()) {
             Cart::instance($this->wishlistInstance)->add($this->product, 1);
             $this->notifyWishlist();
-            $this->notifyBanner('Product added to wishlist');
+            $this->notifyBanner(__('shopping_cart.added.wishlist'));
         }
     }
 
@@ -63,7 +63,8 @@ trait WithCart
         }
         else
         {
-            $this->notifyBanner('Only '.Cart::instance($this->cartInstance)->get($rowId)->model->quantity.' units left!', 'danger');
+            $this->notifyBanner(__('shopping_cart.left_quantity',
+                ['quantity' => Cart::instance($this->cartInstance)->get($rowId)->model->quantity]), 'danger');
         }
 
         $this->notifyCart();
@@ -91,11 +92,11 @@ trait WithCart
 
             $this->notifyCart();
             $this->notifyWishlist();
-            $this->notifyBanner('Product added to cart');
+            $this->notifyBanner(__('shopping_cart.added.cart'));
         }
         else
         {
-            $this->notifyBanner('Sorry, product out of stock!', 'danger'); 
+            $this->notifyBanner(__('shopping_cart.out_of_stock'), 'danger'); 
         }
     }
 
@@ -117,7 +118,7 @@ trait WithCart
 
         $this->notifyCart();
         $this->notifyWishlist();
-        $this->notifyBanner('Product added to wishlist');
+        $this->notifyBanner(__('shopping_cart.added.wishlist'));
     }
 
 
