@@ -16,10 +16,10 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                <span class="sr-only">{{ _('Remove') }}</span>
+                                <span class="sr-only">{{ __('Remove') }}</span>
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                <span class="sr-only">{{ _('Image') }}</span>
+                                <span class="sr-only">{{ __('Image') }}</span>
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 {{ __('Name') }}
