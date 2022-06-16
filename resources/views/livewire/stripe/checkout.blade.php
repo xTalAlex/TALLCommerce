@@ -1,7 +1,7 @@
 <div>
     <div class="mt-5">
         <x-jet-danger-button wire:click="confirmPayment" wire:loading.attr="disabled">
-            {{ __('Pay with Card') }}
+            {{ __('Complete Payment') }}
         </x-jet-danger-button>
     </div>
 

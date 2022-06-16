@@ -31,7 +31,7 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    public static function getModelLabel(): string
+    public static function getLabel(): string
     {
         return __('Product');
     }
@@ -40,7 +40,6 @@ class ProductResource extends Resource
     {
         return __('Products');
     }
-
 
     protected static ?int $navigationSort = 2;
 
@@ -172,7 +171,7 @@ class ProductResource extends Resource
                 SpatieMediaLibraryImageColumn::make('image')
                     ->label(__('Image')),
                 TextColumn::make('orders_count')
-                    ->label('Orders')
+                    ->label(__('Orders'))
                     ->counts('orders'),
                 TextColumn::make('price')
                     ->label(__('Price'))

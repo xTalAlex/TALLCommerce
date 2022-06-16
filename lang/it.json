@@ -72,6 +72,7 @@
 
     "Add to cart" : "Aggiungi al carrello",
     "Out of Stock": "Esaurito",
+    "Low Stock": "In Esaurimento",
     "Avaiable" : "Disponibile|Disponibili",
     "Discounts" : "Sconti",
 
@@ -127,6 +128,7 @@
     "Profile Information" : "Informazioni del Profilo",
     "Update your account's profile information and email address." : "Aggiorna le informazioni legate al tuo account e il tuo indirizzo email.",
     "Select A New Photo" : "Scegli una nuova immagine",
+    "Remove Photo" : "Rimuovi Foto",
     "Update your account's profile default address used for shipping and billing." : "Aggiorna il tuo indirizzo di default per le spedizioni e la fatturazione.",
     "Photo" : "Foto",
     "Update Password" : "Gestione Password",
@@ -134,7 +136,7 @@
     "New Password" : "Nuova Password",
     "Confirm Password" : "Conferma Password",
     "Ensure your account is using a long, random password to stay secure." : "Assicurati di utilizzare una password efficace.",
-    "Two Factor Authentication" : "Autenticazione A Due Fattori",
+    "Two Factor Authentication" : "Autenticazione a Due Fattori",
     "Add additional security to your account using two factor authentication." : "Rendi più sicuro il tuo account usando il sistema di two factor authentication (2FA).",
     "You have not enabled two factor authentication." : "Non hai abilitato l'autenticazione a due fattori.",
     "When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application." : 
@@ -161,7 +163,7 @@
     "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account." :
     "Sei sicuro di voler eliminare il tuo account? Una volta eliminato, tutti i dati associati saranno eliminati definitivamente. Inserisci la tua password per confermare di voler eliminare il tuo account.",
 
-    "Remember Me" : "Ricordami",
+    "Remember me" : "Ricordami",
     "Register" : "Registrati",
     "Forgot your password?" : "Password dimenticata?",
 
@@ -170,5 +172,9 @@
     "Offer" : "Offerta",
     "Offers" : "Offerte",
 
-    "Whoops! Something went wrong." : "Alcune informazioni non sono state inserite correttamente."
+    "Whoops! Something went wrong." : "Alcune informazioni non sono state inserite correttamente.",
+
+    "Complete Payment" : "Completa Pagamento",
+    "Invalid Coupon" : "Coupon Non Valid",
+    "or more" : "o più"
 }

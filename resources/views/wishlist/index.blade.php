@@ -60,7 +60,7 @@
                                 <img class="h-20" src="{{ $item->model->image }}"/>
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                {{ $item->model->name }}
+                                <a href="{{ route('product.show', $item->model) }}">{{ $item->model->name }}</a>
                             </td>
                             <td class="px-6 py-4">
                                 @foreach($item->model->categories as $category)
@@ -72,6 +72,10 @@
                             </td>
                             <td class="px-6 py-4">
                                 {{ $item->model->quantity ? trans_choice('Avaiable',1) : __('Out of Stock') }}
+
+                                @if($item->model->quantity && $item->model->quantity < config('custom.stock_threshold'))
+                                    {{ __('Low Stock') }}
+                                @endif
                             </td>
                             <td class="px-6 py-4">
                                 {{ $item->model->price}}€
@@ -84,7 +88,7 @@
                                     {{ __('shopping_cart.move.cart') }}
                                 </a>
                                 @else
-                                <span>{{ __('Out of Stock') }}</span>
+                                <span>-</span>
                                 @endif
                             </td>
                         </tr>

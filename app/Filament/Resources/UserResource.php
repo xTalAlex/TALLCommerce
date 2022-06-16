@@ -26,7 +26,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    public static function getModelLabel(): string
+    public static function getLabel(): string
     {
         return __('User');
     }

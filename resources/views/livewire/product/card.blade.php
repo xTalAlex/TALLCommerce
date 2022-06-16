@@ -47,7 +47,7 @@
             </form>
             @else
                 <x-jet-secondary-button disabled class="px-1 py-2">
-                    {{ __('Out of Stock') }}
+                    {{ __('Low Stock') }}
                 </x-jet-secondary-button>
             @endif
 

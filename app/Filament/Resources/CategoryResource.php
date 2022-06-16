@@ -22,7 +22,7 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    public static function getModelLabel(): string
+    public static function getLabel(): string
     {
         return __('Category');
     }

@@ -23,7 +23,7 @@ class OrderStatus extends Model
 
     public function getNameAttribute($value)
     {
-        return __('orders.statuses.'.(strtolower($value)));
+        return __('general.order_statuses.'.(strtolower($value)));
     }
 
 }

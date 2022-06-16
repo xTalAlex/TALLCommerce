@@ -6,4 +6,6 @@ return [
         'stripe' => 'Stripe',
     ],
 
+    'stock_threshold' => 3,
+
 ];

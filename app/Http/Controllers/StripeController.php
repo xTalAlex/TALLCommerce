@@ -24,30 +24,30 @@ class StripeController extends Controller
             if ($paymentIntent) {
                 switch ($paymentIntent['status']) {
                     case 'succeeded':
-                    $banner_message='Success! Payment received.';
+                    $banner_message=__('banner_notifications.payment.succeeded');
                     $banner_style="success";
                     break;
                 
                     case 'processing':
-                    $banner_message="Payment processing. We'll update you when payment is received.";
+                    $banner_message=__('banner_notifications.payment.processing');
                     $banner_style="success";
                     break;
                 
                     case 'requires_payment_method':
-                    $banner_message='Payment failed. Please try another payment method.';
+                    $banner_message=__('banner_notifications.payment.failed');
                     $route_name=Auth::user() ? 'order.edit' : 'cart.index';
                     $banner_style="danger";
                     break;
                 
                     default:
-                    $banner_message='Something went wrong.';
+                    $banner_message=__('banner_notifications.payment.error');
                     $banner_style="danger";
                     break;
                 }
             }
             else
             {
-                $banner_message="Error while fetching payment info";
+                $banner_message=__('banner_notifications.payment.not_found');
                 $banner_style="danger";
                 $route_name='';
             }

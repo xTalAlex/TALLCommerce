@@ -45,7 +45,7 @@
                 
                 @if($count)
                 
-                <div class="flex flex-col" >
+                <div class="flex flex-col ml-5" >
                     <span>{{ __('Subtotal') }}: 
                         <span wire:loading.remove>
                             {{ $subtotal }}
@@ -66,7 +66,7 @@
                     </span>
                 </div>
 
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between mx-5 mb-2">
                     @livewire('cart.destroy-form')
 
                     @if(!count($invalid_quantity_row_ids))

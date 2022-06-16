@@ -28,11 +28,12 @@
         @endforeach
     </td>
     <td class="px-6 py-4">
-        <select wire:model.lazy="item.qty">
+        {{-- <select wire:model.lazy="item.qty">
             @for( $i=1 ; $i<=10 ; $i++)
                 <option value="{{$i}}" >{{ $i }}</option>
             @endfor
-        </select>
+        </select> --}}
+        <x-number-input wire:model="item.qty" min="1" max="{{$product->quantity}}"/>
     </td>
     <td class="px-6 py-4">
         <span >{{ $product->pricePerQuantity($item['qty']) }}€</span>

@@ -33,7 +33,7 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    public static function getModelLabel(): string
+    public static function getLabel(): string
     {
         return __('Order');
     }
@@ -43,6 +43,10 @@ class OrderResource extends Resource
         return __('Orders');
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->latest();
+    }
 
     protected static ?int $navigationSort = 1;
 
@@ -171,7 +175,7 @@ class OrderResource extends Resource
                         TextInput::make('total')
                             ->label(__('Total'))
                             ->numeric()
-                            ->suffix('or more'),
+                            ->suffix(__('or more')),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query

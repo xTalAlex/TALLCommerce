@@ -14,11 +14,18 @@ class Checkout extends Component
     public $total;
     public $submitDisabled;
 
+    protected $listeners = ['orderCreated'];
+
     public function mount($total)
     {
         $this->total = $total;
         $this->confirmingPayment = false;
         $this->submitDisabled = false;
+    }
+
+    public function orderCreated()
+    {
+        $this->emit('paymentConfirmed');
     }
 
     public function confirmPayment()
@@ -41,7 +48,6 @@ class Checkout extends Component
     {
         $this->submitDisabled = true;
         $this->emit('createOrder',$this->intent['id']);
-        $this->emit('paymentConfirmed');
     }
 
     public function render()

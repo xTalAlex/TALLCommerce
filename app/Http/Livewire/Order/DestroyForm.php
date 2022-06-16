@@ -23,11 +23,11 @@ class DestroyForm extends Component
 
         if ($this->order->canBeDeleted()){
             $this->order->delete();
-            session()->flash('flash.banner', 'Order deleted');
+            session()->flash('flash.banner', __('banner_notifications.order_deleted') );
             session()->flash('flash.bannerStyle', 'success');
         }
         else{
-            session()->flash('flash.banner', 'Cannot delete this order');
+            session()->flash('flash.banner', __('banner_notifications.order.not_deleted') );
             session()->flash('flash.bannerStyle', 'danger');
         }
 

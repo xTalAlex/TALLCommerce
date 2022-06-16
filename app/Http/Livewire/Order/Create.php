@@ -176,12 +176,12 @@ class Create extends Component
 
         if($defaultAddress)
         {
-            $banner_message = 'Default address saved';
+            $banner_message = __('banner_notifications.address.saved') ;
             $banner_style = 'success';
         }
         else
         {
-            $banner_message = 'Cannot update default address';
+            $banner_message = __('banner_notifications.address.not_saved');
             $banner_style = 'danger';
         }
         
@@ -206,7 +206,7 @@ class Create extends Component
                 session()->put('coupon', $this->coupon->code);
             } else {
                 $this->coupon=null;
-                $this->coupon_error="Invalid coupon";
+                $this->coupon_error=__('Invalid Coupon');
             }
 
             if ($this->coupon) {
@@ -265,6 +265,8 @@ class Create extends Component
             'postal_code' => $this->same_address ? $this->postal_code : $this->billing_postal_code,
         ]);
 
+        //CHECK PRODUCT AVAIABILITY
+
         $this->order = Order::firstOrCreate([
             'payment_gateway' => 'stripe',
             'payment_id' => $payment_id,
@@ -299,6 +301,8 @@ class Create extends Component
 
         Cart::instance('default')->destroy();
         session()->forget('coupon');
+
+        $this->emit('orderCreated');
     }
    
     public function render()
