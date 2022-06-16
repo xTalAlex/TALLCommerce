@@ -6,7 +6,7 @@
                 <span class="absolute z-30 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 sm:text-3xl dark:text-gray-800">
                     {{ $product->name }}
                 </span>
-                <img src="{{ $product->image }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="{{$product->name}}">
+                <img src="{{ $product->image }}" class="absolute block object-cover w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="{{$product->name}}">
             </div>
         @empty
             <div class="absolute inset-0 z-20 transition-all duration-700 ease-in-out transform translate-x-0" data-carousel-item="">
