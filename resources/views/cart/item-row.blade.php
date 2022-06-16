@@ -29,22 +29,54 @@
     </td>
     <td class="px-6 py-4">
         {{-- <select wire:model.lazy="item.qty">
-            @for( $i=1 ; $i<=10 ; $i++)
+            @for( $i=1 ; $i<=($product->quantity>10 ? 10 : $product->quantity ) ; $i++)
                 <option value="{{$i}}" >{{ $i }}</option>
             @endfor
         </select> --}}
-        <x-jet-input type="number" wire:model.lazy="item.qty" min="1" max="{{$product->quantity}}"
+        <div class="flex items-center justify-center"
             x-data="{
+                inputValue : $refs.root.value,
+                min : $refs.inputNumber.min,
+                max : $refs.inputNumber.max,
                 validate(event){
                     if(!event.target.value || event.target.value < event.target.min)
                         event.target.value = event.target.min
-                }
-            }" 
-            @input="validate($event)"
-        />
+                },
+                increase(){
+                    {{-- if(this.max && this.$refs.inputNumber.value<this.max)
+                    { --}}
+                        this.$refs.inputNumber.value++;
+                        $dispatch('input',this.$refs.inputNumber.value);
+                    {{-- } --}}
+                },
+                decrease(){
+                    if(this.min && this.$refs.inputNumber.value>this.min)
+                    {
+                        this.$refs.inputNumber.value--;
+                        $dispatch('input',this.$refs.inputNumber.value);
+                    }
+                },
+            }"
+            wire:model="item.qty"
+            x-ref="root"
+        >
+            <span class="w-8 h-full p-2 mr-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
+                @click="decrease()"
+                x-show="true"
+            >-</span>
+            <x-jet-input type="number" x-bind:value="inputValue" min="1" max="{{$product->quantity}}"
+                @change="validate($event)"
+                x-ref="inputNumber"
+            />
+            <span class="w-8 h-full p-2 ml-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
+                @click="increase()"
+                x-show="true"
+            >+</span>
+        </div>
     </td>
     <td class="px-6 py-4">
-        <span >{{ $product->pricePerQuantity($item['qty']) }}€</span>
+
+        <span >{{ $product->pricePerQuantity($item['qty']!='' ? $item['qty'] : 1) }}€</span>
         
     </td>
     <td class="px-6 py-4 text-right">

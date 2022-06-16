@@ -23,8 +23,11 @@ class ItemRow extends Component
 
     public function updatedItemQty()
     {
-        $newQty = $this->updateCartProductQty($this->item['rowId'], $this->item['qty']);
-        $this->item['qty'] = $newQty;
+        if ($this->item['qty']) 
+        {
+            $newQty = $this->updateCartProductQty($this->item['rowId'], $this->item['qty']);
+            $this->item['qty'] = $newQty;
+        }
     }
 
     public function render()
