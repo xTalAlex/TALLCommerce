@@ -33,7 +33,15 @@
                 <option value="{{$i}}" >{{ $i }}</option>
             @endfor
         </select> --}}
-        <x-number-input wire:model="item.qty" min="1" max="{{$product->quantity}}"/>
+        <x-jet-input type="number" wire:model.lazy="item.qty" min="1" max="{{$product->quantity}}"
+            x-data="{
+                validate(event){
+                    if(!event.target.value || event.target.value < event.target.min)
+                        event.target.value = event.target.min
+                }
+            }" 
+            @input="validate($event)"
+        />
     </td>
     <td class="px-6 py-4">
         <span >{{ $product->pricePerQuantity($item['qty']) }}€</span>
