@@ -37,10 +37,9 @@
             x-data="{
                 inputValue : $refs.root.value,
                 min : $refs.inputNumber.min,
-                max : $refs.inputNumber.max,
                 validate(event){
-                    if(!event.target.value || event.target.value < event.target.min)
-                        event.target.value = event.target.min
+                    if(event.target.value < event.target.min)
+                        event.target.value = event.target.min;
                 },
                 increase(){
                     {{-- if(this.max && this.$refs.inputNumber.value<this.max)
@@ -64,8 +63,8 @@
                 @click="decrease()"
                 x-show="true"
             >-</span>
-            <x-jet-input type="number" x-bind:value="inputValue" min="1" max="{{$product->quantity}}"
-                @change="validate($event)"
+            <x-jet-input type="number" value="{{$item['qty']}}" min="1" max="999"
+                @blur="validate($event)"
                 x-ref="inputNumber"
             />
             <span class="w-8 h-full p-2 ml-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
