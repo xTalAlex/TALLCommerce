@@ -38,10 +38,12 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/orders', [App\Http\Controllers\OrderController::class , 'index'] )->name('order.index');
+    
+    Route::get('/order/create/login', fn() => redirect()->route('order.create') )->name('order.login');
 });
 
 Route::middleware([
-    //admin
+    'admin'
 ])
 ->prefix('admin')
 ->group(function () {

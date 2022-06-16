@@ -21,7 +21,7 @@
                 <x-jet-validation-errors class="mb-4" />
 
                 @if($errors->has('email'))
-                    <a href="{{ route('login') }}">{{ __('Already registered?') }}</a>
+                    <a href="{{ route('order.login') }}">{{ __('Already registered?') }}</a>
                 @endif
 
             {{-- <ul class="flex flex-wrap w-full space-x-8 text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">

@@ -7,8 +7,15 @@
 <div class="py-12">
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-            
+
+            @guest
+                <p class="p-2 my-2 bg-yellow-200">
+                    <a class="underline" href="{{ route('register') }}">{{ __('Register to save your wishlist') }}</a>
+                </p>
+            @endguest        
+                
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
                     <h3 class="my-3 ml-3">{!! trans_choice('shopping_cart.wishlist.count', $count) !!}</h3>

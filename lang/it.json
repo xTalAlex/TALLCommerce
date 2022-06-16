@@ -159,5 +159,14 @@
     "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain." :
     "Una volta eliminato, tutti i dati associati saranno eliminati definitivamente. Prima di continuare, assicurati che non ci siano dati o informazioni che vuoi conservare.",
     "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account." :
-    "Sei sicuro di voler eliminare il tuo account? Una volta eliminato, tutti i dati associati saranno eliminati definitivamente. Inserisci la tua password per confermare di voler eliminare il tuo account."
+    "Sei sicuro di voler eliminare il tuo account? Una volta eliminato, tutti i dati associati saranno eliminati definitivamente. Inserisci la tua password per confermare di voler eliminare il tuo account.",
+
+    "Remember Me" : "Ricordami",
+    "Register" : "Registrati",
+    "Forgot your password?" : "Password dimenticata?",
+
+    "Register to save your wishlist" : "Registrati per non perdere la tua wishlist",
+
+    "Offer" : "Offerta",
+    "Offers" : "Offerte"
 }
