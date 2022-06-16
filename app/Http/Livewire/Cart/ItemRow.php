@@ -23,7 +23,7 @@ class ItemRow extends Component
 
     public function updatedItemQty()
     {
-        if ($this->item['qty']) 
+        if ($this->item['qty'] && $this->item['qty'] > 0) 
         {
             $newQty = $this->updateCartProductQty($this->item['rowId'], $this->item['qty']);
             $this->item['qty'] = $newQty;

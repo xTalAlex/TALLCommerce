@@ -33,44 +33,54 @@
                 <option value="{{$i}}" >{{ $i }}</option>
             @endfor
         </select> --}}
-        <div class="flex items-center justify-center"
+        <div class="flex flex-col items-center justify-center"
             x-data="{
-                inputValue : $refs.root.value,
+                initialValue : {{ $item['qty'] }},
                 min : $refs.inputNumber.min,
+                modified : false,
                 validate(event){
-                    if(event.target.value < event.target.min)
-                        event.target.value = event.target.min;
+                    {{-- if(event.target.value < event.target.min)
+                        event.target.value = event.target.min; --}}
+                        if(!$refs.inputNumber.value ||  $refs.inputNumber.value<0)
+                             $refs.inputNumber.value = 1;
+                        $dispatch('change', $refs.inputNumber.value);
+                        this.modified = false;
                 },
-                increase(){
+                increase(event){
                     {{-- if(this.max && this.$refs.inputNumber.value<this.max)
                     { --}}
                         this.$refs.inputNumber.value++;
-                        $dispatch('input',this.$refs.inputNumber.value);
+                        this.modified = true;
                     {{-- } --}}
                 },
-                decrease(){
+                decrease(event){
                     if(this.min && this.$refs.inputNumber.value>this.min)
                     {
                         this.$refs.inputNumber.value--;
-                        $dispatch('input',this.$refs.inputNumber.value);
+                        this.modified = true;
                     }
                 },
             }"
-            wire:model="item.qty"
-            x-ref="root"
+            wire:model.lazy="item.qty"
         >
-            <span class="w-8 h-full p-2 mr-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
-                @click="decrease()"
-                x-show="true"
-            >-</span>
-            <x-jet-input type="number" value="{{$item['qty']}}" min="1" max="999"
-                @blur="validate($event)"
-                x-ref="inputNumber"
-            />
-            <span class="w-8 h-full p-2 ml-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
-                @click="increase()"
-                x-show="true"
-            >+</span>
+            <div class="flex items-center justify-center">
+                <span class="w-8 h-full p-2 mr-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
+                    @click="decrease($event)"
+                >-</span>
+                <x-jet-input type="number" value="{{$item['qty']}}" min="1" max="999"
+                    @change.stop="modified=true"
+                    @input.stop=""
+                    x-ref="inputNumber"
+                    wire:ignore
+                />
+                <span class="w-8 h-full p-2 ml-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
+                    @click="increase($event)"
+                >+</span>
+            </div>
+            <span class="px-1 py-1 mt-2 bg-green-200 rounded-lg cursor-pointer " style="display:none;" 
+                @click="validate()"
+                x-show="modified"
+            >{{ __('Check') }}</span>
         </div>
     </td>
     <td class="px-6 py-4">
