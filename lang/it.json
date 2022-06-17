@@ -176,5 +176,8 @@
 
     "Complete Payment" : "Completa Pagamento",
     "Invalid Coupon" : "Coupon Non Valid",
-    "or more" : "o più"
+    "or more" : "o più",
+    "or less" : "o meno",
+    "Details" : "Dettagli",
+    "Payment Details" : "Dettagli di pagamento"
 }

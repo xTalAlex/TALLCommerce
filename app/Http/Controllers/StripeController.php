@@ -35,7 +35,7 @@ class StripeController extends Controller
                 
                     case 'requires_payment_method':
                     $banner_message=__('banner_notifications.payment.failed');
-                    $route_name=Auth::user() ? 'order.edit' : 'cart.index';
+                    $route_name=Auth::user() ? 'order.show' : 'cart.index';
                     $banner_style="danger";
                     break;
                 

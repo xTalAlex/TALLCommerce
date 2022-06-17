@@ -22,7 +22,7 @@ class EditOrder extends EditRecord
             $paied= Action::make('paied')
                 ->label(__('Set as Paied'))
                 ->action(function (array $data): void {
-                    $this->record->status()->associate(\App\Models\OrderStatus::where('name', 'Paied')->first()->id);
+                    $this->record->status()->associate(\App\Models\OrderStatus::where('name', 'like','Paied')->first()->id);
                     $this->record->save();
                     $this->redirect(route('filament.resources.orders.view', $this->record));
                     $this->notify('success','Set as Paied');
@@ -46,7 +46,7 @@ class EditOrder extends EditRecord
             $shipped= Action::make('shipped')
                 ->label(__('Set as Shipped'))
                 ->action(function (array $data): void {
-                    $this->record->status()->associate(\App\Models\OrderStatus::where('name','Shipped')->first()->id);
+                    $this->record->status()->associate(\App\Models\OrderStatus::where('name','like','Shipped')->first()->id);
                     $this->record->tracking_number= $data['tracking_number'];
                     $this->record->save();
                     $this->redirect(route('filament.resources.orders.view', $this->record));
@@ -65,7 +65,7 @@ class EditOrder extends EditRecord
                 ->label(__('Set as Refunded'))
                 ->color('danger')
                 ->action(function (array $data): void {
-                    $this->record->status()->associate(\App\Models\OrderStatus::where('name','Refunded')->first()->id);
+                    $this->record->status()->associate(\App\Models\OrderStatus::where('name','like','Refunded')->first()->id);
                     $this->record->save();
                     $this->redirect(route('filament.resources.orders.view', $this->record));
                     $this->notify('success','Set as Refunded');

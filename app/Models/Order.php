@@ -137,6 +137,13 @@ class Order extends Model
         return $deletable_statuses->contains($this->status);
     }
 
+    public function canBeEdited()
+    {
+        $editabled_statuses = OrderStatus::whereIn('name',['pending','payment_failed','paied'])->get();
+
+        return $editabled_statuses->contains($this->status);
+    }
+
     public function canBeInvoiced()
     {
         strtolower($this->status->name) !='pending' && strtolower($this->status->name) !='payment_failed';

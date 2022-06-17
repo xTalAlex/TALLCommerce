@@ -28,7 +28,7 @@ Route::get('/cart', App\Http\Livewire\Cart\Index::class )->name('cart.index');
 Route::get('/wishlist', App\Http\Livewire\Wishlist\Index::class )->name('wishlist.index');
 
 Route::get('/order/create', App\Http\Livewire\Order\Create::class )->name('order.create');
-Route::get('/order/edit/{order}', [App\Http\Controllers\OrderController::class , 'edit' ] )->name('order.edit');
+Route::get('/order/{order}', [App\Http\Controllers\OrderController::class , 'show'] )->name('order.show');
 
 Route::get('/checkout/response/stripe', [App\Http\Controllers\StripeController::class , 'handleCheckoutResponse'] )->name('stripe.handle.checkout.response');
 

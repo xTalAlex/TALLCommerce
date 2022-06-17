@@ -48,9 +48,12 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order)
     {
-        //
+        if( !Auth::user()->is($order->user) && Auth::user()->email != $order->email )
+            abort(403);
+
+        return view('order.show', compact('order'));
     }
 
     /**
