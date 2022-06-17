@@ -9,21 +9,32 @@ use Cartalyst\Stripe\Laravel\Facades\Stripe;
 
 class Checkout extends Component
 {
+    public $update;
+
     public $intent;
     public $confirmingPayment;
     public $total;
     public $submitDisabled;
 
-    protected $listeners = ['orderCreated'];
+    protected $listeners = [
+        'orderCreated',
+        'orderUpdated',
+    ];
 
-    public function mount($total)
+    public function mount($total, $update = false)
     {
+        $this->update = $update;
         $this->total = $total;
         $this->confirmingPayment = false;
         $this->submitDisabled = false;
     }
 
     public function orderCreated()
+    {
+        $this->emit('paymentConfirmed');
+    }
+
+    public function orderUpdated()
     {
         $this->emit('paymentConfirmed');
     }
@@ -47,7 +58,10 @@ class Checkout extends Component
     public function submitPayment()
     {
         $this->submitDisabled = true;
-        $this->emit('createOrder',$this->intent['id']);
+        if($this->update)
+            $this->emit('updateOrder',$this->intent['id']);
+        else
+            $this->emit('createOrder',$this->intent['id']);
     }
 
     public function render()
