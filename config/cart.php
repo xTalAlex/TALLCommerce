@@ -26,9 +26,9 @@ return [
 
     'database' => [
 
-        'connection' => null,
+        'connection' => env('DB_CONNECTION'),
 
-        'table' => 'shoppingcart',
+        'table' => 'shoppinglists',
 
     ],
 

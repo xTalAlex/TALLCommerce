@@ -3,12 +3,12 @@
 namespace App\Http\Livewire\Cart;
 
 use Livewire\Component;
-use App\Traits\Livewire\WithCart;
+use App\Traits\Livewire\WithShoppingLists;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class DestroyForm extends Component
 {
-    use WithCart;
+    use WithShoppingLists;
     
     public $confirmingCartDeletion = false;
 

@@ -5,7 +5,7 @@ namespace App\Traits\Livewire;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Product;
 
-trait WithCart
+trait WithShoppingLists
 {
     public Product $product;
     public $cartInstance = "default";

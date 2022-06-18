@@ -3,11 +3,11 @@
 namespace App\Http\Livewire\Product;
 
 use Livewire\Component;
-use App\Traits\Livewire\WithCart;
+use App\Traits\Livewire\WithShoppingLists;
 
 class Featured extends Component
 {
-    use WithCart;
+    use WithShoppingLists;
 
     public function render()
     {

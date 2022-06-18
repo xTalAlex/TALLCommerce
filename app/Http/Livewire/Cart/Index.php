@@ -4,12 +4,12 @@ namespace App\Http\Livewire\Cart;
 
 use App\Models\Product;
 use Livewire\Component;
-use App\Traits\Livewire\WithCart;
+use App\Traits\Livewire\WithShoppingLists;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class Index extends Component
 {
-    use WithCart;
+    use WithShoppingLists;
     
     public $invalid_quantity_row_ids;
     public $content;
