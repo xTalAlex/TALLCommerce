@@ -2,8 +2,9 @@
 
 namespace App\Traits\Livewire;
 
-use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 trait WithShoppingLists
 {
@@ -22,6 +23,7 @@ trait WithShoppingLists
         if ($this->product->quantity)
         {
             Cart::add($this->product, 1);
+            $this->persist($this->cartInstance);
             $this->notifyCart();
             $this->notifyBanner(__('shopping_cart.added.cart'));
         }
@@ -41,6 +43,7 @@ trait WithShoppingLists
 
         if (!$duplicates->count()) {
             Cart::instance($this->wishlistInstance)->add($this->product, 1);
+            $this->persist($this->wishlistInstance);
             $this->notifyWishlist();
             $this->notifyBanner(__('shopping_cart.added.wishlist'));
         }
@@ -60,14 +63,14 @@ trait WithShoppingLists
         {
             Cart::instance($this->cartInstance)->update($rowId, $qty);
             $newQty = $qty;
+            $this->persist($this->cartInstance);
+            $this->notifyCart();
         }
         else
         {
             $this->notifyBanner(__('shopping_cart.left_quantity',
                 ['quantity' => Cart::instance($this->cartInstance)->get($rowId)->model->quantity]), 'danger');
         }
-
-        $this->notifyCart();
 
         return $newQty;
     }
@@ -90,6 +93,8 @@ trait WithShoppingLists
                 Cart::instance($this->wishlistInstance)->remove($items->first()->rowId);
             }
 
+            $this->persist($this->cartInstance);
+            $this->persist($this->wishlistInstance);
             $this->notifyCart();
             $this->notifyWishlist();
             $this->notifyBanner(__('shopping_cart.added.cart'));
@@ -116,6 +121,8 @@ trait WithShoppingLists
             Cart::instance($this->cartInstance)->remove($items->first()->rowId);
         }
 
+        $this->persist($this->cartInstance);
+        $this->persist($this->wishlistInstance);
         $this->notifyCart();
         $this->notifyWishlist();
         $this->notifyBanner(__('shopping_cart.added.wishlist'));
@@ -135,6 +142,7 @@ trait WithShoppingLists
         });
         foreach( $items as $item)
             Cart::instance($this->cartInstance)->remove($item->rowId);
+        $this->persist($this->cartInstance);
         $this->notifyCart();
     }
 
@@ -145,6 +153,7 @@ trait WithShoppingLists
         });
         foreach( $items as $item)
             Cart::instance($this->wishlistInstance)->remove($item->rowId);
+        $this->persist($this->wishlistInstance);
         $this->notifyWishlist();
     }
 
@@ -158,12 +167,14 @@ trait WithShoppingLists
     public function deleteCart()
     {
         Cart::instance($this->cartInstance)->destroy();
+        $this->persist($this->cartInstance);
         $this->notifyCart();   
     }
 
     public function deleteWishlist()
     {
         Cart::instance($this->wishlistInstance)->destroy();
+        $this->persist($this->wishlistInstance);
         $this->notifyWishlist();
     }
 
@@ -198,6 +209,18 @@ trait WithShoppingLists
             'message' => $message,
             'style' => $style,
         ]);
+    }
+
+    /** 
+     * 
+     *      PERSIST LIST TO DB
+     * 
+     * **/
+
+    public function persist($instance)
+    {
+        if(Auth::user())
+            Cart::instance($instance)->store(Auth::user()->email);
     }
 
 
