@@ -28,7 +28,7 @@ return [
 
         'connection' => env('DB_CONNECTION'),
 
-        'table' => 'shoppinglists',
+        'table' => 'shopping_lists',
 
     ],
 
