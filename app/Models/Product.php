@@ -111,6 +111,10 @@ class Product extends Model implements Buyable , HasMedia
         return $this->price;
     }
 
+    public function getBuyableWeight($options = null){
+        return 0;
+    }
+
     public function getImageAttribute()
     {
         return $this->getFirstMediaUrl('gallery') !="" ? $this->getFirstMediaUrl('gallery') : asset('img/no_image.jpg');

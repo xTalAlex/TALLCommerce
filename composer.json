@@ -7,11 +7,11 @@
     "require": {
         "php": "^8.0.2",
         "ext-gd": "*",
+        "bumbummen99/shoppingcart": "^4.2",
         "cartalyst/stripe-laravel": "^14.0",
         "filament/filament": "^2.12",
         "filament/spatie-laravel-media-library-plugin": "^2.12",
         "guzzlehttp/guzzle": "^7.2",
-        "hardevine/shoppingcart": "^3.1",
         "laravel/framework": "^9.11",
         "laravel/jetstream": "^2.8",
         "laravel/sanctum": "^2.14.1",
