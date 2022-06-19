@@ -73,7 +73,6 @@
                     @input.stop=""
                     x-ref="inputNumber"
                 />
-                {{ $item['qty'] }}
                 <span class="w-8 h-full p-2 ml-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
                     @click="increase($event)"
                 >+</span>
