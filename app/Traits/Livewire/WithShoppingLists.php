@@ -22,7 +22,7 @@ trait WithShoppingLists
     {
         if ($this->product->quantity)
         {
-            Cart::add($this->product, 1);
+            Cart::instance($this->cartInstance)->add($this->product, 1);
             $this->persist($this->cartInstance);
             $this->notifyCart();
             $this->notifyBanner(__('shopping_cart.added.cart'));
@@ -219,8 +219,12 @@ trait WithShoppingLists
 
     public function persist($instance)
     {
-        if(Auth::user())
+        if(Auth::check()) {
+            Cart::instance($instance)->erase(Auth::user()->email);
             Cart::instance($instance)->store(Auth::user()->email);
+            Cart::instance($instance)->restore(Auth::user()->email);
+        }
+
     }
 
 

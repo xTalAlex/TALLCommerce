@@ -13,15 +13,14 @@ class PrepareShoppingListsSession
 
     public function __invoke(Request $request, Closure $next)
     {
-        if (Cart::instance('default')->content()) {
+        if (Cart::instance('default')->content())
+        {
+            Cart::instance('default')->erase(Auth::user()->email);
             Cart::instance('default')->store(Auth::user()->email);
         }
-        else
-        {
-            //restore cart from db (automatically done by middleware)
-        }
 
-        if (Cart::instance('wishlist')->content()) {
+        if (Cart::instance('wishlist')->content())
+        {
             $products = Cart::instance('wishlist')->content()->map( fn($item) => $item->model );
             Cart::instance('wishlist')->restore(Auth::user()->email);
             foreach($products as $product){

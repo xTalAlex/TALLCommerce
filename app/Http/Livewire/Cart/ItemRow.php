@@ -31,6 +31,7 @@ class ItemRow extends Component
         else $this->item['qty'] = 1;
     }
 
+
     public function render()
     {
         return view('cart.item-row',['invalid' => $this->invalid]);

@@ -45,6 +45,7 @@
                              $refs.inputNumber.value = 1;
                         $dispatch('change', $refs.inputNumber.value);
                         this.modified = false;
+                        $refs.inputNumber.value = {{ $item['qty']}};
                 },
                 increase(event){
                     {{-- if(this.max && this.$refs.inputNumber.value<this.max)
@@ -71,8 +72,8 @@
                     @change.stop="modified=true"
                     @input.stop=""
                     x-ref="inputNumber"
-                    wire:ignore
                 />
+                {{ $item['qty'] }}
                 <span class="w-8 h-full p-2 ml-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
                     @click="increase($event)"
                 >+</span>
