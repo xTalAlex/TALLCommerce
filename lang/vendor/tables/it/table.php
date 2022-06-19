@@ -15,7 +15,7 @@ return [
 
         'label' => 'Navigazione paginazione',
 
-        'overview' => 'Mostrati :first a :last di :total risultati',
+        'overview' => 'Mostrati i risultati da :first a :last di :total',
 
         'fields' => [
 

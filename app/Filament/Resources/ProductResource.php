@@ -128,7 +128,7 @@ class ProductResource extends Resource
                                 ->label(__('Settings'))
                                 ->schema([
                                     Toggle::make('featured'),
-                                    Toggle::make('hidden'),
+                                    Toggle::make('hidden')->label(__('Hidden')),
                                 ]),
                             DateTimePicker::make('created_at')
                                 ->label(__('Created at'))
@@ -171,12 +171,14 @@ class ProductResource extends Resource
                 SpatieMediaLibraryImageColumn::make('image')
                     ->label(__('Image')),
                 TextColumn::make('orders_count')
+                    ->sortable()
                     ->label(__('Orders'))
                     ->counts('orders'),
                 TextColumn::make('price')
                     ->label(__('Price'))
                     ->money('eur'),
                 TextColumn::make('quantity')
+                    ->sortable()
                     ->label(__('Quantity')),
                 BooleanColumn::make('featured')
                     ->label(__('Featured'))
