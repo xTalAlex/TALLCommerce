@@ -16,6 +16,7 @@ class Index extends Component
     public $count;
 
     public $subtotal;
+    public $tax;
     public $total;
 
     protected $listeners = [
@@ -26,8 +27,21 @@ class Index extends Component
     {
         $this->content = Cart::instance('default')->content();
         $this->count = Cart::instance('default')->count();
-        $this->subtotal = Cart::instance('default')->subtotal();
-        $this->total = Cart::instance('default')->total();
+        $this->updatePrices();
+        $this->subtotal =  Cart::instance('default')->subtotal();
+        $this->tax =  Cart::instance('default')->tax();
+        $this->total =  Cart::instance('default')->total();
+    }
+
+    public function updatePrices()
+    {
+        $price_changed = false;
+        foreach(Cart::instance('default')->content() as $key=>$item)
+        {
+            if($item->model->price != $item->price) $price_changed = true;
+            Cart::instance('default')->update($key,$item->model);
+        }
+        return $price_changed;
     }
 
     public function checkProductsQuantity()

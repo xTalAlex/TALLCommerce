@@ -73,6 +73,7 @@ class Product extends Model implements Buyable , HasMedia
         $query->when($filters['category'] ?? false, fn ($query) =>
             $query->whereHas('categories', fn($query) =>
                 $query->where('category_id',$filters['category'])
+                    ->orWhere('parent_id',$filters['category'])
             )
         );
 

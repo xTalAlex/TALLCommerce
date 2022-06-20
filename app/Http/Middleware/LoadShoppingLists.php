@@ -20,11 +20,11 @@ class LoadShoppingLists
     {
         if(Auth::user())
         {
-            if( !Cart::instance('default')->count() )
+            if( !session()->has('cart.default') )
             {
                 Cart::instance('default')->restore(Auth::User()->email);
             }
-            if( !Cart::instance('wishlist')->count() )
+            if( !session()->has('cart.wishlist'))
             {
                 Cart::instance('wishlist')->restore(Auth::User()->email);
             }

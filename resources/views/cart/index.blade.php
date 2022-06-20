@@ -54,7 +54,7 @@
                             ...
                         </span>
                     </span>
-                    <span>{{ __('Tax')}}: {{ Cart::tax() }}
+                    <span>{{ __('Tax')}}: {{ $tax }}
                     </span>
                     <span>{{ __('Total') }}: 
                         <span wire:loading.remove>

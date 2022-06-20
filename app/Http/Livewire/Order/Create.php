@@ -88,6 +88,14 @@ class Create extends Component
             $this->redirect(route('cart.index'));
         }
 
+        if($this->updatePrices())
+        {
+            session()->flash('flash.banner', __('shopping_cart.prices_changed') );
+            session()->flash('flash.bannerStyle', 'danger');
+
+            $this->redirect(route('cart.index'));
+        }
+
         $this->content = Cart::instance('default')->content();
         $this->addresses_confirmed = false;
         $this->step = 'shipping';
@@ -125,6 +133,17 @@ class Create extends Component
             $this->total = Cart::instance('default')->total();
         }
         
+    }
+
+    public function updatePrices()
+    {
+        $price_changed = false;
+        foreach(Cart::instance('default')->content() as $key=>$item)
+        {
+            if($item->model->price != $item->price) $price_changed = true;
+            Cart::instance('default')->update($key,$item->model);
+        }
+        return $price_changed;
     }
 
     public function confirmAddresses()
@@ -266,43 +285,56 @@ class Create extends Component
         ]);
 
         //CHECK PRODUCT AVAIABILITY
-
-        $this->order = Order::firstOrCreate([
+        $avaiable = true;
+        foreach(Cart::instance('default')->content() as $key=>$item)
+        {
+            if($item->model->quantity < $item->qty) $avaiable = false;
+        }
+        if(!$avaiable)
+        {
+            $this->redirect(route('cart.index'));
+        }
+        
+        if ($avaiable) {
+            $this->order = Order::firstOrCreate([
             'payment_gateway' => 'stripe',
             'payment_id' => $payment_id,
-        ],
-        [
+            ],[
             'shipping_address' => $this->addressShipping->toJson(),
             'billing_address' => $this->addressBilling->toJson(),
             'email' => $this->email,
             //'phone' => $this->phone,
-            'message' => $this->message,  
+            'message' => $this->message,
             'subtotal' => $this->subtotal,
-            'tax'   => $this->tax,  
-            'total' => $this->total,   
+            'tax'   => $this->tax,
+            'total' => $this->total,
             'coupon_id' => $this->coupon ? $this->coupon->id : null,
-            'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,    
-            'order_status_id' => OrderStatus::where('name','pending')->first()->id,
+            'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,
+            'order_status_id' => OrderStatus::where('name', 'pending')->first()->id,
             'user_id' => auth()->user() ? auth()->user()->id : null,
-        ]);
+            ]);
 
-        $pivots = [];
-        foreach($this->content as $item)
-        {
-            $pivots[$item['id']] = [
+            $pivots = [];
+            foreach ($this->content as $item) {
+                $pivots[$item['id']] = [
                 'price' => $item['price'],
                 'quantity' => $item['qty'],
             ];
-            $product=\App\Models\Product::find($item['id']);
-            $product->quantity = ($product->quantity >$item['qty']) ? $product->quantity-$item['qty'] : 0;
-            $product->save();
+                $product=\App\Models\Product::find($item['id']);
+                $product->quantity = ($product->quantity >$item['qty']) ? $product->quantity-$item['qty'] : 0;
+                $product->save();
+            }
+            $this->order->products()->attach($pivots);
+
+            Cart::instance('default')->destroy();
+            session()->forget('coupon');
+
+            $this->emit('orderCreated');
         }
-        $this->order->products()->attach($pivots);
-
-        Cart::instance('default')->destroy();
-        session()->forget('coupon');
-
-        $this->emit('orderCreated');
+        else
+        {
+            redirect()->route('cart.index');
+        }
     }
    
     public function render()
