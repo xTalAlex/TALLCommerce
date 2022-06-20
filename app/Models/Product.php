@@ -19,6 +19,7 @@ class Product extends Model implements Buyable , HasMedia
     
     protected $fillable = [
         'name',
+        'sku',
         'short_description',
         'description',
         'original_price',

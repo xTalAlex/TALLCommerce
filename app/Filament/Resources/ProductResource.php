@@ -62,6 +62,11 @@ class ProductResource extends Resource
                                 ->columnSpan([
                                     'sm' => 2,
                                 ]),
+                            TextInput::make('SKU')
+                                ->label(__('SKU'))
+                                ->columnSpan([
+                                    'sm' => 2,
+                                ]),
                             TextInput::make('short_description')
                                 ->label(__('Short Description'))
                                 ->maxLength(255)
