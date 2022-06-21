@@ -31,6 +31,7 @@ class PrepareShoppingListsSession
                     Cart::instance('wishlist')->add($product, 1);
                 }
             }
+            Cart::instance('wishlist')->store(Auth::user()->email);
         }
 
         return $next($request);

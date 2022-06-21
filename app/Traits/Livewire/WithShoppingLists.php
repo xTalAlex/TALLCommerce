@@ -223,6 +223,7 @@ trait WithShoppingLists
             Cart::instance($instance)->erase(Auth::user()->email);
             Cart::instance($instance)->store(Auth::user()->email);
             Cart::instance($instance)->restore(Auth::user()->email);
+            Cart::instance($instance)->store(Auth::user()->email);
         }
 
     }
