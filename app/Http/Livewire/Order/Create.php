@@ -327,6 +327,8 @@ class Create extends Component
             $this->order->products()->attach($pivots);
 
             Cart::instance('default')->destroy();
+            if(Auth::check())
+                Cart::instance('default')->erase(auth()->user()->email);
             session()->forget('coupon');
 
             $this->emit('orderCreated');
