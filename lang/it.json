@@ -118,6 +118,7 @@
     "Address2" : "Indirizzo Secondario",
     "Company" : "Ragione Sociale",
     "Full Name" : "Nome Completo",
+    "Use as billing address" : "Usa come indirizzo di fatturazione",
 
     "Save as default" : "Salva come Predefinito",
 
