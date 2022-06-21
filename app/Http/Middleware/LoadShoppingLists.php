@@ -23,10 +23,12 @@ class LoadShoppingLists
             if( !session()->has('cart.default') )
             {
                 Cart::instance('default')->restore(Auth::User()->email);
+                Cart::instance('default')->store(Auth::User()->email);
             }
             if( !session()->has('cart.wishlist'))
             {
                 Cart::instance('wishlist')->restore(Auth::User()->email);
+                Cart::instance('wishlist')->store(Auth::User()->email);
             }
         }
         
