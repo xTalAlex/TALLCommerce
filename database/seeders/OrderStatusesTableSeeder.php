@@ -19,6 +19,7 @@ class OrderStatusesTableSeeder extends Seeder
             'pending',
             'payment_failed',
             'paied',
+            'preparing',
             'shipped',
             'completed',
             'cancelled',
