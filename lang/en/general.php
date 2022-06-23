@@ -21,6 +21,7 @@ return [
         'completed' => 'Completed',
         'disputed' => 'Disputed',
         'paied' => 'Paied',
+        'preparing' => 'Preparing',
         'payment_failed' => 'Payment Failed',
         'pending' => 'Pending',
         'refunded' => 'Refunded',

@@ -113,6 +113,9 @@ class Order extends Model
             case('Paied'):
                 $can = $this->status->name == 'Pending';
                 break;
+            case('Preparing'):
+                $can = $this->status->name == 'Paied';
+                break;
             case('Shipped'):
                 $can = $this->status->name == 'Paied' || $this->status->name == 'Preparing';
                 break;

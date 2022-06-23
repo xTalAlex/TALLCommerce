@@ -21,6 +21,7 @@ return [
         'completed' => 'Completato',
         'disputed' => 'Contestato',
         'paied' => 'Pagato',
+        'preparing' => 'In Lavorazione',
         'payment_failed' => 'Pagamento Fallito',
         'pending' => 'In Sospeso',
         'refunded' => 'Rimborsato',

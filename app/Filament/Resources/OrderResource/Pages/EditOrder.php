@@ -41,6 +41,18 @@ class EditOrder extends EditRecord
                 ]);
             array_push($actions, $paied);
         }
+        if($this->record->statusCanBecome('Preparing'))
+        {
+            $prearing= Action::make('preparing')
+                ->label(__('Prepare for Shipping'))
+                ->action(function (array $data): void {
+                    $this->record->status()->associate(\App\Models\OrderStatus::where('name','like','Preparing')->first()->id);
+                    $this->record->save();
+                    $this->redirect(route('filament.resources.orders.view', $this->record));
+                    $this->notify('success','Set as Preparing for Shipping');
+                });
+            array_push( $actions , $prearing);
+        }
         if($this->record->statusCanBecome('Shipped'))
         {
             $shipped= Action::make('shipped')
