@@ -22,6 +22,7 @@ class DestroyForm extends Component
             abort(403);
 
         if ($this->order->canBeDeleted()){
+            $this->order->restockProducts();
             $this->order->delete();
             session()->flash('flash.banner', __('banner_notifications.order_deleted') );
             session()->flash('flash.bannerStyle', 'success');

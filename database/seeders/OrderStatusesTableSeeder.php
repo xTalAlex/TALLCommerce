@@ -22,7 +22,7 @@ class OrderStatusesTableSeeder extends Seeder
             'preparing',
             'shipped',
             'completed',
-            'cancelled',
+            'canceled',
             'refunded',
             'disputed'
         ];

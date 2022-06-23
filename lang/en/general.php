@@ -17,7 +17,7 @@ return [
     ],
 
     'order_statuses' => [
-        'cancelled' => 'Cancelled',
+        'canceled' => 'Canceled',
         'completed' => 'Completed',
         'disputed' => 'Disputed',
         'paied' => 'Paied',
