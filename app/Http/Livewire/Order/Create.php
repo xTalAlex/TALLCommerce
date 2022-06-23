@@ -220,9 +220,27 @@ class Create extends Component
         if ($this->coupon_code) {
             $coupon = Coupon::where('code', $this->coupon_code)->first();
             if ($coupon) {
-                $this->coupon=$coupon;
-                $this->coupon_error=null;
-                session()->put('coupon', $this->coupon->code);
+                if ($coupon->max_redemptions && $coupon->max_redemptions <= $coupon->redemptions)
+                {    
+                    $this->coupon=null;
+                    $this->coupon_error=__('Coupon Already Redeemed');
+                }
+                elseif($coupon->expires_on && $coupon->expires_on<now())
+                {
+                    $this->coupon=null;
+                    $this->coupon_error=__("Expired Coupon");
+                }
+                elseif($coupon->min_total && $this->total<$coupon->min_total)
+                {
+                    $this->coupon=null;
+                    $this->coupon_error=__("Required minimum total of").' '.($coupon->min_total).'€';
+                }
+                else
+                {
+                    $this->coupon=$coupon;
+                    $this->coupon_error=null;
+                    session()->put('coupon', $this->coupon->code);   
+                }
             } else {
                 $this->coupon=null;
                 $this->coupon_error=__('Invalid Coupon');
@@ -325,6 +343,12 @@ class Create extends Component
                 $product->save();
             }
             $this->order->products()->attach($pivots);
+
+            if($this->coupon)
+            {
+                $this->coupon->redemptions++;
+                $this->coupon->save();
+            }
 
             Cart::instance('default')->destroy();
             if(Auth::check())

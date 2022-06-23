@@ -14,8 +14,10 @@ class Coupon extends Model
         'code',
         'is_fixed_amount',
         'amount',
+        'redemptions',
         'max_redemptions',
         'expires_on',
+        'min_total'
     ];
 
     /**
@@ -29,6 +31,7 @@ class Coupon extends Model
 
     protected $casts = [
         'amount' => 'decimal:2',
+        'min_total' => 'decimal:2',
     ];
 
     public function orders()

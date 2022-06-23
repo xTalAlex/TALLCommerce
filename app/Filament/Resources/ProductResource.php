@@ -21,7 +21,7 @@ use Filament\Tables\Columns\BooleanColumn;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Tables\Filters\MultiSelectFilter;
 use App\Filament\Resources\ProductResource\Pages;
-use Filament\Forms\Components\BelongsToManyMultiSelect;
+use Filament\Forms\Components\MultiSelect;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\ProductResource\RelationManagers;
@@ -78,7 +78,7 @@ class ProductResource extends Resource
                                 ->columnSpan([
                                     'sm' => 3,
                                 ]),
-                            BelongsToManyMultiSelect::make('categories')
+                            MultiSelect::make('categories')
                                 ->label(__('Categories'))
                                 ->relationship('categories', 'name')
                                 ->columnSpan([

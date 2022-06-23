@@ -57,10 +57,28 @@ class CouponResource extends Resource
                             ->thousandsSeparator(',')
                             ->maxValue(999999)
                         ),
-                TextInput::make('max_redemption')
+                TextInput::make('redemptions')
+                    ->label(__('Redemptions'))
+                    ->numeric()
+                    ->disabled()
+                    ->dehydrated(false)
+                    ->minValue(0),
+                TextInput::make('max_redemptions')
                     ->label(__('Max Redemptions'))
                     ->numeric()
                     ->minValue(1),
+                TextInput::make('min_total')
+                    ->label(__('Min Total'))
+                    ->required()
+                    ->prefix('€')
+                    ->mask(fn (TextInput\Mask $mask) => $mask
+                        ->numeric()
+                        ->decimalPlaces(2)
+                        ->decimalSeparator('.')
+                        ->mapToDecimalSeparator([',','.'])
+                        ->thousandsSeparator(',')
+                        ->maxValue(999999)
+                    ),
                 DateTimePicker::make('expires_on')
                     ->label(__('Expires on')),
                 DateTimePicker::make('created_at')
@@ -83,6 +101,16 @@ class CouponResource extends Resource
                 TextColumn::make('label')
                     ->label(__('Label'))
                     ->searchable(['amount']),
+                TextColumn::make('redemptions')
+                    ->label(__('Redemptions'))
+                    ->sortable(),
+                TextColumn::make('max_redemptions')
+                    ->label(__('Max Redemptions'))
+                    ->sortable(),
+                TextColumn::make('expires_on')
+                    ->label(__('Expires On'))
+                    ->dateTime()
+                    ->sortable(),    
                 TextColumn::make('updated_at')
                     ->label(__('Updated at'))
                     ->dateTime()

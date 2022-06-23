@@ -159,12 +159,19 @@ class Order extends Model
         strtolower($this->status->name) !='pending' && strtolower($this->status->name) !='payment_failed';
     }
 
-    public function restockProducts()
+    public function restock()
     {
         foreach($this->products as $product)
         {
             $product->quantity += $product->pivot->quantity;
             $product->save();
         }
+
+        if($this->coupon)
+        {
+            $this->coupon->redemptions --;
+            $this->coupon->save();
+        }
+        
     }
 }

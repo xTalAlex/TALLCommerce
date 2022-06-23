@@ -79,7 +79,7 @@ class EditOrder extends EditRecord
                 ->action(function (array $data): void {
                     $this->record->status()->associate(\App\Models\OrderStatus::where('name','like','Refunded')->first()->id);
                     $this->record->save();
-                    $this->record->restockProducts();
+                    $this->record->restock();
                     $this->redirect(route('filament.resources.orders.view', $this->record));
                     $this->notify('success','Set as Refunded');
                 });

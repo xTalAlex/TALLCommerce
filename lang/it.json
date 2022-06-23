@@ -61,8 +61,10 @@
     "Code" : "Codice",
     "Is Fixed Amount" : "Valore Fisso",
     "Amount" : "Valore",
-    "Max Redemptions" : "N. Riscatti",
+    "Redemptions" : "Riscatti",
+    "Max Redemptions" : "Riscatti possibili",
     "Expires on" : "Scadenza",
+    "Min Total" : "Spesa Minima",
 
     "Category" : "Categoria",
     "Categories" : "Categorie",
@@ -178,7 +180,10 @@
     "Whoops! Something went wrong." : "Alcune informazioni non sono state inserite correttamente.",
 
     "Complete Payment" : "Completa Pagamento",
-    "Invalid Coupon" : "Coupon Non Valid",
+    "Invalid Coupon" : "Coupon Non Valido",
+    "Coupon Already Redeemed" : "Coupon già riscattato",
+    "Expired Coupon" : "Coupon Scaduto",
+    "Required minimum total of" : "Serve una spesa minima di",
     "or more" : "o più",
     "or less" : "o meno",
     "Details" : "Dettagli",

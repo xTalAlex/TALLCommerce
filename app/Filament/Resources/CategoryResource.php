@@ -12,7 +12,7 @@ use Filament\Tables\Filters\Layout;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\BelongsToSelect;
+use Filament\Forms\Components\Select;
 use App\Filament\Resources\CategoryResource\Pages;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -46,9 +46,10 @@ class CategoryResource extends Resource
                     ->required(),
                 TextInput::make('description')
                     ->label(__('Description')),
-                BelongsToSelect::make('parent_id')
+                Select::make('parent_id')
                     ->label(__('Parent'))
-                    ->relationship('parent', 'name'),
+                    ->relationship('parent', 'name')
+                    ->placeholder('-'),
                 SpatieMediaLibraryFileUpload::make('hero')
                     ->label(__('Hero'))
                     ->collection('hero'),
@@ -76,7 +77,7 @@ class CategoryResource extends Resource
                     ->visibleFrom('lg')
                     ->searchable(),
                 SpatieMediaLibraryImageColumn::make('hero')
-                    ->label(__('Herto'))
+                    ->label(__('Hero'))
                     ->visibleFrom('md'),
                 TextColumn::make('updated_at')
                     ->label(__('Updated at'))

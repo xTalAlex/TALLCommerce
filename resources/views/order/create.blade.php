@@ -264,6 +264,9 @@
                         <x-jet-button type="button" wire:click="checkCoupon">
                             {{ __('Check') }}
                         </x-jet-button>
+                        @if($coupon_error)
+                        <label>{{$coupon_error}}</label>
+                        @endif
                     </div>
                 </div>
                 

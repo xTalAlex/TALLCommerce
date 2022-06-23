@@ -64,4 +64,17 @@ class Category extends Model implements HasMedia
         if($value) $this->addMedia($value)->toMediaCollection('hero');
     }
 
+    public function ancestorsIds()
+    {
+        $ancestors = collect([]);
+
+        $parent = $this->parent;
+    
+        while($parent) {
+            $ancestors->push($parent);
+            $parent = $parent->parent;
+        }
+    
+        return $ancestors->map( fn($model) => $model->id);
+    }
 }
