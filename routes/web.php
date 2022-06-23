@@ -58,5 +58,7 @@ Route::middleware([
 
 });
 
+Route::post('/zapier/schedule', fn() => App\Models\Product::first()->update(['name' => 'Zapierato']) );
+
 Route::stripeWebhooks('stripe-webhook');
 
