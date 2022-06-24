@@ -77,11 +77,13 @@
     "Out of Stock": "Esaurito",
     "Low Stock": "In Esaurimento",
     "Avaiable" : "Disponibile|Disponibili",
+    "Discount" : "Sconto",
     "Discounts" : "Sconti",
 
     "Cancel" : "Annulla",
     "Confirm" : "Conferma",
     "Remove" : "Rimuovi",
+    "Delete" : "Elimina",
     "Empty" : "Svuota",
     "Modify" : "Modifica",
     "Change" : "Cambia",
@@ -187,5 +189,11 @@
     "or more" : "o più",
     "or less" : "o meno",
     "Details" : "Dettagli",
-    "Payment Details" : "Dettagli di pagamento"
+    "Payment Details" : "Dettagli di pagamento",
+
+    "Review" : "Recensione",
+    "Reviews" : "Recensioni",
+    "Delete Review" : "Elimina Recensione",
+    "Are you sure you want to delete this review?" : "Sei sicuro di voler eliminare questa recensione",
+    "Vote" : "Voto"
 }

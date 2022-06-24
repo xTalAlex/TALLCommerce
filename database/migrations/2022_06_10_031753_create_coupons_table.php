@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->boolean('is_fixed_amount');
             $table->decimal('amount',6,2);
-            $table->unisgnedInteger('redemptions')->default(0);
+            $table->unsignedInteger('redemptions')->default(0);
             $table->unsignedInteger('max_redemptions')->nullable();
             $table->decimal('min_total',8,2)->nullable();
             $table->dateTime('expires_on')->nullable();

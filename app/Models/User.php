@@ -91,8 +91,14 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return $this->hasOne(Address::class)->where('default',1)->latest();
     }
 
-    public function orders(){
+    public function orders()
+    {
         return $this->hasMany(Order::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     /**
