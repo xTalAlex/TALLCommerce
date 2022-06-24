@@ -27,6 +27,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $observers = [
         \App\Models\Product::class => [\App\Observers\ProductObserver::class],
+        \App\Models\User::class => [\App\Observers\UserObserver::class],
     ];
 
     /**

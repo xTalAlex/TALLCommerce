@@ -3,10 +3,11 @@
 namespace App\Actions;
 
 use Closure;
+use Throwable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
-
 
 class PrepareShoppingListsSession
 {
@@ -15,7 +16,11 @@ class PrepareShoppingListsSession
     {
         if (Cart::instance('default')->count())
         {
-            Cart::instance('default')->erase(Auth::user()->email);
+            try {
+                Cart::instance('default')->erase(Auth::user()->email); 
+            }catch (Throwable $e) {
+                //Log::warning('Attempted to delete cart on login failed');
+            }
             Cart::instance('default')->store(Auth::user()->email);
         }
 
