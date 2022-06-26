@@ -314,6 +314,7 @@ class Create extends Component
         }
         
         if ($avaiable) {
+            $pending_id = OrderStatus::where('name', 'pending')->first()->id;
             $this->order = Order::firstOrCreate([
             'payment_gateway' => 'stripe',
             'payment_id' => $payment_id,
@@ -328,7 +329,7 @@ class Create extends Component
             'total' => $this->total,
             'coupon_id' => $this->coupon ? $this->coupon->id : null,
             'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,
-            'order_status_id' => OrderStatus::where('name', 'pending')->first()->id,
+            'order_status_id' => $pending_id,
             'user_id' => auth()->user() ? auth()->user()->id : null,
             ]);
 
@@ -349,6 +350,10 @@ class Create extends Component
                 $this->coupon->redemptions++;
                 $this->coupon->save();
             }
+
+            $this->order->history()->create([
+                'order_status_id' => $pending_id,
+            ]);
 
             Cart::instance('default')->destroy();
             if(Auth::check())

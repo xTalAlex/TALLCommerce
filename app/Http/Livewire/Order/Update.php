@@ -97,9 +97,13 @@ class Update extends Component
             if($this->same_address) $this->billing_address = $this->shipping_address;
             if (Order::find($this->order->id)->canBeEdited()) {
                 $this->order->update([
-                'shipping_address' => $this->shipping_address->toJson(),
-                'billing_address' => $this->billing_address->toJson(),
-            ]);
+                    'shipping_address' => $this->shipping_address->toJson(),
+                    'billing_address' => $this->billing_address->toJson(),
+                ]);
+                $this->order->history()->create([
+                    'order_status_id' => $this->order->status_id,
+                    'description' => 'Addresses Updated',
+                ]);
                 $this->addresses_confirmed=true;
             }
         }
@@ -108,10 +112,16 @@ class Update extends Component
     public function updateOrder($payment_id)
     {
         if(Order::find($this->order->id)->canBePaied()) {
+            $pending_id = OrderStatus::where('name', 'pending')->first()->id;
             $this->order->update([
                 'payment_gateway' => 'stripe',
                 'payment_id' =>  $payment_id,
-                'order_status_id' => OrderStatus::where('name', 'pending')->first()->id,
+                'order_status_id' => $pending_id,
+            ]);
+
+            $this->order->history()->create([
+                'order_status_id' => $pending_id,
+                'description' => 'New Payment Intent',
             ]);
 
             $this->emit('orderUpdated');

@@ -68,6 +68,11 @@ class Order extends Model
         return $this->belongsTo(Coupon::class);
     }
 
+    public function history()
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
+
     public function shippingAddress()
     {
         return Address::make(

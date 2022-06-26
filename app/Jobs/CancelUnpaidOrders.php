@@ -44,6 +44,9 @@ class CancelUnpaidOrders implements ShouldQueue
             {
                 $order->status()->associate($canceled_status->id);
                 $order->save();
+                $order->history()->create([
+                    'order_status' => $canceled_status->id,
+                ]);
                 $order->restock();
             }
         }

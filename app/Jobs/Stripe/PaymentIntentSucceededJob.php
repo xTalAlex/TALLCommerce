@@ -41,8 +41,12 @@ class PaymentIntentSucceededJob implements ShouldQueue
         if($order)
         {
             $status = OrderStatus::where('name','paied')->first();
-            if($status)
+            if ($status) {
                 $order->status()->associate($status)->save();
+                $order->history()->create([
+                    'order_status_id' => $status->id,
+                ]);
+            }
             else
                 Log::error('Couldn\'t update status to "paied" for order #'.$order->id .' (Payment Failed)');
         }

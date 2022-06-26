@@ -43,11 +43,6 @@ class OrderResource extends Resource
         return __('Orders');
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->latest();
-    }
-
     protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
@@ -166,6 +161,7 @@ class OrderResource extends Resource
                     ->dateTime()
                     ->sortable(), 
             ])
+            ->defaultSort('updated_at','desc')
             ->filters([
                 SelectFilter::make('status')
                     ->label(__('Status'))
@@ -210,6 +206,7 @@ class OrderResource extends Resource
     {
         return [
             RelationManagers\ProductsRelationManager::class,
+            RelationManagers\HistoryRelationManager::class,
         ];
     }
     
