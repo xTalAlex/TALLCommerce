@@ -7,6 +7,7 @@ use App\Models\Coupon;
 use App\Models\Address;
 use Livewire\Component;
 use App\Models\OrderStatus;
+use App\Models\ShippingPrice;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -50,6 +51,10 @@ class Create extends Component
 
     public $order;
     public $content;
+
+    public $shipping_prices;
+    public $shipping_price_id;
+    public $shipping_price;
 
     protected $listeners = ['createOrder'];
 
@@ -120,7 +125,13 @@ class Create extends Component
 
         $this->coupon_code = session()->get('coupon');
         $this->coupon = Coupon::where('code',$this->coupon_code)->first();
-        
+
+        $this->shipping_prices = \App\Models\ShippingPrice::all();
+        $this->shipping_price_id = session()->get('shipping_price') ?? $this->shipping_prices->first()->id;
+        if($this->shipping_price_id){
+            $this->shipping_price = $this->shipping_prices->where('id',$this->shipping_price_id)->first();
+        }
+
         if ($this->coupon) {
             $this->subtotal = Cart::instance('default')->subtotal(); 
             $this->discountedSubtotal = Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal());
@@ -133,6 +144,12 @@ class Create extends Component
             $this->total = Cart::instance('default')->total();
         }
         
+    }
+
+    public function updatedShippingPriceId($value)
+    {
+        $this->shipping_price = $this->shipping_prices->where('id',$value)->first();
+        session()->put('shipping_price', $this->shipping_price->id);
     }
 
     public function updatePrices()
@@ -326,11 +343,13 @@ class Create extends Component
             'message' => $this->message,
             'subtotal' => $this->subtotal,
             'tax'   => $this->tax,
-            'total' => $this->total,
+            'total' => $this->total + $this->shipping_price,
             'coupon_id' => $this->coupon ? $this->coupon->id : null,
             'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,
             'order_status_id' => $pending_id,
             'user_id' => auth()->user() ? auth()->user()->id : null,
+            'shipping_price_id' => $this->shipping_price_id,
+            'shipping_price' => $this->shipping_price->price,
             ]);
 
             $pivots = [];
@@ -359,6 +378,7 @@ class Create extends Component
             if(Auth::check())
                 Cart::instance('default')->erase(auth()->user()->email);
             session()->forget('coupon');
+            session()->forget('shipping_price');
 
             $this->emit('orderCreated');
         }

@@ -194,30 +194,36 @@
                 
             </form>
             @else
-                <div class="px-6 py-12">
-                        <div class="border-2 border-black">
-                            {{ __('Shipping Address') }}
-                        </div>
-                        <div class="border-2 border-black">
-                            {!! $addressShipping->label !!}
-                        </div>
-                   
-                        <div class="border-2 border-black">
-                            {{ __('Billing Address') }}
-                        </div>
-                        <div class="border-2 border-black">
-                            {!! $addressBilling->label !!}
-                        </div>
-
-                        <div class="mx-auto mt-5">
-                            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            wire:click.prevent="$set('addresses_confirmed',false)"
-                            >{{ __('Modify') }}</button>
-                        </div>
-                </div>
+            <div class="px-6 py-12">
+                    <div class="border-2 border-black">
+                        {{ __('Shipping Address') }}
+                    </div>
+                    <div class="border-2 border-black">
+                        {!! $addressShipping->label !!}
+                    </div>
                 
+                    <div class="border-2 border-black">
+                        {{ __('Billing Address') }}
+                    </div>
+                    <div class="border-2 border-black">
+                        {!! $addressBilling->label !!}
+                    </div>
+
+                    <div class="mx-auto mt-5">
+                        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        wire:click.prevent="$set('addresses_confirmed',false)"
+                        >{{ __('Modify') }}</button>
+                    </div>
+            </div>
             @endif
             
+            <div class="">
+                @foreach($shipping_prices as $option)
+                <input type="radio" id="{{$option->name}}" wire:model="shipping_price_id" value="{{ $option->id }}">
+                <label for="{{$option->name}}">{{ $option->name }} {{ $option->price }}  {{ $option->description }}</label><br>
+                @endforeach
+            </div>
+
             </div>
         </div>
 
@@ -240,9 +246,14 @@
                     </span>
                     <span>{{ __('Tax') }}: {{ $tax }}
                     </span>
+                    @if($shipping_price)
+                        <span wire:loading.remove>
+                            {{ __('Shipping') }} : {{ $shipping_price->price }}€
+                        </span>
+                        @endif
                     <span>{{ __('Total') }}: 
                         <span wire:loading.remove>
-                            {{ $total }}
+                            {{ $total + $shipping_price->price }}
                         </span>
                         <span wire:loading>
                             ...
@@ -277,7 +288,7 @@
 
             <div class="flex justify-center">
                 @if($addresses_confirmed)
-                    <livewire:stripe.checkout :total="$total"/>
+                    <livewire:stripe.checkout :total="$total+$shipping_price->price" :key="$shipping_price->id"/>
                 @else
                     <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         wire:click.prevent='confirmAddresses'

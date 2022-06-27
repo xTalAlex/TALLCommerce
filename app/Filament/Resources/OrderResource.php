@@ -93,6 +93,14 @@ class OrderResource extends Resource
                             ->label(__('Tax'))
                             ->prefix('%')
                             ->visibleOn(Pages\ViewOrder::class),
+                        Select::make('shipping')
+                            ->relationship('shippingPrice','name')
+                            ->label(__('Shipping'))
+                            ->visibleOn(Pages\ViewOrder::class),
+                        TextInput::make('shipping_price')
+                            ->label(__('Price'))
+                            ->prefix('€')
+                            ->visibleOn(Pages\ViewOrder::class),
                         TextInput::make('total')
                             ->label(__('Total'))
                             ->prefix('€')

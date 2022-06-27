@@ -28,6 +28,7 @@ return new class extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->unsignedBigInteger('coupon_id')->nullable();
             $table->decimal('coupon_discount',8,2)->nullable();
+            
             $table->foreign('coupon_id')->references('id')->on('coupons')
                 ->onDelete('restrict')->onUpdate('cascade');
         });

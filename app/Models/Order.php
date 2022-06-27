@@ -25,6 +25,8 @@ class Order extends Model
         'total',
         'coupon_id',
         'coupon_discount',
+        'shipping_price_id',
+        'shipping_price'
     ];
 
     /**
@@ -46,6 +48,7 @@ class Order extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'total'      => 'decimal:2',
+        'shipping_price' => 'decimal:2',
     ];
 
     public function status()
@@ -71,6 +74,11 @@ class Order extends Model
     public function history()
     {
         return $this->hasMany(OrderHistory::class);
+    }
+
+    public function shippingPrice()
+    {
+        return $this->belongsTo(ShippingPrice::class);
     }
 
     public function shippingAddress()

@@ -46,8 +46,11 @@
                     <div class="w-full md:w-1/3">
                         <h4 class="mb-2 font-bold">{{ __('Payment Details') }}</h4>
                         <p>{{ __('Gateway') }}: {{ $order->payment_gateway }}</p>
-                        <p>{{ __('Subtotal') }}: {{ $order->total }}€</p>
-                        <p>{{ __('Tax') }}: {{ $order->total }}€</p>
+                        <p>{{ __('Subtotal') }}: {{ $order->subtotal }}€</p>
+                        <p>{{ __('Tax') }}: {{ $order->tax }}€</p>
+                        @if($order->shipping_price)
+                        <p>{{ __('Shipping') }}: {{$order->shippingPrice->name ?? null}} {{ $order->shipping_price }}€</p>
+                        @endif
                         <p>{{ __('Total') }}: {{ $order->total }}€</p>
                         
                         @if($order->coupon)
