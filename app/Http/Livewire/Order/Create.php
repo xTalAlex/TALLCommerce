@@ -343,7 +343,7 @@ class Create extends Component
             'message' => $this->message,
             'subtotal' => $this->subtotal,
             'tax'   => $this->tax,
-            'total' => $this->total + $this->shipping_price,
+            'total' => $this->total + $this->shipping_price->price,
             'coupon_id' => $this->coupon ? $this->coupon->id : null,
             'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,
             'order_status_id' => $pending_id,
