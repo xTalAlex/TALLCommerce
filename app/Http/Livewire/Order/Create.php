@@ -295,6 +295,12 @@ class Create extends Component
 
     public function createOrder($payment_id)
     {
+        $validated = $this->validate([
+            'shipping_price.price' => 'required|min:50',
+            'shipping_price.id' => 'required|exists:shipping_prices,id',
+            'shipping_price.name' => 'required'
+        ]);
+
         $this->addressShipping = new Address([
             'email' => Auth::user() ? Auth::user()->email : $this->email,
             //'phone' => $this->phone,

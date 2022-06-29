@@ -129,6 +129,9 @@ class ProductResource extends Resource
                                 ->required()
                                 ->numeric()
                                 ->default(0),
+                            TextInput::make('low_stock_threshold')
+                                ->label(__('Low Stock Threshold'))
+                                ->numeric(),
                             Fieldset::make('Settings')
                                 ->label(__('Settings'))
                                 ->schema([

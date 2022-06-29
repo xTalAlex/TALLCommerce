@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('selling_price',8,2)->nullable();
             $table->decimal('tax',4,2)->nullable();
             $table->unsignedInteger('quantity')->default(0);
+            $table->unsignedInteger('low_stock_threshold')->nullable();
             $table->boolean('featured')->default(false);
             $table->boolean('hidden')->default(false);
             $table->softDeletes();
