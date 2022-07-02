@@ -29,6 +29,7 @@ class Product extends Model implements Buyable , HasMedia
         'low_stock_threshold',
         'featured',
         'hidden',
+        'variant_id'
     ];
 
     protected $casts = [
@@ -102,8 +103,24 @@ class Product extends Model implements Buyable , HasMedia
         return $this->hasMany(Review::class);
     }
 
-    public function orders(){
+    public function orders()
+    {
         return $this->belongsToMany(Order::class)->withPivot('price','quantity');
+    }
+
+    public function variants()
+    {
+        return $this->hasMany(Product::class,'variant_id');
+    }
+
+    public function defaultVariant()
+    {
+        return $this->belongsTo(Product::class,'variant_id');
+    }
+
+    public function attributeValues()
+    {
+        return $this->belongsToMany(AttributeValue::class);
     }
 
     public function getBuyableIdentifier($options = null){

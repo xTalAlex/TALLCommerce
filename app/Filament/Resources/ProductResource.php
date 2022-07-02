@@ -8,24 +8,26 @@ use App\Models\Product;
 use App\Models\Category;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use App\Scopes\NotHiddenScope;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Fieldset;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\MultiSelect;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Tables\Filters\MultiSelectFilter;
 use App\Filament\Resources\ProductResource\Pages;
-use Filament\Forms\Components\MultiSelect;
+use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\ProductResource\RelationManagers;
-use App\Scopes\NotHiddenScope;
 
 class ProductResource extends Resource
 {
@@ -62,6 +64,9 @@ class ProductResource extends Resource
                                 ->columnSpan([
                                     'sm' => 2,
                                 ]),
+                            Select::make('variant')
+                                ->label(__('Variant'))
+                                ->relationship('defaultVariant','name'),
                             TextInput::make('SKU')
                                 ->label(__('SKU'))
                                 ->columnSpan([
@@ -244,7 +249,11 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\ReviewsRelationManager::class,
+            RelationGroup::make('', [
+                RelationManagers\AttributeValuesRelationManager::class,
+                RelationManagers\VariantsRelationManager::class,
+                RelationManagers\ReviewsRelationManager::class,
+            ]),
         ];
     }
     

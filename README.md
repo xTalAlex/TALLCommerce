@@ -1,6 +1,6 @@
 # TALLCommerce
- 
-cron per pulizia payment_failed > non impostabile da DigitalOcean
+
+cron per pulizia payment_failed
 
 categorie e sottocategorie > vanno specificate anche le categorie genitrici
 

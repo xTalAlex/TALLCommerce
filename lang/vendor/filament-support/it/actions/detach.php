@@ -28,16 +28,16 @@ return [
 
     'multiple' => [
 
-        'label' => 'Scollega selezionato',
+        'label' => 'Scollega selezionati',
 
         'modal' => [
 
-            'heading' => 'Scollega selezionato :label',
+            'heading' => 'Scollega selezionati :label',
 
             'actions' => [
 
                 'detach' => [
-                    'label' => 'Scollega selezionato',
+                    'label' => 'Scollega selezionati',
                 ],
 
             ],
