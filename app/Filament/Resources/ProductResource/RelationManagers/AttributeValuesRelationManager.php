@@ -55,7 +55,26 @@ class AttributeValuesRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->preloadRecordSelect(),
+                    ->form(fn (Tables\Actions\AttachAction $action): array => [
+                        Select::make('attribute')
+                            ->label(('Name'))
+                            ->relationship('attribute','name')
+                            ->reactive()
+                            ->dehydrated(false)
+                            ->afterStateUpdated(fn(callable $set) => $set('recordId', null ) ),
+                        $action->getRecordSelect()
+                            ->label(('Value'))
+                            ->disableLabel(false)
+                            ->options(function(callable $get) {
+                                $attribute = \App\Models\Attribute::find($get('attribute'));
+                                if(!$attribute)
+                                    $attribute_values = \App\Models\AttributeValue::all();
+                                else
+                                    $attribute_values = $attribute->values;
+                                return $attribute_values->pluck('value','id');
+                            })
+                            ->searchable(false),
+                    ]),
             ])
             ->actions([
                 Tables\Actions\DetachAction::make(),
