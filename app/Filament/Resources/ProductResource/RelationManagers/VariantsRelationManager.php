@@ -2,19 +2,30 @@
 
 namespace App\Filament\Resources\ProductResource\RelationManagers;
 
+use Closure;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 
 class VariantsRelationManager extends RelationManager
 {
     protected static string $relationship = 'variants';
 
-    protected static ?string $recordTitleAttribute = 'id';
+    protected static ?string $inverseRelationship = 'defaultVariant';
+
+    protected static ?string $recordTitleAttribute = 'variant_name';
+    
+    protected function getTableRecordUrlUsing(): Closure
+    {
+        return fn (Model $record): string => route('filament.resources.products.view', ['record' => $record]);
+    }
 
     public static function form(Form $form): Form
     {
@@ -28,20 +39,23 @@ class VariantsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('sku')->label(__('SKU')),
+                TextColumn::make('name')->label(__('Name')),
+                SpatieMediaLibraryImageColumn::make('image')->label(__('Image')),
+                TextColumn::make('quantity')->label(__('Quantity')),
+                TextColumn::make('price')->label(__('Price'))->money('eur'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\AssociateAction::make()->preloadRecordSelect(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DissociateAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DissociateBulkAction::make(),
             ]);
     }    
 }

@@ -29,7 +29,8 @@ class Product extends Model implements Buyable , HasMedia
         'low_stock_threshold',
         'featured',
         'hidden',
-        'variant_id'
+        'variant_name',
+        'variant_id',
     ];
 
     protected $casts = [
@@ -137,6 +138,13 @@ class Product extends Model implements Buyable , HasMedia
 
     public function getBuyableWeight($options = null){
         return 0;
+    }
+
+    public function setVariantNameAttribute($value)
+    {
+        if(!$value)
+            $value = $this->attributes['name'];
+        $this->attributes['variant_name'] = $value;
     }
 
     public function getImageAttribute()

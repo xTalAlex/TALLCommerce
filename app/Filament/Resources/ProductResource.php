@@ -16,6 +16,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Fieldset;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
@@ -64,9 +65,15 @@ class ProductResource extends Resource
                                 ->columnSpan([
                                     'sm' => 2,
                                 ]),
+                            TextInput::make('variant_name')
+                                ->label(__('Variant Name'))
+                                ->unique(ignorable: fn (?Model $record): ?Model => $record)
+                                ->columnSpan([
+                                    'sm' => 2,
+                                ]),
                             Select::make('variant')
-                                ->label(__('Variant'))
-                                ->relationship('defaultVariant','name'),
+                                ->label(__('Variant Of'))
+                                ->relationship('defaultVariant','variant_name'),
                             TextInput::make('SKU')
                                 ->label(__('SKU'))
                                 ->columnSpan([
