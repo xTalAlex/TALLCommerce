@@ -124,9 +124,9 @@
                             @endif
 
                             @if(Auth::user()->canAccessFilament())
-                                <x-jet-responsive-nav-link href="{{ route('filament.pages.dashboard') }}" :active="request()->routeIs('filament.pages.dashboard')">
+                                <x-jet-dropdown-link href="{{ route('filament.pages.dashboard') }}" :active="request()->routeIs('filament.pages.dashboard')">
                                     {{ __('Admin Panel') }}
-                                </x-jet-responsive-nav-link>
+                                </x-jet-dropdown-link>
                             @endif
 
                             <div class="border-t border-gray-100"></div>
