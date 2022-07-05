@@ -22,6 +22,16 @@ class VariantsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'variant_name';
     
+    public static function getTitle(): string
+    {
+        return __('Variant');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('Variants');
+    }
+
     protected function getTableRecordUrlUsing(): Closure
     {
         return fn (Model $record): string => route('filament.resources.products.view', ['record' => $record]);
