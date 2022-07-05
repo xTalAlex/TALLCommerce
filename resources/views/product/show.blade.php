@@ -83,6 +83,30 @@
 
                         </form>
                     </div>
+
+                    <div class="flex flex-row space-x-4">
+                        <a href="{{ route('product.show', $product->defaultVariant? $product->defaultVariant : $product) }}" class="px-1 border rounded-lg">{{ $product->defaultVariant ? $product->defaultVariant->name : $product->name }}</a>
+                        @foreach($product->defaultVariant? $product->defaultVariant->variants : $product->variants as $variant)
+                        <a href="{{ route('product.show', $variant) }}" class="px-1 border rounded-lg">{{ $variant->name}}</a>
+                        @endforeach
+                    </div>
+
+                    <div>
+                    @foreach($product->attributeValues as $attributeValue)
+                        <div>{{ $attributeValue->attribute->name}} : {{ $attributeValue->value}}</div>
+                    @endforeach
+                    </div>
+
+                    <div>
+                        @foreach($product->attributes() as $attribute)
+                            <div>{{ $attribute->name }}: 
+                                @foreach($attribute->values as $value)
+                                    <span>{{$value->value}}</span>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+                    
                 </div>
             </div>
 

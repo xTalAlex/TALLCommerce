@@ -4,14 +4,110 @@
     updateUrl(event){
       this.url.searchParams.set('orderby',event.target.value);
       location.href = this.url.toString();
-    }
+    },
   }"
+
+  x-init="
+    searchClient = window.algoliasearch(
+      '{{ config('scout.algolia.id') }}',
+      '{{ config('scout.algolia.client') }}'
+    );
+    window.autocomplete({
+      detachedMediaQuery: '(min-width: 0px)',
+      translations : {
+        detachedCancelButtonText: '{{ __('Cancel') }}'
+      },
+      container: '#autocomplete',
+      placeholder: '{{__('Search...')}}',
+      debug:false,
+      getSources({ query }) {
+        return [
+          {
+            sourceId: 'products',
+            getItemUrl({ item }) {
+              return item.url;
+            },
+            getItems() {
+              return getAlgoliaResults({
+                searchClient,
+                queries: [
+                  {
+                    indexName: 'products',
+                    query,
+                    params: {
+                      hitsPerPage: 5,
+                      attributesToSnippet: ['name:10', 'short_description:35'],
+                      snippetEllipsisText: '…',
+                    },
+                  },
+                ],
+              });
+            },
+            templates: {
+              item({ item, components, html }) {
+                return html`<div class='w-full border-b'>
+                              <div class='flex flex-row w-full space-x-2'>
+                                
+                                <div class='items-start justify-center flex-shrink-0 h-full'>
+                                  <img
+                                    src='${item.image}'
+                                    alt='${item.name}'
+                                    class='object-cover w-10 h-10'
+                                  />
+                                </div>
+
+                                <div class='flex flex-col w-full'>
+                                  <div class='text-base font-bold'>
+                                    ${components.Highlight({
+                                      hit: item,
+                                      attribute: 'name',
+                                    })}
+                                  </div>
+                                  <div class='text-sm'>
+                                    ${item.short_description !== null ? 
+                                      components.Snippet({
+                                        hit: item,
+                                        attribute: 'short_description',
+                                      }) 
+                                      : ''
+                                    }
+                                  </div>
+                                  <div class='text-base text-right'>
+                                    ${item.price}€
+                                  </div>
+                                </div>
+                                
+                              </div>
+                            </div>`;
+              },
+              noResults() {
+                return '{{ __('No results') }}';
+              },
+            },
+            onSelect({item}){
+              window.location.href = item.url;
+            },
+            onSubmit(e){
+              console.log(e);
+              window.location.href = window.location.origin;
+            },
+          },
+        ];
+      },
+      navigator: {
+        navigate() {
+          window.location.href= window.location.origin + '/admin';
+        },
+      }
+    });
+  "
 >
   <div class="container flex flex-wrap items-end justify-between mx-auto">
     <div>
         <label for="orderby">{{ __('general.searchbar.sort_label') }}</label>
         <select name="orderby" id="orderby"
           x-on:change="updateUrl($event)"
+          class="rounded-lg h-9"
         >
           <option value="default" @if(!request()->orderby || request()->orderby=="default" ) selected @endif>{{ __('general.searchbar.options.recent') }}
           </option>
@@ -21,22 +117,7 @@
           </option> 
         </select>
     </div>
-    <div class="flex">
-        <button type="button" data-collapse-toggle="mobile-menu-3" aria-controls="mobile-menu-3" aria-expanded="false" class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-1" >
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-        </button>
-        <div class="relative hidden md:block">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-        </div>
-        <input type="text" id="search-navbar" class="block w-full p-2 pl-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-          placeholder="{{ __('general.searchbar.placeholder') }}"
-        >
-        </div>
-        <button data-collapse-toggle="mobile-menu-3" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-3" aria-expanded="false">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-        </button>
+    <div id="autocomplete" >
     </div>
   </div>
 </nav>

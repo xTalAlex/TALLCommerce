@@ -10,10 +10,11 @@ use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Product extends Model implements Buyable , HasMedia
 {
-    use HasFactory, InteractsWithMedia, SoftDeletes;
+    use HasFactory, InteractsWithMedia, SoftDeletes, Searchable;
 
     const PATH = "products";
     
@@ -72,6 +73,8 @@ class Product extends Model implements Buyable , HasMedia
 
     public function scopeFilter($query, array $filters)
     {
+        $query->whereNull('variant_id');
+        
         $query->with('categories');
 
         $query->when($filters['category'] ?? false, fn ($query) =>
@@ -122,6 +125,12 @@ class Product extends Model implements Buyable , HasMedia
     public function attributeValues()
     {
         return $this->belongsToMany(AttributeValue::class);
+    }
+
+    public function attributes()
+    {
+        $attributeIds = $this->attributeValues()->with('attribute')->get()->pluck('attribute_id');
+        return \App\Models\Attribute::findMany($attributeIds);
     }
 
     public function getBuyableIdentifier($options = null){
@@ -215,6 +224,24 @@ class Product extends Model implements Buyable , HasMedia
     public function pricePerQuantity(int $quantity, float $newPrice = null )
     {
         return number_format( ($newPrice ?? $this->price) * $quantity , 2) ;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array['price'] = $this->price;
+
+        $array['url'] = route('product.show', $this);
+ 
+        // Customize the data array...
+ 
+        return $array;
     }
 
 }

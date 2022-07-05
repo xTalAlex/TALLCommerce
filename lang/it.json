@@ -208,5 +208,8 @@
     "Attribute Values" : "Attributi",
     "Value" : "Valore",
     "Values" : "Valori", 
-    "Values Count" : "N. Valori"
+    "Values Count" : "N. Valori",
+
+    "Search..." : "Cerca...",
+    "No results" : "Nessun risultato"
 }
