@@ -95,8 +95,8 @@
         ];
       },
       navigator: {
-        navigate() {
-          window.location.href= window.location.origin + '/admin';
+        navigate({itemUrl}) {
+          window.location.href= itemUrl;
         },
       }
     });
