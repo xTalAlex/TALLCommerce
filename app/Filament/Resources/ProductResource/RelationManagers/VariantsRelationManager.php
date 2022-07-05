@@ -24,12 +24,12 @@ class VariantsRelationManager extends RelationManager
     
     public static function getTitle(): string
     {
-        return __('Variant');
+        return __('Variants');
     }
 
     public static function getModelLabel(): string
     {
-        return __('Variants');
+        return __('Variant');
     }
 
     protected function getTableRecordUrlUsing(): Closure
