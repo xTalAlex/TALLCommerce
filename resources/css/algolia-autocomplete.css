@@ -1,0 +1,83 @@
+:root {
+    /* --aa-primary-color-rgb
+    --aa-primary-color-alpha
+    --aa-muted-color-rgb
+    --aa-muted-color-alpha
+    --aa-text-color-rgb
+    --aa-text-color-alpha
+
+    --aa-icon-color-rgb
+    --aa-icon-color-alpha
+
+    --aa-panel-border-color-rgb
+    --aa-panel-border-color-alpha
+
+    --aa-input-border-color-rgb
+    --aa-input-border-color-alpha
+    --aa-input-background-color-rgb
+    --aa-input-background-color-alpha
+
+    --aa-background-color-rgb
+    --aa-background-color-alpha
+
+    --aa-selected-color-rgb
+    --aa-selected-color-alpha
+
+    --aa-description-highlight-background-color-rgb
+    --aa-description-highlight-background-color-alpha
+
+    --aa-overlay-color-rgb
+    --aa-overlay-color-alpha
+
+    --aa-scrollbar-track-background-color-rgb
+    --aa-scrollbar-track-background-color-alpha
+    --aa-scrollbar-thumb-background-color-rgb
+    --aa-scrollbar-thumb-background-color-alpha
+    */
+
+    --aa-search-input-height : 38px;
+    --aa-primary-color-rgb : 17,24,39;
+    --aa-input-border-color-rgb : 209, 213, 219;
+    --aa-input-background-color-rgb : 249, 250, 251;
+    --aa-input-background-color-alpha : 1;
+}
+
+.aa-DetachedSearchButton
+{
+    border-radius : 8px;
+    width : 11rem;
+}
+
+.aa-DetachedSearchButton:focus 
+{
+    border-color: #3e34d3;
+    border-color: rgba(var(--aa-primary-color-rgb), 1);
+    box-shadow: rgba(62, 52, 211, 0.2) 0 0 0 0px, inset rgba(62, 52, 211, 0.2) 0 0 0 0px;
+    box-shadow: rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 0px, inset rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 0px;
+    outline: currentColor none medium;
+}
+
+.aa-Input
+{
+    background: transparent;
+}
+
+.aa-Form[focus-within] {
+    border-color: #3e34d3;
+    border-color: rgba(var(--aa-primary-color-rgb), 1);
+    box-shadow: rgba(62, 52, 211, 0.2) 0 0 0 0px;
+    box-shadow: rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 0px, inset rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 0px;
+    outline: currentColor none medium;
+}
+.aa-Form:focus-within {
+    border-color: #3e34d3;
+    border-color: rgba(var(--aa-primary-color-rgb), 1);
+    box-shadow: rgba(62, 52, 211, 0.2) 0 0 0 0px;
+    box-shadow: rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 0px, inset rgba(var(--aa-primary-color-rgb), var(--aa-primary-color-alpha)) 0 0 0 0px;
+    outline: currentColor none medium;
+}
+
+.aa-DetachedCancelButton:hover, .aa-DetachedCancelButton:focus {
+    box-shadow: inset 0 0 0 0px rgba(0,0,0,1);
+    box-shadow: inset 0 0 0 0px rgba(var(--aa-panel-border-color-rgb), var(--aa-panel-border-color-alpha));
+}
