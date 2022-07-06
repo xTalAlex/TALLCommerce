@@ -30,7 +30,7 @@ class Product extends Model implements Buyable , HasMedia
         'low_stock_threshold',
         'featured',
         'hidden',
-        'variant_name',
+        'unique_name',
         'variant_id',
     ];
 
@@ -158,7 +158,7 @@ class Product extends Model implements Buyable , HasMedia
     public function setUniqueNameAttribute($value)
     {
         if(!$value)
-            $value = $this->attributes['name'];
+            $value = $this->attributes['id'].'-'.$this->attributes['name'];
         $this->attributes['unique_name'] = $value;
     }
 
