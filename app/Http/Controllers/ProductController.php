@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::filter($request->only(['category','orderby']))->paginate(12);
+        $products = Product::filter($request->only(['keyword','category','orderby']))->paginate(12);
 
         $category = null;
         if($request->category)

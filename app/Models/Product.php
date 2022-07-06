@@ -83,6 +83,12 @@ class Product extends Model implements Buyable , HasMedia
             )
         );
 
+        $query->when($filters['keyword'] ?? false, fn ($query) =>
+            $query->where('name', 'like', '%'.$filters['keyword'].'%')
+                ->orWhere('short_description', 'like', '%'.$filters['keyword'].'%')
+                ->orWhere('description', 'like', '%'.$filters['keyword'].'%')
+        );
+
         if($filters['orderby'] ?? false){
             switch($filters['orderby']){    
                 case('price_asc'):

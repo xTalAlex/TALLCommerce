@@ -1,6 +1,6 @@
 <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800"
   x-data="{
-    url: new URL('{{ route('product.index', [ 'category' => request()->category ]) }}'),
+    url: new URL('{{ route('product.index', [ 'keyword' => request()->keyword, 'category' => request()->category ]) }}'),
     updateUrl(event){
       this.url.searchParams.set('orderby',event.target.value);
       location.href = this.url.toString();
@@ -83,16 +83,19 @@
               noResults() {
                 return '{{ __('No results') }}';
               },
-            },
-            onSelect({item}){
-              window.location.href = item.url;
-            },
-            onSubmit(e){
-              console.log(e);
-              window.location.href = window.location.origin;
+              onSelect({item}){
+                window.location.href = item.url;
+              },
             },
           },
         ];
+      },
+      onSubmit({state}){
+        if(state.query!=''){
+          var searchParams = new URLSearchParams(window.location.search);
+          searchParams.set('keyword', state.query);
+          window.location.search = searchParams.toString();
+        }
       },
       navigator: {
         navigate({itemUrl}) {
@@ -117,7 +120,7 @@
           </option> 
         </select>
     </div>
-    <div id="autocomplete" >
+    <div id="autocomplete">
     </div>
   </div>
 </nav>
