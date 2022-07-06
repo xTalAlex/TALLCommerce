@@ -32,7 +32,7 @@
                 searchClient,
                 queries: [
                   {
-                    indexName: 'products',
+                    indexName: '{{ config('scout.prefix') }}products',
                     query,
                     params: {
                       hitsPerPage: 5,

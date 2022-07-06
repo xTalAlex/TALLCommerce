@@ -23,6 +23,8 @@
     },
     "dependencies": {
         "@algolia/autocomplete-js": "^1.7.1",
-        "@algolia/autocomplete-theme-classic": "^1.7.1"
+        "@algolia/autocomplete-theme-classic": "^1.7.1",
+        "algoliasearch": "^4.13.1",
+        "instantsearch.js": "^4.43.0"
     }
 }

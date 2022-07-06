@@ -5,3 +5,4 @@
 @import url(@algolia/autocomplete-theme-classic);
 
 @import url(algolia-autocomplete.css);
+@import url(algolia-instant-search.css);
