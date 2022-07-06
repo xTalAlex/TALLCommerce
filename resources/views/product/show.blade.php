@@ -83,6 +83,7 @@
                         </form>
                     </div>
 
+                    @if($product->defaultVariant || $product->variants()->count())
                     <div class="flex flex-row space-x-4">
                         <a href="{{ route('product.show', $product->defaultVariant? $product->defaultVariant : $product) }}" class="px-1 border rounded-lg">
                             <img class="w-8 h-8" src="{{ $product->defaultVariant ? $product->defaultVariant->image : $product->image }}"/>
@@ -92,6 +93,13 @@
                             <img class="w-8 h-8" src="{{ $variant->image}}"/>
                         </a>
                         @endforeach
+                    </div>
+                    @endif
+
+                    <div>
+                    @foreach($product->attributeValues as $attributeValue)
+                        <div>{{ $attributeValue->attribute->name}} : {{ $attributeValue->value}}</div>
+                    @endforeach
                     </div>
 
                     @if($attributeSet)
