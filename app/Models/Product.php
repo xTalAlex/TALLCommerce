@@ -249,7 +249,7 @@ class Product extends Model implements Buyable , HasMedia
 
     public function shouldBeSearchable()
     {
-        return !$this->variant_id;
+        return !$this->variant_id || ($this->variant_id == $this->id);
     }
 
     /**
