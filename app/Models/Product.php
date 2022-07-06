@@ -230,7 +230,7 @@ class Product extends Model implements Buyable , HasMedia
     public function attributeSet()
     {
         $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
-        if ($defaultVariant->has('variants')) {
+        if ($defaultVariant->variants()->exists()) {
             $attributeSet = $defaultVariant->attributeValues
                                         ->pluck('id')->unique()->sort()->toArray();
             $variantsAttributeSet = $defaultVariant->variants()->with('attributeValues')->get()
