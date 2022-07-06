@@ -102,7 +102,7 @@
                     @endforeach
                     </div>
 
-                    @if($attributeSet)
+                    @if($product->defaultVariant || $product->has('variants'))
                     <div>
                         @foreach($attributes as $attribute)
                             <div>
