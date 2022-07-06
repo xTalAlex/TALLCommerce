@@ -239,9 +239,18 @@ class Product extends Model implements Buyable , HasMedia
      */
     public function toSearchableArray()
     {
-        $array = $this->toArray();
-
+        $array = array();
+        $array['id'] = $this->id;
+        $array['name'] = $this->name;
+        $array['short_description'] = $this->short_description;
+        $array['description'] = $this->description;
+        $array['original_price'] = $this->original_price;
+        $array['selling_price'] = $this->selling_price;
         $array['price'] = $this->price;
+        $array['featured'] = $this->featured;
+        $array['quantity'] = $this->quantity;
+        $array['low_stock_threshold'] = $this->low_stock_threshold;
+        $array['image'] = $this->image;
 
         $array['url'] = route('product.show', $this);
  

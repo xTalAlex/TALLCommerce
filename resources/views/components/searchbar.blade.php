@@ -83,9 +83,9 @@
               noResults() {
                 return '{{ __('No results') }}';
               },
-              onSelect({item}){
-                window.location.href = item.url;
-              },
+            },
+            onSelect({item}){
+              window.location.href = item.url;
             },
           },
         ];

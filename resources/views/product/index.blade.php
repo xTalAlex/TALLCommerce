@@ -35,37 +35,5 @@
             </div>
         </div>
     </div>
-
-    <div class="flex justify-center py-8"
-        x-data
-        x-init="
-            searchClient = window.algoliasearch(
-                '{{ config('scout.algolia.id') }}',
-                '{{ config('scout.algolia.client') }}'
-            );
-            search = window.instantsearch({
-                indexName: '{{ config('scout.prefix') }}products',
-                searchClient,
-            });
-            search.addWidgets([
-                window.searchBox({
-                    container: '#searchbox'
-                }),
-
-                window.hits({
-                    container: '#hits'
-                })
-            ]);
-            search.start();
-        "
-    >
-        <div class="flex flex-col w-full mx-auto md:space-x-3 md:flex-row md:inline-flex max-w-7xl sm:px-6 lg:px-8">
-
-            <div id="searchbox"></div>
-            <div id="hits"></div>
-            
-        </div>
-    </div>
-
-    
+        
 </x-app-layout>

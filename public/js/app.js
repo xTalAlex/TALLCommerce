@@ -15396,7 +15396,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _algolia_autocomplete_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @algolia/autocomplete-js */ "./node_modules/@algolia/autocomplete-js/dist/esm/requesters/getAlgoliaResults.js");
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/search-box/search-box.js");
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/hits/hits.js");
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/pagination/pagination.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/sort-by/sort-by.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/breadcrumb/breadcrumb.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/stats/stats.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/refinement-list/refinement-list.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/clear-refinements/clear-refinements.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 
 
 
@@ -15408,9 +15415,16 @@ window.autocomplete = _algolia_autocomplete_js__WEBPACK_IMPORTED_MODULE_3__.auto
 window.getAlgoliaResults = _algolia_autocomplete_js__WEBPACK_IMPORTED_MODULE_4__.getAlgoliaResults;
 window.searchBox = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_5__["default"];
 window.hits = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_6__["default"];
+window.pagination = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__["default"];
+window.sortBy = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__["default"];
+window.breadcrumb = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__["default"];
+window.stats = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__["default"];
+window.refinementList = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__["default"];
+window.clearRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__["default"];
+window.currentRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__["default"];
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_7__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_7__["default"].start();
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_14__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_14__["default"].start();
 
 /***/ }),
 
@@ -34684,6 +34698,197 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/components/Breadcrumb/Breadcrumb.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/Breadcrumb/Breadcrumb.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _Template_Template_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Template/Template.js */ "./node_modules/instantsearch.js/es/components/Template/Template.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+var Breadcrumb = function Breadcrumb(_ref) {
+  var items = _ref.items,
+      cssClasses = _ref.cssClasses,
+      templateProps = _ref.templateProps,
+      createURL = _ref.createURL,
+      refine = _ref.refine;
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.root, _defineProperty({}, cssClasses.noRefinementRoot, items.length === 0))
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("ul", {
+    className: cssClasses.list
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("li", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.item, _defineProperty({}, cssClasses.selectedItem, items.length === 0))
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, templateProps, {
+    templateKey: "home",
+    rootTagName: "a",
+    rootProps: {
+      className: cssClasses.link,
+      href: createURL(undefined),
+      onClick: function onClick(event) {
+        event.preventDefault();
+        refine(undefined);
+      }
+    }
+  }))), items.map(function (item, idx) {
+    var isLast = idx === items.length - 1;
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("li", {
+      key: item.label + idx,
+      className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.item, _defineProperty({}, cssClasses.selectedItem, isLast))
+    }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, templateProps, {
+      templateKey: "separator",
+      rootTagName: "span",
+      rootProps: {
+        className: cssClasses.separator,
+        'aria-hidden': true
+      }
+    })), isLast ? item.label : (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("a", {
+      className: cssClasses.link,
+      href: createURL(item.value),
+      onClick: function onClick(event) {
+        event.preventDefault();
+        refine(item.value);
+      }
+    }, item.label));
+  })));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Breadcrumb);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/components/ClearRefinements/ClearRefinements.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/ClearRefinements/ClearRefinements.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _Template_Template_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Template/Template.js */ "./node_modules/instantsearch.js/es/components/Template/Template.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+var ClearRefinements = function ClearRefinements(_ref) {
+  var hasRefinements = _ref.hasRefinements,
+      refine = _ref.refine,
+      cssClasses = _ref.cssClasses,
+      templateProps = _ref.templateProps;
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+    className: cssClasses.root
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, templateProps, {
+    templateKey: "resetLabel",
+    rootTagName: "button",
+    rootProps: {
+      className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.button, _defineProperty({}, cssClasses.disabledButton, !hasRefinements)),
+      onClick: refine,
+      disabled: !hasRefinements
+    },
+    data: {
+      hasRefinements: hasRefinements
+    }
+  })));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ClearRefinements);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/components/CurrentRefinements/CurrentRefinements.js":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/CurrentRefinements/CurrentRefinements.js ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/isSpecialClick.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/capitalize.js");
+/** @jsx h */
+
+
+
+var createItemKey = function createItemKey(_ref) {
+  var attribute = _ref.attribute,
+      value = _ref.value,
+      type = _ref.type,
+      operator = _ref.operator;
+  return [attribute, type, value, operator].map(function (key) {
+    return key;
+  }).filter(Boolean).join(':');
+};
+
+var handleClick = function handleClick(callback) {
+  return function (event) {
+    if ((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(event)) {
+      return;
+    }
+
+    event.preventDefault();
+    callback();
+  };
+};
+
+var CurrentRefinements = function CurrentRefinements(_ref2) {
+  var items = _ref2.items,
+      cssClasses = _ref2.cssClasses;
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+    className: cssClasses.root
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("ul", {
+    className: cssClasses.list
+  }, items.map(function (item, index) {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("li", {
+      key: "".concat(item.indexName, "-").concat(item.attribute, "-").concat(index),
+      className: cssClasses.item
+    }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+      className: cssClasses.label
+    }, (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(item.label), ":"), item.refinements.map(function (refinement) {
+      return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        key: createItemKey(refinement),
+        className: cssClasses.category
+      }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        className: cssClasses.categoryLabel
+      }, refinement.attribute === 'query' ? (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("q", null, refinement.label) : refinement.label), (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("button", {
+        className: cssClasses.delete,
+        onClick: handleClick(item.refine.bind(null, refinement))
+      }, "\u2715"));
+    }));
+  })));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CurrentRefinements);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/components/Hits/Hits.js":
 /*!******************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/components/Hits/Hits.js ***!
@@ -34749,6 +34954,470 @@ var Hits = function Hits(_ref) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Hits);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/components/Pagination/Pagination.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/Pagination/Pagination.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/isSpecialClick.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+function Pagination(props) {
+  function createClickHandler(pageNumber) {
+    return function (event) {
+      if ((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(event)) {
+        // do not alter the default browser behavior
+        // if one special key is down
+        return;
+      }
+
+      event.preventDefault();
+      props.setCurrentPage(pageNumber);
+    };
+  }
+
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1__(props.cssClasses.root, _defineProperty({}, props.cssClasses.noRefinementRoot, props.nbPages <= 1))
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("ul", {
+    className: props.cssClasses.list
+  }, props.showFirst && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(PaginationLink, {
+    ariaLabel: "First",
+    className: props.cssClasses.firstPageItem,
+    isDisabled: props.isFirstPage,
+    label: props.templates.first,
+    pageNumber: 0,
+    createURL: props.createURL,
+    cssClasses: props.cssClasses,
+    createClickHandler: createClickHandler
+  }), props.showPrevious && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(PaginationLink, {
+    ariaLabel: "Previous",
+    className: props.cssClasses.previousPageItem,
+    isDisabled: props.isFirstPage,
+    label: props.templates.previous,
+    pageNumber: props.currentPage - 1,
+    createURL: props.createURL,
+    cssClasses: props.cssClasses,
+    createClickHandler: createClickHandler
+  }), props.pages.map(function (pageNumber) {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(PaginationLink, {
+      key: pageNumber,
+      ariaLabel: "".concat(pageNumber + 1),
+      className: props.cssClasses.pageItem,
+      isSelected: pageNumber === props.currentPage,
+      label: "".concat(pageNumber + 1),
+      pageNumber: pageNumber,
+      createURL: props.createURL,
+      cssClasses: props.cssClasses,
+      createClickHandler: createClickHandler
+    });
+  }), props.showNext && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(PaginationLink, {
+    ariaLabel: "Next",
+    className: props.cssClasses.nextPageItem,
+    isDisabled: props.isLastPage,
+    label: props.templates.next,
+    pageNumber: props.currentPage + 1,
+    createURL: props.createURL,
+    cssClasses: props.cssClasses,
+    createClickHandler: createClickHandler
+  }), props.showLast && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(PaginationLink, {
+    ariaLabel: "Last",
+    className: props.cssClasses.lastPageItem,
+    isDisabled: props.isLastPage,
+    label: props.templates.last,
+    pageNumber: props.nbPages - 1,
+    createURL: props.createURL,
+    cssClasses: props.cssClasses,
+    createClickHandler: createClickHandler
+  })));
+}
+
+function PaginationLink(_ref) {
+  var label = _ref.label,
+      ariaLabel = _ref.ariaLabel,
+      pageNumber = _ref.pageNumber,
+      className = _ref.className,
+      _ref$isDisabled = _ref.isDisabled,
+      isDisabled = _ref$isDisabled === void 0 ? false : _ref$isDisabled,
+      _ref$isSelected = _ref.isSelected,
+      isSelected = _ref$isSelected === void 0 ? false : _ref$isSelected,
+      cssClasses = _ref.cssClasses,
+      createURL = _ref.createURL,
+      createClickHandler = _ref.createClickHandler;
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("li", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.item, className, isDisabled && cssClasses.disabledItem, isSelected && cssClasses.selectedItem)
+  }, isDisabled ? (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+    className: cssClasses.link,
+    dangerouslySetInnerHTML: {
+      __html: label
+    }
+  }) : (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("a", {
+    className: cssClasses.link,
+    "aria-label": ariaLabel,
+    href: createURL(pageNumber),
+    onClick: createClickHandler(pageNumber),
+    dangerouslySetInnerHTML: {
+      __html: label
+    }
+  }));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Pagination);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/components/RefinementList/RefinementList.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/RefinementList/RefinementList.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/isEqual.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/isSpecialClick.js");
+/* harmony import */ var _Template_Template_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Template/Template.js */ "./node_modules/instantsearch.js/es/components/Template/Template.js");
+/* harmony import */ var _RefinementListItem_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./RefinementListItem.js */ "./node_modules/instantsearch.js/es/components/RefinementList/RefinementListItem.js");
+/* harmony import */ var _SearchBox_SearchBox_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../SearchBox/SearchBox.js */ "./node_modules/instantsearch.js/es/components/SearchBox/SearchBox.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+var defaultProps = {
+  cssClasses: {},
+  depth: 0
+};
+
+function isHierarchicalMenuItem(facetValue) {
+  return facetValue.data !== undefined;
+}
+
+var RefinementList = /*#__PURE__*/function (_Component) {
+  _inherits(RefinementList, _Component);
+
+  var _super = _createSuper(RefinementList);
+
+  function RefinementList(props) {
+    var _this;
+
+    _classCallCheck(this, RefinementList);
+
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "searchBox", (0,preact__WEBPACK_IMPORTED_MODULE_0__.createRef)());
+
+    _this.handleItemClick = _this.handleItemClick.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(RefinementList, [{
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(nextProps) {
+      var areFacetValuesDifferent = !(0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(this.props.facetValues, nextProps.facetValues);
+      return areFacetValuesDifferent;
+    }
+  }, {
+    key: "refine",
+    value: function refine(facetValueToRefine) {
+      this.props.toggleRefinement(facetValueToRefine);
+    }
+  }, {
+    key: "_generateFacetItem",
+    value: function _generateFacetItem(facetValue) {
+      var _cx;
+
+      var subItems;
+
+      if (isHierarchicalMenuItem(facetValue) && Array.isArray(facetValue.data) && facetValue.data.length > 0) {
+        var _this$props$cssClasse = this.props.cssClasses,
+            root = _this$props$cssClasse.root,
+            cssClasses = _objectWithoutProperties(_this$props$cssClasse, ["root"]);
+
+        subItems = (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(RefinementList, _extends({}, this.props, {
+          // We want to keep `root` required for external usage but not for the
+          // sub items.
+          cssClasses: cssClasses,
+          depth: this.props.depth + 1,
+          facetValues: facetValue.data,
+          showMore: false,
+          className: this.props.cssClasses.childList
+        }));
+      }
+
+      var url = this.props.createURL(facetValue.value);
+
+      var templateData = _objectSpread(_objectSpread({}, facetValue), {}, {
+        url: url,
+        attribute: this.props.attribute,
+        cssClasses: this.props.cssClasses,
+        isFromSearch: this.props.isFromSearch
+      });
+
+      var key = facetValue.value;
+
+      if (facetValue.isRefined !== undefined) {
+        key += "/".concat(facetValue.isRefined);
+      }
+
+      if (facetValue.count !== undefined) {
+        key += "/".concat(facetValue.count);
+      }
+
+      var refinementListItemClassName = classnames__WEBPACK_IMPORTED_MODULE_1__(this.props.cssClasses.item, (_cx = {}, _defineProperty(_cx, this.props.cssClasses.selectedItem, facetValue.isRefined), _defineProperty(_cx, this.props.cssClasses.disabledItem, !facetValue.count), _defineProperty(_cx, this.props.cssClasses.parentItem, isHierarchicalMenuItem(facetValue) && Array.isArray(facetValue.data) && facetValue.data.length > 0), _cx));
+      return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_RefinementListItem_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        templateKey: "item",
+        key: key,
+        facetValueToRefine: facetValue.value,
+        handleClick: this.handleItemClick,
+        isRefined: facetValue.isRefined,
+        className: refinementListItemClassName,
+        subItems: subItems,
+        templateData: templateData,
+        templateProps: this.props.templateProps
+      });
+    } // Click events on DOM tree like LABEL > INPUT will result in two click events
+    // instead of one.
+    // No matter the framework, see https://www.google.com/search?q=click+label+twice
+    //
+    // Thus making it hard to distinguish activation from deactivation because both click events
+    // are very close. Debounce is a solution but hacky.
+    //
+    // So the code here checks if the click was done on or in a LABEL. If this LABEL
+    // has a checkbox inside, we ignore the first click event because we will get another one.
+    //
+    // We also check if the click was done inside a link and then e.preventDefault() because we already
+    // handle the url
+    //
+    // Finally, we always stop propagation of the event to avoid multiple levels RefinementLists to fail: click
+    // on child would click on parent also
+
+  }, {
+    key: "handleItemClick",
+    value: function handleItemClick(_ref) {
+      var facetValueToRefine = _ref.facetValueToRefine,
+          isRefined = _ref.isRefined,
+          originalEvent = _ref.originalEvent;
+
+      if ((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])(originalEvent)) {
+        // do not alter the default browser behavior
+        // if one special key is down
+        return;
+      }
+
+      if (!(originalEvent.target instanceof HTMLElement) || !(originalEvent.target.parentNode instanceof HTMLElement)) {
+        return;
+      }
+
+      if (isRefined && originalEvent.target.parentNode.querySelector('input[type="radio"]:checked')) {
+        // Prevent refinement for being reset if the user clicks on an already checked radio button
+        return;
+      }
+
+      if (originalEvent.target.tagName === 'INPUT') {
+        this.refine(facetValueToRefine);
+        return;
+      }
+
+      var parent = originalEvent.target;
+
+      while (parent !== originalEvent.currentTarget) {
+        if (parent.tagName === 'LABEL' && (parent.querySelector('input[type="checkbox"]') || parent.querySelector('input[type="radio"]'))) {
+          return;
+        }
+
+        if (parent.tagName === 'A' && parent.href) {
+          originalEvent.preventDefault();
+        }
+
+        parent = parent.parentNode;
+      }
+
+      originalEvent.stopPropagation();
+      this.refine(facetValueToRefine);
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.searchBox.current && !nextProps.isFromSearch) {
+        this.searchBox.current.resetInput();
+      }
+    }
+  }, {
+    key: "refineFirstValue",
+    value: function refineFirstValue() {
+      var firstValue = this.props.facetValues && this.props.facetValues[0];
+
+      if (firstValue) {
+        var actualValue = firstValue.value;
+        this.props.toggleRefinement(actualValue);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var showMoreButtonClassName = classnames__WEBPACK_IMPORTED_MODULE_1__(this.props.cssClasses.showMore, _defineProperty({}, this.props.cssClasses.disabledShowMore, !(this.props.showMore === true && this.props.canToggleShowMore)));
+      var showMoreButton = this.props.showMore === true && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({}, this.props.templateProps, {
+        templateKey: "showMoreText",
+        rootTagName: "button",
+        rootProps: {
+          className: showMoreButtonClassName,
+          disabled: !this.props.canToggleShowMore,
+          onClick: this.props.toggleShowMore
+        },
+        data: {
+          isShowingMore: this.props.isShowingMore
+        }
+      }));
+      var shouldDisableSearchBox = this.props.searchIsAlwaysActive !== true && !(this.props.isFromSearch || !this.props.hasExhaustiveItems);
+      var searchBox = this.props.searchFacetValues && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        className: this.props.cssClasses.searchBox
+      }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_SearchBox_SearchBox_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        ref: this.searchBox,
+        placeholder: this.props.searchPlaceholder,
+        disabled: shouldDisableSearchBox,
+        cssClasses: this.props.cssClasses.searchable,
+        templates: this.props.searchBoxTemplateProps.templates,
+        onChange: function onChange(event) {
+          return _this2.props.searchFacetValues(event.target.value);
+        },
+        onReset: function onReset() {
+          return _this2.props.searchFacetValues('');
+        },
+        onSubmit: function onSubmit() {
+          return _this2.refineFirstValue();
+        } // This sets the search box to a controlled state because
+        // we don't rely on the `refine` prop but on `onChange`.
+        ,
+        searchAsYouType: false
+      }));
+      var facetValues = this.props.facetValues && this.props.facetValues.length > 0 && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("ul", {
+        className: this.props.cssClasses.list
+      }, this.props.facetValues.map(this._generateFacetItem, this));
+      var noResults = this.props.searchFacetValues && this.props.isFromSearch && (!this.props.facetValues || this.props.facetValues.length === 0) && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({}, this.props.templateProps, {
+        templateKey: "searchableNoResults",
+        rootProps: {
+          className: this.props.cssClasses.noResults
+        }
+      }));
+      var rootClassName = classnames__WEBPACK_IMPORTED_MODULE_1__(this.props.cssClasses.root, _defineProperty({}, this.props.cssClasses.noRefinementRoot, !this.props.facetValues || this.props.facetValues.length === 0), this.props.className);
+      return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        className: rootClassName
+      }, this.props.children, searchBox, facetValues, noResults, showMoreButton);
+    }
+  }]);
+
+  return RefinementList;
+}(preact__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+_defineProperty(RefinementList, "defaultProps", defaultProps);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RefinementList);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/components/RefinementList/RefinementListItem.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/RefinementList/RefinementListItem.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _Template_Template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Template/Template.js */ "./node_modules/instantsearch.js/es/components/Template/Template.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+/** @jsx h */
+
+
+
+function RefinementListItem(_ref) {
+  var className = _ref.className,
+      handleClick = _ref.handleClick,
+      facetValueToRefine = _ref.facetValueToRefine,
+      isRefined = _ref.isRefined,
+      templateProps = _ref.templateProps,
+      templateKey = _ref.templateKey,
+      templateData = _ref.templateData,
+      subItems = _ref.subItems;
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("li", {
+    className: className,
+    onClick: function onClick(originalEvent) {
+      handleClick({
+        facetValueToRefine: facetValueToRefine,
+        isRefined: isRefined,
+        originalEvent: originalEvent
+      });
+    }
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_1__["default"], _extends({}, templateProps, {
+    templateKey: templateKey,
+    data: templateData
+  })), subItems);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RefinementListItem);
 
 /***/ }),
 
@@ -35021,6 +35690,111 @@ _defineProperty(SearchBox, "defaultProps", defaultProps);
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/components/Selector/Selector.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/Selector/Selector.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/** @jsx h */
+
+
+
+function Selector(_ref) {
+  var currentValue = _ref.currentValue,
+      options = _ref.options,
+      cssClasses = _ref.cssClasses,
+      setValue = _ref.setValue;
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("select", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.select),
+    onChange: function onChange(event) {
+      return setValue(event.target.value);
+    },
+    value: "".concat(currentValue)
+  }, options.map(function (option) {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("option", {
+      className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.option),
+      key: option.label + option.value,
+      value: "".concat(option.value)
+    }, option.label);
+  }));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Selector);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/components/Stats/Stats.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/Stats/Stats.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _Template_Template_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Template/Template.js */ "./node_modules/instantsearch.js/es/components/Template/Template.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+/** @jsx h */
+
+
+
+
+var Stats = function Stats(_ref) {
+  var nbHits = _ref.nbHits,
+      nbSortedHits = _ref.nbSortedHits,
+      cssClasses = _ref.cssClasses,
+      templateProps = _ref.templateProps,
+      rest = _objectWithoutProperties(_ref, ["nbHits", "nbSortedHits", "cssClasses", "templateProps"]);
+
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.root)
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, templateProps, {
+    templateKey: "text",
+    rootTagName: "span",
+    rootProps: {
+      className: cssClasses.text
+    },
+    data: _objectSpread({
+      hasManySortedResults: nbSortedHits && nbSortedHits > 1,
+      hasNoSortedResults: nbSortedHits === 0,
+      hasOneSortedResults: nbSortedHits === 1,
+      hasManyResults: nbHits > 1,
+      hasNoResults: nbHits === 0,
+      hasOneResult: nbHits === 1,
+      nbHits: nbHits,
+      nbSortedHits: nbSortedHits,
+      cssClasses: cssClasses
+    }, rest)
+  })));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Stats);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/components/Template/Template.js":
 /*!**************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/components/Template/Template.js ***!
@@ -35124,6 +35898,623 @@ var Template = /*#__PURE__*/function (_Component) {
 _defineProperty(Template, "defaultProps", defaultProps);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Template);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/connectors/breadcrumb/connectBreadcrumb.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/breadcrumb/connectBreadcrumb.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/logger.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/isEqual.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
+  name: 'breadcrumb',
+  connector: true
+});
+
+var connectBreadcrumb = function connectBreadcrumb(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
+  var connectorState = {};
+  return function (widgetParams) {
+    var _ref = widgetParams || {},
+        attributes = _ref.attributes,
+        _ref$separator = _ref.separator,
+        separator = _ref$separator === void 0 ? ' > ' : _ref$separator,
+        _ref$rootPath = _ref.rootPath,
+        rootPath = _ref$rootPath === void 0 ? null : _ref$rootPath,
+        _ref$transformItems = _ref.transformItems,
+        transformItems = _ref$transformItems === void 0 ? function (items) {
+      return items;
+    } : _ref$transformItems;
+
+    if (!attributes || !Array.isArray(attributes) || attributes.length === 0) {
+      throw new Error(withUsage('The `attributes` option expects an array of strings.'));
+    }
+
+    var _attributes = _slicedToArray(attributes, 1),
+        hierarchicalFacetName = _attributes[0];
+
+    function getRefinedState(state, facetValue) {
+      if (!facetValue) {
+        var breadcrumb = state.getHierarchicalFacetBreadcrumb(hierarchicalFacetName);
+
+        if (breadcrumb.length === 0) {
+          return state;
+        } else {
+          return state.resetPage().toggleFacetRefinement(hierarchicalFacetName, breadcrumb[0]);
+        }
+      }
+
+      return state.resetPage().toggleFacetRefinement(hierarchicalFacetName, facetValue);
+    }
+
+    return {
+      $$type: 'ais.breadcrumb',
+      init: function init(initOptions) {
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
+          instantSearchInstance: initOptions.instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: renderOptions.instantSearchInstance
+        }), false);
+      },
+      dispose: function dispose() {
+        unmountFn();
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          breadcrumb: _objectSpread(_objectSpread({}, renderState.breadcrumb), {}, _defineProperty({}, hierarchicalFacetName, this.getWidgetRenderState(renderOptions)))
+        });
+      },
+      getWidgetRenderState: function getWidgetRenderState(_ref2) {
+        var helper = _ref2.helper,
+            createURL = _ref2.createURL,
+            results = _ref2.results,
+            state = _ref2.state;
+
+        function getItems() {
+          // The hierarchicalFacets condition is required for flavors
+          // that render immediately with empty results, without relying
+          // on init() (like React InstantSearch Hooks).
+          if (!results || state.hierarchicalFacets.length === 0) {
+            return [];
+          }
+
+          var _state$hierarchicalFa = _slicedToArray(state.hierarchicalFacets, 1),
+              facetName = _state$hierarchicalFa[0].name;
+
+          var facetValues = results.getFacetValues(facetName, {});
+          var data = Array.isArray(facetValues.data) ? facetValues.data : [];
+          var items = transformItems(shiftItemsValues(prepareItems(data)), {
+            results: results
+          });
+          return items;
+        }
+
+        var items = getItems();
+
+        if (!connectorState.createURL) {
+          connectorState.createURL = function (facetValue) {
+            return createURL(getRefinedState(helper.state, facetValue));
+          };
+        }
+
+        if (!connectorState.refine) {
+          connectorState.refine = function (facetValue) {
+            helper.setState(getRefinedState(helper.state, facetValue)).search();
+          };
+        }
+
+        return {
+          canRefine: items.length > 0,
+          createURL: connectorState.createURL,
+          items: items,
+          refine: connectorState.refine,
+          widgetParams: widgetParams
+        };
+      },
+      getWidgetSearchParameters: function getWidgetSearchParameters(searchParameters) {
+        if (searchParameters.isHierarchicalFacet(hierarchicalFacetName)) {
+          var facet = searchParameters.getHierarchicalFacetByName(hierarchicalFacetName);
+           true ? (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.warning)((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])(facet.attributes, attributes) && facet.separator === separator && facet.rootPath === rootPath, 'Using Breadcrumb and HierarchicalMenu on the same facet with different options overrides the configuration of the HierarchicalMenu.') : 0;
+          return searchParameters;
+        }
+
+        return searchParameters.addHierarchicalFacet({
+          name: hierarchicalFacetName,
+          attributes: attributes,
+          separator: separator,
+          rootPath: rootPath
+        });
+      }
+    };
+  };
+};
+
+function prepareItems(data) {
+  return data.reduce(function (result, currentItem) {
+    if (currentItem.isRefined) {
+      result.push({
+        label: currentItem.name,
+        value: currentItem.escapedValue
+      });
+
+      if (Array.isArray(currentItem.data)) {
+        result = result.concat(prepareItems(currentItem.data));
+      }
+    }
+
+    return result;
+  }, []);
+}
+
+function shiftItemsValues(array) {
+  return array.map(function (x, idx) {
+    return {
+      label: x.label,
+      value: idx + 1 === array.length ? null : array[idx + 1].value
+    };
+  });
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectBreadcrumb);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/connectors/clear-refinements/connectClearRefinements.js":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/clear-refinements/connectClearRefinements.js ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/clearRefinements.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/mergeSearchParameters.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/uniq.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getRefinements.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
+  name: 'clear-refinements',
+  connector: true
+});
+
+var connectClearRefinements = function connectClearRefinements(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
+  return function (widgetParams) {
+    var _ref = widgetParams || {},
+        _ref$includedAttribut = _ref.includedAttributes,
+        includedAttributes = _ref$includedAttribut === void 0 ? [] : _ref$includedAttribut,
+        _ref$excludedAttribut = _ref.excludedAttributes,
+        excludedAttributes = _ref$excludedAttribut === void 0 ? ['query'] : _ref$excludedAttribut,
+        _ref$transformItems = _ref.transformItems,
+        transformItems = _ref$transformItems === void 0 ? function (items) {
+      return items;
+    } : _ref$transformItems;
+
+    if (widgetParams && widgetParams.includedAttributes && widgetParams.excludedAttributes) {
+      throw new Error(withUsage('The options `includedAttributes` and `excludedAttributes` cannot be used together.'));
+    }
+
+    var connectorState = {
+      refine: _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+      createURL: function createURL() {
+        return '';
+      },
+      attributesToClear: []
+    };
+
+    var cachedRefine = function cachedRefine() {
+      return connectorState.refine();
+    };
+
+    var cachedCreateURL = function cachedCreateURL() {
+      return connectorState.createURL();
+    };
+
+    return {
+      $$type: 'ais.clearRefinements',
+      init: function init(initOptions) {
+        var instantSearchInstance = initOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        var instantSearchInstance = renderOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), false);
+      },
+      dispose: function dispose() {
+        unmountFn();
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          clearRefinements: this.getWidgetRenderState(renderOptions)
+        });
+      },
+      getWidgetRenderState: function getWidgetRenderState(_ref2) {
+        var createURL = _ref2.createURL,
+            scopedResults = _ref2.scopedResults,
+            results = _ref2.results;
+        connectorState.attributesToClear = scopedResults.reduce(function (attributesToClear, scopedResult) {
+          return attributesToClear.concat(getAttributesToClear({
+            scopedResult: scopedResult,
+            includedAttributes: includedAttributes,
+            excludedAttributes: excludedAttributes,
+            transformItems: transformItems,
+            results: results
+          }));
+        }, []);
+
+        connectorState.refine = function () {
+          connectorState.attributesToClear.forEach(function (_ref3) {
+            var indexHelper = _ref3.helper,
+                items = _ref3.items;
+            indexHelper.setState((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])({
+              helper: indexHelper,
+              attributesToClear: items
+            })).search();
+          });
+        };
+
+        connectorState.createURL = function () {
+          return createURL(_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"].apply(void 0, _toConsumableArray(connectorState.attributesToClear.map(function (_ref4) {
+            var indexHelper = _ref4.helper,
+                items = _ref4.items;
+            return (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])({
+              helper: indexHelper,
+              attributesToClear: items
+            });
+          }))));
+        };
+
+        var canRefine = connectorState.attributesToClear.some(function (attributeToClear) {
+          return attributeToClear.items.length > 0;
+        });
+        return {
+          canRefine: canRefine,
+          hasRefinements: canRefine,
+          refine: cachedRefine,
+          createURL: cachedCreateURL,
+          widgetParams: widgetParams
+        };
+      }
+    };
+  };
+};
+
+function getAttributesToClear(_ref5) {
+  var scopedResult = _ref5.scopedResult,
+      includedAttributes = _ref5.includedAttributes,
+      excludedAttributes = _ref5.excludedAttributes,
+      transformItems = _ref5.transformItems,
+      results = _ref5.results;
+  var includesQuery = includedAttributes.indexOf('query') !== -1 || excludedAttributes.indexOf('query') === -1;
+  return {
+    helper: scopedResult.helper,
+    items: transformItems((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__["default"])(scopedResult.results, scopedResult.helper.state, includesQuery).map(function (refinement) {
+      return refinement.attribute;
+    }).filter(function (attribute) {
+      return (// If the array is empty (default case), we keep all the attributes
+        includedAttributes.length === 0 || // Otherwise, only add the specified attributes
+        includedAttributes.indexOf(attribute) !== -1
+      );
+    }).filter(function (attribute) {
+      return (// If the query is included, we ignore the default `excludedAttributes = ['query']`
+        attribute === 'query' && includesQuery || // Otherwise, ignore the excluded attributes
+        excludedAttributes.indexOf(attribute) === -1
+      );
+    })), {
+      results: results
+    })
+  };
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectClearRefinements);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/connectors/current-refinements/connectCurrentRefinements.js":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/current-refinements/connectCurrentRefinements.js ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getRefinements.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/logger.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
+  name: 'current-refinements',
+  connector: true
+});
+
+var connectCurrentRefinements = function connectCurrentRefinements(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
+  return function (widgetParams) {
+    if ((widgetParams || {}).includedAttributes && (widgetParams || {}).excludedAttributes) {
+      throw new Error(withUsage('The options `includedAttributes` and `excludedAttributes` cannot be used together.'));
+    }
+
+    var _ref = widgetParams || {},
+        includedAttributes = _ref.includedAttributes,
+        _ref$excludedAttribut = _ref.excludedAttributes,
+        excludedAttributes = _ref$excludedAttribut === void 0 ? ['query'] : _ref$excludedAttribut,
+        _ref$transformItems = _ref.transformItems,
+        transformItems = _ref$transformItems === void 0 ? function (items) {
+      return items;
+    } : _ref$transformItems;
+
+    return {
+      $$type: 'ais.currentRefinements',
+      init: function init(initOptions) {
+        var instantSearchInstance = initOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        var instantSearchInstance = renderOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), false);
+      },
+      dispose: function dispose() {
+        unmountFn();
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          currentRefinements: this.getWidgetRenderState(renderOptions)
+        });
+      },
+      getWidgetRenderState: function getWidgetRenderState(_ref2) {
+        var results = _ref2.results,
+            scopedResults = _ref2.scopedResults,
+            _createURL = _ref2.createURL,
+            helper = _ref2.helper;
+
+        function getItems() {
+          if (!results) {
+            return transformItems(getRefinementsItems({
+              results: {},
+              helper: helper,
+              includedAttributes: includedAttributes,
+              excludedAttributes: excludedAttributes
+            }), {
+              results: results
+            });
+          }
+
+          return scopedResults.reduce(function (accResults, scopedResult) {
+            return accResults.concat(transformItems(getRefinementsItems({
+              results: scopedResult.results,
+              helper: scopedResult.helper,
+              includedAttributes: includedAttributes,
+              excludedAttributes: excludedAttributes
+            }), {
+              results: results
+            }));
+          }, []);
+        }
+
+        var items = getItems();
+        return {
+          items: items,
+          canRefine: items.length > 0,
+          refine: function refine(refinement) {
+            return clearRefinement(helper, refinement);
+          },
+          createURL: function createURL(refinement) {
+            return _createURL(clearRefinementFromState(helper.state, refinement));
+          },
+          widgetParams: widgetParams
+        };
+      }
+    };
+  };
+};
+
+function getRefinementsItems(_ref3) {
+  var results = _ref3.results,
+      helper = _ref3.helper,
+      includedAttributes = _ref3.includedAttributes,
+      excludedAttributes = _ref3.excludedAttributes;
+  var includesQuery = (includedAttributes || []).indexOf('query') !== -1 || (excludedAttributes || []).indexOf('query') === -1;
+  var filterFunction = includedAttributes ? function (item) {
+    return includedAttributes.indexOf(item.attribute) !== -1;
+  } : function (item) {
+    return excludedAttributes.indexOf(item.attribute) === -1;
+  };
+  var items = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(results, helper.state, includesQuery).map(normalizeRefinement).filter(filterFunction);
+  return items.reduce(function (allItems, currentItem) {
+    return [].concat(_toConsumableArray(allItems.filter(function (item) {
+      return item.attribute !== currentItem.attribute;
+    })), [{
+      indexName: helper.state.index,
+      attribute: currentItem.attribute,
+      label: currentItem.attribute,
+      refinements: items.filter(function (result) {
+        return result.attribute === currentItem.attribute;
+      }) // We want to keep the order of refinements except the numeric ones.
+      .sort(function (a, b) {
+        return a.type === 'numeric' ? a.value - b.value : 0;
+      }),
+      refine: function refine(refinement) {
+        return clearRefinement(helper, refinement);
+      }
+    }]);
+  }, []);
+}
+
+function clearRefinementFromState(state, refinement) {
+  switch (refinement.type) {
+    case 'facet':
+      return state.removeFacetRefinement(refinement.attribute, String(refinement.value));
+
+    case 'disjunctive':
+      return state.removeDisjunctiveFacetRefinement(refinement.attribute, String(refinement.value));
+
+    case 'hierarchical':
+      return state.removeHierarchicalFacetRefinement(refinement.attribute);
+
+    case 'exclude':
+      return state.removeExcludeRefinement(refinement.attribute, String(refinement.value));
+
+    case 'numeric':
+      return state.removeNumericRefinement(refinement.attribute, refinement.operator, String(refinement.value));
+
+    case 'tag':
+      return state.removeTagRefinement(String(refinement.value));
+
+    case 'query':
+      return state.setQueryParameter('query', '');
+
+    default:
+       true ? (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__.warning)(false, "The refinement type \"".concat(refinement.type, "\" does not exist and cannot be cleared from the current refinements.")) : 0;
+      return state;
+  }
+}
+
+function clearRefinement(helper, refinement) {
+  helper.setState(clearRefinementFromState(helper.state, refinement)).search();
+}
+
+function getOperatorSymbol(operator) {
+  switch (operator) {
+    case '>=':
+      return '≥';
+
+    case '<=':
+      return '≤';
+
+    default:
+      return operator;
+  }
+}
+
+function normalizeRefinement(refinement) {
+  var value = getValue(refinement);
+  var label = refinement.operator ? "".concat(getOperatorSymbol(refinement.operator), " ").concat(refinement.name) : refinement.name;
+  var normalizedRefinement = {
+    attribute: refinement.attribute,
+    type: refinement.type,
+    value: value,
+    label: label
+  };
+
+  if (refinement.operator !== undefined) {
+    normalizedRefinement.operator = refinement.operator;
+  }
+
+  if (refinement.count !== undefined) {
+    normalizedRefinement.count = refinement.count;
+  }
+
+  if (refinement.exhaustive !== undefined) {
+    normalizedRefinement.exhaustive = refinement.exhaustive;
+  }
+
+  return normalizedRefinement;
+}
+
+function getValue(refinement) {
+  if (refinement.type === 'numeric') {
+    return Number(refinement.name);
+  }
+
+  if ('escapedValue' in refinement) {
+    return refinement.escapedValue;
+  }
+
+  return refinement.name;
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectCurrentRefinements);
 
 /***/ }),
 
@@ -35264,6 +36655,561 @@ var connectHits = function connectHits(renderFn) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/connectors/pagination/Paginator.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/pagination/Paginator.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/range.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var Paginator = /*#__PURE__*/function () {
+  function Paginator(params) {
+    _classCallCheck(this, Paginator);
+
+    _defineProperty(this, "currentPage", void 0);
+
+    _defineProperty(this, "total", void 0);
+
+    _defineProperty(this, "padding", void 0);
+
+    this.currentPage = params.currentPage;
+    this.total = params.total;
+    this.padding = params.padding;
+  }
+
+  _createClass(Paginator, [{
+    key: "pages",
+    value: function pages() {
+      var total = this.total,
+          currentPage = this.currentPage,
+          padding = this.padding;
+      if (total === 0) return [0];
+      var totalDisplayedPages = this.nbPagesDisplayed(padding, total);
+
+      if (totalDisplayedPages === total) {
+        return (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+          end: total
+        });
+      }
+
+      var paddingLeft = this.calculatePaddingLeft(currentPage, padding, total, totalDisplayedPages);
+      var paddingRight = totalDisplayedPages - paddingLeft;
+      var first = currentPage - paddingLeft;
+      var last = currentPage + paddingRight;
+      return (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+        start: first,
+        end: last
+      });
+    }
+  }, {
+    key: "nbPagesDisplayed",
+    value: function nbPagesDisplayed(padding, total) {
+      return Math.min(2 * padding + 1, total);
+    }
+  }, {
+    key: "calculatePaddingLeft",
+    value: function calculatePaddingLeft(current, padding, total, totalDisplayedPages) {
+      if (current <= padding) {
+        return current;
+      }
+
+      if (current >= total - padding) {
+        return totalDisplayedPages - (total - current);
+      }
+
+      return padding;
+    }
+  }, {
+    key: "isLastPage",
+    value: function isLastPage() {
+      return this.currentPage === this.total - 1 || this.total === 0;
+    }
+  }, {
+    key: "isFirstPage",
+    value: function isFirstPage() {
+      return this.currentPage === 0;
+    }
+  }]);
+
+  return Paginator;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Paginator);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/connectors/pagination/connectPagination.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/pagination/connectPagination.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+/* harmony import */ var _Paginator_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Paginator.js */ "./node_modules/instantsearch.js/es/connectors/pagination/Paginator.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
+  name: 'pagination',
+  connector: true
+});
+
+/**
+ * **Pagination** connector provides the logic to build a widget that will let the user
+ * choose the current page of the results.
+ *
+ * When using the pagination with Algolia, you should be aware that the engine won't provide you pages
+ * beyond the 1000th hits by default. You can find more information on the [Algolia documentation](https://www.algolia.com/doc/guides/searching/pagination/#pagination-limitations).
+ */
+var connectPagination = function connectPagination(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
+  return function (widgetParams) {
+    var _ref = widgetParams || {},
+        totalPages = _ref.totalPages,
+        _ref$padding = _ref.padding,
+        padding = _ref$padding === void 0 ? 3 : _ref$padding;
+
+    var pager = new _Paginator_js__WEBPACK_IMPORTED_MODULE_3__["default"]({
+      currentPage: 0,
+      total: 0,
+      padding: padding
+    });
+    var connectorState = {};
+
+    function getMaxPage(_ref2) {
+      var nbPages = _ref2.nbPages;
+      return totalPages !== undefined ? Math.min(totalPages, nbPages) : nbPages;
+    }
+
+    return {
+      $$type: 'ais.pagination',
+      init: function init(initOptions) {
+        var instantSearchInstance = initOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        var instantSearchInstance = renderOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), false);
+      },
+      dispose: function dispose(_ref3) {
+        var state = _ref3.state;
+        unmountFn();
+        return state.setQueryParameter('page', undefined);
+      },
+      getWidgetUiState: function getWidgetUiState(uiState, _ref4) {
+        var searchParameters = _ref4.searchParameters;
+        var page = searchParameters.page || 0;
+
+        if (!page) {
+          return uiState;
+        }
+
+        return _objectSpread(_objectSpread({}, uiState), {}, {
+          page: page + 1
+        });
+      },
+      getWidgetSearchParameters: function getWidgetSearchParameters(searchParameters, _ref5) {
+        var uiState = _ref5.uiState;
+        var page = uiState.page ? uiState.page - 1 : 0;
+        return searchParameters.setQueryParameter('page', page);
+      },
+      getWidgetRenderState: function getWidgetRenderState(_ref6) {
+        var results = _ref6.results,
+            helper = _ref6.helper,
+            state = _ref6.state,
+            createURL = _ref6.createURL;
+
+        if (!connectorState.refine) {
+          connectorState.refine = function (page) {
+            helper.setPage(page);
+            helper.search();
+          };
+        }
+
+        if (!connectorState.createURL) {
+          connectorState.createURL = function (helperState) {
+            return function (page) {
+              return createURL(helperState.setPage(page));
+            };
+          };
+        }
+
+        var page = state.page || 0;
+        var nbPages = getMaxPage(results || {
+          nbPages: 0
+        });
+        pager.currentPage = page;
+        pager.total = nbPages;
+        return {
+          createURL: connectorState.createURL(state),
+          refine: connectorState.refine,
+          canRefine: nbPages > 1,
+          currentRefinement: page,
+          nbHits: (results === null || results === void 0 ? void 0 : results.nbHits) || 0,
+          nbPages: nbPages,
+          pages: results ? pager.pages() : [],
+          isFirstPage: pager.isFirstPage(),
+          isLastPage: pager.isLastPage(),
+          widgetParams: widgetParams
+        };
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          pagination: this.getWidgetRenderState(renderOptions)
+        });
+      }
+    };
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectPagination);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/connectors/refinement-list/connectRefinementList.js":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/refinement-list/connectRefinementList.js ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/escape-highlight.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/createSendEventForFacet.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
+  name: 'refinement-list',
+  connector: true
+});
+var DEFAULT_SORT = ['isRefined', 'count:desc', 'name:asc'];
+
+/**
+ * **RefinementList** connector provides the logic to build a custom widget that
+ * will let the user filter the results based on the values of a specific facet.
+ *
+ * **Requirement:** the attribute passed as `attribute` must be present in
+ * attributesForFaceting of the searched index.
+ *
+ * This connector provides:
+ * - a `refine()` function to select an item.
+ * - a `toggleShowMore()` function to display more or less items
+ * - a `searchForItems()` function to search within the items.
+ */
+var connectRefinementList = function connectRefinementList(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
+  return function (widgetParams) {
+    var _ref = widgetParams || {},
+        attribute = _ref.attribute,
+        _ref$operator = _ref.operator,
+        operator = _ref$operator === void 0 ? 'or' : _ref$operator,
+        _ref$limit = _ref.limit,
+        limit = _ref$limit === void 0 ? 10 : _ref$limit,
+        _ref$showMore = _ref.showMore,
+        showMore = _ref$showMore === void 0 ? false : _ref$showMore,
+        _ref$showMoreLimit = _ref.showMoreLimit,
+        showMoreLimit = _ref$showMoreLimit === void 0 ? 20 : _ref$showMoreLimit,
+        _ref$sortBy = _ref.sortBy,
+        sortBy = _ref$sortBy === void 0 ? DEFAULT_SORT : _ref$sortBy,
+        _ref$escapeFacetValue = _ref.escapeFacetValues,
+        escapeFacetValues = _ref$escapeFacetValue === void 0 ? true : _ref$escapeFacetValue,
+        _ref$transformItems = _ref.transformItems,
+        transformItems = _ref$transformItems === void 0 ? function (items) {
+      return items;
+    } : _ref$transformItems;
+
+    if (!attribute) {
+      throw new Error(withUsage('The `attribute` option is required.'));
+    }
+
+    if (!/^(and|or)$/.test(operator)) {
+      throw new Error(withUsage("The `operator` must one of: `\"and\"`, `\"or\"` (got \"".concat(operator, "\").")));
+    }
+
+    if (showMore === true && showMoreLimit <= limit) {
+      throw new Error(withUsage('`showMoreLimit` should be greater than `limit`.'));
+    }
+
+    var formatItems = function formatItems(_ref2) {
+      var label = _ref2.name,
+          value = _ref2.escapedValue,
+          item = _objectWithoutProperties(_ref2, ["name", "escapedValue"]);
+
+      return _objectSpread(_objectSpread({}, item), {}, {
+        value: value,
+        label: label,
+        highlighted: label
+      });
+    };
+
+    var lastResultsFromMainSearch;
+    var lastItemsFromMainSearch = [];
+    var hasExhaustiveItems = true;
+    var triggerRefine;
+    var sendEvent;
+    var isShowingMore = false; // Provide the same function to the `renderFn` so that way the user
+    // has to only bind it once when `isFirstRendering` for instance
+
+    var toggleShowMore = function toggleShowMore() {};
+
+    function cachedToggleShowMore() {
+      toggleShowMore();
+    }
+
+    function createToggleShowMore(renderOptions, widget) {
+      return function () {
+        isShowingMore = !isShowingMore;
+        widget.render(renderOptions);
+      };
+    }
+
+    function getLimit() {
+      return isShowingMore ? showMoreLimit : limit;
+    }
+
+    var searchForFacetValues = function searchForFacetValues() {
+      return function () {};
+    };
+
+    var createSearchForFacetValues = function createSearchForFacetValues(helper, widget) {
+      return function (renderOptions) {
+        return function (query) {
+          var instantSearchInstance = renderOptions.instantSearchInstance,
+              searchResults = renderOptions.results;
+
+          if (query === '' && lastItemsFromMainSearch) {
+            // render with previous data from the helper.
+            renderFn(_objectSpread(_objectSpread({}, widget.getWidgetRenderState(_objectSpread(_objectSpread({}, renderOptions), {}, {
+              results: lastResultsFromMainSearch
+            }))), {}, {
+              instantSearchInstance: instantSearchInstance
+            }), false);
+          } else {
+            var tags = {
+              highlightPreTag: escapeFacetValues ? _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.TAG_PLACEHOLDER.highlightPreTag : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.TAG_REPLACEMENT.highlightPreTag,
+              highlightPostTag: escapeFacetValues ? _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.TAG_PLACEHOLDER.highlightPostTag : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.TAG_REPLACEMENT.highlightPostTag
+            };
+            helper.searchForFacetValues(attribute, query, // We cap the `maxFacetHits` value to 100 because the Algolia API
+            // doesn't support a greater number.
+            // See https://www.algolia.com/doc/api-reference/api-parameters/maxFacetHits/
+            Math.min(getLimit(), 100), tags).then(function (results) {
+              var facetValues = escapeFacetValues ? (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.escapeFacets)(results.facetHits) : results.facetHits;
+              var normalizedFacetValues = transformItems(facetValues.map(function (_ref3) {
+                var escapedValue = _ref3.escapedValue,
+                    value = _ref3.value,
+                    item = _objectWithoutProperties(_ref3, ["escapedValue", "value"]);
+
+                return _objectSpread(_objectSpread({}, item), {}, {
+                  value: escapedValue,
+                  label: value
+                });
+              }), {
+                results: searchResults
+              });
+              renderFn(_objectSpread(_objectSpread({}, widget.getWidgetRenderState(_objectSpread(_objectSpread({}, renderOptions), {}, {
+                results: lastResultsFromMainSearch
+              }))), {}, {
+                items: normalizedFacetValues,
+                canToggleShowMore: false,
+                canRefine: true,
+                isFromSearch: true,
+                instantSearchInstance: instantSearchInstance
+              }), false);
+            });
+          }
+        };
+      };
+    };
+
+    return {
+      $$type: 'ais.refinementList',
+      init: function init(initOptions) {
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
+          instantSearchInstance: initOptions.instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: renderOptions.instantSearchInstance
+        }), false);
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          refinementList: _objectSpread(_objectSpread({}, renderState.refinementList), {}, _defineProperty({}, attribute, this.getWidgetRenderState(renderOptions)))
+        });
+      },
+      getWidgetRenderState: function getWidgetRenderState(renderOptions) {
+        var results = renderOptions.results,
+            state = renderOptions.state,
+            _createURL = renderOptions.createURL,
+            instantSearchInstance = renderOptions.instantSearchInstance,
+            helper = renderOptions.helper;
+        var items = [];
+        var facetValues = [];
+
+        if (!sendEvent || !triggerRefine || !searchForFacetValues) {
+          sendEvent = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__.createSendEventForFacet)({
+            instantSearchInstance: instantSearchInstance,
+            helper: helper,
+            attribute: attribute,
+            widgetType: this.$$type
+          });
+
+          triggerRefine = function triggerRefine(facetValue) {
+            sendEvent('click', facetValue);
+            helper.toggleFacetRefinement(attribute, facetValue).search();
+          };
+
+          searchForFacetValues = createSearchForFacetValues(helper, this);
+        }
+
+        if (results) {
+          var values = results.getFacetValues(attribute, {
+            sortBy: sortBy,
+            facetOrdering: sortBy === DEFAULT_SORT
+          });
+          facetValues = values && Array.isArray(values) ? values : [];
+          items = transformItems(facetValues.slice(0, getLimit()).map(formatItems), {
+            results: results
+          });
+          var maxValuesPerFacetConfig = state.maxValuesPerFacet;
+          var currentLimit = getLimit(); // If the limit is the max number of facet retrieved it is impossible to know
+          // if the facets are exhaustive. The only moment we are sure it is exhaustive
+          // is when it is strictly under the number requested unless we know that another
+          // widget has requested more values (maxValuesPerFacet > getLimit()).
+          // Because this is used for making the search of facets unable or not, it is important
+          // to be conservative here.
+
+          hasExhaustiveItems = maxValuesPerFacetConfig > currentLimit ? facetValues.length <= currentLimit : facetValues.length < currentLimit;
+          lastResultsFromMainSearch = results;
+          lastItemsFromMainSearch = items;
+
+          if (renderOptions.results) {
+            toggleShowMore = createToggleShowMore(renderOptions, this);
+          }
+        } // Do not mistake searchForFacetValues and searchFacetValues which is the actual search
+        // function
+
+
+        var searchFacetValues = searchForFacetValues && searchForFacetValues(renderOptions);
+        var canShowLess = isShowingMore && lastItemsFromMainSearch.length > limit;
+        var canShowMore = showMore && !hasExhaustiveItems;
+        var canToggleShowMore = canShowLess || canShowMore;
+        return {
+          createURL: function createURL(facetValue) {
+            return _createURL(state.resetPage().toggleFacetRefinement(attribute, facetValue));
+          },
+          items: items,
+          refine: triggerRefine,
+          searchForItems: searchFacetValues,
+          isFromSearch: false,
+          canRefine: items.length > 0,
+          widgetParams: widgetParams,
+          isShowingMore: isShowingMore,
+          canToggleShowMore: canToggleShowMore,
+          toggleShowMore: cachedToggleShowMore,
+          sendEvent: sendEvent,
+          hasExhaustiveItems: hasExhaustiveItems
+        };
+      },
+      dispose: function dispose(_ref4) {
+        var state = _ref4.state;
+        unmountFn();
+        var withoutMaxValuesPerFacet = state.setQueryParameter('maxValuesPerFacet', undefined);
+
+        if (operator === 'and') {
+          return withoutMaxValuesPerFacet.removeFacet(attribute);
+        }
+
+        return withoutMaxValuesPerFacet.removeDisjunctiveFacet(attribute);
+      },
+      getWidgetUiState: function getWidgetUiState(uiState, _ref5) {
+        var searchParameters = _ref5.searchParameters;
+        var values = operator === 'or' ? searchParameters.getDisjunctiveRefinements(attribute) : searchParameters.getConjunctiveRefinements(attribute);
+
+        if (!values.length) {
+          return uiState;
+        }
+
+        return _objectSpread(_objectSpread({}, uiState), {}, {
+          refinementList: _objectSpread(_objectSpread({}, uiState.refinementList), {}, _defineProperty({}, attribute, values))
+        });
+      },
+      getWidgetSearchParameters: function getWidgetSearchParameters(searchParameters, _ref6) {
+        var uiState = _ref6.uiState;
+        var isDisjunctive = operator === 'or';
+        var values = uiState.refinementList && uiState.refinementList[attribute];
+        var withoutRefinements = searchParameters.clearRefinements(attribute);
+        var withFacetConfiguration = isDisjunctive ? withoutRefinements.addDisjunctiveFacet(attribute) : withoutRefinements.addFacet(attribute);
+        var currentMaxValuesPerFacet = withFacetConfiguration.maxValuesPerFacet || 0;
+        var nextMaxValuesPerFacet = Math.max(currentMaxValuesPerFacet, showMore ? showMoreLimit : limit);
+        var withMaxValuesPerFacet = withFacetConfiguration.setQueryParameter('maxValuesPerFacet', nextMaxValuesPerFacet);
+
+        if (!values) {
+          var key = isDisjunctive ? 'disjunctiveFacetsRefinements' : 'facetsRefinements';
+          return withMaxValuesPerFacet.setQueryParameters(_defineProperty({}, key, _objectSpread(_objectSpread({}, withMaxValuesPerFacet[key]), {}, _defineProperty({}, attribute, []))));
+        }
+
+        return values.reduce(function (parameters, value) {
+          return isDisjunctive ? parameters.addDisjunctiveFacetRefinement(attribute, value) : parameters.addFacetRefinement(attribute, value);
+        }, withMaxValuesPerFacet);
+      }
+    };
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectRefinementList);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/connectors/search-box/connectSearchBox.js":
 /*!************************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/connectors/search-box/connectSearchBox.js ***!
@@ -35383,6 +37329,224 @@ var connectSearchBox = function connectSearchBox(renderFn) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectSearchBox);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/connectors/sort-by/connectSortBy.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/sort-by/connectSortBy.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/find.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/logger.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
+  name: 'sort-by',
+  connector: true
+});
+/**
+ * The **SortBy** connector provides the logic to build a custom widget that will display a
+ * list of indices. With Algolia, this is most commonly used for changing ranking strategy. This allows
+ * a user to change how the hits are being sorted.
+ */
+
+var connectSortBy = function connectSortBy(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
+  var connectorState = {};
+  return function (widgetParams) {
+    var _ref = widgetParams || {},
+        items = _ref.items,
+        _ref$transformItems = _ref.transformItems,
+        transformItems = _ref$transformItems === void 0 ? function (x) {
+      return x;
+    } : _ref$transformItems;
+
+    if (!Array.isArray(items)) {
+      throw new Error(withUsage('The `items` option expects an array of objects.'));
+    }
+
+    return {
+      $$type: 'ais.sortBy',
+      init: function init(initOptions) {
+        var instantSearchInstance = initOptions.instantSearchInstance;
+        var widgetRenderState = this.getWidgetRenderState(initOptions);
+        var currentIndex = widgetRenderState.currentRefinement;
+        var isCurrentIndexInItems = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(items, function (item) {
+          return item.value === currentIndex;
+        });
+         true ? (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__.warning)(isCurrentIndexInItems !== undefined, "The index named \"".concat(currentIndex, "\" is not listed in the `items` of `sortBy`.")) : 0;
+        renderFn(_objectSpread(_objectSpread({}, widgetRenderState), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        var instantSearchInstance = renderOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), false);
+      },
+      dispose: function dispose(_ref2) {
+        var state = _ref2.state;
+        unmountFn();
+        return connectorState.initialIndex ? state.setIndex(connectorState.initialIndex) : state;
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          sortBy: this.getWidgetRenderState(renderOptions)
+        });
+      },
+      getWidgetRenderState: function getWidgetRenderState(_ref3) {
+        var results = _ref3.results,
+            helper = _ref3.helper,
+            state = _ref3.state,
+            parent = _ref3.parent;
+
+        if (!connectorState.initialIndex && parent) {
+          connectorState.initialIndex = parent.getIndexName();
+        }
+
+        if (!connectorState.setIndex) {
+          connectorState.setIndex = function (indexName) {
+            helper.setIndex(indexName).search();
+          };
+        }
+
+        return {
+          currentRefinement: state.index,
+          options: transformItems(items, {
+            results: results
+          }),
+          refine: connectorState.setIndex,
+          hasNoResults: results ? results.nbHits === 0 : true,
+          widgetParams: widgetParams
+        };
+      },
+      getWidgetUiState: function getWidgetUiState(uiState, _ref4) {
+        var searchParameters = _ref4.searchParameters;
+        var currentIndex = searchParameters.index;
+        return _objectSpread(_objectSpread({}, uiState), {}, {
+          sortBy: currentIndex !== connectorState.initialIndex ? currentIndex : undefined
+        });
+      },
+      getWidgetSearchParameters: function getWidgetSearchParameters(searchParameters, _ref5) {
+        var uiState = _ref5.uiState;
+        return searchParameters.setQueryParameter('index', uiState.sortBy || connectorState.initialIndex || searchParameters.index);
+      }
+    };
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectSortBy);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/connectors/stats/connectStats.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/stats/connectStats.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
+  name: 'stats',
+  connector: true
+});
+/**
+ * **Stats** connector provides the logic to build a custom widget that will displays
+ * search statistics (hits number and processing time).
+ */
+
+var connectStats = function connectStats(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
+  return function (widgetParams) {
+    return {
+      $$type: 'ais.stats',
+      init: function init(initOptions) {
+        var instantSearchInstance = initOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        var instantSearchInstance = renderOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), false);
+      },
+      dispose: function dispose() {
+        unmountFn();
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          stats: this.getWidgetRenderState(renderOptions)
+        });
+      },
+      getWidgetRenderState: function getWidgetRenderState(_ref) {
+        var results = _ref.results,
+            state = _ref.state;
+
+        if (!results) {
+          return {
+            hitsPerPage: state.hitsPerPage,
+            nbHits: 0,
+            nbSortedHits: undefined,
+            areHitsSorted: false,
+            nbPages: 0,
+            page: state.page || 0,
+            processingTimeMS: -1,
+            query: state.query || '',
+            widgetParams: widgetParams
+          };
+        }
+
+        return {
+          hitsPerPage: results.hitsPerPage,
+          nbHits: results.nbHits,
+          nbSortedHits: results.nbSortedHits,
+          areHitsSorted: typeof results.appliedRelevancyStrictness !== 'undefined' && results.appliedRelevancyStrictness > 0 && results.nbSortedHits !== results.nbHits,
+          nbPages: results.nbPages,
+          page: results.page,
+          processingTimeMS: results.processingTimeMS,
+          query: results.query,
+          widgetParams: widgetParams
+        };
+      }
+    };
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectStats);
 
 /***/ }),
 
@@ -37381,6 +39545,62 @@ function checkRendering(rendering, usage) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/lib/utils/clearRefinements.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/lib/utils/clearRefinements.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Clears the refinements of a SearchParameters object based on rules provided.
+ * The included attributes list is applied before the excluded attributes list. If the list
+ * is not provided, this list of all the currently refined attributes is used as included attributes.
+ * @param {object} $0 parameters
+ * @param {Helper} $0.helper instance of the Helper
+ * @param {string[]} [$0.attributesToClear = []] list of parameters to clear
+ * @returns {SearchParameters} search parameters with refinements cleared
+ */
+function clearRefinements(_ref) {
+  var helper = _ref.helper,
+      _ref$attributesToClea = _ref.attributesToClear,
+      attributesToClear = _ref$attributesToClea === void 0 ? [] : _ref$attributesToClea;
+  var finalState = helper.state.setPage(0);
+  finalState = attributesToClear.reduce(function (state, attribute) {
+    if (finalState.isNumericRefined(attribute)) {
+      return state.removeNumericRefinement(attribute);
+    }
+
+    if (finalState.isHierarchicalFacet(attribute)) {
+      return state.removeHierarchicalFacetRefinement(attribute);
+    }
+
+    if (finalState.isDisjunctiveFacet(attribute)) {
+      return state.removeDisjunctiveFacetRefinement(attribute);
+    }
+
+    if (finalState.isConjunctiveFacet(attribute)) {
+      return state.removeFacetRefinement(attribute);
+    }
+
+    return state;
+  }, finalState);
+
+  if (attributesToClear.indexOf('query') !== -1) {
+    finalState = finalState.setQuery('');
+  }
+
+  return finalState;
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (clearRefinements);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/lib/utils/concatHighlightedParts.js":
 /*!******************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/lib/utils/concatHighlightedParts.js ***!
@@ -37400,6 +39620,64 @@ function concatHighlightedParts(parts) {
   return parts.map(function (part) {
     return part.isHighlighted ? highlightPreTag + part.value + highlightPostTag : part.value;
   }).join('');
+}
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/lib/utils/createSendEventForFacet.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/lib/utils/createSendEventForFacet.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createSendEventForFacet": () => (/* binding */ createSendEventForFacet)
+/* harmony export */ });
+/* harmony import */ var _isFacetRefined_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isFacetRefined.js */ "./node_modules/instantsearch.js/es/lib/utils/isFacetRefined.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+function createSendEventForFacet(_ref) {
+  var instantSearchInstance = _ref.instantSearchInstance,
+      helper = _ref.helper,
+      attribute = _ref.attribute,
+      widgetType = _ref.widgetType;
+
+  var sendEventForFacet = function sendEventForFacet() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var eventType = args[0],
+        facetValue = args[1],
+        _args$ = args[2],
+        eventName = _args$ === void 0 ? 'Filter Applied' : _args$;
+
+    if (args.length === 1 && _typeof(args[0]) === 'object') {
+      instantSearchInstance.sendEventToInsights(args[0]);
+    } else if (eventType === 'click' && (args.length === 2 || args.length === 3)) {
+      if (!(0,_isFacetRefined_js__WEBPACK_IMPORTED_MODULE_0__["default"])(helper, attribute, facetValue)) {
+        // send event only when the facet is being checked "ON"
+        instantSearchInstance.sendEventToInsights({
+          insightsMethod: 'clickedFilters',
+          widgetType: widgetType,
+          eventType: eventType,
+          payload: {
+            eventName: eventName,
+            index: helper.getIndex(),
+            filters: ["".concat(attribute, ":").concat(facetValue)]
+          },
+          attribute: attribute
+        });
+      }
+    } else if (true) {
+      throw new Error("You need to pass two arguments like:\n  sendEvent('click', facetValue);\n\nIf you want to send a custom payload, you can pass one object: sendEvent(customPayload);\n");
+    }
+  };
+
+  return sendEventForFacet;
 }
 
 /***/ }),
@@ -37811,6 +40089,35 @@ function escape(value) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/lib/utils/escapeFacetValue.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/lib/utils/escapeFacetValue.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "escapeFacetValue": () => (/* binding */ escapeFacetValue),
+/* harmony export */   "unescapeFacetValue": () => (/* binding */ unescapeFacetValue)
+/* harmony export */ });
+function unescapeFacetValue(value) {
+  if (typeof value === 'string') {
+    return value.replace(/^\\-/, '-');
+  }
+
+  return value;
+}
+function escapeFacetValue(value) {
+  if (typeof value === 'number' && value < 0 || typeof value === 'string') {
+    return String(value).replace(/^-/, '\\-');
+  }
+
+  return value;
+}
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/lib/utils/find.js":
 /*!************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/lib/utils/find.js ***!
@@ -38037,6 +40344,158 @@ function getPropertyByPath(object, path) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/lib/utils/getRefinements.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/lib/utils/getRefinements.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ getRefinements)
+/* harmony export */ });
+/* harmony import */ var _find_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./find.js */ "./node_modules/instantsearch.js/es/lib/utils/find.js");
+/* harmony import */ var _escapeFacetValue_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./escapeFacetValue.js */ "./node_modules/instantsearch.js/es/lib/utils/escapeFacetValue.js");
+
+
+
+function getRefinement(state, type, attribute, name) {
+  var resultsFacets = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
+  var res = {
+    type: type,
+    attribute: attribute,
+    name: name,
+    escapedValue: (0,_escapeFacetValue_js__WEBPACK_IMPORTED_MODULE_0__.escapeFacetValue)(name)
+  };
+  var facet = (0,_find_js__WEBPACK_IMPORTED_MODULE_1__["default"])(resultsFacets, function (resultsFacet) {
+    return resultsFacet.name === attribute;
+  });
+  var count;
+
+  if (type === 'hierarchical') {
+    (function () {
+      var facetDeclaration = state.getHierarchicalFacetByName(attribute);
+      var nameParts = name.split(facetDeclaration.separator);
+
+      var getFacetRefinement = function getFacetRefinement(facetData) {
+        return function (refinementKey) {
+          return facetData[refinementKey];
+        };
+      };
+
+      var _loop = function _loop(i) {
+        facet = facet && facet.data && (0,_find_js__WEBPACK_IMPORTED_MODULE_1__["default"])(Object.keys(facet.data).map(getFacetRefinement(facet.data)), function (refinement) {
+          return refinement.name === nameParts[i];
+        });
+      };
+
+      for (var i = 0; facet !== undefined && i < nameParts.length; ++i) {
+        _loop(i);
+      }
+
+      count = facet && facet.count;
+    })();
+  } else {
+    count = facet && facet.data && facet.data[res.name];
+  }
+
+  if (count !== undefined) {
+    res.count = count;
+  }
+
+  if (facet && facet.exhaustive !== undefined) {
+    res.exhaustive = facet.exhaustive;
+  }
+
+  return res;
+}
+
+function getRefinements(results, state) {
+  var includesQuery = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var refinements = [];
+  var _state$facetsRefineme = state.facetsRefinements,
+      facetsRefinements = _state$facetsRefineme === void 0 ? {} : _state$facetsRefineme,
+      _state$facetsExcludes = state.facetsExcludes,
+      facetsExcludes = _state$facetsExcludes === void 0 ? {} : _state$facetsExcludes,
+      _state$disjunctiveFac = state.disjunctiveFacetsRefinements,
+      disjunctiveFacetsRefinements = _state$disjunctiveFac === void 0 ? {} : _state$disjunctiveFac,
+      _state$hierarchicalFa = state.hierarchicalFacetsRefinements,
+      hierarchicalFacetsRefinements = _state$hierarchicalFa === void 0 ? {} : _state$hierarchicalFa,
+      _state$numericRefinem = state.numericRefinements,
+      numericRefinements = _state$numericRefinem === void 0 ? {} : _state$numericRefinem,
+      _state$tagRefinements = state.tagRefinements,
+      tagRefinements = _state$tagRefinements === void 0 ? [] : _state$tagRefinements;
+  Object.keys(facetsRefinements).forEach(function (attribute) {
+    var refinementNames = facetsRefinements[attribute];
+    refinementNames.forEach(function (refinementName) {
+      refinements.push(getRefinement(state, 'facet', attribute, refinementName, results.facets));
+    });
+  });
+  Object.keys(facetsExcludes).forEach(function (attribute) {
+    var refinementNames = facetsExcludes[attribute];
+    refinementNames.forEach(function (refinementName) {
+      refinements.push({
+        type: 'exclude',
+        attribute: attribute,
+        name: refinementName,
+        exclude: true
+      });
+    });
+  });
+  Object.keys(disjunctiveFacetsRefinements).forEach(function (attribute) {
+    var refinementNames = disjunctiveFacetsRefinements[attribute];
+    refinementNames.forEach(function (refinementName) {
+      refinements.push(getRefinement(state, 'disjunctive', attribute, // We unescape any disjunctive refined values with `unescapeFacetValue` because
+      // they can be escaped on negative numeric values with `escapeFacetValue`.
+      (0,_escapeFacetValue_js__WEBPACK_IMPORTED_MODULE_0__.unescapeFacetValue)(refinementName), results.disjunctiveFacets));
+    });
+  });
+  Object.keys(hierarchicalFacetsRefinements).forEach(function (attribute) {
+    var refinementNames = hierarchicalFacetsRefinements[attribute];
+    refinementNames.forEach(function (refinement) {
+      refinements.push(getRefinement(state, 'hierarchical', attribute, refinement, results.hierarchicalFacets));
+    });
+  });
+  Object.keys(numericRefinements).forEach(function (attribute) {
+    var operators = numericRefinements[attribute];
+    Object.keys(operators).forEach(function (operatorOriginal) {
+      var operator = operatorOriginal;
+      var valueOrValues = operators[operator];
+      var refinementNames = Array.isArray(valueOrValues) ? valueOrValues : [valueOrValues];
+      refinementNames.forEach(function (refinementName) {
+        refinements.push({
+          type: 'numeric',
+          attribute: attribute,
+          name: "".concat(refinementName),
+          numericValue: refinementName,
+          operator: operator
+        });
+      });
+    });
+  });
+  tagRefinements.forEach(function (refinementName) {
+    refinements.push({
+      type: 'tag',
+      attribute: '_tags',
+      name: refinementName
+    });
+  });
+
+  if (includesQuery && state.query && state.query.trim()) {
+    refinements.push({
+      attribute: 'query',
+      type: 'query',
+      name: state.query,
+      query: state.query
+    });
+  }
+
+  return refinements;
+}
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/lib/utils/hits-absolute-position.js":
 /*!******************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/lib/utils/hits-absolute-position.js ***!
@@ -38161,6 +40620,29 @@ function isEqual(first, second) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/lib/utils/isFacetRefined.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/lib/utils/isFacetRefined.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ isFacetRefined)
+/* harmony export */ });
+function isFacetRefined(helper, facet, value) {
+  if (helper.state.isHierarchicalFacet(facet)) {
+    return helper.state.isHierarchicalFacetRefined(facet, value);
+  } else if (helper.state.isConjunctiveFacet(facet)) {
+    return helper.state.isFacetRefined(facet, value);
+  } else {
+    return helper.state.isDisjunctiveFacetRefined(facet, value);
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/lib/utils/isPlainObject.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/lib/utils/isPlainObject.js ***!
@@ -38216,6 +40698,26 @@ function isPlainObject(value) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (isPlainObject);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/lib/utils/isSpecialClick.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/lib/utils/isSpecialClick.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function isSpecialClick(event) {
+  var isMiddleClick = event.button === 1;
+  return isMiddleClick || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (isSpecialClick);
 
 /***/ }),
 
@@ -38523,6 +41025,52 @@ function prepareTemplateProps(_ref) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (prepareTemplateProps);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/lib/utils/range.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/lib/utils/range.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function range(_ref) {
+  var _ref$start = _ref.start,
+      start = _ref$start === void 0 ? 0 : _ref$start,
+      end = _ref.end,
+      _ref$step = _ref.step,
+      step = _ref$step === void 0 ? 1 : _ref$step;
+  // We can't divide by 0 so we re-assign the step to 1 if it happens.
+  var limitStep = step === 0 ? 1 : step; // In some cases the array to create has a decimal length.
+  // We therefore need to round the value.
+  // Example:
+  //   { start: 1, end: 5000, step: 500 }
+  //   => Array length = (5000 - 1) / 500 = 9.998
+
+  var arrayLength = Math.round((end - start) / limitStep);
+  return _toConsumableArray(Array(arrayLength)).map(function (_, current) {
+    return start + current * limitStep;
+  });
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (range);
 
 /***/ }),
 
@@ -39046,6 +41594,397 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/breadcrumb/breadcrumb.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/breadcrumb/breadcrumb.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _components_Breadcrumb_Breadcrumb_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/Breadcrumb/Breadcrumb.js */ "./node_modules/instantsearch.js/es/components/Breadcrumb/Breadcrumb.js");
+/* harmony import */ var _connectors_breadcrumb_connectBreadcrumb_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../connectors/breadcrumb/connectBreadcrumb.js */ "./node_modules/instantsearch.js/es/connectors/breadcrumb/connectBreadcrumb.js");
+/* harmony import */ var _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./defaultTemplates.js */ "./node_modules/instantsearch.js/es/widgets/breadcrumb/defaultTemplates.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/prepareTemplateProps.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
+  name: 'breadcrumb'
+});
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('Breadcrumb');
+
+var renderer = function renderer(_ref) {
+  var containerNode = _ref.containerNode,
+      cssClasses = _ref.cssClasses,
+      renderState = _ref.renderState,
+      templates = _ref.templates;
+  return function (_ref2, isFirstRendering) {
+    var canRefine = _ref2.canRefine,
+        createURL = _ref2.createURL,
+        instantSearchInstance = _ref2.instantSearchInstance,
+        items = _ref2.items,
+        refine = _ref2.refine;
+
+    if (isFirstRendering) {
+      renderState.templateProps = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])({
+        defaultTemplates: _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+        templatesConfig: instantSearchInstance.templatesConfig,
+        templates: templates
+      });
+      return;
+    }
+
+    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_Breadcrumb_Breadcrumb_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      canRefine: canRefine,
+      cssClasses: cssClasses,
+      createURL: createURL,
+      items: items,
+      refine: refine,
+      templateProps: renderState.templateProps
+    }), containerNode);
+  };
+};
+
+var breadcrumb = function breadcrumb(widgetParams) {
+  var _ref3 = widgetParams || {},
+      container = _ref3.container,
+      attributes = _ref3.attributes,
+      separator = _ref3.separator,
+      rootPath = _ref3.rootPath,
+      transformItems = _ref3.transformItems,
+      _ref3$templates = _ref3.templates,
+      templates = _ref3$templates === void 0 ? {} : _ref3$templates,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses;
+
+  if (!container) {
+    throw new Error(withUsage('The `container` option is required.'));
+  }
+
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_7__["default"])(container);
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
+    noRefinementRoot: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      modifierName: 'noRefinement'
+    }), userCssClasses.noRefinementRoot),
+    list: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'list'
+    }), userCssClasses.list),
+    item: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item'
+    }), userCssClasses.item),
+    selectedItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'selected'
+    }), userCssClasses.selectedItem),
+    separator: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'separator'
+    }), userCssClasses.separator),
+    link: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'link'
+    }), userCssClasses.link)
+  };
+  var specializedRenderer = renderer({
+    containerNode: containerNode,
+    cssClasses: cssClasses,
+    renderState: {},
+    templates: templates
+  });
+  var makeWidget = (0,_connectors_breadcrumb_connectBreadcrumb_js__WEBPACK_IMPORTED_MODULE_8__["default"])(specializedRenderer, function () {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+  });
+  return _objectSpread(_objectSpread({}, makeWidget({
+    attributes: attributes,
+    separator: separator,
+    rootPath: rootPath,
+    transformItems: transformItems
+  })), {}, {
+    $$widgetType: 'ais.breadcrumb'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (breadcrumb);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/breadcrumb/defaultTemplates.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/breadcrumb/defaultTemplates.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var defaultTemplates = {
+  home: 'Home',
+  separator: '>'
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (defaultTemplates);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/clear-refinements/clear-refinements.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/clear-refinements/clear-refinements.js ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _components_ClearRefinements_ClearRefinements_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/ClearRefinements/ClearRefinements.js */ "./node_modules/instantsearch.js/es/components/ClearRefinements/ClearRefinements.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _connectors_clear_refinements_connectClearRefinements_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../connectors/clear-refinements/connectClearRefinements.js */ "./node_modules/instantsearch.js/es/connectors/clear-refinements/connectClearRefinements.js");
+/* harmony import */ var _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./defaultTemplates.js */ "./node_modules/instantsearch.js/es/widgets/clear-refinements/defaultTemplates.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/prepareTemplateProps.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
+  name: 'clear-refinements'
+});
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('ClearRefinements');
+
+var renderer = function renderer(_ref) {
+  var containerNode = _ref.containerNode,
+      cssClasses = _ref.cssClasses,
+      renderState = _ref.renderState,
+      templates = _ref.templates;
+  return function (_ref2, isFirstRendering) {
+    var refine = _ref2.refine,
+        hasRefinements = _ref2.hasRefinements,
+        instantSearchInstance = _ref2.instantSearchInstance;
+
+    if (isFirstRendering) {
+      renderState.templateProps = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])({
+        defaultTemplates: _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+        templatesConfig: instantSearchInstance.templatesConfig,
+        templates: templates
+      });
+      return;
+    }
+
+    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_ClearRefinements_ClearRefinements_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      refine: refine,
+      cssClasses: cssClasses,
+      hasRefinements: hasRefinements,
+      templateProps: renderState.templateProps
+    }), containerNode);
+  };
+};
+
+var clearRefinements = function clearRefinements(widgetParams) {
+  var _ref3 = widgetParams || {},
+      container = _ref3.container,
+      _ref3$templates = _ref3.templates,
+      templates = _ref3$templates === void 0 ? {} : _ref3$templates,
+      includedAttributes = _ref3.includedAttributes,
+      excludedAttributes = _ref3.excludedAttributes,
+      transformItems = _ref3.transformItems,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses;
+
+  if (!container) {
+    throw new Error(withUsage('The `container` option is required.'));
+  }
+
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_7__["default"])(container);
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
+    button: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'button'
+    }), userCssClasses.button),
+    disabledButton: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'button',
+      modifierName: 'disabled'
+    }), userCssClasses.disabledButton)
+  };
+  var specializedRenderer = renderer({
+    containerNode: containerNode,
+    cssClasses: cssClasses,
+    renderState: {},
+    templates: templates
+  });
+  var makeWidget = (0,_connectors_clear_refinements_connectClearRefinements_js__WEBPACK_IMPORTED_MODULE_8__["default"])(specializedRenderer, function () {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+  });
+  return _objectSpread(_objectSpread({}, makeWidget({
+    includedAttributes: includedAttributes,
+    excludedAttributes: excludedAttributes,
+    transformItems: transformItems
+  })), {}, {
+    $$widgetType: 'ais.clearRefinements'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (clearRefinements);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/clear-refinements/defaultTemplates.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/clear-refinements/defaultTemplates.js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var defaultTemplates = {
+  resetLabel: 'Clear refinements'
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (defaultTemplates);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _components_CurrentRefinements_CurrentRefinements_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/CurrentRefinements/CurrentRefinements.js */ "./node_modules/instantsearch.js/es/components/CurrentRefinements/CurrentRefinements.js");
+/* harmony import */ var _connectors_current_refinements_connectCurrentRefinements_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../connectors/current-refinements/connectCurrentRefinements.js */ "./node_modules/instantsearch.js/es/connectors/current-refinements/connectCurrentRefinements.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
+  name: 'current-refinements'
+});
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('CurrentRefinements');
+
+var renderer = function renderer(_ref, isFirstRender) {
+  var items = _ref.items,
+      widgetParams = _ref.widgetParams;
+
+  if (isFirstRender) {
+    return;
+  }
+
+  var _ref2 = widgetParams,
+      container = _ref2.container,
+      cssClasses = _ref2.cssClasses;
+  (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_CurrentRefinements_CurrentRefinements_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    cssClasses: cssClasses,
+    items: items
+  }), container);
+};
+
+var currentRefinements = function currentRefinements(widgetParams) {
+  var _ref3 = widgetParams || {},
+      container = _ref3.container,
+      includedAttributes = _ref3.includedAttributes,
+      excludedAttributes = _ref3.excludedAttributes,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses,
+      transformItems = _ref3.transformItems;
+
+  if (!container) {
+    throw new Error(withUsage('The `container` option is required.'));
+  }
+
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])(container);
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
+    list: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'list'
+    }), userCssClasses.list),
+    item: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item'
+    }), userCssClasses.item),
+    label: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'label'
+    }), userCssClasses.label),
+    category: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'category'
+    }), userCssClasses.category),
+    categoryLabel: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'categoryLabel'
+    }), userCssClasses.categoryLabel),
+    delete: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'delete'
+    }), userCssClasses.delete)
+  };
+  var makeWidget = (0,_connectors_current_refinements_connectCurrentRefinements_js__WEBPACK_IMPORTED_MODULE_6__["default"])(renderer, function () {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+  });
+  return _objectSpread(_objectSpread({}, makeWidget({
+    container: containerNode,
+    cssClasses: cssClasses,
+    includedAttributes: includedAttributes,
+    excludedAttributes: excludedAttributes,
+    transformItems: transformItems
+  })), {}, {
+    $$widgetType: 'ais.currentRefinements'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (currentRefinements);
 
 /***/ }),
 
@@ -39792,6 +42731,461 @@ function storeRenderState(_ref7) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/widgets/pagination/pagination.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/pagination/pagination.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _components_Pagination_Pagination_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Pagination/Pagination.js */ "./node_modules/instantsearch.js/es/components/Pagination/Pagination.js");
+/* harmony import */ var _connectors_pagination_connectPagination_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../connectors/pagination/connectPagination.js */ "./node_modules/instantsearch.js/es/connectors/pagination/connectPagination.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_2__.component)('Pagination');
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.createDocumentationMessageGenerator)({
+  name: 'pagination'
+});
+var defaultTemplates = {
+  previous: '‹',
+  next: '›',
+  first: '«',
+  last: '»'
+};
+
+var renderer = function renderer(_ref) {
+  var containerNode = _ref.containerNode,
+      cssClasses = _ref.cssClasses,
+      templates = _ref.templates,
+      showFirst = _ref.showFirst,
+      showLast = _ref.showLast,
+      showPrevious = _ref.showPrevious,
+      showNext = _ref.showNext,
+      scrollToNode = _ref.scrollToNode;
+  return function (_ref2, isFirstRendering) {
+    var createURL = _ref2.createURL,
+        currentRefinement = _ref2.currentRefinement,
+        nbPages = _ref2.nbPages,
+        pages = _ref2.pages,
+        isFirstPage = _ref2.isFirstPage,
+        isLastPage = _ref2.isLastPage,
+        refine = _ref2.refine;
+    if (isFirstRendering) return;
+
+    var setCurrentPage = function setCurrentPage(pageNumber) {
+      refine(pageNumber);
+
+      if (scrollToNode !== false) {
+        scrollToNode.scrollIntoView();
+      }
+    };
+
+    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_Pagination_Pagination_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      createURL: createURL,
+      cssClasses: cssClasses,
+      currentPage: currentRefinement,
+      templates: templates,
+      nbPages: nbPages,
+      pages: pages,
+      isFirstPage: isFirstPage,
+      isLastPage: isLastPage,
+      setCurrentPage: setCurrentPage,
+      showFirst: showFirst,
+      showLast: showLast,
+      showPrevious: showPrevious,
+      showNext: showNext
+    }), containerNode);
+  };
+};
+
+var pagination = function pagination(widgetParams) {
+  var _ref3 = widgetParams || {},
+      container = _ref3.container,
+      _ref3$templates = _ref3.templates,
+      userTemplates = _ref3$templates === void 0 ? {} : _ref3$templates,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses,
+      totalPages = _ref3.totalPages,
+      padding = _ref3.padding,
+      _ref3$showFirst = _ref3.showFirst,
+      showFirst = _ref3$showFirst === void 0 ? true : _ref3$showFirst,
+      _ref3$showLast = _ref3.showLast,
+      showLast = _ref3$showLast === void 0 ? true : _ref3$showLast,
+      _ref3$showPrevious = _ref3.showPrevious,
+      showPrevious = _ref3$showPrevious === void 0 ? true : _ref3$showPrevious,
+      _ref3$showNext = _ref3.showNext,
+      showNext = _ref3$showNext === void 0 ? true : _ref3$showNext,
+      _ref3$scrollTo = _ref3.scrollTo,
+      userScrollTo = _ref3$scrollTo === void 0 ? 'body' : _ref3$scrollTo;
+
+  if (!container) {
+    throw new Error(withUsage('The `container` option is required.'));
+  }
+
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])(container);
+  var scrollTo = userScrollTo === true ? 'body' : userScrollTo;
+  var scrollToNode = scrollTo !== false ? (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])(scrollTo) : false;
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
+    noRefinementRoot: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      modifierName: 'noRefinement'
+    }), userCssClasses.noRefinementRoot),
+    list: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'list'
+    }), userCssClasses.list),
+    item: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item'
+    }), userCssClasses.item),
+    firstPageItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'firstPage'
+    }), userCssClasses.firstPageItem),
+    lastPageItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'lastPage'
+    }), userCssClasses.lastPageItem),
+    previousPageItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'previousPage'
+    }), userCssClasses.previousPageItem),
+    nextPageItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'nextPage'
+    }), userCssClasses.nextPageItem),
+    pageItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'page'
+    }), userCssClasses.pageItem),
+    selectedItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'selected'
+    }), userCssClasses.selectedItem),
+    disabledItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'disabled'
+    }), userCssClasses.disabledItem),
+    link: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'link'
+    }), userCssClasses.link)
+  };
+
+  var templates = _objectSpread(_objectSpread({}, defaultTemplates), userTemplates);
+
+  var specializedRenderer = renderer({
+    containerNode: containerNode,
+    cssClasses: cssClasses,
+    templates: templates,
+    showFirst: showFirst,
+    showLast: showLast,
+    showPrevious: showPrevious,
+    showNext: showNext,
+    scrollToNode: scrollToNode
+  });
+  var makeWidget = (0,_connectors_pagination_connectPagination_js__WEBPACK_IMPORTED_MODULE_6__["default"])(specializedRenderer, function () {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+  });
+  return _objectSpread(_objectSpread({}, makeWidget({
+    totalPages: totalPages,
+    padding: padding
+  })), {}, {
+    $$widgetType: 'ais.pagination'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (pagination);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/refinement-list/defaultTemplates.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/refinement-list/defaultTemplates.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var defaultTemplates = {
+  item: "<label class=\"{{cssClasses.label}}\">\n  <input type=\"checkbox\"\n         class=\"{{cssClasses.checkbox}}\"\n         value=\"{{value}}\"\n         {{#isRefined}}checked{{/isRefined}} />\n  <span class=\"{{cssClasses.labelText}}\">{{#isFromSearch}}{{{highlighted}}}{{/isFromSearch}}{{^isFromSearch}}{{highlighted}}{{/isFromSearch}}</span>\n  <span class=\"{{cssClasses.count}}\">{{#helpers.formatNumber}}{{count}}{{/helpers.formatNumber}}</span>\n</label>",
+  showMoreText: "\n    {{#isShowingMore}}\n      Show less\n    {{/isShowingMore}}\n    {{^isShowingMore}}\n      Show more\n    {{/isShowingMore}}\n    ",
+  searchableNoResults: 'No results'
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (defaultTemplates);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/refinement-list/refinement-list.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/refinement-list/refinement-list.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _components_RefinementList_RefinementList_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/RefinementList/RefinementList.js */ "./node_modules/instantsearch.js/es/components/RefinementList/RefinementList.js");
+/* harmony import */ var _connectors_refinement_list_connectRefinementList_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../connectors/refinement-list/connectRefinementList.js */ "./node_modules/instantsearch.js/es/connectors/refinement-list/connectRefinementList.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/prepareTemplateProps.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+/* harmony import */ var _search_box_defaultTemplates_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../search-box/defaultTemplates.js */ "./node_modules/instantsearch.js/es/widgets/search-box/defaultTemplates.js");
+/* harmony import */ var _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./defaultTemplates.js */ "./node_modules/instantsearch.js/es/widgets/refinement-list/defaultTemplates.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
+  name: 'refinement-list'
+});
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('RefinementList');
+var searchBoxSuit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('SearchBox');
+
+var renderer = function renderer(_ref) {
+  var containerNode = _ref.containerNode,
+      cssClasses = _ref.cssClasses,
+      templates = _ref.templates,
+      searchBoxTemplates = _ref.searchBoxTemplates,
+      renderState = _ref.renderState,
+      showMore = _ref.showMore,
+      searchable = _ref.searchable,
+      searchablePlaceholder = _ref.searchablePlaceholder,
+      searchableIsAlwaysActive = _ref.searchableIsAlwaysActive;
+  return function (_ref2, isFirstRendering) {
+    var refine = _ref2.refine,
+        items = _ref2.items,
+        createURL = _ref2.createURL,
+        searchForItems = _ref2.searchForItems,
+        isFromSearch = _ref2.isFromSearch,
+        instantSearchInstance = _ref2.instantSearchInstance,
+        toggleShowMore = _ref2.toggleShowMore,
+        isShowingMore = _ref2.isShowingMore,
+        hasExhaustiveItems = _ref2.hasExhaustiveItems,
+        canToggleShowMore = _ref2.canToggleShowMore;
+
+    if (isFirstRendering) {
+      renderState.templateProps = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])({
+        defaultTemplates: _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+        templatesConfig: instantSearchInstance.templatesConfig,
+        templates: templates
+      });
+      renderState.searchBoxTemplateProps = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])({
+        defaultTemplates: _search_box_defaultTemplates_js__WEBPACK_IMPORTED_MODULE_6__["default"],
+        templatesConfig: instantSearchInstance.templatesConfig,
+        templates: searchBoxTemplates
+      });
+      return;
+    }
+
+    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_RefinementList_RefinementList_js__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      createURL: createURL,
+      cssClasses: cssClasses,
+      facetValues: items,
+      templateProps: renderState.templateProps,
+      searchBoxTemplateProps: renderState.searchBoxTemplateProps,
+      toggleRefinement: refine,
+      searchFacetValues: searchable ? searchForItems : undefined,
+      searchPlaceholder: searchablePlaceholder,
+      searchIsAlwaysActive: searchableIsAlwaysActive,
+      isFromSearch: isFromSearch,
+      showMore: showMore && !isFromSearch && items.length > 0,
+      toggleShowMore: toggleShowMore,
+      isShowingMore: isShowingMore,
+      hasExhaustiveItems: hasExhaustiveItems,
+      canToggleShowMore: canToggleShowMore
+    }), containerNode);
+  };
+};
+
+/**
+ * The refinement list widget is one of the most common widget that you can find
+ * in a search UI. With this widget, the user can filter the dataset based on facets.
+ *
+ * The refinement list displays only the most relevant facets for the current search
+ * context. The sort option only affects the facet that are returned by the engine,
+ * not which facets are returned.
+ *
+ * This widget also implements search for facet values, which is a mini search inside the
+ * values of the facets. This makes easy to deal with uncommon facet values.
+ *
+ * @requirements
+ *
+ * The attribute passed to `attribute` must be declared as an
+ * [attribute for faceting](https://www.algolia.com/doc/guides/searching/faceting/#declaring-attributes-for-faceting)
+ * in your Algolia settings.
+ *
+ * If you also want to use search for facet values on this attribute, you need to make it searchable using the [dashboard](https://www.algolia.com/explorer/display/) or using the [API](https://www.algolia.com/doc/guides/searching/faceting/#search-for-facet-values).
+ */
+var refinementList = function refinementList(widgetParams) {
+  var _ref3 = widgetParams || {},
+      container = _ref3.container,
+      attribute = _ref3.attribute,
+      operator = _ref3.operator,
+      sortBy = _ref3.sortBy,
+      limit = _ref3.limit,
+      showMore = _ref3.showMore,
+      showMoreLimit = _ref3.showMoreLimit,
+      _ref3$searchable = _ref3.searchable,
+      searchable = _ref3$searchable === void 0 ? false : _ref3$searchable,
+      _ref3$searchablePlace = _ref3.searchablePlaceholder,
+      searchablePlaceholder = _ref3$searchablePlace === void 0 ? 'Search...' : _ref3$searchablePlace,
+      _ref3$searchableEscap = _ref3.searchableEscapeFacetValues,
+      searchableEscapeFacetValues = _ref3$searchableEscap === void 0 ? true : _ref3$searchableEscap,
+      _ref3$searchableIsAlw = _ref3.searchableIsAlwaysActive,
+      searchableIsAlwaysActive = _ref3$searchableIsAlw === void 0 ? true : _ref3$searchableIsAlw,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses,
+      _ref3$templates = _ref3.templates,
+      templates = _ref3$templates === void 0 ? {} : _ref3$templates,
+      transformItems = _ref3.transformItems;
+
+  if (!container) {
+    throw new Error(withUsage('The `container` option is required.'));
+  }
+
+  var escapeFacetValues = searchable ? Boolean(searchableEscapeFacetValues) : false;
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_8__["default"])(container);
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
+    noRefinementRoot: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      modifierName: 'noRefinement'
+    }), userCssClasses.noRefinementRoot),
+    list: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'list'
+    }), userCssClasses.list),
+    item: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item'
+    }), userCssClasses.item),
+    selectedItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'selected'
+    }), userCssClasses.selectedItem),
+    searchBox: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'searchBox'
+    }), userCssClasses.searchBox),
+    label: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'label'
+    }), userCssClasses.label),
+    checkbox: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'checkbox'
+    }), userCssClasses.checkbox),
+    labelText: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'labelText'
+    }), userCssClasses.labelText),
+    count: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'count'
+    }), userCssClasses.count),
+    noResults: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'noResults'
+    }), userCssClasses.noResults),
+    showMore: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'showMore'
+    }), userCssClasses.showMore),
+    disabledShowMore: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'showMore',
+      modifierName: 'disabled'
+    }), userCssClasses.disabledShowMore),
+    searchable: {
+      root: classnames__WEBPACK_IMPORTED_MODULE_1__(searchBoxSuit(), userCssClasses.searchableRoot),
+      form: classnames__WEBPACK_IMPORTED_MODULE_1__(searchBoxSuit({
+        descendantName: 'form'
+      }), userCssClasses.searchableForm),
+      input: classnames__WEBPACK_IMPORTED_MODULE_1__(searchBoxSuit({
+        descendantName: 'input'
+      }), userCssClasses.searchableInput),
+      submit: classnames__WEBPACK_IMPORTED_MODULE_1__(searchBoxSuit({
+        descendantName: 'submit'
+      }), userCssClasses.searchableSubmit),
+      submitIcon: classnames__WEBPACK_IMPORTED_MODULE_1__(searchBoxSuit({
+        descendantName: 'submitIcon'
+      }), userCssClasses.searchableSubmitIcon),
+      reset: classnames__WEBPACK_IMPORTED_MODULE_1__(searchBoxSuit({
+        descendantName: 'reset'
+      }), userCssClasses.searchableReset),
+      resetIcon: classnames__WEBPACK_IMPORTED_MODULE_1__(searchBoxSuit({
+        descendantName: 'resetIcon'
+      }), userCssClasses.searchableResetIcon),
+      loadingIndicator: classnames__WEBPACK_IMPORTED_MODULE_1__(searchBoxSuit({
+        descendantName: 'loadingIndicator'
+      }), userCssClasses.searchableLoadingIndicator),
+      loadingIcon: classnames__WEBPACK_IMPORTED_MODULE_1__(searchBoxSuit({
+        descendantName: 'loadingIcon'
+      }), userCssClasses.searchableLoadingIcon)
+    }
+  };
+  var specializedRenderer = renderer({
+    containerNode: containerNode,
+    cssClasses: cssClasses,
+    templates: templates,
+    searchBoxTemplates: {
+      submit: templates.searchableSubmit,
+      reset: templates.searchableReset,
+      loadingIndicator: templates.searchableLoadingIndicator
+    },
+    renderState: {},
+    searchable: searchable,
+    searchablePlaceholder: searchablePlaceholder,
+    searchableIsAlwaysActive: searchableIsAlwaysActive,
+    showMore: showMore
+  });
+  var makeWidget = (0,_connectors_refinement_list_connectRefinementList_js__WEBPACK_IMPORTED_MODULE_9__["default"])(specializedRenderer, function () {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+  });
+  return _objectSpread(_objectSpread({}, makeWidget({
+    attribute: attribute,
+    operator: operator,
+    limit: limit,
+    showMore: showMore,
+    showMoreLimit: showMoreLimit,
+    sortBy: sortBy,
+    escapeFacetValues: escapeFacetValues,
+    transformItems: transformItems
+  })), {}, {
+    $$widgetType: 'ais.refinementList'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (refinementList);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/widgets/search-box/defaultTemplates.js":
 /*!*********************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/widgets/search-box/defaultTemplates.js ***!
@@ -39967,6 +43361,237 @@ var searchBox = function searchBox(widgetParams) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (searchBox);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/sort-by/sort-by.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/sort-by/sort-by.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _components_Selector_Selector_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Selector/Selector.js */ "./node_modules/instantsearch.js/es/components/Selector/Selector.js");
+/* harmony import */ var _connectors_sort_by_connectSortBy_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../connectors/sort-by/connectSortBy.js */ "./node_modules/instantsearch.js/es/connectors/sort-by/connectSortBy.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
+  name: 'sort-by'
+});
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('SortBy');
+
+var renderer = function renderer(_ref) {
+  var containerNode = _ref.containerNode,
+      cssClasses = _ref.cssClasses;
+  return function (_ref2, isFirstRendering) {
+    var currentRefinement = _ref2.currentRefinement,
+        options = _ref2.options,
+        refine = _ref2.refine;
+
+    if (isFirstRendering) {
+      return;
+    }
+
+    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+      className: cssClasses.root
+    }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_Selector_Selector_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      cssClasses: cssClasses,
+      currentValue: currentRefinement,
+      options: options,
+      setValue: refine
+    })), containerNode);
+  };
+};
+/**
+ * Sort by selector is a widget used for letting the user choose between different
+ * indices that contains the same data with a different order / ranking formula.
+ */
+
+
+var sortBy = function sortBy(widgetParams) {
+  var _ref3 = widgetParams || {},
+      container = _ref3.container,
+      items = _ref3.items,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses,
+      transformItems = _ref3.transformItems;
+
+  if (!container) {
+    throw new Error(withUsage('The `container` option is required.'));
+  }
+
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])(container);
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
+    select: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'select'
+    }), userCssClasses.select),
+    option: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'option'
+    }), userCssClasses.option)
+  };
+  var specializedRenderer = renderer({
+    containerNode: containerNode,
+    cssClasses: cssClasses
+  });
+  var makeWidget = (0,_connectors_sort_by_connectSortBy_js__WEBPACK_IMPORTED_MODULE_6__["default"])(specializedRenderer, function () {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+  });
+  return _objectSpread(_objectSpread({}, makeWidget({
+    container: containerNode,
+    items: items,
+    transformItems: transformItems
+  })), {}, {
+    $$widgetType: 'ais.sortBy'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (sortBy);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/stats/stats.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/stats/stats.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "defaultTemplates": () => (/* binding */ defaultTemplates)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _components_Stats_Stats_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/Stats/Stats.js */ "./node_modules/instantsearch.js/es/components/Stats/Stats.js");
+/* harmony import */ var _connectors_stats_connectStats_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../connectors/stats/connectStats.js */ "./node_modules/instantsearch.js/es/connectors/stats/connectStats.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/prepareTemplateProps.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
+  name: 'stats'
+});
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('Stats');
+var defaultTemplates = {
+  text: "\n    {{#areHitsSorted}}\n      {{#hasNoSortedResults}}No relevant results{{/hasNoSortedResults}}\n      {{#hasOneSortedResults}}1 relevant result{{/hasOneSortedResults}}\n      {{#hasManySortedResults}}{{#helpers.formatNumber}}{{nbSortedHits}}{{/helpers.formatNumber}} relevant results{{/hasManySortedResults}}\n      sorted out of {{#helpers.formatNumber}}{{nbHits}}{{/helpers.formatNumber}}\n    {{/areHitsSorted}}\n    {{^areHitsSorted}}\n      {{#hasNoResults}}No results{{/hasNoResults}}\n      {{#hasOneResult}}1 result{{/hasOneResult}}\n      {{#hasManyResults}}{{#helpers.formatNumber}}{{nbHits}}{{/helpers.formatNumber}} results{{/hasManyResults}}\n    {{/areHitsSorted}}\n    found in {{processingTimeMS}}ms"
+};
+
+var renderer = function renderer(_ref) {
+  var renderState = _ref.renderState,
+      cssClasses = _ref.cssClasses,
+      containerNode = _ref.containerNode,
+      templates = _ref.templates;
+  return function (_ref2, isFirstRendering) {
+    var hitsPerPage = _ref2.hitsPerPage,
+        nbHits = _ref2.nbHits,
+        nbSortedHits = _ref2.nbSortedHits,
+        areHitsSorted = _ref2.areHitsSorted,
+        nbPages = _ref2.nbPages,
+        page = _ref2.page,
+        processingTimeMS = _ref2.processingTimeMS,
+        query = _ref2.query,
+        instantSearchInstance = _ref2.instantSearchInstance;
+
+    if (isFirstRendering) {
+      renderState.templateProps = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])({
+        defaultTemplates: defaultTemplates,
+        templatesConfig: instantSearchInstance.templatesConfig,
+        templates: templates
+      });
+      return;
+    }
+
+    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_Stats_Stats_js__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      cssClasses: cssClasses,
+      hitsPerPage: hitsPerPage,
+      nbHits: nbHits,
+      nbSortedHits: nbSortedHits,
+      areHitsSorted: areHitsSorted,
+      nbPages: nbPages,
+      page: page,
+      processingTimeMS: processingTimeMS,
+      query: query,
+      templateProps: renderState.templateProps
+    }), containerNode);
+  };
+};
+/**
+ * The `stats` widget is used to display useful insights about the current results.
+ *
+ * By default, it will display the **number of hits** and the time taken to compute the
+ * results inside the engine.
+ */
+
+
+var stats = function stats(widgetParams) {
+  var _ref3 = widgetParams || {},
+      container = _ref3.container,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses,
+      _ref3$templates = _ref3.templates,
+      templates = _ref3$templates === void 0 ? {} : _ref3$templates;
+
+  if (!container) {
+    throw new Error(withUsage('The `container` option is required.'));
+  }
+
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__["default"])(container);
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
+    text: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'text'
+    }), userCssClasses.text)
+  };
+  var specializedRenderer = renderer({
+    containerNode: containerNode,
+    cssClasses: cssClasses,
+    templates: templates,
+    renderState: {}
+  });
+  var makeWidget = (0,_connectors_stats_connectStats_js__WEBPACK_IMPORTED_MODULE_7__["default"])(specializedRenderer, function () {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+  });
+  return _objectSpread(_objectSpread({}, makeWidget({})), {}, {
+    $$widgetType: 'ais.stats'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stats);
 
 /***/ })
 

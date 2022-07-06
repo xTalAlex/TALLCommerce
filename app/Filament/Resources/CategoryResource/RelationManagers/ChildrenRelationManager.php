@@ -23,6 +23,11 @@ class ChildrenRelationManager extends HasManyRelationManager
         return __('Children Categories');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('Sottocategoria');
+    }
+
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?string $inverseRelationship = 'children';
