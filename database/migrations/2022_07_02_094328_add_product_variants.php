@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('variant_name')->unique()->nullable();
+            $table->string('unique_name')->unique()->nullable();
             $table->unsignedBigInteger('variant_id')->nullable();
 
             $table->foreign('variant_id')->references('id')->on('products')

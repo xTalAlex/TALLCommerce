@@ -6,8 +6,8 @@
 <div class="py-12">
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="py-6 overflow-hidden bg-white shadow-xl sm:rounded-lg">
-            <div class="md:flex ">
-                <div class="flex flex-col md:w-1/2"
+            <div class="md:flex">
+                <div class="flex flex-col md:w-1/2" wire:key='{{$product->id}}'
                     x-data="{
                         curImage : '{{ $product->image }}',
                         show : true,
@@ -23,7 +23,6 @@
                             }
                         }
                     }"
-                    wire:ignore
                 >
                     <img class="object-contain mx-auto border h-96 w-96" 
                         :src="curImage"
@@ -51,7 +50,7 @@
                     <p>{{ $product->short_description ?? 'Short Description here' }}</p>
                     <p>{{ $product->description ?? 'Description here' }}</p>
                     <div>
-                        @if($product->discount())
+                        @if($product->discount)
                             <span class="text-2xl text-gray-900 line-through dark:text-white">{{$product->original_price}}€</span>
                         @endif
                             <span class="text-xl font-bold text-gray-900 dark:text-white">{{ $product->selling_price }}€</span>
@@ -85,28 +84,31 @@
                     </div>
 
                     <div class="flex flex-row space-x-4">
-                        <a href="{{ route('product.show', $product->defaultVariant? $product->defaultVariant : $product) }}" class="px-1 border rounded-lg">{{ $product->defaultVariant ? $product->defaultVariant->name : $product->name }}</a>
+                        <a href="{{ route('product.show', $product->defaultVariant? $product->defaultVariant : $product) }}" class="px-1 border rounded-lg">
+                            <img class="w-8 h-8" src="{{ $product->defaultVariant ? $product->defaultVariant->image : $product->image }}"/>
+                        </a>
                         @foreach($product->defaultVariant? $product->defaultVariant->variants : $product->variants as $variant)
-                        <a href="{{ route('product.show', $variant) }}" class="px-1 border rounded-lg">{{ $variant->name}}</a>
+                        <a href="{{ route('product.show', $variant) }}" class="px-1 border rounded-lg">
+                            <img class="w-8 h-8" src="{{ $variant->image}}"/>
+                        </a>
                         @endforeach
                     </div>
 
+                    @if($attributeSet)
                     <div>
-                    @foreach($product->attributeValues as $attributeValue)
-                        <div>{{ $attributeValue->attribute->name}} : {{ $attributeValue->value}}</div>
-                    @endforeach
-                    </div>
-
-                    <div>
-                        @foreach($product->attributes() as $attribute)
-                            <div>{{ $attribute->name }}: 
-                                @foreach($attribute->values as $value)
-                                    <span>{{$value->value}}</span>
-                                @endforeach
+                        @foreach($attributes as $attribute)
+                            <div>
+                                {{ $attribute }}: 
+                                <select wire:model="selection.{{$attribute}}">
+                                    @foreach ( $attributeSet->where('attribute.name',$attribute) as $attributeValue )
+                                        <option value="{{$attributeValue->id}}">{{$attributeValue->value}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         @endforeach
                     </div>
-                    
+                    @endif
+
                 </div>
             </div>
 

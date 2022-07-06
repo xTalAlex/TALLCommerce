@@ -21,11 +21,13 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('original_price',8,2);
             $table->decimal('selling_price',8,2)->nullable();
+            $table->decimal('discount',8,2)->storedAs('original_price - selling_price');
             $table->decimal('tax',4,2)->nullable();
             $table->unsignedInteger('quantity')->default(0);
             $table->unsignedInteger('low_stock_threshold')->nullable();
             $table->boolean('featured')->default(false);
             $table->boolean('hidden')->default(false);
+            $table->decimal('weight',8,2)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -152,14 +152,14 @@ class Product extends Model implements Buyable , HasMedia
     }
 
     public function getBuyableWeight($options = null){
-        return 0;
+        return $this->weight;
     }
 
-    public function setVariantNameAttribute($value)
+    public function setUniqueNameAttribute($value)
     {
         if(!$value)
             $value = $this->attributes['name'];
-        $this->attributes['variant_name'] = $value;
+        $this->attributes['unique_name'] = $value;
     }
 
     public function getImageAttribute()
@@ -217,7 +217,7 @@ class Product extends Model implements Buyable , HasMedia
         );
     }
 
-    public function discount()
+    public function getDiscountAttribute($value)
     {
         $difference = $this->selling_price && ($this->selling_price < $this->original_price) ? $this->original_price - $this->selling_price : 0;
         if($difference) 
@@ -227,9 +227,29 @@ class Product extends Model implements Buyable , HasMedia
         return $percent;
     }
 
+    public function attributeSet()
+    {
+        $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
+        if ($defaultVariant->has('variants')) {
+            $attributeSet = $defaultVariant->attributeValues
+                                        ->pluck('id')->unique()->sort()->toArray();
+            $variantsAttributeSet = $defaultVariant->variants()->with('attributeValues')->get()
+                                                ->pluck('attributeValues.*.id')->collapse()->unique()->sort()->toArray();
+                            
+            $attributeSet = array_merge($attributeSet, $variantsAttributeSet);
+
+            return AttributeValue::findMany($attributeSet)->sortBy('attribute_id');
+        }
+    }
+
     public function pricePerQuantity(int $quantity, float $newPrice = null )
     {
         return number_format( ($newPrice ?? $this->price) * $quantity , 2) ;
+    }
+
+    public function shouldBeSearchable()
+    {
+        return !$this->variant_id;
     }
 
     /**
@@ -240,12 +260,14 @@ class Product extends Model implements Buyable , HasMedia
     public function toSearchableArray()
     {
         $array = array();
+
         $array['id'] = $this->id;
         $array['name'] = $this->name;
         $array['short_description'] = $this->short_description;
         $array['description'] = $this->description;
         $array['original_price'] = $this->original_price;
         $array['selling_price'] = $this->selling_price;
+        $array['discount'] = $this->discount;
         $array['price'] = $this->price;
         $array['featured'] = $this->featured;
         $array['quantity'] = $this->quantity;
@@ -253,8 +275,6 @@ class Product extends Model implements Buyable , HasMedia
         $array['image'] = $this->image;
 
         $array['url'] = route('product.show', $this);
- 
-        // Customize the data array...
  
         return $array;
     }

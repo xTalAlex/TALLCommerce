@@ -33,7 +33,7 @@
         </div>
 
         <div class="flex items-center justify-between">
-            @if($product->discount())
+            @if($product->discount)
                 <span class="text-base text-gray-900 line-through dark:text-white">{{ $product->original_price }}€</span>
             @endif
             <span class="text-xl font-bold text-gray-900 dark:text-white">{{ $product->price }}€</span>

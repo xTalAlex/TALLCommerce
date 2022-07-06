@@ -61,19 +61,13 @@ class ProductResource extends Resource
                         ->schema([
                             TextInput::make('name')
                                 ->label(__('Name'))
-                                ->required()
-                                ->columnSpan([
-                                    'sm' => 2,
-                                ]),
-                            TextInput::make('variant_name')
-                                ->label(__('Variant Name'))
-                                ->unique(ignorable: fn (?Model $record): ?Model => $record)
-                                ->columnSpan([
-                                    'sm' => 2,
-                                ]),
+                                ->required(),
+                            TextInput::make('unique_name')
+                                ->label(__('Unique Name'))
+                                ->unique(ignorable: fn (?Model $record): ?Model => $record),     
                             Select::make('variant')
                                 ->label(__('Variant Of'))
-                                ->relationship('defaultVariant','variant_name'),
+                                ->relationship('defaultVariant','unique_name'),
                             TextInput::make('SKU')
                                 ->label(__('SKU'))
                                 ->columnSpan([
@@ -144,6 +138,17 @@ class ProductResource extends Resource
                             TextInput::make('low_stock_threshold')
                                 ->label(__('Low Stock Threshold'))
                                 ->numeric(),
+                            TextInput::make('weight')
+                                ->label(__('Weight'))
+                                ->prefix('Kg')
+                                ->mask(fn (TextInput\Mask $mask) => $mask
+                                    ->numeric()
+                                    ->decimalPlaces(2)
+                                    ->decimalSeparator('.')
+                                    ->mapToDecimalSeparator([',','.'])
+                                    ->thousandsSeparator(',')
+                                    ->maxValue(999999)
+                                ),
                             Fieldset::make('Settings')
                                 ->label(__('Settings'))
                                 ->schema([

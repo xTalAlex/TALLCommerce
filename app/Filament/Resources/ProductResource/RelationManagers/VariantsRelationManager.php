@@ -20,7 +20,7 @@ class VariantsRelationManager extends RelationManager
 
     protected static ?string $inverseRelationship = 'defaultVariant';
 
-    protected static ?string $recordTitleAttribute = 'variant_name';
+    protected static ?string $recordTitleAttribute = 'unique_name';
     
     public static function getTitle(): string
     {

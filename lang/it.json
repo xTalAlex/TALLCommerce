@@ -36,6 +36,7 @@
     "Featured" : "Featured",
     "Hidden" : "Nascosto",
     "Discounted" : "Scontato|Scontati",
+    "Weight" : "Peso",
 
     "Subject" : "Oggetto",
     "Message" : "Messaggio",
@@ -201,7 +202,7 @@
     "Variant" : "Variante",
     "Variants" : "Varianti",
     "Variant Of" : "Variante di",
-    "Variant Name" : "Nome Variante",
+    "Unique Name" : "Nome Univoco",
 
     "Attribute" : "Attributo",
     "Attributes" : "Attributi",

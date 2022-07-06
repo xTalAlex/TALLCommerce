@@ -18,7 +18,7 @@ class AttributesTableSeeder extends Seeder
         $colore = Attribute::create([
             'name' => 'colore'
         ]);
-        $values = ['rosso','blue','verde','giallo'];
+        $values = ['Rosso','Blue','Verde','Giallo'];
         foreach($values as $value)
         {
             $colore->values()->create(['value' => $value]);
