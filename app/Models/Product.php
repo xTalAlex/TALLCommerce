@@ -227,18 +227,36 @@ class Product extends Model implements Buyable , HasMedia
         return $percent;
     }
 
-    public function attributeSet()
+    public function variantsAttributeValues()
+    {
+        $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
+        if ($defaultVariant->variants()->exists()) {
+            $attributeValues = $defaultVariant->attributeValues
+                                        ->pluck('id')->unique()->sort()->toArray();
+            $variantsAttributeValues = $defaultVariant->variants()->with('attributeValues')->get()
+                                                ->pluck('attributeValues.*.id')->collapse()->unique()->sort()->toArray();
+                            
+            $attributeValues = array_merge($attributeValues, $variantsAttributeValues);
+
+            return AttributeValue::findMany($attributeValues)->sortBy('attribute_id');
+        }
+    }
+
+    public function variantsAttributeSets()
     {
         $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
         if ($defaultVariant->variants()->exists()) {
             $attributeSet = $defaultVariant->attributeValues
-                                        ->pluck('id')->unique()->sort()->toArray();
-            $variantsAttributeSet = $defaultVariant->variants()->with('attributeValues')->get()
-                                                ->pluck('attributeValues.*.id')->collapse()->unique()->sort()->toArray();
-                            
-            $attributeSet = array_merge($attributeSet, $variantsAttributeSet);
+                                        ->pluck('id','attribute_id')->unique()->sort()->toArray();
+            $attributeSet = array($attributeSet);
+            foreach($defaultVariant->variants as $variant)
+            {
+                $variantsAttributeSet = $variant->attributeValues
+                                            ->pluck('id','attribute_id')->unique()->sort()->toArray();
+                $attributeSet = array_merge($attributeSet, array($variantsAttributeSet));
+            }
 
-            return AttributeValue::findMany($attributeSet)->sortBy('attribute_id');
+            return $attributeSet;
         }
     }
 

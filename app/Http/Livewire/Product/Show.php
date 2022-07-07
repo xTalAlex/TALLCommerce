@@ -10,19 +10,28 @@ class Show extends Component
 {
     use WithShoppingLists;
 
-    public $attributeSet;
+    public $variantsAttributeValues;
+    public $variantsAttributeSets;
     public $attributes;
     public $selection;
 
     public function mount()
     {
-        $this->attributeSet = $this->product->attributeSet();
-        if ($this->attributeSet) {
-            $this->attributes = $this->attributeSet->pluck('attribute.name')->unique();
+        $this->variantsAttributeValues = $this->product->variantsAttributeValues();
+        $this->variantsAttributeSets = $this->product->variantsAttributeSets();
+        if ($this->variantsAttributeValues) {
+            $this->attributes = $this->variantsAttributeValues->pluck('attribute.name','attribute.id')->unique();
             foreach ($this->product->attributeValues as $attributeValue) {
-                $this->selection[$attributeValue->attribute->name] = $attributeValue->id;
+                $this->selection[$attributeValue->attribute->id] = $attributeValue->id;
             }
         }
+    }
+
+    public function variantExists($attribute,$value)
+    {
+        $possibleSelection = $this->selection;
+        $possibleSelection[$attribute] = $value;
+        return in_array($possibleSelection ,$this->variantsAttributeSets);
     }
 
     public function updatedSelection($value)
@@ -36,7 +45,7 @@ class Show extends Component
             
         foreach($this->product->attributeValues as $attributeValue)
         {
-            $this->selection[$attributeValue->attribute->name] = $attributeValue->id;
+            $this->selection[$attributeValue->attribute->id] = $attributeValue->id;
         }
     }
 

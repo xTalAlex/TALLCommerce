@@ -104,12 +104,15 @@
 
                     @if($product->defaultVariant || $product->variants()->exists())
                     <div>
-                        @foreach($attributes as $attribute)
+                        @foreach($attributes as $id=>$name)
                             <div>
-                                {{ $attribute }}: 
-                                <select wire:model="selection.{{$attribute}}">
-                                    @foreach ( $attributeSet->where('attribute.name',$attribute) as $attributeValue )
-                                        <option value="{{$attributeValue->id}}">{{$attributeValue->value}}</option>
+                                {{ $name }}: 
+                                <select wire:model="selection.{{$id}}">
+                                    @foreach ( $variantsAttributeValues->where('attribute.id',$id) as $attributeValue )
+                                        <option 
+                                            class="@if(!$this->variantExists($id, $attributeValue->id)) text-gray-400 @endif"
+                                            value="{{$attributeValue->id}}">{{$attributeValue->value}}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>

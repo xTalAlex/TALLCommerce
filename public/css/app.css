@@ -3135,6 +3135,9 @@ input[type="range"]::-ms-fill-lower {
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
+.grid-cols-\[repeat\(auto-fit\2c minmax\(0\2c 1fr\)\)\] {
+  grid-template-columns: repeat(auto-fit,minmax(0,1fr));
+}
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -3164,9 +3167,6 @@ input[type="range"]::-ms-fill-lower {
 }
 .grid-cols-12 {
   grid-template-columns: repeat(12, minmax(0, 1fr));
-}
-.grid-cols-\[repeat\(auto-fit\2c minmax\(0\2c 1fr\)\)\] {
-  grid-template-columns: repeat(auto-fit,minmax(0,1fr));
 }
 .flex-row {
   flex-direction: row;
@@ -3216,6 +3216,9 @@ input[type="range"]::-ms-fill-lower {
 .gap-1 {
   gap: 0.25rem;
 }
+.gap-2 {
+  gap: 0.5rem;
+}
 .gap-3 {
   gap: 0.75rem;
 }
@@ -3224,9 +3227,6 @@ input[type="range"]::-ms-fill-lower {
 }
 .gap-0 {
   gap: 0px;
-}
-.gap-2 {
-  gap: 0.5rem;
 }
 .space-x-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
