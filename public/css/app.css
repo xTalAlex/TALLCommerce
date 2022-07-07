@@ -3200,8 +3200,9 @@ body[data-theme=dark], body.dark {
 
 .ais-VoiceSearch-button {
   color: #5a5e9a;
-  height: 48px;
-  width: 48px; }
+  padding : 0px;
+  height: 40px;
+  width: 40px; }
 
 .ais-VoiceSearch-button svg {
   color: currentcolor; }
@@ -4271,6 +4272,10 @@ body[data-theme=dark], body.dark {
   width: 6rem;
 }
 
+.w-64 {
+  width: 16rem;
+}
+
 .w-11 {
   width: 2.75rem;
 }
@@ -4305,8 +4310,8 @@ body[data-theme=dark], body.dark {
   width: 8rem;
 }
 
-.w-64 {
-  width: 16rem;
+.w-44 {
+  width: 11rem;
 }
 
 .min-w-0 {
@@ -4780,6 +4785,18 @@ body[data-theme=dark], body.dark {
   --tw-space-x-reverse: 0;
   margin-right: calc(2.5rem * var(--tw-space-x-reverse));
   margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-0\.5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.125rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.125rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-0 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0px * var(--tw-space-x-reverse));
+  margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-x-reverse > :not([hidden]) ~ :not([hidden]) {

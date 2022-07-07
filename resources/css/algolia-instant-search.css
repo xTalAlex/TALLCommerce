@@ -653,8 +653,9 @@
  */
 .ais-VoiceSearch-button {
   color: #5a5e9a;
-  height: 48px;
-  width: 48px; }
+  padding : 0px;
+  height: 40px;
+  width: 40px; }
 
 .ais-VoiceSearch-button svg {
   color: currentcolor; }

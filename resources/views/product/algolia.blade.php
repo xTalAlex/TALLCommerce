@@ -23,6 +23,15 @@
                     autofocus : true,
                 }),
 
+                window.voiceSearch({
+                    container: '#voicesearch',
+                    searchAsYouSpeak: true,
+                    language: '{{ config('app.locale') }}',
+                    templates: {
+                        status: '',
+                    },
+                }),
+
                 window.hits({
                     container: '#hits',
                     templates : {
@@ -96,7 +105,8 @@
     >
         <div class="flex flex-col w-full mx-auto md:space-x-3 md:flex-row md:inline-flex max-w-7xl sm:px-6 lg:px-8">
             
-            <div class="w-full mb-2 md:w-64 md:mb-auto" aria-label="Sidebar">
+            <div class="flex flex-row w-full mb-2 space-x-1 md:w-64 md:mb-auto" aria-label="Sidebar">
+                <span id="voicesearch"></span>
                 <div id="searchbox"></div>
             </div>
             <div class="w-full overflow-hidden bg-white shadow-xl sm:rounded-lg">

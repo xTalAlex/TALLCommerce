@@ -15400,10 +15400,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/sort-by/sort-by.js");
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/breadcrumb/breadcrumb.js");
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/stats/stats.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/refinement-list/refinement-list.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/clear-refinements/clear-refinements.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js");
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/voice-search/voice-search.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/panel/panel.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/refinement-list/refinement-list.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/clear-refinements/clear-refinements.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 
 
 
@@ -15419,12 +15421,14 @@ window.pagination = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__["de
 window.sortBy = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__["default"];
 window.breadcrumb = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__["default"];
 window.stats = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__["default"];
-window.refinementList = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__["default"];
-window.clearRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__["default"];
-window.currentRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__["default"];
+window.voiceSearch = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__["default"];
+window.panel = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__["default"];
+window.refinementList = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__["default"];
+window.clearRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_14__["default"];
+window.currentRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__["default"];
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_14__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_14__["default"].start();
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_16__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_16__["default"].start();
 
 /***/ }),
 
@@ -34504,6 +34508,34 @@ var n,l,u,i,t,o,r,f,e={},c=[],s=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[c
 
 /***/ }),
 
+/***/ "./node_modules/preact/hooks/dist/hooks.module.js":
+/*!********************************************************!*\
+  !*** ./node_modules/preact/hooks/dist/hooks.module.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useCallback": () => (/* binding */ T),
+/* harmony export */   "useContext": () => (/* binding */ q),
+/* harmony export */   "useDebugValue": () => (/* binding */ x),
+/* harmony export */   "useEffect": () => (/* binding */ _),
+/* harmony export */   "useErrorBoundary": () => (/* binding */ V),
+/* harmony export */   "useImperativeHandle": () => (/* binding */ A),
+/* harmony export */   "useLayoutEffect": () => (/* binding */ h),
+/* harmony export */   "useMemo": () => (/* binding */ F),
+/* harmony export */   "useReducer": () => (/* binding */ d),
+/* harmony export */   "useRef": () => (/* binding */ s),
+/* harmony export */   "useState": () => (/* binding */ y)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+var t,u,r,o,i=0,c=[],f=[],e=preact__WEBPACK_IMPORTED_MODULE_0__.options.__b,a=preact__WEBPACK_IMPORTED_MODULE_0__.options.__r,v=preact__WEBPACK_IMPORTED_MODULE_0__.options.diffed,l=preact__WEBPACK_IMPORTED_MODULE_0__.options.__c,m=preact__WEBPACK_IMPORTED_MODULE_0__.options.unmount;function p(t,r){preact__WEBPACK_IMPORTED_MODULE_0__.options.__h&&preact__WEBPACK_IMPORTED_MODULE_0__.options.__h(u,t,i||r),i=0;var o=u.__H||(u.__H={__:[],__h:[]});return t>=o.__.length&&o.__.push({__V:f}),o.__[t]}function y(n){return i=1,d(z,n)}function d(n,r,o){var i=p(t++,2);return i.t=n,i.__c||(i.__=[o?o(r):z(void 0,r),function(n){var t=i.t(i.__[0],n);i.__[0]!==t&&(i.__=[t,i.__[1]],i.__c.setState({}))}],i.__c=u),i.__}function _(r,o){var i=p(t++,3);!preact__WEBPACK_IMPORTED_MODULE_0__.options.__s&&w(i.__H,o)&&(i.__=r,i.u=o,u.__H.__h.push(i))}function h(r,o){var i=p(t++,4);!preact__WEBPACK_IMPORTED_MODULE_0__.options.__s&&w(i.__H,o)&&(i.__=r,i.u=o,u.__h.push(i))}function s(n){return i=5,F(function(){return{current:n}},[])}function A(n,t,u){i=6,h(function(){return"function"==typeof n?(n(t()),function(){return n(null)}):n?(n.current=t(),function(){return n.current=null}):void 0},null==u?u:u.concat(n))}function F(n,u){var r=p(t++,7);return w(r.__H,u)?(r.__V=n(),r.u=u,r.__h=n,r.__V):r.__}function T(n,t){return i=8,F(function(){return n},t)}function q(n){var r=u.context[n.__c],o=p(t++,9);return o.c=n,r?(null==o.__&&(o.__=!0,r.sub(u)),r.props.value):n.__}function x(t,u){preact__WEBPACK_IMPORTED_MODULE_0__.options.useDebugValue&&preact__WEBPACK_IMPORTED_MODULE_0__.options.useDebugValue(u?u(t):t)}function V(n){var r=p(t++,10),o=y();return r.__=n,u.componentDidCatch||(u.componentDidCatch=function(n){r.__&&r.__(n),o[1](n)}),[o[0],function(){o[1](void 0)}]}function b(){for(var t;t=c.shift();)if(t.__P)try{t.__H.__h.forEach(j),t.__H.__h.forEach(k),t.__H.__h=[]}catch(u){t.__H.__h=[],preact__WEBPACK_IMPORTED_MODULE_0__.options.__e(u,t.__v)}}preact__WEBPACK_IMPORTED_MODULE_0__.options.__b=function(n){u=null,e&&e(n)},preact__WEBPACK_IMPORTED_MODULE_0__.options.__r=function(n){a&&a(n),t=0;var o=(u=n.__c).__H;o&&(r===u?(o.__h=[],u.__h=[],o.__.forEach(function(n){n.__V=f,n.u=void 0})):(o.__h.forEach(j),o.__h.forEach(k),o.__h=[])),r=u},preact__WEBPACK_IMPORTED_MODULE_0__.options.diffed=function(t){v&&v(t);var i=t.__c;i&&i.__H&&(i.__H.__h.length&&(1!==c.push(i)&&o===preact__WEBPACK_IMPORTED_MODULE_0__.options.requestAnimationFrame||((o=preact__WEBPACK_IMPORTED_MODULE_0__.options.requestAnimationFrame)||function(n){var t,u=function(){clearTimeout(r),g&&cancelAnimationFrame(t),setTimeout(n)},r=setTimeout(u,100);g&&(t=requestAnimationFrame(u))})(b)),i.__H.__.forEach(function(n){n.u&&(n.__H=n.u),n.__V!==f&&(n.__=n.__V),n.u=void 0,n.__V=f})),r=u=null},preact__WEBPACK_IMPORTED_MODULE_0__.options.__c=function(t,u){u.some(function(t){try{t.__h.forEach(j),t.__h=t.__h.filter(function(n){return!n.__||k(n)})}catch(r){u.some(function(n){n.__h&&(n.__h=[])}),u=[],preact__WEBPACK_IMPORTED_MODULE_0__.options.__e(r,t.__v)}}),l&&l(t,u)},preact__WEBPACK_IMPORTED_MODULE_0__.options.unmount=function(t){m&&m(t);var u,r=t.__c;r&&r.__H&&(r.__H.__.forEach(function(n){try{j(n)}catch(n){u=n}}),u&&preact__WEBPACK_IMPORTED_MODULE_0__.options.__e(u,r.__v))};var g="function"==typeof requestAnimationFrame;function j(n){var t=u,r=n.__c;"function"==typeof r&&(n.__c=void 0,r()),u=t}function k(n){var t=u;n.__c=n.__(),u=t}function w(n,t){return!n||n.length!==t.length||t.some(function(t,u){return t!==n[u]})}function z(n,t){return"function"==typeof t?t(n):t}
+//# sourceMappingURL=hooks.module.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -35078,6 +35110,116 @@ function PaginationLink(_ref) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Pagination);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/components/Panel/Panel.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/Panel/Panel.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _Template_Template_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Template/Template.js */ "./node_modules/instantsearch.js/es/components/Template/Template.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+/** @jsx h */
+
+
+
+
+
+function Panel(props) {
+  var _cx;
+
+  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useState)(props.isCollapsed),
+      _useState2 = _slicedToArray(_useState, 2),
+      isCollapsed = _useState2[0],
+      setIsCollapsed = _useState2[1];
+
+  var _useState3 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isControlled = _useState4[0],
+      setIsControlled = _useState4[1];
+
+  var bodyRef = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+  (0,preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var node = bodyRef.current;
+
+    if (!node) {
+      return undefined;
+    }
+
+    node.appendChild(props.bodyElement);
+    return function () {
+      node.removeChild(props.bodyElement);
+    };
+  }, [bodyRef, props.bodyElement]);
+
+  if (!isControlled && props.isCollapsed !== isCollapsed) {
+    setIsCollapsed(props.isCollapsed);
+  }
+
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_2__(props.cssClasses.root, (_cx = {}, _defineProperty(_cx, props.cssClasses.noRefinementRoot, props.hidden), _defineProperty(_cx, props.cssClasses.collapsibleRoot, props.collapsible), _defineProperty(_cx, props.cssClasses.collapsedRoot, isCollapsed), _cx)),
+    hidden: props.hidden
+  }, props.templates.header && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+    className: props.cssClasses.header
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    templates: props.templates,
+    templateKey: "header",
+    rootTagName: "span",
+    data: props.data
+  }), props.collapsible && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("button", {
+    className: props.cssClasses.collapseButton,
+    "aria-expanded": !isCollapsed,
+    onClick: function onClick(event) {
+      event.preventDefault();
+      setIsControlled(true);
+      setIsCollapsed(function (prevIsCollapsed) {
+        return !prevIsCollapsed;
+      });
+    }
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    templates: props.templates,
+    templateKey: "collapseButtonText",
+    rootTagName: "span",
+    data: {
+      collapsed: isCollapsed
+    }
+  }))), (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+    className: props.cssClasses.body,
+    ref: bodyRef
+  }), props.templates.footer && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    templates: props.templates,
+    templateKey: "footer",
+    rootProps: {
+      className: props.cssClasses.footer
+    },
+    data: props.data
+  }));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Panel);
 
 /***/ }),
 
@@ -35898,6 +36040,85 @@ var Template = /*#__PURE__*/function (_Component) {
 _defineProperty(Template, "defaultProps", defaultProps);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Template);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/components/VoiceSearch/VoiceSearch.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/VoiceSearch/VoiceSearch.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _Template_Template_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Template/Template.js */ "./node_modules/instantsearch.js/es/components/Template/Template.js");
+/** @jsx h */
+
+
+
+var VoiceSearch = function VoiceSearch(_ref) {
+  var cssClasses = _ref.cssClasses,
+      isBrowserSupported = _ref.isBrowserSupported,
+      isListening = _ref.isListening,
+      toggleListening = _ref.toggleListening,
+      voiceListeningState = _ref.voiceListeningState,
+      templates = _ref.templates;
+
+  var handleClick = function handleClick(event) {
+    if (event.currentTarget instanceof HTMLElement) {
+      event.currentTarget.blur();
+    }
+
+    toggleListening();
+  };
+
+  var status = voiceListeningState.status,
+      transcript = voiceListeningState.transcript,
+      isSpeechFinal = voiceListeningState.isSpeechFinal,
+      errorCode = voiceListeningState.errorCode;
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+    className: cssClasses.root
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    templateKey: "buttonText",
+    rootTagName: "button",
+    rootProps: {
+      className: cssClasses.button,
+      type: 'button',
+      title: "Search by voice".concat(isBrowserSupported ? '' : ' (not supported on this browser)'),
+      onClick: handleClick,
+      disabled: !isBrowserSupported
+    },
+    data: {
+      status: status,
+      errorCode: errorCode,
+      isListening: isListening,
+      transcript: transcript,
+      isSpeechFinal: isSpeechFinal,
+      isBrowserSupported: isBrowserSupported
+    },
+    templates: templates
+  }), (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    templateKey: "status",
+    rootProps: {
+      className: cssClasses.status
+    },
+    data: {
+      status: status,
+      errorCode: errorCode,
+      isListening: isListening,
+      transcript: transcript,
+      isSpeechFinal: isSpeechFinal,
+      isBrowserSupported: isBrowserSupported
+    },
+    templates: templates
+  }));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VoiceSearch);
 
 /***/ }),
 
@@ -37547,6 +37768,182 @@ var connectStats = function connectStats(renderFn) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectStats);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/connectors/voice-search/connectVoiceSearch.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/voice-search/connectVoiceSearch.js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+/* harmony import */ var _lib_voiceSearchHelper_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/voiceSearchHelper/index.js */ "./node_modules/instantsearch.js/es/lib/voiceSearchHelper/index.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
+  name: 'voice-search',
+  connector: true
+});
+
+var connectVoiceSearch = function connectVoiceSearch(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
+  return function (widgetParams) {
+    var _widgetParams$searchA = widgetParams.searchAsYouSpeak,
+        searchAsYouSpeak = _widgetParams$searchA === void 0 ? false : _widgetParams$searchA,
+        language = widgetParams.language,
+        additionalQueryParameters = widgetParams.additionalQueryParameters,
+        _widgetParams$createV = widgetParams.createVoiceSearchHelper,
+        createVoiceSearchHelper = _widgetParams$createV === void 0 ? _lib_voiceSearchHelper_index_js__WEBPACK_IMPORTED_MODULE_3__["default"] : _widgetParams$createV;
+    return {
+      $$type: 'ais.voiceSearch',
+      init: function init(initOptions) {
+        var instantSearchInstance = initOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        var instantSearchInstance = renderOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), false);
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          voiceSearch: this.getWidgetRenderState(renderOptions)
+        });
+      },
+      getWidgetRenderState: function getWidgetRenderState(renderOptions) {
+        var _this = this;
+
+        var helper = renderOptions.helper,
+            instantSearchInstance = renderOptions.instantSearchInstance;
+
+        if (!this._refine) {
+          this._refine = function (query) {
+            if (query !== helper.state.query) {
+              var queryLanguages = language ? [language.split('-')[0]] : undefined;
+              helper.setQueryParameter('queryLanguages', queryLanguages);
+
+              if (typeof additionalQueryParameters === 'function') {
+                helper.setState(helper.state.setQueryParameters(_objectSpread({
+                  ignorePlurals: true,
+                  removeStopWords: true,
+                  // @ts-ignore (optionalWords only allows array in v3, while string is also valid)
+                  optionalWords: query
+                }, additionalQueryParameters({
+                  query: query
+                }))));
+              }
+
+              helper.setQuery(query).search();
+            }
+          };
+        }
+
+        if (!this._voiceSearchHelper) {
+          this._voiceSearchHelper = createVoiceSearchHelper({
+            searchAsYouSpeak: searchAsYouSpeak,
+            language: language,
+            onQueryChange: function onQueryChange(query) {
+              return _this._refine(query);
+            },
+            onStateChange: function onStateChange() {
+              renderFn(_objectSpread(_objectSpread({}, _this.getWidgetRenderState(renderOptions)), {}, {
+                instantSearchInstance: instantSearchInstance
+              }), false);
+            }
+          });
+        }
+
+        var _voiceSearchHelper = this._voiceSearchHelper,
+            isBrowserSupported = _voiceSearchHelper.isBrowserSupported,
+            isListening = _voiceSearchHelper.isListening,
+            startListening = _voiceSearchHelper.startListening,
+            stopListening = _voiceSearchHelper.stopListening,
+            getState = _voiceSearchHelper.getState;
+        return {
+          isBrowserSupported: isBrowserSupported(),
+          isListening: isListening(),
+          toggleListening: function toggleListening() {
+            if (!isBrowserSupported()) {
+              return;
+            }
+
+            if (isListening()) {
+              stopListening();
+            } else {
+              startListening();
+            }
+          },
+          voiceListeningState: getState(),
+          widgetParams: widgetParams
+        };
+      },
+      dispose: function dispose(_ref) {
+        var state = _ref.state;
+
+        this._voiceSearchHelper.dispose();
+
+        unmountFn();
+        var newState = state;
+
+        if (typeof additionalQueryParameters === 'function') {
+          var additional = additionalQueryParameters({
+            query: ''
+          });
+          var toReset = additional ? Object.keys(additional).reduce(function (acc, current) {
+            // @ts-ignore search parameters is typed as readonly in v4
+            acc[current] = undefined;
+            return acc;
+          }, {}) : {};
+          newState = state.setQueryParameters(_objectSpread({
+            // @ts-ignore (queryLanguages is not added to algoliasearch v3)
+            queryLanguages: undefined,
+            ignorePlurals: undefined,
+            removeStopWords: undefined,
+            optionalWords: undefined
+          }, toReset));
+        }
+
+        return newState.setQueryParameter('query', undefined);
+      },
+      getWidgetUiState: function getWidgetUiState(uiState, _ref2) {
+        var searchParameters = _ref2.searchParameters;
+        var query = searchParameters.query || '';
+
+        if (!query) {
+          return uiState;
+        }
+
+        return _objectSpread(_objectSpread({}, uiState), {}, {
+          query: query
+        });
+      },
+      getWidgetSearchParameters: function getWidgetSearchParameters(searchParameters, _ref3) {
+        var uiState = _ref3.uiState;
+        return searchParameters.setQueryParameter('query', uiState.query || '');
+      }
+    };
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectVoiceSearch);
 
 /***/ }),
 
@@ -41366,6 +41763,164 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/lib/voiceSearchHelper/index.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/lib/voiceSearchHelper/index.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// `SpeechRecognition` is an API used on the browser so we can safely disable
+// the `window` check.
+
+/* eslint-disable no-restricted-globals */
+
+/* global SpeechRecognition SpeechRecognitionEvent */
+var createVoiceSearchHelper = function createVoiceSearchHelper(_ref) {
+  var searchAsYouSpeak = _ref.searchAsYouSpeak,
+      language = _ref.language,
+      onQueryChange = _ref.onQueryChange,
+      onStateChange = _ref.onStateChange;
+  var SpeechRecognitionAPI = window.webkitSpeechRecognition || window.SpeechRecognition;
+
+  var getDefaultState = function getDefaultState(status) {
+    return {
+      status: status,
+      transcript: '',
+      isSpeechFinal: false,
+      errorCode: undefined
+    };
+  };
+
+  var state = getDefaultState('initial');
+  var recognition;
+
+  var isBrowserSupported = function isBrowserSupported() {
+    return Boolean(SpeechRecognitionAPI);
+  };
+
+  var isListening = function isListening() {
+    return state.status === 'askingPermission' || state.status === 'waiting' || state.status === 'recognizing';
+  };
+
+  var setState = function setState() {
+    var newState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    state = _objectSpread(_objectSpread({}, state), newState);
+    onStateChange();
+  };
+
+  var getState = function getState() {
+    return state;
+  };
+
+  var resetState = function resetState() {
+    var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'initial';
+    setState(getDefaultState(status));
+  };
+
+  var onStart = function onStart() {
+    setState({
+      status: 'waiting'
+    });
+  };
+
+  var onError = function onError(event) {
+    setState({
+      status: 'error',
+      errorCode: event.error
+    });
+  };
+
+  var onResult = function onResult(event) {
+    setState({
+      status: 'recognizing',
+      transcript: event.results[0] && event.results[0][0] && event.results[0][0].transcript || '',
+      isSpeechFinal: event.results[0] && event.results[0].isFinal
+    });
+
+    if (searchAsYouSpeak && state.transcript) {
+      onQueryChange(state.transcript);
+    }
+  };
+
+  var onEnd = function onEnd() {
+    if (!state.errorCode && state.transcript && !searchAsYouSpeak) {
+      onQueryChange(state.transcript);
+    }
+
+    if (state.status !== 'error') {
+      setState({
+        status: 'finished'
+      });
+    }
+  };
+
+  var startListening = function startListening() {
+    recognition = new SpeechRecognitionAPI();
+
+    if (!recognition) {
+      return;
+    }
+
+    resetState('askingPermission');
+    recognition.interimResults = true;
+
+    if (language) {
+      recognition.lang = language;
+    }
+
+    recognition.addEventListener('start', onStart);
+    recognition.addEventListener('error', onError);
+    recognition.addEventListener('result', onResult);
+    recognition.addEventListener('end', onEnd);
+    recognition.start();
+  };
+
+  var dispose = function dispose() {
+    if (!recognition) {
+      return;
+    }
+
+    recognition.stop();
+    recognition.removeEventListener('start', onStart);
+    recognition.removeEventListener('error', onError);
+    recognition.removeEventListener('result', onResult);
+    recognition.removeEventListener('end', onEnd);
+    recognition = undefined;
+  };
+
+  var stopListening = function stopListening() {
+    dispose(); // Because `dispose` removes event listeners, `end` listener is not called.
+    // So we're setting the `status` as `finished` here.
+    // If we don't do it, it will be still `waiting` or `recognizing`.
+
+    resetState('finished');
+  };
+
+  return {
+    getState: getState,
+    isBrowserSupported: isBrowserSupported,
+    isListening: isListening,
+    startListening: startListening,
+    stopListening: stopListening,
+    dispose: dispose
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createVoiceSearchHelper);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/middlewares/createMetadataMiddleware.js":
 /*!**********************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/middlewares/createMetadataMiddleware.js ***!
@@ -42916,6 +43471,211 @@ var pagination = function pagination(widgetParams) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/widgets/panel/panel.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/panel/panel.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/logger.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getObjectType.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+/* harmony import */ var _components_Panel_Panel_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Panel/Panel.js */ "./node_modules/instantsearch.js/es/components/Panel/Panel.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
+  name: 'panel'
+});
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('Panel');
+
+var renderer = function renderer(_ref) {
+  var containerNode = _ref.containerNode,
+      bodyContainerNode = _ref.bodyContainerNode,
+      cssClasses = _ref.cssClasses,
+      templates = _ref.templates;
+  return function (_ref2) {
+    var options = _ref2.options,
+        hidden = _ref2.hidden,
+        collapsible = _ref2.collapsible,
+        collapsed = _ref2.collapsed;
+    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_Panel_Panel_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      cssClasses: cssClasses,
+      hidden: hidden,
+      collapsible: collapsible,
+      isCollapsed: collapsed,
+      templates: templates,
+      data: options,
+      bodyElement: bodyContainerNode
+    }), containerNode);
+  };
+};
+
+/**
+ * The panel widget wraps other widgets in a consistent panel design.
+ * It also reacts, indicates and sets CSS classes when widgets are no longer relevant for refining.
+ */
+var panel = function panel(panelWidgetParams) {
+  var _ref3 = panelWidgetParams || {},
+      _ref3$templates = _ref3.templates,
+      templates = _ref3$templates === void 0 ? {} : _ref3$templates,
+      _ref3$hidden = _ref3.hidden,
+      hidden = _ref3$hidden === void 0 ? function () {
+    return false;
+  } : _ref3$hidden,
+      collapsed = _ref3.collapsed,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses;
+
+   true ? (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__.warning)(typeof hidden === 'function', "The `hidden` option in the \"panel\" widget expects a function returning a boolean (received type ".concat((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__["default"])(hidden), ").")) : 0;
+   true ? (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__.warning)(typeof collapsed === 'undefined' || typeof collapsed === 'function', "The `collapsed` option in the \"panel\" widget expects a function returning a boolean (received type ".concat((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__["default"])(collapsed), ").")) : 0;
+  var bodyContainerNode = document.createElement('div');
+  var collapsible = Boolean(collapsed);
+  var collapsedFn = typeof collapsed === 'function' ? collapsed : function () {
+    return false;
+  };
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
+    noRefinementRoot: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      modifierName: 'noRefinement'
+    }), userCssClasses.noRefinementRoot),
+    collapsibleRoot: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      modifierName: 'collapsible'
+    }), userCssClasses.collapsibleRoot),
+    collapsedRoot: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      modifierName: 'collapsed'
+    }), userCssClasses.collapsedRoot),
+    collapseButton: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'collapseButton'
+    }), userCssClasses.collapseButton),
+    collapseIcon: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'collapseIcon'
+    }), userCssClasses.collapseIcon),
+    body: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'body'
+    }), userCssClasses.body),
+    header: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'header'
+    }), userCssClasses.header),
+    footer: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'footer'
+    }), userCssClasses.footer)
+  };
+  return function (widgetFactory) {
+    return function (widgetParams) {
+      if (!(widgetParams && widgetParams.container)) {
+        throw new Error(withUsage("The `container` option is required in the widget within the panel."));
+      }
+
+      var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_7__["default"])(widgetParams.container);
+      var defaultTemplates = {
+        header: '',
+        footer: '',
+        collapseButtonText: function collapseButtonText(_ref4) {
+          var isCollapsed = _ref4.collapsed;
+          return "<svg\n          class=\"".concat(cssClasses.collapseIcon, "\"\n          width=\"1em\"\n          height=\"1em\"\n          viewBox=\"0 0 500 500\"\n        >\n        <path d=\"").concat(isCollapsed ? 'M100 250l300-150v300z' : 'M250 400l150-300H100z', "\" fill=\"currentColor\" />\n        </svg>");
+        }
+      };
+      var renderPanel = renderer({
+        containerNode: containerNode,
+        bodyContainerNode: bodyContainerNode,
+        cssClasses: cssClasses,
+        templates: _objectSpread(_objectSpread({}, defaultTemplates), templates)
+      });
+      var widget = widgetFactory(_objectSpread(_objectSpread({}, widgetParams), {}, {
+        container: bodyContainerNode
+      })); // TypeScript somehow loses track of the ...widget type, since it's
+      // not directly returned. Eventually the "as AugmentedWidget<typeof widgetFactory>"
+      // will not be needed anymore.
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+
+      return _objectSpread(_objectSpread({}, widget), {}, {
+        init: function init() {
+          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+          }
+
+          var renderOptions = args[0];
+
+          var options = _objectSpread(_objectSpread({}, widget.getWidgetRenderState ? widget.getWidgetRenderState(renderOptions) : {}), renderOptions);
+
+          renderPanel({
+            options: options,
+            hidden: true,
+            collapsible: collapsible,
+            collapsed: false
+          });
+
+          if (typeof widget.init === 'function') {
+            var _widget$init;
+
+            (_widget$init = widget.init).call.apply(_widget$init, [this].concat(args));
+          }
+        },
+        render: function render() {
+          for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+          }
+
+          var renderOptions = args[0];
+
+          var options = _objectSpread(_objectSpread({}, widget.getWidgetRenderState ? widget.getWidgetRenderState(renderOptions) : {}), renderOptions);
+
+          renderPanel({
+            options: options,
+            hidden: Boolean(hidden(options)),
+            collapsible: collapsible,
+            collapsed: Boolean(collapsedFn(options))
+          });
+
+          if (typeof widget.render === 'function') {
+            var _widget$render;
+
+            (_widget$render = widget.render).call.apply(_widget$render, [this].concat(args));
+          }
+        },
+        dispose: function dispose() {
+          (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+
+          if (typeof widget.dispose === 'function') {
+            var _widget$dispose;
+
+            for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+              args[_key3] = arguments[_key3];
+            }
+
+            return (_widget$dispose = widget.dispose).call.apply(_widget$dispose, [this].concat(args));
+          }
+
+          return undefined;
+        }
+      });
+    };
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (panel);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/widgets/refinement-list/defaultTemplates.js":
 /*!**************************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/widgets/refinement-list/defaultTemplates.js ***!
@@ -43592,6 +44352,151 @@ var stats = function stats(widgetParams) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stats);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/voice-search/defaultTemplates.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/voice-search/defaultTemplates.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var getButtonInnerElement = function getButtonInnerElement(status, errorCode, isListening) {
+  if (status === 'error' && errorCode === 'not-allowed') {
+    return "<line x1=\"1\" y1=\"1\" x2=\"23\" y2=\"23\"></line>\n            <path d=\"M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6\"></path>\n            <path d=\"M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23\"></path>\n            <line x1=\"12\" y1=\"19\" x2=\"12\" y2=\"23\"></line>\n            <line x1=\"8\" y1=\"23\" x2=\"16\" y2=\"23\"></line>";
+  }
+
+  return "<path\n            d=\"M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z\"\n            fill=\"".concat(isListening ? 'currentColor' : 'none', "\">\n          </path>\n          <path d=\"M19 10v2a7 7 0 0 1-14 0v-2\"></path>\n          <line x1=\"12\" y1=\"19\" x2=\"12\" y2=\"23\"></line>\n          <line x1=\"8\" y1=\"23\" x2=\"16\" y2=\"23\"></line>");
+};
+
+var defaultTemplates = {
+  buttonText: function buttonText(_ref) {
+    var status = _ref.status,
+        errorCode = _ref.errorCode,
+        isListening = _ref.isListening;
+    return "<svg\n       width=\"16\"\n       height=\"16\"\n       viewBox=\"0 0 24 24\"\n       fill=\"none\"\n       stroke=\"currentColor\"\n       stroke-width=\"2\"\n       stroke-linecap=\"round\"\n       stroke-linejoin=\"round\"\n     >\n       ".concat(getButtonInnerElement(status, errorCode, isListening), "\n     </svg>");
+  },
+  status: "<p>{{transcript}}</p>"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (defaultTemplates);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/voice-search/voice-search.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/voice-search/voice-search.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+/* harmony import */ var _connectors_voice_search_connectVoiceSearch_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../connectors/voice-search/connectVoiceSearch.js */ "./node_modules/instantsearch.js/es/connectors/voice-search/connectVoiceSearch.js");
+/* harmony import */ var _components_VoiceSearch_VoiceSearch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/VoiceSearch/VoiceSearch.js */ "./node_modules/instantsearch.js/es/components/VoiceSearch/VoiceSearch.js");
+/* harmony import */ var _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./defaultTemplates.js */ "./node_modules/instantsearch.js/es/widgets/voice-search/defaultTemplates.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
+  name: 'voice-search'
+});
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('VoiceSearch');
+
+var renderer = function renderer(_ref) {
+  var containerNode = _ref.containerNode,
+      cssClasses = _ref.cssClasses,
+      templates = _ref.templates;
+  return function (_ref2) {
+    var isBrowserSupported = _ref2.isBrowserSupported,
+        isListening = _ref2.isListening,
+        toggleListening = _ref2.toggleListening,
+        voiceListeningState = _ref2.voiceListeningState;
+    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_VoiceSearch_VoiceSearch_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      cssClasses: cssClasses,
+      templates: templates,
+      isBrowserSupported: isBrowserSupported,
+      isListening: isListening,
+      toggleListening: toggleListening,
+      voiceListeningState: voiceListeningState
+    }), containerNode);
+  };
+};
+
+var voiceSearch = function voiceSearch(widgetParams) {
+  var _ref3 = widgetParams || {},
+      container = _ref3.container,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses,
+      _ref3$templates = _ref3.templates,
+      userTemplates = _ref3$templates === void 0 ? {} : _ref3$templates,
+      _ref3$searchAsYouSpea = _ref3.searchAsYouSpeak,
+      searchAsYouSpeak = _ref3$searchAsYouSpea === void 0 ? false : _ref3$searchAsYouSpea,
+      language = _ref3.language,
+      additionalQueryParameters = _ref3.additionalQueryParameters,
+      createVoiceSearchHelper = _ref3.createVoiceSearchHelper;
+
+  if (!container) {
+    throw new Error(withUsage('The `container` option is required.'));
+  }
+
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])(container);
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
+    button: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'button'
+    }), userCssClasses.button),
+    status: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'status'
+    }), userCssClasses.status)
+  };
+
+  var templates = _objectSpread(_objectSpread({}, _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_6__["default"]), userTemplates);
+
+  var specializedRenderer = renderer({
+    containerNode: containerNode,
+    cssClasses: cssClasses,
+    templates: templates
+  });
+  var makeWidget = (0,_connectors_voice_search_connectVoiceSearch_js__WEBPACK_IMPORTED_MODULE_7__["default"])(specializedRenderer, function () {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+  });
+  return _objectSpread(_objectSpread({}, makeWidget({
+    container: containerNode,
+    cssClasses: cssClasses,
+    templates: templates,
+    searchAsYouSpeak: searchAsYouSpeak,
+    language: language,
+    additionalQueryParameters: additionalQueryParameters,
+    createVoiceSearchHelper: createVoiceSearchHelper
+  })), {}, {
+    $$widgetType: 'ais.voiceSearch'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (voiceSearch);
 
 /***/ })
 
