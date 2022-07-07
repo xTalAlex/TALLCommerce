@@ -12,12 +12,18 @@
       '{{ config('scout.algolia.id') }}',
       '{{ config('scout.algolia.client') }}'
     );
+    recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
+      key: 'RECENT_SEARCH',
+      limit: 5,
+    });
     window.autocomplete({
       detachedMediaQuery: '(min-width: 0px)',
       translations : {
         detachedCancelButtonText: '{{ __('Cancel') }}'
       },
       container: '#autocomplete',
+      plugins: [recentSearchesPlugin],
+      openOnFocus: true,
       placeholder: '{{__('Search...')}}',
       debug:false,
       getSources({ query }) {

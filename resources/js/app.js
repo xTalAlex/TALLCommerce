@@ -3,12 +3,14 @@ import './bootstrap';
 import algoliasearch from 'algoliasearch/lite';
 import instantsearch from 'instantsearch.js';
 import { autocomplete , getAlgoliaResults } from '@algolia/autocomplete-js';
+import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import { searchBox, hits, pagination, sortBy, breadcrumb, stats, voiceSearch, panel, refinementList, clearRefinements, currentRefinements } from 'instantsearch.js/es/widgets';
 
 window.algoliasearch = algoliasearch;
 window.instantsearch = instantsearch;
 window.autocomplete = autocomplete;
 window.getAlgoliaResults = getAlgoliaResults;
+window.createLocalStorageRecentSearchesPlugin = createLocalStorageRecentSearchesPlugin;
 window.searchBox = searchBox;
 window.hits = hits;
 window.pagination = pagination;

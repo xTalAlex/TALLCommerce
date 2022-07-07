@@ -3788,6 +3788,532 @@ function setPropertiesWithoutEvents(dom, props) {
 
 /***/ }),
 
+/***/ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/addHighlightedAttribute.js":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/addHighlightedAttribute.js ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addHighlightedAttribute": () => (/* binding */ addHighlightedAttribute)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function addHighlightedAttribute(_ref) {
+  var item = _ref.item,
+      query = _ref.query;
+  return _objectSpread(_objectSpread({}, item), {}, {
+    _highlightResult: {
+      label: {
+        value: query ? item.label.replace(new RegExp(query.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi'), function (match) {
+          return "__aa-highlight__".concat(match, "__/aa-highlight__");
+        }) : item.label
+      }
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/constants.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/constants.js ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "LOCAL_STORAGE_KEY": () => (/* binding */ LOCAL_STORAGE_KEY),
+/* harmony export */   "LOCAL_STORAGE_KEY_TEST": () => (/* binding */ LOCAL_STORAGE_KEY_TEST)
+/* harmony export */ });
+var LOCAL_STORAGE_KEY = 'AUTOCOMPLETE_RECENT_SEARCHES';
+var LOCAL_STORAGE_KEY_TEST = '__AUTOCOMPLETE_RECENT_SEARCHES_PLUGIN_TEST_KEY__';
+
+/***/ }),
+
+/***/ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createLocalStorage.js":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createLocalStorage.js ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createLocalStorage": () => (/* binding */ createLocalStorage)
+/* harmony export */ });
+/* harmony import */ var _getLocalStorage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getLocalStorage */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/getLocalStorage.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+function createLocalStorage(_ref) {
+  var key = _ref.key,
+      limit = _ref.limit,
+      search = _ref.search;
+  var storage = (0,_getLocalStorage__WEBPACK_IMPORTED_MODULE_0__.getLocalStorage)({
+    key: key
+  });
+  return {
+    onAdd: function onAdd(item) {
+      storage.setItem([item].concat(_toConsumableArray(storage.getItem())));
+    },
+    onRemove: function onRemove(id) {
+      storage.setItem(storage.getItem().filter(function (x) {
+        return x.id !== id;
+      }));
+    },
+    getAll: function getAll() {
+      var query = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      return search({
+        query: query,
+        items: storage.getItem(),
+        limit: limit
+      }).slice(0, limit);
+    }
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createLocalStorageRecentSearchesPlugin.js":
+/*!**********************************************************************************************************************!*\
+  !*** ./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createLocalStorageRecentSearchesPlugin.js ***!
+  \**********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createLocalStorageRecentSearchesPlugin": () => (/* binding */ createLocalStorageRecentSearchesPlugin)
+/* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/constants.js");
+/* harmony import */ var _createLocalStorage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createLocalStorage */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createLocalStorage.js");
+/* harmony import */ var _createRecentSearchesPlugin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./createRecentSearchesPlugin */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createRecentSearchesPlugin.js");
+/* harmony import */ var _search__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./search */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/search.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+function createLocalStorageRecentSearchesPlugin(options) {
+  var _getOptions = getOptions(options),
+      key = _getOptions.key,
+      limit = _getOptions.limit,
+      transformSource = _getOptions.transformSource,
+      search = _getOptions.search,
+      subscribe = _getOptions.subscribe;
+
+  var storage = (0,_createLocalStorage__WEBPACK_IMPORTED_MODULE_0__.createLocalStorage)({
+    key: [_constants__WEBPACK_IMPORTED_MODULE_1__.LOCAL_STORAGE_KEY, key].join(':'),
+    limit: limit,
+    search: search
+  });
+  var recentSearchesPlugin = (0,_createRecentSearchesPlugin__WEBPACK_IMPORTED_MODULE_2__.createRecentSearchesPlugin)({
+    transformSource: transformSource,
+    storage: storage,
+    subscribe: subscribe
+  });
+  return _objectSpread(_objectSpread({}, recentSearchesPlugin), {}, {
+    name: 'aa.localStorageRecentSearchesPlugin',
+    __autocomplete_pluginOptions: options
+  });
+}
+
+function getOptions(options) {
+  return _objectSpread({
+    limit: 5,
+    search: _search__WEBPACK_IMPORTED_MODULE_3__.search,
+    transformSource: function transformSource(_ref) {
+      var source = _ref.source;
+      return source;
+    }
+  }, options);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createRecentSearchesPlugin.js":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createRecentSearchesPlugin.js ***!
+  \**********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createRecentSearchesPlugin": () => (/* binding */ createRecentSearchesPlugin)
+/* harmony export */ });
+/* harmony import */ var _algolia_autocomplete_shared__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @algolia/autocomplete-shared */ "./node_modules/@algolia/autocomplete-shared/dist/esm/createRef.js");
+/* harmony import */ var _algolia_autocomplete_shared__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @algolia/autocomplete-shared */ "./node_modules/@algolia/autocomplete-shared/dist/esm/warn.js");
+/* harmony import */ var _createStorageApi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createStorageApi */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createStorageApi.js");
+/* harmony import */ var _getTemplates__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getTemplates */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/getTemplates.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+function getDefaultSubcribe(store) {
+  return function subscribe(_ref) {
+    var onSelect = _ref.onSelect;
+    onSelect(function (_ref2) {
+      var item = _ref2.item,
+          state = _ref2.state,
+          source = _ref2.source;
+      var inputValue = source.getItemInputValue({
+        item: item,
+        state: state
+      });
+
+      if (source.sourceId === 'querySuggestionsPlugin' && inputValue) {
+        var recentItem = {
+          id: inputValue,
+          label: inputValue,
+          category: item.__autocomplete_qsCategory
+        };
+        store.addItem(recentItem);
+      }
+    });
+  };
+}
+
+function createRecentSearchesPlugin(options) {
+  var _getOptions = getOptions(options),
+      storage = _getOptions.storage,
+      transformSource = _getOptions.transformSource,
+      subscribe = _getOptions.subscribe;
+
+  var store = (0,_createStorageApi__WEBPACK_IMPORTED_MODULE_0__.createStorageApi)(storage);
+  var lastItemsRef = (0,_algolia_autocomplete_shared__WEBPACK_IMPORTED_MODULE_1__.createRef)([]);
+  return {
+    name: 'aa.recentSearchesPlugin',
+    subscribe: subscribe !== null && subscribe !== void 0 ? subscribe : getDefaultSubcribe(store),
+    onSubmit: function onSubmit(_ref3) {
+      var state = _ref3.state;
+      var query = state.query;
+
+      if (query) {
+        var recentItem = {
+          id: query,
+          label: query
+        };
+        store.addItem(recentItem);
+      }
+    },
+    getSources: function getSources(_ref4) {
+      var query = _ref4.query,
+          setQuery = _ref4.setQuery,
+          refresh = _ref4.refresh,
+          state = _ref4.state;
+      lastItemsRef.current = store.getAll(query);
+
+      function onRemove(id) {
+        store.removeItem(id);
+        refresh();
+      }
+
+      function onTapAhead(item) {
+        setQuery(item.label);
+        refresh();
+      }
+
+      return Promise.resolve(lastItemsRef.current).then(function (items) {
+        if (items.length === 0) {
+          return [];
+        }
+
+        return [transformSource({
+          source: {
+            sourceId: 'recentSearchesPlugin',
+            getItemInputValue: function getItemInputValue(_ref5) {
+              var item = _ref5.item;
+              return item.label;
+            },
+            getItems: function getItems() {
+              return items;
+            },
+            templates: (0,_getTemplates__WEBPACK_IMPORTED_MODULE_2__.getTemplates)({
+              onRemove: onRemove,
+              onTapAhead: onTapAhead
+            })
+          },
+          onRemove: onRemove,
+          onTapAhead: onTapAhead,
+          state: state
+        })];
+      });
+    },
+    data: _objectSpread(_objectSpread({}, store), {}, {
+      // @ts-ignore SearchOptions `facetFilters` is ReadonlyArray
+      getAlgoliaSearchParams: function getAlgoliaSearchParams() {
+        var _params$facetFilters, _params$hitsPerPage;
+
+        var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        // If the items returned by `store.getAll` are contained in a Promise,
+        // we cannot provide the search params in time when this function is called
+        // because we need to resolve the promise before getting the value.
+        if (!Array.isArray(lastItemsRef.current)) {
+           true ? (0,_algolia_autocomplete_shared__WEBPACK_IMPORTED_MODULE_3__.warn)(false, 'The `getAlgoliaSearchParams` function is not supported with storages that return promises in `getAll`.') : 0;
+          return params;
+        }
+
+        return _objectSpread(_objectSpread({}, params), {}, {
+          facetFilters: [].concat(_toConsumableArray((_params$facetFilters = params.facetFilters) !== null && _params$facetFilters !== void 0 ? _params$facetFilters : []), _toConsumableArray(lastItemsRef.current.map(function (item) {
+            return ["objectID:-".concat(item.label)];
+          }))),
+          hitsPerPage: Math.max(1, ((_params$hitsPerPage = params.hitsPerPage) !== null && _params$hitsPerPage !== void 0 ? _params$hitsPerPage : 10) - lastItemsRef.current.length)
+        });
+      }
+    }),
+    __autocomplete_pluginOptions: options
+  };
+}
+
+function getOptions(options) {
+  return _objectSpread({
+    transformSource: function transformSource(_ref6) {
+      var source = _ref6.source;
+      return source;
+    }
+  }, options);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createStorageApi.js":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createStorageApi.js ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createStorageApi": () => (/* binding */ createStorageApi)
+/* harmony export */ });
+function createStorageApi(storage) {
+  return {
+    addItem: function addItem(item) {
+      storage.onRemove(item.id);
+      storage.onAdd(item);
+    },
+    removeItem: function removeItem(id) {
+      storage.onRemove(id);
+    },
+    getAll: function getAll(query) {
+      return storage.getAll(query);
+    }
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/getLocalStorage.js":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/getLocalStorage.js ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getLocalStorage": () => (/* binding */ getLocalStorage)
+/* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/constants.js");
+
+
+function isLocalStorageSupported() {
+  try {
+    localStorage.setItem(_constants__WEBPACK_IMPORTED_MODULE_0__.LOCAL_STORAGE_KEY_TEST, '');
+    localStorage.removeItem(_constants__WEBPACK_IMPORTED_MODULE_0__.LOCAL_STORAGE_KEY_TEST);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+function getLocalStorage(_ref) {
+  var key = _ref.key;
+
+  if (!isLocalStorageSupported()) {
+    return {
+      setItem: function setItem() {},
+      getItem: function getItem() {
+        return [];
+      }
+    };
+  }
+
+  return {
+    setItem: function setItem(items) {
+      return window.localStorage.setItem(key, JSON.stringify(items));
+    },
+    getItem: function getItem() {
+      var items = window.localStorage.getItem(key);
+      return items ? JSON.parse(items) : [];
+    }
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/getTemplates.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/getTemplates.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getTemplates": () => (/* binding */ getTemplates)
+/* harmony export */ });
+/** @jsx createElement */
+function getTemplates(_ref) {
+  var onRemove = _ref.onRemove,
+      onTapAhead = _ref.onTapAhead;
+  return {
+    item: function item(_ref2) {
+      var item = _ref2.item,
+          createElement = _ref2.createElement,
+          components = _ref2.components;
+      return createElement("div", {
+        className: "aa-ItemWrapper"
+      }, createElement("div", {
+        className: "aa-ItemContent"
+      }, createElement("div", {
+        className: "aa-ItemIcon aa-ItemIcon--noBorder"
+      }, createElement("svg", {
+        viewBox: "0 0 24 24",
+        fill: "currentColor"
+      }, createElement("path", {
+        d: "M12.516 6.984v5.25l4.5 2.672-0.75 1.266-5.25-3.188v-6h1.5zM12 20.016q3.281 0 5.648-2.367t2.367-5.648-2.367-5.648-5.648-2.367-5.648 2.367-2.367 5.648 2.367 5.648 5.648 2.367zM12 2.016q4.125 0 7.055 2.93t2.93 7.055-2.93 7.055-7.055 2.93-7.055-2.93-2.93-7.055 2.93-7.055 7.055-2.93z"
+      }))), createElement("div", {
+        className: "aa-ItemContentBody"
+      }, createElement("div", {
+        className: "aa-ItemContentTitle"
+      }, createElement(components.ReverseHighlight, {
+        hit: item,
+        attribute: "label"
+      }), item.category && createElement("span", {
+        className: "aa-ItemContentSubtitle aa-ItemContentSubtitle--inline"
+      }, createElement("span", {
+        className: "aa-ItemContentSubtitleIcon"
+      }), " in", ' ', createElement("span", {
+        className: "aa-ItemContentSubtitleCategory"
+      }, item.category))))), createElement("div", {
+        className: "aa-ItemActions"
+      }, createElement("button", {
+        className: "aa-ItemActionButton",
+        title: "Remove this search",
+        onClick: function onClick(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          onRemove(item.id);
+        }
+      }, createElement("svg", {
+        viewBox: "0 0 24 24",
+        fill: "currentColor"
+      }, createElement("path", {
+        d: "M18 7v13c0 0.276-0.111 0.525-0.293 0.707s-0.431 0.293-0.707 0.293h-10c-0.276 0-0.525-0.111-0.707-0.293s-0.293-0.431-0.293-0.707v-13zM17 5v-1c0-0.828-0.337-1.58-0.879-2.121s-1.293-0.879-2.121-0.879h-4c-0.828 0-1.58 0.337-2.121 0.879s-0.879 1.293-0.879 2.121v1h-4c-0.552 0-1 0.448-1 1s0.448 1 1 1h1v13c0 0.828 0.337 1.58 0.879 2.121s1.293 0.879 2.121 0.879h10c0.828 0 1.58-0.337 2.121-0.879s0.879-1.293 0.879-2.121v-13h1c0.552 0 1-0.448 1-1s-0.448-1-1-1zM9 5v-1c0-0.276 0.111-0.525 0.293-0.707s0.431-0.293 0.707-0.293h4c0.276 0 0.525 0.111 0.707 0.293s0.293 0.431 0.293 0.707v1zM9 11v6c0 0.552 0.448 1 1 1s1-0.448 1-1v-6c0-0.552-0.448-1-1-1s-1 0.448-1 1zM13 11v6c0 0.552 0.448 1 1 1s1-0.448 1-1v-6c0-0.552-0.448-1-1-1s-1 0.448-1 1z"
+      }))), createElement("button", {
+        className: "aa-ItemActionButton",
+        title: "Fill query with \"".concat(item.label, "\""),
+        onClick: function onClick(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          onTapAhead(item);
+        }
+      }, createElement("svg", {
+        viewBox: "0 0 24 24",
+        fill: "currentColor"
+      }, createElement("path", {
+        d: "M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+      })))));
+    }
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/search.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/search.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "search": () => (/* binding */ search)
+/* harmony export */ });
+/* harmony import */ var _addHighlightedAttribute__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addHighlightedAttribute */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/addHighlightedAttribute.js");
+
+function search(_ref) {
+  var query = _ref.query,
+      items = _ref.items,
+      limit = _ref.limit;
+
+  if (!query) {
+    return items.slice(0, limit).map(function (item) {
+      return (0,_addHighlightedAttribute__WEBPACK_IMPORTED_MODULE_0__.addHighlightedAttribute)({
+        item: item,
+        query: query
+      });
+    });
+  }
+
+  return items.filter(function (item) {
+    return item.label.toLowerCase().includes(query.toLowerCase());
+  }).slice(0, limit).map(function (item) {
+    return (0,_addHighlightedAttribute__WEBPACK_IMPORTED_MODULE_0__.addHighlightedAttribute)({
+      item: item,
+      query: query
+    });
+  });
+}
+
+/***/ }),
+
 /***/ "./node_modules/@algolia/autocomplete-preset-algolia/dist/esm/constants/index.js":
 /*!***************************************************************************************!*\
   !*** ./node_modules/@algolia/autocomplete-preset-algolia/dist/esm/constants/index.js ***!
@@ -15394,18 +15920,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var instantsearch_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! instantsearch.js */ "./node_modules/instantsearch.js/es/index.js");
 /* harmony import */ var _algolia_autocomplete_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @algolia/autocomplete-js */ "./node_modules/@algolia/autocomplete-js/dist/esm/autocomplete.js");
 /* harmony import */ var _algolia_autocomplete_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @algolia/autocomplete-js */ "./node_modules/@algolia/autocomplete-js/dist/esm/requesters/getAlgoliaResults.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/search-box/search-box.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/hits/hits.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/pagination/pagination.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/sort-by/sort-by.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/breadcrumb/breadcrumb.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/stats/stats.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/voice-search/voice-search.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/panel/panel.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/refinement-list/refinement-list.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/clear-refinements/clear-refinements.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js");
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _algolia_autocomplete_plugin_recent_searches__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @algolia/autocomplete-plugin-recent-searches */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createLocalStorageRecentSearchesPlugin.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/search-box/search-box.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/hits/hits.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/pagination/pagination.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/sort-by/sort-by.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/breadcrumb/breadcrumb.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/stats/stats.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/voice-search/voice-search.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/panel/panel.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/refinement-list/refinement-list.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/clear-refinements/clear-refinements.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+
 
 
 
@@ -15415,20 +15943,21 @@ window.algoliasearch = (algoliasearch_lite__WEBPACK_IMPORTED_MODULE_1___default(
 window.instantsearch = instantsearch_js__WEBPACK_IMPORTED_MODULE_2__["default"];
 window.autocomplete = _algolia_autocomplete_js__WEBPACK_IMPORTED_MODULE_3__.autocomplete;
 window.getAlgoliaResults = _algolia_autocomplete_js__WEBPACK_IMPORTED_MODULE_4__.getAlgoliaResults;
-window.searchBox = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_5__["default"];
-window.hits = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_6__["default"];
-window.pagination = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__["default"];
-window.sortBy = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__["default"];
-window.breadcrumb = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__["default"];
-window.stats = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__["default"];
-window.voiceSearch = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__["default"];
-window.panel = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__["default"];
-window.refinementList = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__["default"];
-window.clearRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_14__["default"];
-window.currentRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__["default"];
+window.createLocalStorageRecentSearchesPlugin = _algolia_autocomplete_plugin_recent_searches__WEBPACK_IMPORTED_MODULE_5__.createLocalStorageRecentSearchesPlugin;
+window.searchBox = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_6__["default"];
+window.hits = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__["default"];
+window.pagination = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__["default"];
+window.sortBy = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__["default"];
+window.breadcrumb = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__["default"];
+window.stats = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__["default"];
+window.voiceSearch = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__["default"];
+window.panel = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__["default"];
+window.refinementList = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_14__["default"];
+window.clearRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__["default"];
+window.currentRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_16__["default"];
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_16__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_16__["default"].start();
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_17__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_17__["default"].start();
 
 /***/ }),
 
