@@ -120,7 +120,9 @@
           </option> 
         </select>
     </div>
-    <div id="autocomplete">
+    <div class="w-44">
+      <div id="autocomplete">
+      </div>
     </div>
   </div>
 </nav>

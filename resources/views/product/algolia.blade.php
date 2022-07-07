@@ -2,9 +2,6 @@
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('Shop') }}
-            @if($category)
-                {{ " / ".$category->name }}
-            @endif
         </h2>
     </x-slot>
 
@@ -21,7 +18,9 @@
             });
             search.addWidgets([
                 window.searchBox({
-                    container: '#searchbox'
+                    container: '#searchbox',
+                    placeholder: '{{ __('Search...') }}',
+                    autofocus : true,
                 }),
 
                 window.hits({
