@@ -9,7 +9,7 @@
             <div class="md:flex">
                 <div class="flex flex-col md:w-1/2" wire:key='{{$product->id}}'
                     x-data="{
-                        curImage : '{{ $product->image }}',
+                        curImage : '{{ $gallery[0]}}',
                         show : true,
                         transitionTotalTime : 500,
                         changeImage(src){
@@ -30,9 +30,9 @@
                         x-show = "show "
                     />
 
-                    @if($product->gallery->count() > 1)
+                    @if(count($gallery) > 2)
                         <div class="inline-flex mx-auto mt-6 space-x-2">
-                        @foreach ($product->gallery as $image )
+                        @foreach ($gallery as $image )
                             <div class="border">
                                 <img class="object-cover w-24 h-24" src="{{ $image }}" 
                                     @click="changeImage('{{ $image }}')"
@@ -85,13 +85,17 @@
 
                     @if($product->defaultVariant || $product->variants()->count())
                     <div class="flex flex-row space-x-4">
+                        @if($product->defaultVariant->hasImage())
                         <a href="{{ route('product.show', $product->defaultVariant? $product->defaultVariant : $product) }}" class="px-1 border rounded-lg">
                             <img class="w-8 h-8" src="{{ $product->defaultVariant ? $product->defaultVariant->image : $product->image }}"/>
                         </a>
+                        @endif
                         @foreach($product->defaultVariant? $product->defaultVariant->variants : $product->variants as $variant)
+                        @if($variant->hasImage())
                         <a href="{{ route('product.show', $variant) }}" class="px-1 border rounded-lg">
                             <img class="w-8 h-8" src="{{ $variant->image}}"/>
                         </a>
+                        @endif
                         @endforeach
                     </div>
                     @endif
@@ -126,7 +130,7 @@
             <section class="text-gray-600 body-font">
                 <div class="container flex flex-wrap px-5 py-24 mx-auto">
                     <div class="flex flex-wrap w-full -m-4">
-                        @foreach($product->reviews as $review)
+                        @foreach($reviews as $review)
                         <div class="w-full p-4 md:w-1/2 lg:w-1/3">
                             <div class="flex flex-col p-8 border-2 border-gray-200 border-opacity-50 rounded-lg sm:flex-row">
                             <div class="inline-flex items-center justify-center flex-shrink-0 w-16 h-16 mb-4 text-indigo-500 bg-indigo-100 rounded-full sm:mr-8 sm:mb-0">
@@ -135,7 +139,7 @@
                             <div class="flex-grow">
                                 <h2 class="mb-3 text-lg font-medium text-gray-900 title-font">{{ $review->user->name }}</h2>
                                 <p class="text-base leading-relaxed">{{ $review->description }}</p>
-                                <p class="inline-flex items-center mt-3 text-indigo-500">{{ $review->vote }}
+                                <p class="inline-flex items-center mt-3 text-indigo-500">{{ $review->rating }}
                                 </p>
                                 @can('delete', $review)
                                 <livewire:review.destroy-form :review='$review'/>
@@ -160,8 +164,8 @@
                         <div class="flex flex-wrap -m-2">
                             <div class="w-1/2 p-2">
                                 <div class="relative">
-                                    <label for="vote" class="text-sm leading-7 text-gray-600">{{ __('Vote') }}</label>
-                                    <input type="number" id="vote" min="0" max="5" name="vote" class="w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200">
+                                    <label for="rating" class="text-sm leading-7 text-gray-600">{{ __('Rating') }}</label>
+                                    <input type="number" id="rating" min="0" max="5" name="rating" class="w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200">
                                 </div>
                             </div>
                             <div class="w-full p-2">

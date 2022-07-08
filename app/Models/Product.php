@@ -38,6 +38,7 @@ class Product extends Model implements Buyable , HasMedia
         'original_price' => 'decimal:2',
         'selling_price' => 'decimal:2',
         'price'         => 'decimal:2',
+        'avg_rating' => 'decimal:1',
     ];
 
     /**
@@ -155,20 +156,63 @@ class Product extends Model implements Buyable , HasMedia
         return $this->weight;
     }
 
-    public function setUniqueNameAttribute($value)
+    public function getUniqueNameAttribute()
     {
-        if(!$value)
-            $value = $this->attributes['id'].'-'.$this->attributes['name'];
-        $this->attributes['unique_name'] = $value;
+        return $this->attributes['unique_name'] ?? $this->id.'-'.$this->name;
+    } 
+
+    public function getStockStatusAttribute()
+    {
+        $low_stock_threshold = $this->low_stock_threshold ?? config('custom.stock_threshold');
+        if($this->quantity < 1)
+        {
+            $status = __('Out of Stock');
+        }
+        elseif($this->quantity >= 1 && $this->quantity <= $low_stock_threshold)
+        {
+            $status = __('Low Stock');
+        }
+        else
+        {
+            $status = trans_choice('Avaiable',1);
+        }
+
+        return $status;
+    }
+
+    public function getAvgRatingAttribute()
+    {
+        return round($this->reviews()->avg('rating'),1);
     }
 
     public function getImageAttribute()
     {
-        return $this->getFirstMediaUrl('gallery') !="" ? $this->getFirstMediaUrl('gallery') : asset('img/no_image.jpg');
+        // $image = null;
+        // if($this->getFirstMediaUrl('gallery') !="")
+        // {
+        //     $image =  $this->getFirstMediaUrl('gallery');
+        // }
+        // else
+        // {
+        //     $this->defaultVariant()->exists() ?
+        //         $image = $this->defaultVariant->image : $image = asset('img/no_image.jpg');
+        // }
+
+        return $this->hasImage() ? $this->getFirstMediaUrl('gallery') : asset('img/no_image.jpg');
     }
 
     public function getGalleryAttribute()
     {
+        // $gallery = null;
+        // if($this->getMedia('gallery')->count() || $this->defaultVariant()->doesntExist())
+        // {
+        //     $gallery =  $this->getMedia('gallery')->map( fn($media) => $media->getFullUrl() );
+        // }
+        // else
+        // {
+        //     $gallery = $this->defaultVariant->gallery;
+        // }
+
         return $this->getMedia('gallery')->map( fn($media) => $media->getFullUrl() );
     }
 
@@ -180,6 +224,11 @@ class Product extends Model implements Buyable , HasMedia
                 $fileAdder->toMediaCollection('gallery');
             }
         }
+    }
+
+    public function hasImage()
+    {
+        return $this->getFirstMediaUrl('gallery') !="";
     }
 
     protected function originalPrice(): Attribute
@@ -290,7 +339,10 @@ class Product extends Model implements Buyable , HasMedia
         $array['featured'] = $this->featured;
         $array['quantity'] = $this->quantity;
         $array['low_stock_threshold'] = $this->low_stock_threshold;
+        $array['stock_status'] = $this->stock_status;
         $array['image'] = $this->image;
+        $array['has_variants'] = $this->defaultVariant()->exists() || $this->variants()->exists();
+        $array['avg_rating'] = $this->avg_rating;
 
         $array['url'] = route('product.show', $this);
  

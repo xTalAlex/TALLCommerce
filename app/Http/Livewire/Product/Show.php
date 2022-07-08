@@ -14,6 +14,8 @@ class Show extends Component
     public $variantsAttributeSets;
     public $attributes;
     public $selection;
+    public $reviews;
+    public $gallery;
 
     public function mount()
     {
@@ -25,6 +27,22 @@ class Show extends Component
                 $this->selection[$attributeValue->attribute->id] = $attributeValue->id;
             }
         }
+        if($this->product->hasImage())
+        {
+            $this->gallery = $this->product->gallery;
+        }
+        else
+        {
+            if($this->product->defaultVariant()->exists())
+            {
+                $this->gallery = $this->product->defaultVariant->gallery;
+            }
+            else
+            {
+                $this->gallery = $this->product->image;
+            }
+        }
+        $this->reviews = $this->product->defaultVaraint ? $this->product->defaultVariant->reviews : $this->product->reviews;
     }
 
     public function variantExists($attribute,$value)

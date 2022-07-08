@@ -33,8 +33,8 @@ class ReviewsRelationManager extends RelationManager
                 Select::make('user')
                     ->relationship('user', 'name')
                     ->label(__('User')),
-                TextInput::make('vote')
-                    ->label(__('Vote'))
+                TextInput::make('rating')
+                    ->label(__('Rating'))
                     ->numeric(),
                 TextInput::make('description')
                     ->label(__('Description')),
@@ -50,7 +50,7 @@ class ReviewsRelationManager extends RelationManager
         return $table
             ->columns([
                 TextColumn::make('user.name')->label(__('User')),
-                TextColumn::make('vote')->label(__('Vote')),
+                TextColumn::make('rating')->label(__('Rating')),
                 TextColumn::make('description')->label(__('Description'))
                     ->wrap(),
                 TextColumn::make('updated_at')

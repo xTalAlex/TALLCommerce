@@ -52,6 +52,8 @@ class ReviewPolicy
         return  $user->orders()
                     ->whereHas('products', fn($query) => 
                         $query->where('products.id',$product->id)
+                            ->orWhere('products.id',$product->defaultVariant()->id)
+                            ->orWhereIn('products.id', $product->variants()->pluck('id')->toArray())
                     )->exists()
                 &&
                 $user->reviews()->where('product_id',$product->id)->doesntExist();

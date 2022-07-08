@@ -38,13 +38,16 @@ class ReviewController extends Controller
         $this->authorize('create', [Review::class, $product]);
 
         $validated = $request->validate([
-            'vote' => 'required|numeric|min:0|max:5',
+            'rating' => 'required|numeric|min:0|max:5',
             'description' => 'nullable',
         ]);
 
+        if($product->defaultVariant)
+            $product = $product->defaultVariant;
+
         $product->reviews()->create([
             'user_id' => auth()->user()->id,
-            'vote' => $validated['vote'],
+            'rating' => $validated['rating'],
             'description' => $validated['description'],
         ]);
 
