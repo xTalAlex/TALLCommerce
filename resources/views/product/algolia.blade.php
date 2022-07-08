@@ -35,32 +35,8 @@
                 window.hits({
                     container: '#hits',
                     templates : {
-                        empty(results) { 
-                            return `
-                                <p class=\'mt-2 text-center\'>{{__('No results for') }} <strong>${results.query}</strong></p>
-                                `; 
-                            },
-                        item(hit) { 
-                            return `
-                                <div class='flex flex-col w-full max-w-xs mx-auto'>
-                                <a href='${hit.url}'>
-                                    <div class='w-full mb-2'>
-                                        <img class='object-cover w-auto h-48 mx-auto' src='${hit.image}'/>
-                                    </div>
-                                    <div class='flex flex-col'>
-                                        <h2 class='mb-2 font-bold'>
-                                            <span class='mr-1'>${instantsearch.highlight({ attribute: 'name', hit })}</span>
-                                            ${hit.avg_rating ? '⭐'+hit.avg_rating: '' }
-                                        </h2>
-                                        <div class='flex justify-between'>
-                                            <span>${hit.has_variants ? '' : hit.stock_status }</span>
-                                            <span class='font-bold'>${hit.price}€</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                </div>
-                            `; 
-                        }
+                        empty : document.getElementById('empty').innerHTML,
+                        item : document.getElementById('item').innerHTML,
                     }
                 })
             ]);
@@ -80,4 +56,40 @@
         </div>
         
     </div>
+
+    @push('scripts')
+
+        <script id="empty" type="text/html">
+            <p class="mt-2 text-center">{{__('No results for') }} <strong>@{{query}}</strong></p>
+        </script>
+
+        <script id="item" type="text/html">
+            <div class='flex flex-col w-full max-w-xs mx-auto'>
+            <a href='@{{url}}'>
+                <div class='w-full mb-2'>
+                    <img class='object-cover w-auto h-48 mx-auto' src='@{{image}}'/>
+                </div>
+                <div class='flex flex-col'>
+                    <h2 class='mb-2 font-bold'>
+                        <span class='mr-1'>@{{{_highlightResult.name.value}}}</span>
+                        @{{#avg_rating}}
+                            @{{avg_rating}}<x-icons.star class="w-4 h-4"></x-icons.star>
+                        @{{/avg_rating}}
+                        
+                    </h2>
+                    <div class='flex justify-between'>
+                        <span>
+                            @{{^has_variants}}
+                                @{{stock_status}}
+                            @{{/has_variants}}
+                        </span>
+                        <span class='font-bold'>@{{price}}€</span>
+                    </div>
+                </div>
+            </a>
+            </div>
+        </script>
+
+    @endpush
+
 </x-app-layout>
