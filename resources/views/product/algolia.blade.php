@@ -49,7 +49,8 @@
                                     </div>
                                     <div class='flex flex-col'>
                                         <h2 class='mb-2 font-bold'>
-                                            ${instantsearch.highlight({ attribute: 'name', hit })}
+                                            <span class='mr-1'>${instantsearch.highlight({ attribute: 'name', hit })}</span>
+                                            ${hit.avg_rating ? '⭐'+hit.avg_rating: '' }
                                         </h2>
                                         <div class='flex justify-between'>
                                             <span>${hit.has_variants ? '' : hit.stock_status }</span>

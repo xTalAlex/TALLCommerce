@@ -5162,6 +5162,14 @@ body[data-theme=dark], body.dark {
   fill: currentColor;
 }
 
+.fill-yellow-400 {
+  fill: #E3A008;
+}
+
+.stroke-yellow-400 {
+  stroke: #E3A008;
+}
+
 .object-contain {
   -o-object-fit: contain;
      object-fit: contain;

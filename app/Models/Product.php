@@ -182,7 +182,7 @@ class Product extends Model implements Buyable , HasMedia
 
     public function getAvgRatingAttribute()
     {
-        return round($this->reviews()->avg('rating'),1);
+        return $this->reviews()->avg('rating') ? round($this->reviews()->avg('rating'),1) : null;
     }
 
     public function getImageAttribute()
