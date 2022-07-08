@@ -153,7 +153,7 @@ class Product extends Model implements Buyable , HasMedia
     }
 
     public function getBuyableWeight($options = null){
-        return $this->weight;
+        return $this->weight ?? 0;
     }
 
     public function getUniqueNameAttribute()
