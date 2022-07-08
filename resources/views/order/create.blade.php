@@ -41,7 +41,6 @@
             </ul> --}}
                 
             {{-- <form action="{{ route('stripe.checkout') }}" method="POST"> --}}
-            <button wire:click="funzioneDiProva()" >CAZZO</button>
             @if(!$addresses_confirmed)
             <form action="" method="POST">
             @csrf
