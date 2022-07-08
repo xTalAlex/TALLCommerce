@@ -3629,17 +3629,28 @@ body[data-theme=dark], body.dark {
     font-size: 1rem; } }
 
 /**
-* Make items list a grid   
+* Results as a grid
 **/
 
-#hits ol {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: 100%;
+.ais-Hits-list {
+	display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+	grid-gap: 4px;
+	padding: 4px;	}
+
+.ais-Hits-item{
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%; }
+
+@media (min-width:  639px) {
+  .ais-Hits-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); } 
 }
 
-#hits.list ol {
-  grid-template-columns: 1fr;
+@media (min-width: 1024px) {
+  .ais-Hits-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr)); } 
 }
 
 .sr-only {

@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="flex justify-center py-8"
+    <div class="flex justify-center py-8 mx-auto"
         x-data
         x-init="
             searchClient = window.algoliasearch(
