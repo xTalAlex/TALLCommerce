@@ -1126,3 +1126,15 @@
   .ais-SearchBox-input,
   .ais-RangeInput-input {
     font-size: 1rem; } }
+
+/**
+* Make items list a grid   
+**/
+#hits ol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
+#hits.list ol {
+  grid-template-columns: 1fr;
+}

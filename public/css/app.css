@@ -3628,6 +3628,20 @@ body[data-theme=dark], body.dark {
   .ais-RangeInput-input {
     font-size: 1rem; } }
 
+/**
+* Make items list a grid   
+**/
+
+#hits ol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
+
+#hits.list ol {
+  grid-template-columns: 1fr;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -3992,6 +4006,10 @@ body[data-theme=dark], body.dark {
   margin-bottom: 0.5rem;
 }
 
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
 .-ml-1 {
   margin-left: -0.25rem;
 }
@@ -4006,10 +4024,6 @@ body[data-theme=dark], body.dark {
 
 .mb-12 {
   margin-bottom: 3rem;
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem;
 }
 
 .mb-5 {

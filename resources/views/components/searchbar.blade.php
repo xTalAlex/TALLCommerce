@@ -132,3 +132,7 @@
     </div>
   </div>
 </nav>
+
+@push('scripts')
+
+@endpush

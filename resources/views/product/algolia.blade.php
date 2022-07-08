@@ -66,17 +66,20 @@
         <script id="item" type="text/html">
             <div class='flex flex-col w-full max-w-xs mx-auto'>
             <a href='@{{url}}'>
-                <div class='w-full mb-2'>
+                <div class='w-full mb-6'>
                     <img class='object-cover w-auto h-48 mx-auto' src='@{{image}}'/>
                 </div>
                 <div class='flex flex-col'>
-                    <h2 class='mb-2 font-bold'>
+                    <h2 class='mb-1 font-bold'>
                         <span class='mr-1'>@{{{_highlightResult.name.value}}}</span>
                         @{{#avg_rating}}
                             @{{avg_rating}}<x-icons.star class="w-4 h-4"></x-icons.star>
                         @{{/avg_rating}}
                         
                     </h2>
+                    <h3 class="mb-2 font-medium">
+                        @{{short_description}}
+                    </h3>
                     <div class='flex justify-between'>
                         <span>
                             @{{^has_variants}}
