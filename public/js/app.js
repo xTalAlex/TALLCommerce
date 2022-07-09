@@ -15922,12 +15922,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _algolia_autocomplete_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @algolia/autocomplete-js */ "./node_modules/@algolia/autocomplete-js/dist/esm/requesters/getAlgoliaResults.js");
 /* harmony import */ var _algolia_autocomplete_plugin_recent_searches__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @algolia/autocomplete-plugin-recent-searches */ "./node_modules/@algolia/autocomplete-plugin-recent-searches/dist/esm/createLocalStorageRecentSearchesPlugin.js");
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/search-box/search-box.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/hits/hits.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/pagination/pagination.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/sort-by/sort-by.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/breadcrumb/breadcrumb.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/stats/stats.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/voice-search/voice-search.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/voice-search/voice-search.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/configure/configure.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/infinite-hits/infinite-hits.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/sort-by/sort-by.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/breadcrumb/breadcrumb.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/stats/stats.js");
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/panel/panel.js");
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/refinement-list/refinement-list.js");
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/clear-refinements/clear-refinements.js");
@@ -15945,12 +15945,12 @@ window.autocomplete = _algolia_autocomplete_js__WEBPACK_IMPORTED_MODULE_3__.auto
 window.getAlgoliaResults = _algolia_autocomplete_js__WEBPACK_IMPORTED_MODULE_4__.getAlgoliaResults;
 window.createLocalStorageRecentSearchesPlugin = _algolia_autocomplete_plugin_recent_searches__WEBPACK_IMPORTED_MODULE_5__.createLocalStorageRecentSearchesPlugin;
 window.searchBox = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_6__["default"];
-window.hits = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__["default"];
-window.pagination = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__["default"];
-window.sortBy = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__["default"];
-window.breadcrumb = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__["default"];
-window.stats = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__["default"];
-window.voiceSearch = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__["default"];
+window.voiceSearch = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_7__["default"];
+window.configure = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_8__["default"];
+window.infiniteHits = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_9__["default"];
+window.sortBy = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_10__["default"];
+window.breadcrumb = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__["default"];
+window.stats = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__["default"];
 window.panel = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__["default"];
 window.refinementList = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_14__["default"];
 window.clearRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__["default"];
@@ -35450,10 +35450,10 @@ var CurrentRefinements = function CurrentRefinements(_ref2) {
 
 /***/ }),
 
-/***/ "./node_modules/instantsearch.js/es/components/Hits/Hits.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/instantsearch.js/es/components/Hits/Hits.js ***!
-  \******************************************************************/
+/***/ "./node_modules/instantsearch.js/es/components/InfiniteHits/InfiniteHits.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/InfiniteHits/InfiniteHits.js ***!
+  \**********************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -35477,10 +35477,15 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 
 
-var Hits = function Hits(_ref) {
+var InfiniteHits = function InfiniteHits(_ref) {
   var results = _ref.results,
       hits = _ref.hits,
       bindEvent = _ref.bindEvent,
+      hasShowPrevious = _ref.hasShowPrevious,
+      showPrevious = _ref.showPrevious,
+      showMore = _ref.showMore,
+      isFirstPage = _ref.isFirstPage,
+      isLastPage = _ref.isLastPage,
       cssClasses = _ref.cssClasses,
       templateProps = _ref.templateProps;
 
@@ -35496,9 +35501,17 @@ var Hits = function Hits(_ref) {
 
   return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
     className: cssClasses.root
-  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("ol", {
+  }, hasShowPrevious && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, templateProps, {
+    templateKey: "showPreviousText",
+    rootTagName: "button",
+    rootProps: {
+      className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.loadPrevious, _defineProperty({}, cssClasses.disabledLoadPrevious, isFirstPage)),
+      disabled: isFirstPage,
+      onClick: showPrevious
+    }
+  })), (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("ol", {
     className: cssClasses.list
-  }, hits.map(function (hit, index) {
+  }, hits.map(function (hit, position) {
     return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, templateProps, {
       templateKey: "item",
       rootTagName: "li",
@@ -35507,138 +35520,22 @@ var Hits = function Hits(_ref) {
       },
       key: hit.objectID,
       data: _objectSpread(_objectSpread({}, hit), {}, {
-        __hitIndex: index
+        __hitIndex: position
       }),
       bindEvent: bindEvent
     }));
+  })), (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_Template_Template_js__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, templateProps, {
+    templateKey: "showMoreText",
+    rootTagName: "button",
+    rootProps: {
+      className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.loadMore, _defineProperty({}, cssClasses.disabledLoadMore, isLastPage)),
+      disabled: isLastPage,
+      onClick: showMore
+    }
   })));
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Hits);
-
-/***/ }),
-
-/***/ "./node_modules/instantsearch.js/es/components/Pagination/Pagination.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/instantsearch.js/es/components/Pagination/Pagination.js ***!
-  \******************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/isSpecialClick.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-/** @jsx h */
-
-
-
-
-function Pagination(props) {
-  function createClickHandler(pageNumber) {
-    return function (event) {
-      if ((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(event)) {
-        // do not alter the default browser behavior
-        // if one special key is down
-        return;
-      }
-
-      event.preventDefault();
-      props.setCurrentPage(pageNumber);
-    };
-  }
-
-  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1__(props.cssClasses.root, _defineProperty({}, props.cssClasses.noRefinementRoot, props.nbPages <= 1))
-  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("ul", {
-    className: props.cssClasses.list
-  }, props.showFirst && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(PaginationLink, {
-    ariaLabel: "First",
-    className: props.cssClasses.firstPageItem,
-    isDisabled: props.isFirstPage,
-    label: props.templates.first,
-    pageNumber: 0,
-    createURL: props.createURL,
-    cssClasses: props.cssClasses,
-    createClickHandler: createClickHandler
-  }), props.showPrevious && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(PaginationLink, {
-    ariaLabel: "Previous",
-    className: props.cssClasses.previousPageItem,
-    isDisabled: props.isFirstPage,
-    label: props.templates.previous,
-    pageNumber: props.currentPage - 1,
-    createURL: props.createURL,
-    cssClasses: props.cssClasses,
-    createClickHandler: createClickHandler
-  }), props.pages.map(function (pageNumber) {
-    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(PaginationLink, {
-      key: pageNumber,
-      ariaLabel: "".concat(pageNumber + 1),
-      className: props.cssClasses.pageItem,
-      isSelected: pageNumber === props.currentPage,
-      label: "".concat(pageNumber + 1),
-      pageNumber: pageNumber,
-      createURL: props.createURL,
-      cssClasses: props.cssClasses,
-      createClickHandler: createClickHandler
-    });
-  }), props.showNext && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(PaginationLink, {
-    ariaLabel: "Next",
-    className: props.cssClasses.nextPageItem,
-    isDisabled: props.isLastPage,
-    label: props.templates.next,
-    pageNumber: props.currentPage + 1,
-    createURL: props.createURL,
-    cssClasses: props.cssClasses,
-    createClickHandler: createClickHandler
-  }), props.showLast && (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(PaginationLink, {
-    ariaLabel: "Last",
-    className: props.cssClasses.lastPageItem,
-    isDisabled: props.isLastPage,
-    label: props.templates.last,
-    pageNumber: props.nbPages - 1,
-    createURL: props.createURL,
-    cssClasses: props.cssClasses,
-    createClickHandler: createClickHandler
-  })));
-}
-
-function PaginationLink(_ref) {
-  var label = _ref.label,
-      ariaLabel = _ref.ariaLabel,
-      pageNumber = _ref.pageNumber,
-      className = _ref.className,
-      _ref$isDisabled = _ref.isDisabled,
-      isDisabled = _ref$isDisabled === void 0 ? false : _ref$isDisabled,
-      _ref$isSelected = _ref.isSelected,
-      isSelected = _ref$isSelected === void 0 ? false : _ref$isSelected,
-      cssClasses = _ref.cssClasses,
-      createURL = _ref.createURL,
-      createClickHandler = _ref.createClickHandler;
-  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("li", {
-    className: classnames__WEBPACK_IMPORTED_MODULE_1__(cssClasses.item, className, isDisabled && cssClasses.disabledItem, isSelected && cssClasses.selectedItem)
-  }, isDisabled ? (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
-    className: cssClasses.link,
-    dangerouslySetInnerHTML: {
-      __html: label
-    }
-  }) : (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("a", {
-    className: cssClasses.link,
-    "aria-label": ariaLabel,
-    href: createURL(pageNumber),
-    onClick: createClickHandler(pageNumber),
-    dangerouslySetInnerHTML: {
-      __html: label
-    }
-  }));
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Pagination);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InfiniteHits);
 
 /***/ }),
 
@@ -37023,6 +36920,130 @@ function getAttributesToClear(_ref5) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/connectors/configure/connectConfigure.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/configure/connectConfigure.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var algoliasearch_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! algoliasearch-helper */ "./node_modules/algoliasearch-helper/index.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/isPlainObject.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/mergeSearchParameters.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+/**
+ * Refine the given search parameters.
+ */
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__.createDocumentationMessageGenerator)({
+  name: 'configure',
+  connector: true
+});
+
+function getInitialSearchParameters(state, widgetParams) {
+  // We leverage the helper internals to remove the `widgetParams` from
+  // the state. The function `setQueryParameters` omits the values that
+  // are `undefined` on the next state.
+  return state.setQueryParameters(Object.keys(widgetParams.searchParameters).reduce(function (acc, key) {
+    return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, key, undefined));
+  }, {}));
+}
+
+var connectConfigure = function connectConfigure() {
+  var renderFn = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"];
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"];
+  return function (widgetParams) {
+    if (!widgetParams || !(0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(widgetParams.searchParameters)) {
+      throw new Error(withUsage('The `searchParameters` option expects an object.'));
+    }
+
+    var connectorState = {};
+
+    function refine(helper) {
+      return function (searchParameters) {
+        // Merge new `searchParameters` with the ones set from other widgets
+        var actualState = getInitialSearchParameters(helper.state, widgetParams);
+        var nextSearchParameters = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])(actualState, new algoliasearch_helper__WEBPACK_IMPORTED_MODULE_0__.SearchParameters(searchParameters)); // Update original `widgetParams.searchParameters` to the new refined one
+
+        widgetParams.searchParameters = searchParameters; // Trigger a search with the resolved search parameters
+
+        helper.setState(nextSearchParameters).search();
+      };
+    }
+
+    return {
+      $$type: 'ais.configure',
+      init: function init(initOptions) {
+        var instantSearchInstance = initOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        var instantSearchInstance = renderOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), false);
+      },
+      dispose: function dispose(_ref) {
+        var state = _ref.state;
+        unmountFn();
+        return getInitialSearchParameters(state, widgetParams);
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        var _renderState$configur;
+
+        var widgetRenderState = this.getWidgetRenderState(renderOptions);
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          configure: _objectSpread(_objectSpread({}, widgetRenderState), {}, {
+            widgetParams: _objectSpread(_objectSpread({}, widgetRenderState.widgetParams), {}, {
+              searchParameters: (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])(new algoliasearch_helper__WEBPACK_IMPORTED_MODULE_0__.SearchParameters((_renderState$configur = renderState.configure) === null || _renderState$configur === void 0 ? void 0 : _renderState$configur.widgetParams.searchParameters), new algoliasearch_helper__WEBPACK_IMPORTED_MODULE_0__.SearchParameters(widgetRenderState.widgetParams.searchParameters)).getQueryParams()
+            })
+          })
+        });
+      },
+      getWidgetRenderState: function getWidgetRenderState(_ref2) {
+        var helper = _ref2.helper;
+
+        if (!connectorState.refine) {
+          connectorState.refine = refine(helper);
+        }
+
+        return {
+          refine: connectorState.refine,
+          widgetParams: widgetParams
+        };
+      },
+      getWidgetSearchParameters: function getWidgetSearchParameters(state, _ref3) {
+        var uiState = _ref3.uiState;
+        return (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])(state, new algoliasearch_helper__WEBPACK_IMPORTED_MODULE_0__.SearchParameters(_objectSpread(_objectSpread({}, uiState.configure), widgetParams.searchParameters)));
+      },
+      getWidgetUiState: function getWidgetUiState(uiState) {
+        return _objectSpread(_objectSpread({}, uiState), {}, {
+          configure: _objectSpread(_objectSpread({}, uiState.configure), widgetParams.searchParameters)
+        });
+      }
+    };
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectConfigure);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/connectors/current-refinements/connectCurrentRefinements.js":
 /*!******************************************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/connectors/current-refinements/connectCurrentRefinements.js ***!
@@ -37268,10 +37289,10 @@ function getValue(refinement) {
 
 /***/ }),
 
-/***/ "./node_modules/instantsearch.js/es/connectors/hits/connectHits.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/instantsearch.js/es/connectors/hits/connectHits.js ***!
-  \*************************************************************************/
+/***/ "./node_modules/instantsearch.js/es/connectors/infinite-hits/connectInfiniteHits.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/infinite-hits/connectInfiniteHits.js ***!
+  \******************************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -37280,371 +37301,270 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/createSendEventForHits.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/escape-highlight.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/hits-absolute-position.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/hits-query-id.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/isEqual.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/createSendEventForHits.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/escape-highlight.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/hits-absolute-position.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/hits-query-id.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
 
 var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
-  name: 'hits',
+  name: 'infinite-hits',
   connector: true
 });
 
-var connectHits = function connectHits(renderFn) {
-  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
-  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
-  return function (widgetParams) {
-    var _ref = widgetParams || {},
-        _ref$escapeHTML = _ref.escapeHTML,
-        escapeHTML = _ref$escapeHTML === void 0 ? true : _ref$escapeHTML,
-        _ref$transformItems = _ref.transformItems,
-        transformItems = _ref$transformItems === void 0 ? function (items) {
-      return items;
-    } : _ref$transformItems;
+function getStateWithoutPage(state) {
+  var _ref = state || {},
+      page = _ref.page,
+      rest = _objectWithoutProperties(_ref, ["page"]);
 
+  return rest;
+}
+
+function getInMemoryCache() {
+  var cachedHits = null;
+  var cachedState = null;
+  return {
+    read: function read(_ref2) {
+      var state = _ref2.state;
+      return (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(cachedState, getStateWithoutPage(state)) ? cachedHits : null;
+    },
+    write: function write(_ref3) {
+      var state = _ref3.state,
+          hits = _ref3.hits;
+      cachedState = getStateWithoutPage(state);
+      cachedHits = hits;
+    }
+  };
+}
+
+function extractHitsFromCachedHits(cachedHits) {
+  return Object.keys(cachedHits).map(Number).sort(function (a, b) {
+    return a - b;
+  }).reduce(function (acc, page) {
+    return acc.concat(cachedHits[page]);
+  }, []);
+}
+
+var connectInfiniteHits = function connectInfiniteHits(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(renderFn, withUsage()); // @TODO: this should be a generic, but a Connector can not yet be generic itself
+
+  return function (widgetParams) {
+    var _ref4 = widgetParams || {},
+        _ref4$escapeHTML = _ref4.escapeHTML,
+        escapeHTML = _ref4$escapeHTML === void 0 ? true : _ref4$escapeHTML,
+        _ref4$transformItems = _ref4.transformItems,
+        transformItems = _ref4$transformItems === void 0 ? function (items) {
+      return items;
+    } : _ref4$transformItems,
+        _ref4$cache = _ref4.cache,
+        cache = _ref4$cache === void 0 ? getInMemoryCache() : _ref4$cache;
+
+    var showPrevious;
+    var showMore;
     var sendEvent;
     var bindEvent;
+
+    var getFirstReceivedPage = function getFirstReceivedPage(state, cachedHits) {
+      var _state$page = state.page,
+          page = _state$page === void 0 ? 0 : _state$page;
+      var pages = Object.keys(cachedHits).map(Number);
+
+      if (pages.length === 0) {
+        return page;
+      } else {
+        return Math.min.apply(Math, [page].concat(_toConsumableArray(pages)));
+      }
+    };
+
+    var getLastReceivedPage = function getLastReceivedPage(state, cachedHits) {
+      var _state$page2 = state.page,
+          page = _state$page2 === void 0 ? 0 : _state$page2;
+      var pages = Object.keys(cachedHits).map(Number);
+
+      if (pages.length === 0) {
+        return page;
+      } else {
+        return Math.max.apply(Math, [page].concat(_toConsumableArray(pages)));
+      }
+    };
+
+    var getShowPrevious = function getShowPrevious(helper) {
+      return function () {
+        // Using the helper's `overrideStateWithoutTriggeringChangeEvent` method
+        // avoid updating the browser URL when the user displays the previous page.
+        helper.overrideStateWithoutTriggeringChangeEvent(_objectSpread(_objectSpread({}, helper.state), {}, {
+          page: getFirstReceivedPage(helper.state, cache.read({
+            state: helper.state
+          }) || {}) - 1
+        })).searchWithoutTriggeringOnStateChange();
+      };
+    };
+
+    var getShowMore = function getShowMore(helper) {
+      return function () {
+        helper.setPage(getLastReceivedPage(helper.state, cache.read({
+          state: helper.state
+        }) || {}) + 1).search();
+      };
+    };
+
     return {
-      $$type: 'ais.hits',
+      $$type: 'ais.infiniteHits',
       init: function init(initOptions) {
         renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
           instantSearchInstance: initOptions.instantSearchInstance
         }), true);
       },
       render: function render(renderOptions) {
-        var renderState = this.getWidgetRenderState(renderOptions);
-        renderFn(_objectSpread(_objectSpread({}, renderState), {}, {
-          instantSearchInstance: renderOptions.instantSearchInstance
+        var instantSearchInstance = renderOptions.instantSearchInstance;
+        var widgetRenderState = this.getWidgetRenderState(renderOptions);
+        renderFn(_objectSpread(_objectSpread({}, widgetRenderState), {}, {
+          instantSearchInstance: instantSearchInstance
         }), false);
-        renderState.sendEvent('view', renderState.hits);
+        sendEvent('view', widgetRenderState.currentPageHits);
       },
       getRenderState: function getRenderState(renderState, renderOptions) {
         return _objectSpread(_objectSpread({}, renderState), {}, {
-          hits: this.getWidgetRenderState(renderOptions)
+          infiniteHits: this.getWidgetRenderState(renderOptions)
         });
       },
-      getWidgetRenderState: function getWidgetRenderState(_ref2) {
-        var results = _ref2.results,
-            helper = _ref2.helper,
-            instantSearchInstance = _ref2.instantSearchInstance;
+      getWidgetRenderState: function getWidgetRenderState(_ref5) {
+        var results = _ref5.results,
+            helper = _ref5.helper,
+            state = _ref5.state,
+            instantSearchInstance = _ref5.instantSearchInstance;
+        var isFirstPage;
+        var currentPageHits = [];
+        var cachedHits = cache.read({
+          state: state
+        }) || {};
 
-        if (!sendEvent) {
-          sendEvent = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.createSendEventForHits)({
+        if (!results) {
+          showPrevious = getShowPrevious(helper);
+          showMore = getShowMore(helper);
+          sendEvent = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__.createSendEventForHits)({
             instantSearchInstance: instantSearchInstance,
             index: helper.getIndex(),
             widgetType: this.$$type
           });
-        }
-
-        if (!bindEvent) {
-          bindEvent = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.createBindEventForHits)({
+          bindEvent = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__.createBindEventForHits)({
             index: helper.getIndex(),
             widgetType: this.$$type
           });
+          isFirstPage = state.page === undefined || getFirstReceivedPage(state, cachedHits) === 0;
+        } else {
+          var _state$page3 = state.page,
+              _page = _state$page3 === void 0 ? 0 : _state$page3;
+
+          if (escapeHTML && results.hits.length > 0) {
+            results.hits = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__.escapeHits)(results.hits);
+          }
+
+          var hitsWithAbsolutePosition = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__.addAbsolutePosition)(results.hits, results.page, results.hitsPerPage);
+          var hitsWithAbsolutePositionAndQueryID = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_7__.addQueryID)(hitsWithAbsolutePosition, results.queryID);
+          var transformedHits = transformItems(hitsWithAbsolutePositionAndQueryID, {
+            results: results
+          });
+
+          if (cachedHits[_page] === undefined && !results.__isArtificial) {
+            cachedHits[_page] = transformedHits;
+            cache.write({
+              state: state,
+              hits: cachedHits
+            });
+          }
+
+          currentPageHits = transformedHits;
+          isFirstPage = getFirstReceivedPage(state, cachedHits) === 0;
         }
 
-        if (!results) {
-          return {
-            hits: [],
-            results: undefined,
-            sendEvent: sendEvent,
-            bindEvent: bindEvent,
-            widgetParams: widgetParams
-          };
-        }
-
-        if (escapeHTML && results.hits.length > 0) {
-          results.hits = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__.escapeHits)(results.hits);
-        }
-
-        var hitsWithAbsolutePosition = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__.addAbsolutePosition)(results.hits, results.page, results.hitsPerPage);
-        var hitsWithAbsolutePositionAndQueryID = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__.addQueryID)(hitsWithAbsolutePosition, results.queryID);
-        var transformedHits = transformItems(hitsWithAbsolutePositionAndQueryID, {
-          results: results
-        });
+        var hits = extractHitsFromCachedHits(cachedHits);
+        var isLastPage = results ? results.nbPages <= getLastReceivedPage(state, cachedHits) + 1 : true;
         return {
-          hits: transformedHits,
-          results: results,
+          hits: hits,
+          currentPageHits: currentPageHits,
           sendEvent: sendEvent,
           bindEvent: bindEvent,
+          results: results,
+          showPrevious: showPrevious,
+          showMore: showMore,
+          isFirstPage: isFirstPage,
+          isLastPage: isLastPage,
           widgetParams: widgetParams
         };
       },
-      dispose: function dispose(_ref3) {
-        var state = _ref3.state;
+      dispose: function dispose(_ref6) {
+        var state = _ref6.state;
         unmountFn();
+        var stateWithoutPage = state.setQueryParameter('page', undefined);
 
         if (!escapeHTML) {
-          return state;
+          return stateWithoutPage;
         }
 
-        return state.setQueryParameters(Object.keys(_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__.TAG_PLACEHOLDER).reduce(function (acc, key) {
+        return stateWithoutPage.setQueryParameters(Object.keys(_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__.TAG_PLACEHOLDER).reduce(function (acc, key) {
           return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, key, undefined));
         }, {}));
       },
-      getWidgetSearchParameters: function getWidgetSearchParameters(state) {
-        if (!escapeHTML) {
-          return state;
-        }
-
-        return state.setQueryParameters(_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__.TAG_PLACEHOLDER);
-      }
-    };
-  };
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectHits);
-
-/***/ }),
-
-/***/ "./node_modules/instantsearch.js/es/connectors/pagination/Paginator.js":
-/*!*****************************************************************************!*\
-  !*** ./node_modules/instantsearch.js/es/connectors/pagination/Paginator.js ***!
-  \*****************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/range.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-var Paginator = /*#__PURE__*/function () {
-  function Paginator(params) {
-    _classCallCheck(this, Paginator);
-
-    _defineProperty(this, "currentPage", void 0);
-
-    _defineProperty(this, "total", void 0);
-
-    _defineProperty(this, "padding", void 0);
-
-    this.currentPage = params.currentPage;
-    this.total = params.total;
-    this.padding = params.padding;
-  }
-
-  _createClass(Paginator, [{
-    key: "pages",
-    value: function pages() {
-      var total = this.total,
-          currentPage = this.currentPage,
-          padding = this.padding;
-      if (total === 0) return [0];
-      var totalDisplayedPages = this.nbPagesDisplayed(padding, total);
-
-      if (totalDisplayedPages === total) {
-        return (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
-          end: total
-        });
-      }
-
-      var paddingLeft = this.calculatePaddingLeft(currentPage, padding, total, totalDisplayedPages);
-      var paddingRight = totalDisplayedPages - paddingLeft;
-      var first = currentPage - paddingLeft;
-      var last = currentPage + paddingRight;
-      return (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
-        start: first,
-        end: last
-      });
-    }
-  }, {
-    key: "nbPagesDisplayed",
-    value: function nbPagesDisplayed(padding, total) {
-      return Math.min(2 * padding + 1, total);
-    }
-  }, {
-    key: "calculatePaddingLeft",
-    value: function calculatePaddingLeft(current, padding, total, totalDisplayedPages) {
-      if (current <= padding) {
-        return current;
-      }
-
-      if (current >= total - padding) {
-        return totalDisplayedPages - (total - current);
-      }
-
-      return padding;
-    }
-  }, {
-    key: "isLastPage",
-    value: function isLastPage() {
-      return this.currentPage === this.total - 1 || this.total === 0;
-    }
-  }, {
-    key: "isFirstPage",
-    value: function isFirstPage() {
-      return this.currentPage === 0;
-    }
-  }]);
-
-  return Paginator;
-}();
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Paginator);
-
-/***/ }),
-
-/***/ "./node_modules/instantsearch.js/es/connectors/pagination/connectPagination.js":
-/*!*************************************************************************************!*\
-  !*** ./node_modules/instantsearch.js/es/connectors/pagination/connectPagination.js ***!
-  \*************************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
-/* harmony import */ var _Paginator_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Paginator.js */ "./node_modules/instantsearch.js/es/connectors/pagination/Paginator.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
-  name: 'pagination',
-  connector: true
-});
-
-/**
- * **Pagination** connector provides the logic to build a widget that will let the user
- * choose the current page of the results.
- *
- * When using the pagination with Algolia, you should be aware that the engine won't provide you pages
- * beyond the 1000th hits by default. You can find more information on the [Algolia documentation](https://www.algolia.com/doc/guides/searching/pagination/#pagination-limitations).
- */
-var connectPagination = function connectPagination(renderFn) {
-  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
-  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
-  return function (widgetParams) {
-    var _ref = widgetParams || {},
-        totalPages = _ref.totalPages,
-        _ref$padding = _ref.padding,
-        padding = _ref$padding === void 0 ? 3 : _ref$padding;
-
-    var pager = new _Paginator_js__WEBPACK_IMPORTED_MODULE_3__["default"]({
-      currentPage: 0,
-      total: 0,
-      padding: padding
-    });
-    var connectorState = {};
-
-    function getMaxPage(_ref2) {
-      var nbPages = _ref2.nbPages;
-      return totalPages !== undefined ? Math.min(totalPages, nbPages) : nbPages;
-    }
-
-    return {
-      $$type: 'ais.pagination',
-      init: function init(initOptions) {
-        var instantSearchInstance = initOptions.instantSearchInstance;
-        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
-          instantSearchInstance: instantSearchInstance
-        }), true);
-      },
-      render: function render(renderOptions) {
-        var instantSearchInstance = renderOptions.instantSearchInstance;
-        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
-          instantSearchInstance: instantSearchInstance
-        }), false);
-      },
-      dispose: function dispose(_ref3) {
-        var state = _ref3.state;
-        unmountFn();
-        return state.setQueryParameter('page', undefined);
-      },
-      getWidgetUiState: function getWidgetUiState(uiState, _ref4) {
-        var searchParameters = _ref4.searchParameters;
+      getWidgetUiState: function getWidgetUiState(uiState, _ref7) {
+        var searchParameters = _ref7.searchParameters;
         var page = searchParameters.page || 0;
 
         if (!page) {
+          // return without adding `page` to uiState
+          // because we don't want `page=1` in the URL
           return uiState;
         }
 
         return _objectSpread(_objectSpread({}, uiState), {}, {
+          // The page in the UI state is incremented by one
+          // to expose the user value (not `0`).
           page: page + 1
         });
       },
-      getWidgetSearchParameters: function getWidgetSearchParameters(searchParameters, _ref5) {
-        var uiState = _ref5.uiState;
+      getWidgetSearchParameters: function getWidgetSearchParameters(searchParameters, _ref8) {
+        var uiState = _ref8.uiState;
+        var widgetSearchParameters = searchParameters;
+
+        if (escapeHTML) {
+          widgetSearchParameters = searchParameters.setQueryParameters(_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__.TAG_PLACEHOLDER);
+        } // The page in the search parameters is decremented by one
+        // to get to the actual parameter value from the UI state.
+
+
         var page = uiState.page ? uiState.page - 1 : 0;
-        return searchParameters.setQueryParameter('page', page);
-      },
-      getWidgetRenderState: function getWidgetRenderState(_ref6) {
-        var results = _ref6.results,
-            helper = _ref6.helper,
-            state = _ref6.state,
-            createURL = _ref6.createURL;
-
-        if (!connectorState.refine) {
-          connectorState.refine = function (page) {
-            helper.setPage(page);
-            helper.search();
-          };
-        }
-
-        if (!connectorState.createURL) {
-          connectorState.createURL = function (helperState) {
-            return function (page) {
-              return createURL(helperState.setPage(page));
-            };
-          };
-        }
-
-        var page = state.page || 0;
-        var nbPages = getMaxPage(results || {
-          nbPages: 0
-        });
-        pager.currentPage = page;
-        pager.total = nbPages;
-        return {
-          createURL: connectorState.createURL(state),
-          refine: connectorState.refine,
-          canRefine: nbPages > 1,
-          currentRefinement: page,
-          nbHits: (results === null || results === void 0 ? void 0 : results.nbHits) || 0,
-          nbPages: nbPages,
-          pages: results ? pager.pages() : [],
-          isFirstPage: pager.isFirstPage(),
-          isLastPage: pager.isLastPage(),
-          widgetParams: widgetParams
-        };
-      },
-      getRenderState: function getRenderState(renderState, renderOptions) {
-        return _objectSpread(_objectSpread({}, renderState), {}, {
-          pagination: this.getWidgetRenderState(renderOptions)
-        });
+        return widgetSearchParameters.setQueryParameter('page', page);
       }
     };
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectPagination);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectInfiniteHits);
 
 /***/ }),
 
@@ -41954,52 +41874,6 @@ function prepareTemplateProps(_ref) {
 
 /***/ }),
 
-/***/ "./node_modules/instantsearch.js/es/lib/utils/range.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/instantsearch.js/es/lib/utils/range.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function range(_ref) {
-  var _ref$start = _ref.start,
-      start = _ref$start === void 0 ? 0 : _ref$start,
-      end = _ref.end,
-      _ref$step = _ref.step,
-      step = _ref$step === void 0 ? 1 : _ref$step;
-  // We can't divide by 0 so we re-assign the step to 1 if it happens.
-  var limitStep = step === 0 ? 1 : step; // In some cases the array to create has a decimal length.
-  // We therefore need to round the value.
-  // Example:
-  //   { start: 1, end: 5000, step: 500 }
-  //   => Array length = (5000 - 1) / 500 = 9.998
-
-  var arrayLength = Math.round((end - start) / limitStep);
-  return _toConsumableArray(Array(arrayLength)).map(function (_, current) {
-    return start + current * limitStep;
-  });
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (range);
-
-/***/ }),
-
 /***/ "./node_modules/instantsearch.js/es/lib/utils/renderTemplate.js":
 /*!**********************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/lib/utils/renderTemplate.js ***!
@@ -42966,6 +42840,47 @@ var defaultTemplates = {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/widgets/configure/configure.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/configure/configure.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _connectors_configure_connectConfigure_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../connectors/configure/connectConfigure.js */ "./node_modules/instantsearch.js/es/connectors/configure/connectConfigure.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+/**
+ * A list of [search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/)
+ * to enable when the widget mounts.
+ */
+
+var configure = function configure(widgetParams) {
+  // This is a renderless widget that falls back to the connector's
+  // noop render and unmount functions.
+  var makeWidget = (0,_connectors_configure_connectConfigure_js__WEBPACK_IMPORTED_MODULE_0__["default"])(_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+  return _objectSpread(_objectSpread({}, makeWidget({
+    searchParameters: widgetParams
+  })), {}, {
+    $$widgetType: 'ais.configure'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (configure);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js":
 /*!*********************************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js ***!
@@ -43069,153 +42984,6 @@ var currentRefinements = function currentRefinements(widgetParams) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (currentRefinements);
-
-/***/ }),
-
-/***/ "./node_modules/instantsearch.js/es/widgets/hits/defaultTemplates.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/instantsearch.js/es/widgets/hits/defaultTemplates.js ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-var defaultTemplates = {
-  empty: 'No results',
-  item: function item(data) {
-    return JSON.stringify(data, null, 2);
-  }
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (defaultTemplates);
-
-/***/ }),
-
-/***/ "./node_modules/instantsearch.js/es/widgets/hits/hits.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/instantsearch.js/es/widgets/hits/hits.js ***!
-  \***************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var _connectors_hits_connectHits_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../connectors/hits/connectHits.js */ "./node_modules/instantsearch.js/es/connectors/hits/connectHits.js");
-/* harmony import */ var _components_Hits_Hits_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/Hits/Hits.js */ "./node_modules/instantsearch.js/es/components/Hits/Hits.js");
-/* harmony import */ var _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./defaultTemplates.js */ "./node_modules/instantsearch.js/es/widgets/hits/defaultTemplates.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/prepareTemplateProps.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
-/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
-/* harmony import */ var _lib_insights_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/insights/index.js */ "./node_modules/instantsearch.js/es/lib/insights/listener.js");
-/* harmony import */ var _lib_insights_index_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../lib/insights/index.js */ "./node_modules/instantsearch.js/es/lib/insights/client.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-/** @jsx h */
-
-
-
-
-
-
-
-
-var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
-  name: 'hits'
-});
-var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('Hits');
-var HitsWithInsightsListener = (0,_lib_insights_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_components_Hits_Hits_js__WEBPACK_IMPORTED_MODULE_5__["default"]);
-
-var renderer = function renderer(_ref) {
-  var renderState = _ref.renderState,
-      cssClasses = _ref.cssClasses,
-      containerNode = _ref.containerNode,
-      templates = _ref.templates;
-  return function (_ref2, isFirstRendering) {
-    var receivedHits = _ref2.hits,
-        results = _ref2.results,
-        instantSearchInstance = _ref2.instantSearchInstance,
-        insights = _ref2.insights,
-        bindEvent = _ref2.bindEvent;
-
-    if (isFirstRendering) {
-      renderState.templateProps = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
-        defaultTemplates: _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_7__["default"],
-        templatesConfig: instantSearchInstance.templatesConfig,
-        templates: templates
-      });
-      return;
-    }
-
-    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(HitsWithInsightsListener, {
-      cssClasses: cssClasses,
-      hits: receivedHits,
-      results: results,
-      templateProps: renderState.templateProps,
-      insights: insights,
-      sendEvent: function sendEvent(event) {
-        instantSearchInstance.sendEventToInsights(event);
-      },
-      bindEvent: bindEvent
-    }), containerNode);
-  };
-};
-
-var hits = function hits(widgetParams) {
-  var _ref3 = widgetParams || {},
-      container = _ref3.container,
-      escapeHTML = _ref3.escapeHTML,
-      transformItems = _ref3.transformItems,
-      _ref3$templates = _ref3.templates,
-      templates = _ref3$templates === void 0 ? {} : _ref3$templates,
-      _ref3$cssClasses = _ref3.cssClasses,
-      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses;
-
-  if (!container) {
-    throw new Error(withUsage('The `container` option is required.'));
-  }
-
-  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_8__["default"])(container);
-  var cssClasses = {
-    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
-    emptyRoot: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      modifierName: 'empty'
-    }), userCssClasses.emptyRoot),
-    list: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'list'
-    }), userCssClasses.list),
-    item: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'item'
-    }), userCssClasses.item)
-  };
-  var specializedRenderer = renderer({
-    containerNode: containerNode,
-    cssClasses: cssClasses,
-    renderState: {},
-    templates: templates
-  });
-  var makeWidget = (0,_lib_insights_index_js__WEBPACK_IMPORTED_MODULE_9__["default"])(_connectors_hits_connectHits_js__WEBPACK_IMPORTED_MODULE_10__["default"])(specializedRenderer, function () {
-    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
-  });
-  return _objectSpread(_objectSpread({}, makeWidget({
-    escapeHTML: escapeHTML,
-    transformItems: transformItems
-  })), {}, {
-    $$widgetType: 'ais.hits'
-  });
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (hits);
 
 /***/ }),
 
@@ -43815,10 +43583,33 @@ function storeRenderState(_ref7) {
 
 /***/ }),
 
-/***/ "./node_modules/instantsearch.js/es/widgets/pagination/pagination.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/instantsearch.js/es/widgets/pagination/pagination.js ***!
-  \***************************************************************************/
+/***/ "./node_modules/instantsearch.js/es/widgets/infinite-hits/defaultTemplates.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/infinite-hits/defaultTemplates.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var defaultTemplates = {
+  empty: 'No results',
+  showPreviousText: 'Show previous results',
+  showMoreText: 'Show more results',
+  item: function item(data) {
+    return JSON.stringify(data, null, 2);
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (defaultTemplates);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/infinite-hits/infinite-hits.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/infinite-hits/infinite-hits.js ***!
+  \*********************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -43828,11 +43619,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var _components_Pagination_Pagination_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Pagination/Pagination.js */ "./node_modules/instantsearch.js/es/components/Pagination/Pagination.js");
-/* harmony import */ var _connectors_pagination_connectPagination_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../connectors/pagination/connectPagination.js */ "./node_modules/instantsearch.js/es/connectors/pagination/connectPagination.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
-/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
-/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+/* harmony import */ var _components_InfiniteHits_InfiniteHits_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/InfiniteHits/InfiniteHits.js */ "./node_modules/instantsearch.js/es/components/InfiniteHits/InfiniteHits.js");
+/* harmony import */ var _connectors_infinite_hits_connectInfiniteHits_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../connectors/infinite-hits/connectInfiniteHits.js */ "./node_modules/instantsearch.js/es/connectors/infinite-hits/connectInfiniteHits.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/prepareTemplateProps.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+/* harmony import */ var _lib_insights_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/insights/index.js */ "./node_modules/instantsearch.js/es/lib/insights/listener.js");
+/* harmony import */ var _lib_insights_index_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../lib/insights/index.js */ "./node_modules/instantsearch.js/es/lib/insights/client.js");
+/* harmony import */ var _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./defaultTemplates.js */ "./node_modules/instantsearch.js/es/widgets/infinite-hits/defaultTemplates.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -43846,157 +43641,123 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_2__.component)('Pagination');
-var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.createDocumentationMessageGenerator)({
-  name: 'pagination'
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
+  name: 'infinite-hits'
 });
-var defaultTemplates = {
-  previous: '‹',
-  next: '›',
-  first: '«',
-  last: '»'
-};
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('InfiniteHits');
+var InfiniteHitsWithInsightsListener = (0,_lib_insights_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_components_InfiniteHits_InfiniteHits_js__WEBPACK_IMPORTED_MODULE_5__["default"]);
 
 var renderer = function renderer(_ref) {
   var containerNode = _ref.containerNode,
       cssClasses = _ref.cssClasses,
+      renderState = _ref.renderState,
       templates = _ref.templates,
-      showFirst = _ref.showFirst,
-      showLast = _ref.showLast,
-      showPrevious = _ref.showPrevious,
-      showNext = _ref.showNext,
-      scrollToNode = _ref.scrollToNode;
+      hasShowPrevious = _ref.showPrevious;
   return function (_ref2, isFirstRendering) {
-    var createURL = _ref2.createURL,
-        currentRefinement = _ref2.currentRefinement,
-        nbPages = _ref2.nbPages,
-        pages = _ref2.pages,
+    var hits = _ref2.hits,
+        results = _ref2.results,
+        showMore = _ref2.showMore,
+        showPrevious = _ref2.showPrevious,
         isFirstPage = _ref2.isFirstPage,
         isLastPage = _ref2.isLastPage,
-        refine = _ref2.refine;
-    if (isFirstRendering) return;
+        instantSearchInstance = _ref2.instantSearchInstance,
+        insights = _ref2.insights,
+        bindEvent = _ref2.bindEvent;
 
-    var setCurrentPage = function setCurrentPage(pageNumber) {
-      refine(pageNumber);
+    if (isFirstRendering) {
+      renderState.templateProps = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
+        defaultTemplates: _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_7__["default"],
+        templatesConfig: instantSearchInstance.templatesConfig,
+        templates: templates
+      });
+      return;
+    }
 
-      if (scrollToNode !== false) {
-        scrollToNode.scrollIntoView();
-      }
-    };
-
-    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_Pagination_Pagination_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      createURL: createURL,
+    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(InfiniteHitsWithInsightsListener, {
       cssClasses: cssClasses,
-      currentPage: currentRefinement,
-      templates: templates,
-      nbPages: nbPages,
-      pages: pages,
+      hits: hits,
+      results: results,
+      hasShowPrevious: hasShowPrevious,
+      showPrevious: showPrevious,
+      showMore: showMore,
+      templateProps: renderState.templateProps,
       isFirstPage: isFirstPage,
       isLastPage: isLastPage,
-      setCurrentPage: setCurrentPage,
-      showFirst: showFirst,
-      showLast: showLast,
-      showPrevious: showPrevious,
-      showNext: showNext
+      insights: insights,
+      sendEvent: function sendEvent(event) {
+        instantSearchInstance.sendEventToInsights(event);
+      },
+      bindEvent: bindEvent
     }), containerNode);
   };
 };
 
-var pagination = function pagination(widgetParams) {
+var infiniteHits = function infiniteHits(widgetParams) {
   var _ref3 = widgetParams || {},
       container = _ref3.container,
+      escapeHTML = _ref3.escapeHTML,
+      transformItems = _ref3.transformItems,
       _ref3$templates = _ref3.templates,
-      userTemplates = _ref3$templates === void 0 ? {} : _ref3$templates,
+      templates = _ref3$templates === void 0 ? {} : _ref3$templates,
       _ref3$cssClasses = _ref3.cssClasses,
       userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses,
-      totalPages = _ref3.totalPages,
-      padding = _ref3.padding,
-      _ref3$showFirst = _ref3.showFirst,
-      showFirst = _ref3$showFirst === void 0 ? true : _ref3$showFirst,
-      _ref3$showLast = _ref3.showLast,
-      showLast = _ref3$showLast === void 0 ? true : _ref3$showLast,
-      _ref3$showPrevious = _ref3.showPrevious,
-      showPrevious = _ref3$showPrevious === void 0 ? true : _ref3$showPrevious,
-      _ref3$showNext = _ref3.showNext,
-      showNext = _ref3$showNext === void 0 ? true : _ref3$showNext,
-      _ref3$scrollTo = _ref3.scrollTo,
-      userScrollTo = _ref3$scrollTo === void 0 ? 'body' : _ref3$scrollTo;
+      showPrevious = _ref3.showPrevious,
+      cache = _ref3.cache;
 
   if (!container) {
     throw new Error(withUsage('The `container` option is required.'));
   }
 
-  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])(container);
-  var scrollTo = userScrollTo === true ? 'body' : userScrollTo;
-  var scrollToNode = scrollTo !== false ? (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])(scrollTo) : false;
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_8__["default"])(container);
   var cssClasses = {
     root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
-    noRefinementRoot: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      modifierName: 'noRefinement'
-    }), userCssClasses.noRefinementRoot),
-    list: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'list'
-    }), userCssClasses.list),
+    emptyRoot: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      modifierName: 'empty'
+    }), userCssClasses.emptyRoot),
     item: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
       descendantName: 'item'
     }), userCssClasses.item),
-    firstPageItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'item',
-      modifierName: 'firstPage'
-    }), userCssClasses.firstPageItem),
-    lastPageItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'item',
-      modifierName: 'lastPage'
-    }), userCssClasses.lastPageItem),
-    previousPageItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'item',
-      modifierName: 'previousPage'
-    }), userCssClasses.previousPageItem),
-    nextPageItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'item',
-      modifierName: 'nextPage'
-    }), userCssClasses.nextPageItem),
-    pageItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'item',
-      modifierName: 'page'
-    }), userCssClasses.pageItem),
-    selectedItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'item',
-      modifierName: 'selected'
-    }), userCssClasses.selectedItem),
-    disabledItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'item',
+    list: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'list'
+    }), userCssClasses.list),
+    loadPrevious: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'loadPrevious'
+    }), userCssClasses.loadPrevious),
+    disabledLoadPrevious: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'loadPrevious',
       modifierName: 'disabled'
-    }), userCssClasses.disabledItem),
-    link: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
-      descendantName: 'link'
-    }), userCssClasses.link)
+    }), userCssClasses.disabledLoadPrevious),
+    loadMore: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'loadMore'
+    }), userCssClasses.loadMore),
+    disabledLoadMore: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'loadMore',
+      modifierName: 'disabled'
+    }), userCssClasses.disabledLoadMore)
   };
-
-  var templates = _objectSpread(_objectSpread({}, defaultTemplates), userTemplates);
-
   var specializedRenderer = renderer({
     containerNode: containerNode,
     cssClasses: cssClasses,
     templates: templates,
-    showFirst: showFirst,
-    showLast: showLast,
     showPrevious: showPrevious,
-    showNext: showNext,
-    scrollToNode: scrollToNode
+    renderState: {}
   });
-  var makeWidget = (0,_connectors_pagination_connectPagination_js__WEBPACK_IMPORTED_MODULE_6__["default"])(specializedRenderer, function () {
+  var makeWidget = (0,_lib_insights_index_js__WEBPACK_IMPORTED_MODULE_9__["default"])(_connectors_infinite_hits_connectInfiniteHits_js__WEBPACK_IMPORTED_MODULE_10__["default"])(specializedRenderer, function () {
     return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
   });
   return _objectSpread(_objectSpread({}, makeWidget({
-    totalPages: totalPages,
-    padding: padding
+    escapeHTML: escapeHTML,
+    transformItems: transformItems,
+    showPrevious: showPrevious,
+    cache: cache
   })), {}, {
-    $$widgetType: 'ais.pagination'
+    $$widgetType: 'ais.infiniteHits'
   });
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (pagination);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (infiniteHits);
 
 /***/ }),
 

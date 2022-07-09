@@ -235,7 +235,7 @@ class Product extends Model implements Buyable , HasMedia
     {
         return Attribute::make(
             set: function ($value) {
-                return number_format( $value , 2);
+                return number_format(  $value , 2);
             },
         );
     }
@@ -250,7 +250,7 @@ class Product extends Model implements Buyable , HasMedia
             set: function ($value, $attributes) {
                 
                 return $value ?
-                    number_format( $value , 2)
+                    number_format(  $value , 2)
                     : $attributes['original_price'];
             },
         );
@@ -335,7 +335,10 @@ class Product extends Model implements Buyable , HasMedia
         $array['original_price'] = $this->original_price;
         $array['selling_price'] = $this->selling_price;
         $array['discount'] = $this->discount;
-        $array['price'] = $this->price;
+        $array['price'] =  $this->price;
+        $array['original_price_float'] = (float) $this->original_price;
+        $array['selling_price_float'] = (float) $this->selling_price;
+        $array['price_float'] =  (float) $this->price;
         $array['featured'] = $this->featured;
         $array['quantity'] = $this->quantity;
         $array['low_stock_threshold'] = $this->low_stock_threshold;

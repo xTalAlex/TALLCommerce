@@ -10,6 +10,7 @@ return [
         'sort_label' => 'Sort by',
         'placeholder' => 'Search...',
         'options' => [
+            'featured' => 'Featured',
             'recent' => 'Most Recent',
             'price_asc' => 'Price Ascending',
             'price_desc' => 'Prce Descending'

@@ -10,6 +10,7 @@ return [
         'sort_label' => 'Ordina per',
         'placeholder' => 'Cerca...',
         'options' => [
+            'featured' => 'In Evidenza',
             'recent' => 'Più recenti',
             'price_asc' => 'Più economici',
             'price_desc' => 'Più costosi'

@@ -33,7 +33,7 @@
     "Gallery" : "Galleria",
     "Image" : "Immagine",
     "Price" : "Prezzo",
-    "Featured" : "Featured",
+    "Featured" : "In Evidenza",
     "Hidden" : "Nascosto",
     "Discounted" : "Scontato|Scontati",
     "Weight" : "Peso",
@@ -214,5 +214,6 @@
 
     "Search..." : "Cerca...",
     "No results" : "Nessun risultato",
-    "No results for" : "Nessun risultato per"
+    "No results for" : "Nessun risultato per",
+    "Show more" : "Altro"
 }

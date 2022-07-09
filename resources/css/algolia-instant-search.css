@@ -1130,23 +1130,27 @@
 /**
 * Results as a grid
 **/
-.ais-Hits-list {
+.ais-InfiniteHits .ais-InfiniteHits-list {
+  display : grid;
+}
+
+.ais-InfiniteHits-list {
 	display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
 	grid-gap: 4px;
 	padding: 4px;	}
   
-.ais-Hits-item{
+.ais-InfiniteHits-item{
   margin-left: auto;
   margin-right: auto;
   width: 100%; }
 
 @media (min-width:  639px) {
-  .ais-Hits-list {
+  .ais-InfiniteHits-list {
     grid-template-columns: repeat(2, minmax(0, 1fr)); } 
 }
 
 @media (min-width: 1024px) {
-  .ais-Hits-list {
+  .ais-InfiniteHits-list {
     grid-template-columns: repeat(3, minmax(0, 1fr)); } 
 }
