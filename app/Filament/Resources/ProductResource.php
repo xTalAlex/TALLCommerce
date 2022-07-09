@@ -88,10 +88,29 @@ class ProductResource extends Resource
                                 ->label(__('Categories'))
                                 ->relationship('categories', 'name',
                                     fn (Builder $query, callable $get) => 
-                                        $query->whereNull('parent_id')
+                                        $query->whereNotIn('id', $get('categories'))
+                                                ->whereNull('parent_id')
                                                 ->orWhereIn('parent_id', $get('categories'))
+
                                 )
                                 ->reactive()
+                                ->afterStateUpdated(function(callable $get, callable $set){
+                                    $selectedCategories = \App\Models\Category::findMany($get('categories'));
+                                    $removed = false;
+                                    do{
+                                        $removed = false;
+                                        foreach($selectedCategories as $category)
+                                        {
+                                            if ($category->parent && !$selectedCategories->contains($category->parent)) {
+                                                $selectedCategories = $selectedCategories->filter(fn($selectedCategory) =>
+                                                    $selectedCategory->id!=$category->id
+                                                );
+                                                $removed = true;
+                                            }
+                                        }
+                                    }while($removed == false);
+                                    return $set('categories',$selectedCategories->pluck('id'));
+                                 })
                                 ->columnSpan([
                                     'sm' => 3,
                                 ])
