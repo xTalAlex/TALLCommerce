@@ -33,7 +33,7 @@
                 }),
 
                 window.configure({
-                    hitsPerPage: 5,
+                    hitsPerPage: 9,
                     attributesToSnippet: ['name:5','short_description:5','description:5'],
                     snippetEllipsisText: '&hellip;'
                 }),
