@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Shop') }}
+        <h2 class="text-xl font-semibold leading-tight text-gray-800"
+            id="breadcrumb"
+        >
         </h2>
     </x-slot>
 
@@ -64,7 +65,76 @@
                     ]
                 }),
 
-                window.refinementList({
+                window.hierarchicalMenu({
+                    container: '#hierarchical-menu',
+                    attributes: [
+                        'hierarchicalCategories.lvl0',
+                        'hierarchicalCategories.lvl1',
+                        'hierarchicalCategories.lvl2',
+                        'hierarchicalCategories.lvl3',
+                    ],
+                    limit: 5,
+                    showMore: true,
+                    separator: '>',
+                }),
+
+                {{-- window.currentRefinements({
+                    container: '#current-refinements',
+                    transformItems(items) {
+                        return items
+                            ? items
+                            : items.map(item => item.attribute='');
+                    },
+                }), --}}
+
+                window.clearRefinements({
+                    container: '#clear-refinements',
+                    templates: {
+                        resetLabel() {
+                            return '{{ __('Clear filters') }}';
+                        },
+                    },
+                }),
+
+                window.breadcrumb({
+                    container: '#breadcrumb',
+                    attributes: [
+                        'hierarchicalCategories.lvl0',
+                        'hierarchicalCategories.lvl1',
+                        'hierarchicalCategories.lvl2',
+                        'hierarchicalCategories.lvl3',
+                    ],
+                    templates: {
+                        home() {
+                            return '{{ __('Shop') }}';
+                        },
+                    },
+                }),
+
+                window.stats({
+                    container: '#stats',
+                    templates: {
+                        text(data) {
+                            let count = '';
+
+                            if (data.hasManyResults) {
+                                count += `${data.nbHits} {{ __('results') }}`;
+                            } else if (data.hasOneResult) {
+                                count += `1 {{ __('result') }}`;
+                            } else {
+                                count += `0 {{ __('results') }}`;
+                            }
+
+                            return `${count} in ${data.processingTimeMS}ms`;
+                        },
+                    },
+                }),
+
+                window.poweredBy({
+                    container: '#powered-by',
+                }),
+
+                {{-- window.refinementList({
                     container: '#refinement-list',
                     attribute: 'categories.name',
                     operator: 'or',
@@ -81,7 +151,7 @@
                             return data.isShowingMore ? '{{ __('Hide') }}' : '{{ __('Show') }}';
                         },
                     },
-                }),
+                }), --}}
 
             ]);
             search.start();
@@ -90,12 +160,24 @@
         <div class="flex flex-col w-full mx-auto md:space-x-3 md:flex-row md:inline-flex max-w-7xl sm:px-6 lg:px-8">
             
             <div class="flex flex-col w-full mb-2 space-x-2 md:w-64 md:mb-auto" aria-label="Sidebar">
-                <div class="flex flex-row items-center justify-center w-full mb-2 space-x-1">
+                <div class="flex flex-row items-center justify-center w-full mb-4 space-x-1">
                     <span id="voicesearch"></span>
                     <div id="searchbox"></div>
                 </div>
-                <div class="mb-2" id="sort-by"></div>
-                <div class="mb-2" id="refinement-list"></div>
+                
+                <div class="px-1">
+                    <div class="mb-2" id="sort-by"></div>
+                    <div class="mb-2" id="hierarchical-menu"></div>
+                    <div class="mb-2" id="refinement-list"></div>
+                    <div class="mb-2" id="current-refinements"></div>
+                    <div class="mb-2" id="clear-refinements"></div>
+                </div>
+
+                <div class="flex justify-between px-1 mt-4">
+                    <div id="powered-by"></div>
+                    <div class="text-xs opacity-50" id="stats"></div>
+                </div>
+                
             </div>
             <div class="w-full overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 <div id="infinite-hits"></div>
@@ -108,7 +190,14 @@
     @push('scripts')
 
         <script id="empty" type="text/html">
-            <p class="mt-2 text-center">{{__('No results for') }} <strong>@{{query}}</strong></p>
+            <p class="mt-2 text-center">
+                @{{#query}}
+                {{__('No results for') }} <strong>@{{query}}
+                @{{/query}}
+                @{{^query}}
+                {{__('No results') }}
+                @{{/query}}
+            </strong></p>
         </script>
 
         <script id="item" type="text/html">

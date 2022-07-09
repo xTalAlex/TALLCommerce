@@ -15930,9 +15930,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/stats/stats.js");
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/panel/panel.js");
 /* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/refinement-list/refinement-list.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/clear-refinements/clear-refinements.js");
-/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js");
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/hierarchical-menu/hierarchical-menu.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/clear-refinements/clear-refinements.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/current-refinements/current-refinements.js");
+/* harmony import */ var instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! instantsearch.js/es/widgets */ "./node_modules/instantsearch.js/es/widgets/powered-by/powered-by.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 
 
 
@@ -15953,11 +15955,13 @@ window.breadcrumb = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_11__["d
 window.stats = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_12__["default"];
 window.panel = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_13__["default"];
 window.refinementList = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_14__["default"];
-window.clearRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__["default"];
-window.currentRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_16__["default"];
+window.hierarchicalMenu = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_15__["default"];
+window.clearRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_16__["default"];
+window.currentRefinements = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_17__["default"];
+window.poweredBy = instantsearch_js_es_widgets__WEBPACK_IMPORTED_MODULE_18__["default"];
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_17__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_17__["default"].start();
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_19__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_19__["default"].start();
 
 /***/ }),
 
@@ -35649,6 +35653,65 @@ function Panel(props) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/components/PoweredBy/PoweredBy.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/components/PoweredBy/PoweredBy.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/** @jsx h */
+
+
+var _ref2 = (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("path", {
+  fill: "#5468FF",
+  d: "M78.99.94h16.6a2.97 2.97 0 012.96 2.96v16.6a2.97 2.97 0 01-2.97 2.96h-16.6a2.97 2.97 0 01-2.96-2.96V3.9A2.96 2.96 0 0179 .94"
+});
+
+var _ref3 = (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("path", {
+  fill: "#FFF",
+  d: "M89.63 5.97v-.78a.98.98 0 00-.98-.97h-2.28a.98.98 0 00-.97.97V6c0 .09.08.15.17.13a7.13 7.13 0 013.9-.02c.08.02.16-.04.16-.13m-6.25 1L83 6.6a.98.98 0 00-1.38 0l-.46.46a.97.97 0 000 1.38l.38.39c.06.06.15.04.2-.02a7.49 7.49 0 011.63-1.62c.07-.04.08-.14.02-.2m4.16 2.45v3.34c0 .1.1.17.2.12l2.97-1.54c.06-.03.08-.12.05-.18a3.7 3.7 0 00-3.08-1.87c-.07 0-.14.06-.14.13m0 8.05a4.49 4.49 0 110-8.98 4.49 4.49 0 010 8.98m0-10.85a6.37 6.37 0 100 12.74 6.37 6.37 0 000-12.74"
+});
+
+var PoweredBy = function PoweredBy(_ref) {
+  var url = _ref.url,
+      theme = _ref.theme,
+      cssClasses = _ref.cssClasses;
+  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+    className: cssClasses.root
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("a", {
+    href: url,
+    target: "_blank",
+    className: cssClasses.link,
+    "aria-label": "Search by Algolia",
+    rel: "noopener noreferrer"
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("svg", {
+    height: "1.2em",
+    className: cssClasses.logo,
+    viewBox: "0 0 168 24" // This style is necessary as long as it's not included in InstantSearch.css.
+    // For now, InstantSearch.css sets a maximum width of 70px.
+    ,
+    style: {
+      width: 'auto'
+    }
+  }, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("path", {
+    fill: theme === 'dark' ? '#FFF' : '#5D6494',
+    d: "M6.97 6.68V8.3a4.47 4.47 0 00-2.42-.67 2.2 2.2 0 00-1.38.4c-.34.26-.5.6-.5 1.02 0 .43.16.77.49 1.03.33.25.83.53 1.51.83a7.04 7.04 0 011.9 1.08c.34.24.58.54.73.89.15.34.23.74.23 1.18 0 .95-.33 1.7-1 2.24a4 4 0 01-2.6.81 5.71 5.71 0 01-2.94-.68v-1.71c.84.63 1.81.94 2.92.94.58 0 1.05-.14 1.39-.4.34-.28.5-.65.5-1.13 0-.29-.1-.55-.3-.8a2.2 2.2 0 00-.65-.53 23.03 23.03 0 00-1.64-.78 13.67 13.67 0 01-1.11-.64c-.12-.1-.28-.22-.46-.4a1.72 1.72 0 01-.39-.5 4.46 4.46 0 01-.22-.6c-.07-.23-.1-.48-.1-.75 0-.91.33-1.63 1-2.17a4 4 0 012.57-.8c.97 0 1.8.18 2.47.52zm7.47 5.7v-.3a2.26 2.26 0 00-.5-1.44c-.3-.35-.74-.53-1.32-.53-.53 0-.99.2-1.37.58a2.9 2.9 0 00-.72 1.68h3.91zm1 2.79v1.4c-.6.34-1.38.51-2.36.51a4.02 4.02 0 01-3-1.13 4.04 4.04 0 01-1.11-2.97c0-1.3.34-2.32 1.02-3.06a3.38 3.38 0 012.6-1.1c1.03 0 1.85.32 2.46.96.6.64.9 1.57.9 2.78 0 .33-.03.68-.09 1.04h-5.31c.1.7.4 1.24.89 1.61.49.38 1.1.56 1.85.56.86 0 1.58-.2 2.15-.6zm6.61-1.78h-1.21c-.6 0-1.05.12-1.35.36-.3.23-.46.53-.46.89 0 .37.12.66.36.88.23.2.57.32 1.02.32.5 0 .9-.15 1.2-.43.3-.28.44-.65.44-1.1v-.92zm-4.07-2.55V9.33a4.96 4.96 0 012.5-.55c2.1 0 3.17 1.03 3.17 3.08V17H22.1v-.96c-.42.68-1.15 1.02-2.19 1.02-.76 0-1.38-.22-1.84-.66-.46-.44-.7-1-.7-1.68 0-.78.3-1.38.88-1.81.59-.43 1.4-.65 2.46-.65h1.34v-.46c0-.55-.13-.97-.4-1.25-.26-.29-.7-.43-1.32-.43-.86 0-1.65.24-2.35.72zm9.34-1.93v1.42c.39-1 1.1-1.5 2.12-1.5.15 0 .31.02.5.05v1.53c-.23-.1-.48-.14-.76-.14-.54 0-.99.24-1.34.71a2.8 2.8 0 00-.52 1.71V17h-1.57V8.91h1.57zm5 4.09a3 3 0 00.76 2.01c.47.53 1.14.8 2 .8.64 0 1.24-.18 1.8-.53v1.4c-.53.32-1.2.48-2 .48a3.98 3.98 0 01-4.17-4.18c0-1.16.38-2.15 1.14-2.98a4 4 0 013.1-1.23c.7 0 1.34.15 1.92.44v1.44a3.24 3.24 0 00-1.77-.5A2.65 2.65 0 0032.33 13zm7.92-7.28v4.58c.46-1 1.3-1.5 2.5-1.5.8 0 1.42.24 1.9.73.48.5.72 1.17.72 2.05V17H43.8v-5.1c0-.56-.14-.99-.43-1.29-.28-.3-.65-.45-1.1-.45-.54 0-1 .2-1.42.6-.4.4-.61 1.02-.61 1.85V17h-1.56V5.72h1.56zM55.2 15.74c.6 0 1.1-.25 1.5-.76.4-.5.6-1.16.6-1.95 0-.92-.2-1.62-.6-2.12-.4-.5-.92-.74-1.55-.74-.56 0-1.05.22-1.5.67-.44.45-.66 1.13-.66 2.06 0 .96.22 1.67.64 2.14.43.47.95.7 1.57.7zM53 5.72v4.42a2.74 2.74 0 012.43-1.34c1.03 0 1.86.38 2.51 1.15.65.76.97 1.78.97 3.05 0 1.13-.3 2.1-.92 2.9-.62.81-1.47 1.21-2.54 1.21s-1.9-.45-2.46-1.34V17h-1.58V5.72H53zm9.9 11.1l-3.22-7.9h1.74l1 2.62 1.26 3.42c.1-.32.48-1.46 1.15-3.42l.91-2.63h1.66l-2.92 7.87c-.78 2.07-1.96 3.1-3.56 3.1-.28 0-.53-.02-.73-.07v-1.34c.17.04.35.06.54.06 1.03 0 1.76-.57 2.17-1.7z"
+  }), _ref2, _ref3, (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)("path", {
+    fill: theme === 'dark' ? '#FFF' : '#5468FF',
+    d: "M120.92 18.8c-4.38.02-4.38-3.54-4.38-4.1V1.36l2.67-.42v13.25c0 .32 0 2.36 1.71 2.37v2.24zm-10.84-2.18c.82 0 1.43-.04 1.85-.12v-2.72a5.48 5.48 0 00-1.57-.2c-.3 0-.6.02-.9.07-.3.04-.57.12-.81.24-.24.11-.44.28-.58.49a.93.93 0 00-.22.65c0 .63.22 1 .61 1.23.4.24.94.36 1.62.36zm-.23-9.7c.88 0 1.62.11 2.23.33.6.22 1.09.53 1.44.92.36.4.61.92.76 1.48.16.56.23 1.17.23 1.85v6.87a21.69 21.69 0 01-4.68.5c-.69 0-1.32-.07-1.9-.2a4 4 0 01-1.46-.63 3.3 3.3 0 01-.96-1.13 4.3 4.3 0 01-.34-1.8 3.13 3.13 0 011.43-2.63c.45-.3.95-.5 1.54-.62a8.8 8.8 0 013.79.05v-.44c0-.3-.04-.6-.11-.87a1.78 1.78 0 00-1.1-1.22 3.2 3.2 0 00-1.15-.2 9.75 9.75 0 00-2.95.46l-.33-2.19a11.43 11.43 0 013.56-.53zm52.84 9.63c.82 0 1.43-.05 1.85-.13V13.7a5.42 5.42 0 00-1.57-.2c-.3 0-.6.02-.9.07-.3.04-.57.12-.81.24-.24.12-.44.28-.58.5a.93.93 0 00-.22.65c0 .63.22.99.61 1.23.4.24.94.36 1.62.36zm-.23-9.7c.88 0 1.63.11 2.23.33.6.22 1.1.53 1.45.92.35.39.6.92.76 1.48.15.56.23 1.18.23 1.85v6.88c-.41.08-1.03.19-1.87.31-.83.12-1.77.18-2.81.18-.7 0-1.33-.06-1.9-.2a4 4 0 01-1.47-.63c-.4-.3-.72-.67-.95-1.13a4.3 4.3 0 01-.34-1.8c0-.66.13-1.08.38-1.53.26-.45.61-.82 1.05-1.1.44-.3.95-.5 1.53-.62a8.8 8.8 0 013.8.05v-.43c0-.31-.04-.6-.12-.88-.07-.28-.2-.52-.38-.73a1.78 1.78 0 00-.73-.5c-.3-.1-.68-.2-1.14-.2a9.85 9.85 0 00-2.95.47l-.32-2.19a11.63 11.63 0 013.55-.53zm-8.03-1.27a1.62 1.62 0 000-3.24 1.62 1.62 0 100 3.24zm1.35 13.22h-2.7V7.27l2.7-.42V18.8zm-4.72 0c-4.38.02-4.38-3.54-4.38-4.1l-.01-13.34 2.67-.42v13.25c0 .32 0 2.36 1.72 2.37v2.24zm-8.7-5.9a4.7 4.7 0 00-.74-2.79 2.4 2.4 0 00-2.07-1 2.4 2.4 0 00-2.06 1 4.7 4.7 0 00-.74 2.8c0 1.16.25 1.94.74 2.62a2.4 2.4 0 002.07 1.02c.88 0 1.57-.34 2.07-1.02a4.2 4.2 0 00.73-2.63zm2.74 0a6.46 6.46 0 01-1.52 4.23c-.49.53-1.07.94-1.76 1.22-.68.29-1.73.45-2.26.45a6.6 6.6 0 01-2.25-.45 5.1 5.1 0 01-2.88-3.13 7.3 7.3 0 01-.01-4.84 5.13 5.13 0 012.9-3.1 5.67 5.67 0 012.22-.42c.81 0 1.56.14 2.24.42.69.29 1.28.69 1.75 1.22.49.52.87 1.15 1.14 1.89a7 7 0 01.43 2.5zm-20.14 0c0 1.11.25 2.36.74 2.88.5.52 1.13.78 1.91.78a4.07 4.07 0 002.12-.6V9.33c-.19-.04-.99-.2-1.76-.23a2.67 2.67 0 00-2.23 1 4.73 4.73 0 00-.78 2.8zm7.44 5.27c0 1.82-.46 3.16-1.4 4-.94.85-2.37 1.27-4.3 1.27-.7 0-2.17-.13-3.34-.4l.43-2.11c.98.2 2.27.26 2.95.26 1.08 0 1.84-.22 2.3-.66.46-.43.68-1.08.68-1.94v-.44a5.2 5.2 0 01-2.54.6 5.6 5.6 0 01-2.01-.36 4.2 4.2 0 01-2.58-2.71 9.88 9.88 0 01.02-5.35 4.92 4.92 0 012.93-2.96 6.6 6.6 0 012.43-.46 19.64 19.64 0 014.43.66v10.6z"
+  }))));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PoweredBy);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/components/RefinementList/RefinementList.js":
 /*!**************************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/components/RefinementList/RefinementList.js ***!
@@ -37289,6 +37352,283 @@ function getValue(refinement) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/connectors/hierarchical-menu/connectHierarchicalMenu.js":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/hierarchical-menu/connectHierarchicalMenu.js ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/createSendEventForFacet.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/logger.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/isEqual.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
+  name: 'hierarchical-menu',
+  connector: true
+});
+var DEFAULT_SORT = ['name:asc'];
+
+/**
+ * **HierarchicalMenu** connector provides the logic to build a custom widget
+ * that will give the user the ability to explore facets in a tree-like structure.
+ *
+ * This is commonly used for multi-level categorization of products on e-commerce
+ * websites. From a UX point of view, we suggest not displaying more than two
+ * levels deep.
+ *
+ * @type {Connector}
+ * @param {function(HierarchicalMenuRenderingOptions, boolean)} renderFn Rendering function for the custom **HierarchicalMenu** widget.
+ * @param {function} unmountFn Unmount function called when the widget is disposed.
+ * @return {function(CustomHierarchicalMenuWidgetParams)} Re-usable widget factory for a custom **HierarchicalMenu** widget.
+ */
+var connectHierarchicalMenu = function connectHierarchicalMenu(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
+  return function (widgetParams) {
+    var _ref = widgetParams || {},
+        attributes = _ref.attributes,
+        _ref$separator = _ref.separator,
+        separator = _ref$separator === void 0 ? ' > ' : _ref$separator,
+        _ref$rootPath = _ref.rootPath,
+        rootPath = _ref$rootPath === void 0 ? null : _ref$rootPath,
+        _ref$showParentLevel = _ref.showParentLevel,
+        showParentLevel = _ref$showParentLevel === void 0 ? true : _ref$showParentLevel,
+        _ref$limit = _ref.limit,
+        limit = _ref$limit === void 0 ? 10 : _ref$limit,
+        _ref$showMore = _ref.showMore,
+        showMore = _ref$showMore === void 0 ? false : _ref$showMore,
+        _ref$showMoreLimit = _ref.showMoreLimit,
+        showMoreLimit = _ref$showMoreLimit === void 0 ? 20 : _ref$showMoreLimit,
+        _ref$sortBy = _ref.sortBy,
+        sortBy = _ref$sortBy === void 0 ? DEFAULT_SORT : _ref$sortBy,
+        _ref$transformItems = _ref.transformItems,
+        transformItems = _ref$transformItems === void 0 ? function (items) {
+      return items;
+    } : _ref$transformItems;
+
+    if (!attributes || !Array.isArray(attributes) || attributes.length === 0) {
+      throw new Error(withUsage('The `attributes` option expects an array of strings.'));
+    }
+
+    if (showMore === true && showMoreLimit <= limit) {
+      throw new Error(withUsage('The `showMoreLimit` option must be greater than `limit`.'));
+    }
+
+    // we need to provide a hierarchicalFacet name for the search state
+    // so that we can always map $hierarchicalFacetName => real attributes
+    // we use the first attribute name
+    var _attributes = _slicedToArray(attributes, 1),
+        hierarchicalFacetName = _attributes[0];
+
+    var sendEvent; // Provide the same function to the `renderFn` so that way the user
+    // has to only bind it once when `isFirstRendering` for instance
+
+    var toggleShowMore = function toggleShowMore() {};
+
+    function cachedToggleShowMore() {
+      toggleShowMore();
+    }
+
+    var _refine;
+
+    var isShowingMore = false;
+
+    function createToggleShowMore(renderOptions, widget) {
+      return function () {
+        isShowingMore = !isShowingMore;
+        widget.render(renderOptions);
+      };
+    }
+
+    function getLimit() {
+      return isShowingMore ? showMoreLimit : limit;
+    }
+
+    function _prepareFacetValues(facetValues) {
+      return facetValues.slice(0, getLimit()).map(function (_ref2) {
+        var label = _ref2.name,
+            value = _ref2.escapedValue,
+            data = _ref2.data,
+            path = _ref2.path,
+            subValue = _objectWithoutProperties(_ref2, ["name", "escapedValue", "data", "path"]);
+
+        var item = _objectSpread(_objectSpread({}, subValue), {}, {
+          value: value,
+          label: label,
+          data: null
+        });
+
+        if (Array.isArray(data)) {
+          item.data = _prepareFacetValues(data);
+        }
+
+        return item;
+      });
+    }
+
+    return {
+      $$type: 'ais.hierarchicalMenu',
+      init: function init(initOptions) {
+        var instantSearchInstance = initOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        var instantSearchInstance = renderOptions.instantSearchInstance;
+        toggleShowMore = createToggleShowMore(renderOptions, this);
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), false);
+      },
+      dispose: function dispose(_ref3) {
+        var state = _ref3.state;
+        unmountFn();
+        return state.removeHierarchicalFacet(hierarchicalFacetName).setQueryParameter('maxValuesPerFacet', undefined);
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          hierarchicalMenu: _objectSpread(_objectSpread({}, renderState.hierarchicalMenu), {}, _defineProperty({}, hierarchicalFacetName, this.getWidgetRenderState(renderOptions)))
+        });
+      },
+      getWidgetRenderState: function getWidgetRenderState(_ref4) {
+        var results = _ref4.results,
+            state = _ref4.state,
+            createURL = _ref4.createURL,
+            instantSearchInstance = _ref4.instantSearchInstance,
+            helper = _ref4.helper;
+        var items = [];
+        var canToggleShowMore = false; // Bind createURL to this specific attribute
+
+        function _createURL(facetValue) {
+          return createURL(state.resetPage().toggleFacetRefinement(hierarchicalFacetName, facetValue));
+        }
+
+        if (!sendEvent) {
+          sendEvent = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.createSendEventForFacet)({
+            instantSearchInstance: instantSearchInstance,
+            helper: helper,
+            attribute: hierarchicalFacetName,
+            widgetType: this.$$type
+          });
+        }
+
+        if (!_refine) {
+          _refine = function _refine(facetValue) {
+            sendEvent('click', facetValue);
+            helper.toggleFacetRefinement(hierarchicalFacetName, facetValue).search();
+          };
+        }
+
+        if (results) {
+          var facetValues = results.getFacetValues(hierarchicalFacetName, {
+            sortBy: sortBy,
+            facetOrdering: sortBy === DEFAULT_SORT
+          });
+          var facetItems = facetValues && !Array.isArray(facetValues) && facetValues.data ? facetValues.data : []; // If the limit is the max number of facet retrieved it is impossible to know
+          // if the facets are exhaustive. The only moment we are sure it is exhaustive
+          // is when it is strictly under the number requested unless we know that another
+          // widget has requested more values (maxValuesPerFacet > getLimit()).
+          // Because this is used for making the search of facets unable or not, it is important
+          // to be conservative here.
+
+          var hasExhaustiveItems = (state.maxValuesPerFacet || 0) > getLimit() ? facetItems.length <= getLimit() : facetItems.length < getLimit();
+          canToggleShowMore = showMore && (isShowingMore || !hasExhaustiveItems);
+          items = transformItems(_prepareFacetValues(facetItems), {
+            results: results
+          });
+        }
+
+        return {
+          items: items,
+          refine: _refine,
+          canRefine: items.length > 0,
+          createURL: _createURL,
+          sendEvent: sendEvent,
+          widgetParams: widgetParams,
+          isShowingMore: isShowingMore,
+          toggleShowMore: cachedToggleShowMore,
+          canToggleShowMore: canToggleShowMore
+        };
+      },
+      getWidgetUiState: function getWidgetUiState(uiState, _ref5) {
+        var searchParameters = _ref5.searchParameters;
+        var path = searchParameters.getHierarchicalFacetBreadcrumb(hierarchicalFacetName);
+
+        if (!path.length) {
+          return uiState;
+        }
+
+        return _objectSpread(_objectSpread({}, uiState), {}, {
+          hierarchicalMenu: _objectSpread(_objectSpread({}, uiState.hierarchicalMenu), {}, _defineProperty({}, hierarchicalFacetName, path))
+        });
+      },
+      getWidgetSearchParameters: function getWidgetSearchParameters(searchParameters, _ref6) {
+        var uiState = _ref6.uiState;
+        var values = uiState.hierarchicalMenu && uiState.hierarchicalMenu[hierarchicalFacetName];
+
+        if (searchParameters.isHierarchicalFacet(hierarchicalFacetName)) {
+          var facet = searchParameters.getHierarchicalFacetByName(hierarchicalFacetName);
+           true ? (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__.warning)((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])(facet.attributes, attributes) && facet.separator === separator && facet.rootPath === rootPath, 'Using Breadcrumb and HierarchicalMenu on the same facet with different options overrides the configuration of the HierarchicalMenu.') : 0;
+        }
+
+        var withFacetConfiguration = searchParameters.removeHierarchicalFacet(hierarchicalFacetName).addHierarchicalFacet({
+          name: hierarchicalFacetName,
+          attributes: attributes,
+          separator: separator,
+          rootPath: rootPath,
+          showParentLevel: showParentLevel
+        });
+        var currentMaxValuesPerFacet = withFacetConfiguration.maxValuesPerFacet || 0;
+        var nextMaxValuesPerFacet = Math.max(currentMaxValuesPerFacet, showMore ? showMoreLimit : limit);
+        var withMaxValuesPerFacet = withFacetConfiguration.setQueryParameter('maxValuesPerFacet', nextMaxValuesPerFacet);
+
+        if (!values) {
+          return withMaxValuesPerFacet.setQueryParameters({
+            hierarchicalFacetsRefinements: _objectSpread(_objectSpread({}, withMaxValuesPerFacet.hierarchicalFacetsRefinements), {}, _defineProperty({}, hierarchicalFacetName, []))
+          });
+        }
+
+        return withMaxValuesPerFacet.addHierarchicalFacetRefinement(hierarchicalFacetName, values.join(separator));
+      }
+    };
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectHierarchicalMenu);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/connectors/infinite-hits/connectInfiniteHits.js":
 /*!******************************************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/connectors/infinite-hits/connectInfiniteHits.js ***!
@@ -37565,6 +37905,91 @@ var connectInfiniteHits = function connectInfiniteHits(renderFn) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectInfiniteHits);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/connectors/powered-by/connectPoweredBy.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/connectors/powered-by/connectPoweredBy.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/noop.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/checkRendering.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/safelyRunOnBrowser.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_0__.createDocumentationMessageGenerator)({
+  name: 'powered-by',
+  connector: true
+});
+
+/**
+ * **PoweredBy** connector provides the logic to build a custom widget that will displays
+ * the logo to redirect to Algolia.
+ */
+var connectPoweredBy = function connectPoweredBy(renderFn) {
+  var unmountFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+  (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(renderFn, withUsage());
+  var defaultUrl = 'https://www.algolia.com/?' + 'utm_source=instantsearch.js&' + 'utm_medium=website&' + "utm_content=".concat((0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.safelyRunOnBrowser)(function (_ref) {
+    var _window$location;
+
+    var window = _ref.window;
+    return ((_window$location = window.location) === null || _window$location === void 0 ? void 0 : _window$location.hostname) || '';
+  }, {
+    fallback: function fallback() {
+      return '';
+    }
+  }), "&") + 'utm_campaign=poweredby';
+  return function (widgetParams) {
+    var _ref2 = widgetParams || {},
+        _ref2$url = _ref2.url,
+        url = _ref2$url === void 0 ? defaultUrl : _ref2$url;
+
+    return {
+      $$type: 'ais.poweredBy',
+      init: function init(initOptions) {
+        var instantSearchInstance = initOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(initOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), true);
+      },
+      render: function render(renderOptions) {
+        var instantSearchInstance = renderOptions.instantSearchInstance;
+        renderFn(_objectSpread(_objectSpread({}, this.getWidgetRenderState(renderOptions)), {}, {
+          instantSearchInstance: instantSearchInstance
+        }), false);
+      },
+      getRenderState: function getRenderState(renderState, renderOptions) {
+        return _objectSpread(_objectSpread({}, renderState), {}, {
+          poweredBy: this.getWidgetRenderState(renderOptions)
+        });
+      },
+      getWidgetRenderState: function getWidgetRenderState() {
+        return {
+          url: url,
+          widgetParams: widgetParams
+        };
+      },
+      dispose: function dispose() {
+        unmountFn();
+      }
+    };
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (connectPoweredBy);
 
 /***/ }),
 
@@ -42987,6 +43412,246 @@ var currentRefinements = function currentRefinements(widgetParams) {
 
 /***/ }),
 
+/***/ "./node_modules/instantsearch.js/es/widgets/hierarchical-menu/defaultTemplates.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/hierarchical-menu/defaultTemplates.js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var defaultTemplates = {
+  item: '<a class="{{cssClasses.link}}" href="{{url}}">' + '<span class="{{cssClasses.label}}">{{label}}</span>' + '<span class="{{cssClasses.count}}">{{#helpers.formatNumber}}{{count}}{{/helpers.formatNumber}}</span>' + '</a>',
+  showMoreText: "\n    {{#isShowingMore}}\n      Show less\n    {{/isShowingMore}}\n    {{^isShowingMore}}\n      Show more\n    {{/isShowingMore}}\n  "
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (defaultTemplates);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/hierarchical-menu/hierarchical-menu.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/hierarchical-menu/hierarchical-menu.js ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _components_RefinementList_RefinementList_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/RefinementList/RefinementList.js */ "./node_modules/instantsearch.js/es/components/RefinementList/RefinementList.js");
+/* harmony import */ var _connectors_hierarchical_menu_connectHierarchicalMenu_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../connectors/hierarchical-menu/connectHierarchicalMenu.js */ "./node_modules/instantsearch.js/es/connectors/hierarchical-menu/connectHierarchicalMenu.js");
+/* harmony import */ var _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./defaultTemplates.js */ "./node_modules/instantsearch.js/es/widgets/hierarchical-menu/defaultTemplates.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/prepareTemplateProps.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_2__.createDocumentationMessageGenerator)({
+  name: 'hierarchical-menu'
+});
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_3__.component)('HierarchicalMenu');
+
+var renderer = function renderer(_ref) {
+  var cssClasses = _ref.cssClasses,
+      containerNode = _ref.containerNode,
+      showMore = _ref.showMore,
+      templates = _ref.templates,
+      renderState = _ref.renderState;
+  return function (_ref2, isFirstRendering) {
+    var createURL = _ref2.createURL,
+        items = _ref2.items,
+        refine = _ref2.refine,
+        instantSearchInstance = _ref2.instantSearchInstance,
+        isShowingMore = _ref2.isShowingMore,
+        toggleShowMore = _ref2.toggleShowMore,
+        canToggleShowMore = _ref2.canToggleShowMore;
+
+    if (isFirstRendering) {
+      renderState.templateProps = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])({
+        defaultTemplates: _defaultTemplates_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+        templatesConfig: instantSearchInstance.templatesConfig,
+        templates: templates
+      });
+      return;
+    }
+
+    (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_RefinementList_RefinementList_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      createURL: createURL,
+      cssClasses: cssClasses,
+      facetValues: items,
+      templateProps: renderState.templateProps,
+      toggleRefinement: refine,
+      showMore: showMore,
+      toggleShowMore: toggleShowMore,
+      isShowingMore: isShowingMore,
+      canToggleShowMore: canToggleShowMore
+    }), containerNode);
+  };
+};
+/**
+ * The hierarchical menu widget is used to create a navigation based on a hierarchy of facet attributes.
+ *
+ * It is commonly used for categories with subcategories.
+ *
+ * All attributes (lvl0, lvl1 here) must be declared as [attributes for faceting](https://www.algolia.com/doc/guides/searching/faceting/#declaring-attributes-for-faceting) in your
+ * Algolia settings.
+ *
+ * By default, the separator we expect is ` > ` (with spaces) but you can use
+ * a different one by using the `separator` option.
+ * @requirements
+ * Your objects must be formatted in a specific way to be
+ * able to display hierarchical menus. Here's an example:
+ *
+ * ```javascript
+ * {
+ *   "objectID": "123",
+ *   "name": "orange",
+ *   "categories": {
+ *     "lvl0": "fruits",
+ *     "lvl1": "fruits > citrus"
+ *   }
+ * }
+ * ```
+ *
+ * Every level must be specified entirely.
+ * It's also possible to have multiple values per level, for example:
+ *
+ * ```javascript
+ * {
+ *   "objectID": "123",
+ *   "name": "orange",
+ *   "categories": {
+ *     "lvl0": ["fruits", "vitamins"],
+ *     "lvl1": ["fruits > citrus", "vitamins > C"]
+ *   }
+ * }
+ * ```
+ * @type {WidgetFactory}
+ * @devNovel HierarchicalMenu
+ * @category filter
+ * @param {HierarchicalMenuWidgetParams} widgetParams The HierarchicalMenu widget options.
+ * @return {Widget} A new HierarchicalMenu widget instance.
+ * @example
+ * search.addWidgets([
+ *   instantsearch.widgets.hierarchicalMenu({
+ *     container: '#hierarchical-categories',
+ *     attributes: ['hierarchicalCategories.lvl0', 'hierarchicalCategories.lvl1', 'hierarchicalCategories.lvl2'],
+ *   })
+ * ]);
+ */
+
+
+var hierarchicalMenu = function hierarchicalMenu(widgetParams) {
+  var _ref3 = widgetParams || {},
+      container = _ref3.container,
+      attributes = _ref3.attributes,
+      separator = _ref3.separator,
+      rootPath = _ref3.rootPath,
+      showParentLevel = _ref3.showParentLevel,
+      limit = _ref3.limit,
+      _ref3$showMore = _ref3.showMore,
+      showMore = _ref3$showMore === void 0 ? false : _ref3$showMore,
+      showMoreLimit = _ref3.showMoreLimit,
+      sortBy = _ref3.sortBy,
+      transformItems = _ref3.transformItems,
+      _ref3$templates = _ref3.templates,
+      templates = _ref3$templates === void 0 ? {} : _ref3$templates,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses;
+
+  if (!container) {
+    throw new Error(withUsage('The `container` option is required.'));
+  }
+
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_7__["default"])(container);
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), userCssClasses.root),
+    noRefinementRoot: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      modifierName: 'noRefinement'
+    }), userCssClasses.noRefinementRoot),
+    list: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'list'
+    }), userCssClasses.list),
+    childList: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'list',
+      modifierName: 'child'
+    }), userCssClasses.childList),
+    item: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item'
+    }), userCssClasses.item),
+    selectedItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'selected'
+    }), userCssClasses.selectedItem),
+    parentItem: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'item',
+      modifierName: 'parent'
+    }), userCssClasses.parentItem),
+    link: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'link'
+    }), userCssClasses.link),
+    label: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'label'
+    }), userCssClasses.label),
+    count: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'count'
+    }), userCssClasses.count),
+    showMore: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'showMore'
+    }), userCssClasses.showMore),
+    disabledShowMore: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'showMore',
+      modifierName: 'disabled'
+    }), userCssClasses.disabledShowMore)
+  };
+  var specializedRenderer = renderer({
+    cssClasses: cssClasses,
+    containerNode: containerNode,
+    templates: templates,
+    showMore: showMore,
+    renderState: {}
+  });
+  var makeWidget = (0,_connectors_hierarchical_menu_connectHierarchicalMenu_js__WEBPACK_IMPORTED_MODULE_8__["default"])(specializedRenderer, function () {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+  });
+  return _objectSpread(_objectSpread({}, makeWidget({
+    attributes: attributes,
+    separator: separator,
+    rootPath: rootPath,
+    showParentLevel: showParentLevel,
+    limit: limit,
+    showMore: showMore,
+    showMoreLimit: showMoreLimit,
+    sortBy: sortBy,
+    transformItems: transformItems
+  })), {}, {
+    $$widgetType: 'ais.hierarchicalMenu'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (hierarchicalMenu);
+
+/***/ }),
+
 /***/ "./node_modules/instantsearch.js/es/widgets/index/index.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/instantsearch.js/es/widgets/index/index.js ***!
@@ -43963,6 +44628,104 @@ var panel = function panel(panelWidgetParams) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (panel);
+
+/***/ }),
+
+/***/ "./node_modules/instantsearch.js/es/widgets/powered-by/powered-by.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/instantsearch.js/es/widgets/powered-by/powered-by.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var _components_PoweredBy_PoweredBy_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/PoweredBy/PoweredBy.js */ "./node_modules/instantsearch.js/es/components/PoweredBy/PoweredBy.js");
+/* harmony import */ var _connectors_powered_by_connectPoweredBy_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../connectors/powered-by/connectPoweredBy.js */ "./node_modules/instantsearch.js/es/connectors/powered-by/connectPoweredBy.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/documentation.js");
+/* harmony import */ var _lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../lib/utils/index.js */ "./node_modules/instantsearch.js/es/lib/utils/getContainerNode.js");
+/* harmony import */ var _lib_suit_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/suit.js */ "./node_modules/instantsearch.js/es/lib/suit.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/** @jsx h */
+
+
+
+
+
+
+var suit = (0,_lib_suit_js__WEBPACK_IMPORTED_MODULE_2__.component)('PoweredBy');
+var withUsage = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_3__.createDocumentationMessageGenerator)({
+  name: 'powered-by'
+});
+
+var renderer = function renderer(_ref) {
+  var containerNode = _ref.containerNode,
+      cssClasses = _ref.cssClasses;
+  return function (_ref2, isFirstRendering) {
+    var url = _ref2.url,
+        widgetParams = _ref2.widgetParams;
+
+    if (isFirstRendering) {
+      var _widgetParams$theme = widgetParams.theme,
+          theme = _widgetParams$theme === void 0 ? 'light' : _widgetParams$theme;
+      (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)((0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(_components_PoweredBy_PoweredBy_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        cssClasses: cssClasses,
+        url: url,
+        theme: theme
+      }), containerNode);
+      return;
+    }
+  };
+};
+
+var poweredBy = function poweredBy(widgetParams) {
+  var _ref3 = widgetParams || {},
+      container = _ref3.container,
+      _ref3$cssClasses = _ref3.cssClasses,
+      userCssClasses = _ref3$cssClasses === void 0 ? {} : _ref3$cssClasses,
+      _ref3$theme = _ref3.theme,
+      theme = _ref3$theme === void 0 ? 'light' : _ref3$theme;
+
+  if (!container) {
+    throw new Error(withUsage('The `container` option is required.'));
+  }
+
+  var containerNode = (0,_lib_utils_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])(container);
+  var cssClasses = {
+    root: classnames__WEBPACK_IMPORTED_MODULE_1__(suit(), suit({
+      modifierName: theme === 'dark' ? 'dark' : 'light'
+    }), userCssClasses.root),
+    link: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'link'
+    }), userCssClasses.link),
+    logo: classnames__WEBPACK_IMPORTED_MODULE_1__(suit({
+      descendantName: 'logo'
+    }), userCssClasses.logo)
+  };
+  var specializedRenderer = renderer({
+    containerNode: containerNode,
+    cssClasses: cssClasses
+  });
+  var makeWidget = (0,_connectors_powered_by_connectPoweredBy_js__WEBPACK_IMPORTED_MODULE_6__["default"])(specializedRenderer, function () {
+    return (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(null, containerNode);
+  });
+  return _objectSpread(_objectSpread({}, makeWidget({
+    theme: theme
+  })), {}, {
+    $$widgetType: 'ais.poweredBy'
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (poweredBy);
 
 /***/ }),
 

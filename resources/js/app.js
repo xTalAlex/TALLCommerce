@@ -4,7 +4,7 @@ import algoliasearch from 'algoliasearch/lite';
 import instantsearch from 'instantsearch.js';
 import { autocomplete , getAlgoliaResults } from '@algolia/autocomplete-js';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
-import { searchBox, voiceSearch, configure, infiniteHits, sortBy, breadcrumb, stats, panel, refinementList, clearRefinements, currentRefinements } from 'instantsearch.js/es/widgets';
+import { searchBox, voiceSearch, configure, infiniteHits, sortBy, breadcrumb, stats, panel, refinementList, hmenu, hierarchicalMenu, poweredBy, rangeInput, clearRefinements, currentRefinements } from 'instantsearch.js/es/widgets';
 
 window.algoliasearch = algoliasearch;
 window.instantsearch = instantsearch;
@@ -20,8 +20,10 @@ window.breadcrumb = breadcrumb;
 window.stats = stats;
 window.panel = panel;
 window.refinementList = refinementList;
+window.hierarchicalMenu = hierarchicalMenu;
 window.clearRefinements = clearRefinements;
 window.currentRefinements = currentRefinements;
+window.poweredBy = poweredBy;
 
 import Alpine from 'alpinejs';
 

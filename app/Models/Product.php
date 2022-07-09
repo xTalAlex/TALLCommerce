@@ -309,6 +309,46 @@ class Product extends Model implements Buyable , HasMedia
         }
     }
 
+    public function hierarchicalCategories()
+    {
+        $allCategories = $this->categories;
+        $hierarchicalCategories = array();
+        $hasMoreLevels = false;
+        $level = 0;
+        $hierarchicalCategories[$level] = array();
+        do{
+            $levelCategories = array();
+            $hasMoreLevels = false;
+            foreach($allCategories as $category)
+            {
+                if($level != 0 )
+                {
+                    if ($hierarchicalCategories[$level-1][$category->parent_id] ?? false) {
+                        $levelCategories[$category->id] = [
+                                $category->name, 
+                                $category->parent_id, 
+                                $hierarchicalCategories[$level-1][$category->parent_id][2]. ">".$category->name
+                            ];
+                        $hasMoreLevels = true;
+                    }
+                }
+                else
+                {
+                    if ($category->parent_id == null) {
+                        $levelCategories[$category->id] = [$category->name, $category->parent_id, $category->name];
+                        $hasMoreLevels = true;
+                    }
+                }
+            }
+            if ($hasMoreLevels) {
+                $hierarchicalCategories[$level] = $levelCategories;
+                $level ++;
+            }
+        }while($hasMoreLevels);
+
+        return $hierarchicalCategories;
+     }
+
     public function pricePerQuantity(int $quantity, float $newPrice = null )
     {
         return number_format( ($newPrice ?? $this->price) * $quantity , 2) ;
@@ -347,7 +387,14 @@ class Product extends Model implements Buyable , HasMedia
         $array['has_variants'] = $this->defaultVariant()->exists() || $this->variants()->exists();
         $array['avg_rating'] = $this->avg_rating;
 
-        $array['categories'] = $this->categories;
+        $array['hierarchicalCategories'] = [];
+        foreach($this->hierarchicalCategories() as $level=>$categories)
+        { 
+            $array['hierarchicalCategories']['lvl'.$level] = array();
+            foreach($categories as $category){
+                array_push($array['hierarchicalCategories']['lvl'.$level],$category[2]);
+            }
+        };
 
         $array['url'] = route('product.show', $this);
  
