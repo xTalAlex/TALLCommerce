@@ -86,7 +86,7 @@ class ProductResource extends Resource
                                 ]),
                             MultiSelect::make('categories')
                                 ->label(__('Categories'))
-                                ->relationship('categories', 'name',
+                                ->relationship('categories','name',
                                     fn (Builder $query, callable $get) => 
                                         $query->whereNotIn('id', $get('categories'))
                                                 ->where(fn ($query) =>
@@ -94,25 +94,25 @@ class ProductResource extends Resource
                                                         ->orWhereIn('parent_id', $get('categories'))
                                                 )
                                 )
+                                ->preload(true)
                                 ->reactive()
                                 ->afterStateUpdated(function(callable $get, callable $set){
                                     $selectedCategories = \App\Models\Category::findMany($get('categories'));
                                     $removed = false;
                                     do{
                                         $removed = false;
-                                        foreach($selectedCategories as $category)
-                                        {
+                                        foreach ($selectedCategories as $category) {
                                             if ($category->parent && !$selectedCategories->contains($category->parent)) {
-                                                $selectedCategories = $selectedCategories->filter(fn($selectedCategory) =>
+                                                $selectedCategories = $selectedCategories->filter(
+                                                    fn ($selectedCategory) =>
                                                     $selectedCategory->id!=$category->id
                                                 );
                                                 $removed = true;
                                             }
                                         }
-                                    }while($removed == false);
-                                    return $set('categories',$selectedCategories->pluck('id')->toArray());
-                                 })
-                                ->preload(true)
+                                    }while($removed);
+                                    $set('categories',$selectedCategories->pluck('id')->toArray());
+                                })
                                 ->columnSpan([
                                     'sm' => 3,
                                 ]),
