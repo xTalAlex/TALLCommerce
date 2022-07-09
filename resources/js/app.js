@@ -1,10 +1,11 @@
 import './bootstrap';
+import '../css/app.css';
 
 import algoliasearch from 'algoliasearch/lite';
 import instantsearch from 'instantsearch.js';
 import { autocomplete , getAlgoliaResults } from '@algolia/autocomplete-js';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
-import { searchBox, voiceSearch, configure, infiniteHits, sortBy, breadcrumb, stats, panel, refinementList, hmenu, hierarchicalMenu, poweredBy, rangeInput, clearRefinements, currentRefinements } from 'instantsearch.js/es/widgets';
+import { searchBox, voiceSearch, configure, infiniteHits, sortBy, breadcrumb, stats, panel, refinementList, menu, hierarchicalMenu, poweredBy, rangeInput, clearRefinements, currentRefinements } from 'instantsearch.js/es/widgets';
 
 window.algoliasearch = algoliasearch;
 window.instantsearch = instantsearch;
