@@ -86,7 +86,12 @@ class ProductResource extends Resource
                                 ]),
                             MultiSelect::make('categories')
                                 ->label(__('Categories'))
-                                ->relationship('categories', 'name')
+                                ->relationship('categories', 'name',
+                                    fn (Builder $query, callable $get) => 
+                                        $query->whereNull('parent_id')
+                                                ->orWhereIn('parent_id', $get('categories'))
+                                )
+                                ->reactive()
                                 ->columnSpan([
                                     'sm' => 3,
                                 ])
