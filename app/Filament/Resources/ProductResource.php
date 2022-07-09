@@ -89,9 +89,10 @@ class ProductResource extends Resource
                                 ->relationship('categories', 'name',
                                     fn (Builder $query, callable $get) => 
                                         $query->whereNotIn('id', $get('categories'))
-                                                ->whereNull('parent_id')
-                                                ->orWhereIn('parent_id', $get('categories'))
-
+                                                ->where(fn ($query) =>
+                                                    $query->whereNull('parent_id')
+                                                        ->orWhereIn('parent_id', $get('categories'))
+                                                )
                                 )
                                 ->reactive()
                                 ->afterStateUpdated(function(callable $get, callable $set){
@@ -109,12 +110,12 @@ class ProductResource extends Resource
                                             }
                                         }
                                     }while($removed == false);
-                                    return $set('categories',$selectedCategories->pluck('id'));
+                                    return $set('categories',$selectedCategories->pluck('id')->toArray());
                                  })
+                                ->preload(true)
                                 ->columnSpan([
                                     'sm' => 3,
-                                ])
-                                ->preload(true),
+                                ]),
                             Fieldset::make('Pricing')
                                 ->label(__('Pricing'))
                                 ->schema([
