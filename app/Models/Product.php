@@ -347,6 +347,8 @@ class Product extends Model implements Buyable , HasMedia
         $array['has_variants'] = $this->defaultVariant()->exists() || $this->variants()->exists();
         $array['avg_rating'] = $this->avg_rating;
 
+        $array['categories'] = $this->categories;
+
         $array['url'] = route('product.show', $this);
  
         return $array;

@@ -215,5 +215,7 @@
     "Search..." : "Cerca...",
     "No results" : "Nessun risultato",
     "No results for" : "Nessun risultato per",
-    "Show more" : "Altro"
+    "Show more" : "Altro",
+    "Show" : "Mostra",
+    "Hide" : "Nascondi"
 }

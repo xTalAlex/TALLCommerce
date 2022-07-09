@@ -21,7 +21,6 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/shop', [App\Http\Controllers\ProductController::class , 'index'] )->name('product.index');
-Route::get('/algolia', [App\Http\Controllers\ProductController::class , 'algolia'] )->name('product.algolia');
 Route::get('/shop/{product}', App\Http\Livewire\Product\Show::class )->name('product.show');
 
 Route::get('/cart', App\Http\Livewire\Cart\Index::class )->name('cart.index');

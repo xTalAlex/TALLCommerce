@@ -16,23 +16,14 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::filter($request->only(['keyword','category','orderby']))->paginate(12);
+        // $products = Product::filter($request->only(['keyword','category','orderby']))->paginate(12);
 
-        $category = null;
-        if($request->category)
-            $category = Category::findOrFail($request->category);
+        // $category = null;
+        // if($request->category)
+        //     $category = Category::findOrFail($request->category);
 
-        return view( 'product.index', compact('products','category') );
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function algolia(Request $request)
-    {
-        return view('product.algolia');
+        // return view( 'product.index', compact('products','category') );
+        return view('product.index');
     }
 
     /**
