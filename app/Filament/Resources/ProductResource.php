@@ -177,7 +177,8 @@ class ProductResource extends Resource
                             Fieldset::make('Settings')
                                 ->label(__('Settings'))
                                 ->schema([
-                                    Toggle::make('featured'),
+                                    Toggle::make('featured')
+                                        ->label(__('Featured')),
                                     Toggle::make('hidden')->label(__('Hidden')),
                                 ]),
                             DateTimePicker::make('created_at')

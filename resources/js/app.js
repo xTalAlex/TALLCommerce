@@ -1,5 +1,4 @@
 import './bootstrap';
-import '../css/app.css';
 
 import algoliasearch from 'algoliasearch/lite';
 import instantsearch from 'instantsearch.js';
