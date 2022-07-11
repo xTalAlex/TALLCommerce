@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="h-80 flex items-center justify-center w-full bg-cover bg-[url('https://random.imagecdn.app/1500/320')]">
+    <div class="my-12 h-80 flex items-center justify-center w-full bg-cover bg-[url('https://random.imagecdn.app/1500/320')]">
         <x-algolia-autocomplete class="w-full mx-4 md:w-72"/>
     </div>
 
