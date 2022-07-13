@@ -12,6 +12,10 @@ import { loadScript } from "@paypal/paypal-js";
 
 window.paypalLoadScript = loadScript;
 
+import KeenSlider from 'keen-slider';
+
+window.KeenSlider = KeenSlider;
+
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
