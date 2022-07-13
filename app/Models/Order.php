@@ -118,28 +118,28 @@ class Order extends Model
     {
         $can = false;
 
-        switch(ucfirst(strtolower($status)))
+        switch(strtolower($status))
         {
-            case('Payment_failed'):
-                $can = $this->status->name == 'Pending';
+            case('payment_failed'):
+                $can = $this->status->name == 'pending';
                 break;
-            case('Paied'):
-                $can = $this->status->name == 'Pending';
+            case('paied'):
+                $can = $this->status->name == 'pending';
                 break;
-            case('Preparing'):
-                $can = $this->status->name == 'Paied';
+            case('preparing'):
+                $can = $this->status->name == 'paied';
                 break;
-            case('Shipped'):
-                $can = $this->status->name == 'Paied' || $this->status->name == 'Preparing';
+            case('shipped'):
+                $can = $this->status->name == 'paied' || $this->status->name == 'preparing';
                 break;
-            case('Completed'):
-                $can = $this->status->name == 'Paied' || $this->status->name == 'Shipped';
+            case('completed'):
+                $can = $this->status->name == 'paied' || $this->status->name == 'shipped';
                 break;
-            case('Refunded'):
-                $can = $this->status->name == 'Completed' || $this->status->name == 'Shipped'  || $this->status->name == 'Paied';
+            case('refunded'):
+                $can = $this->status->name == 'completed' || $this->status->name == 'shipped'  || $this->status->name == 'paied';
                 break;
-            case('Cancelled'):
-                $can = $this->status->name == 'Paid';
+            case('cancelled'):
+                $can = $this->status->name == 'paid';
                 break;
         }
 

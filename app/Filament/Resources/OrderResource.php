@@ -57,11 +57,12 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                BelongsToSelect::make('status')
+                Select::make('status')
                     ->label(__('Status'))
                     ->disabled()
                     ->dehydrated(false)
-                    ->relationship('status', 'name'),
+                    ->relationship('status', 'name')
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->label}"),
                 TextInput::make('tracking_number')
                     ->label(__('Tracking Number')),
                 RichEditor::make('shipping_label')
@@ -77,7 +78,7 @@ class OrderResource extends Resource
                             ->disablePlaceholderSelection(),
                         TextInput::make('payment_id')
                             ->label(__('Payment ID')),
-                        BelongsToSelect::make('coupon')
+                        Select::make('coupon')
                             ->label(__('Coupon'))
                             ->relationship('coupon','code')
                             ->visibleOn(Pages\ViewOrder::class),
@@ -140,7 +141,7 @@ class OrderResource extends Resource
             ->columns([
                 TextColumn::make('id')
                     ->searchable(),
-                BadgeColumn::make('status.name')
+                BadgeColumn::make('status.label')
                     ->label(__('Status'))
                     ->colors([
                         'secondary',
@@ -173,7 +174,8 @@ class OrderResource extends Resource
             ->filters([
                 SelectFilter::make('status')
                     ->label(__('Status'))
-                    ->relationship('status', 'name'),
+                    ->relationship('status', 'name')
+                    ->options(fn() => \App\Models\OrderStatus::all()->pluck('label','id')),
                 Filter::make('total')
                     ->form([
                         TextInput::make('total')
