@@ -8,6 +8,7 @@
     <div class="mx-auto text-center"> {{ __('or')}}</div>
 
     <div
+        wire:ignore
         x-data="{
             total : {{ $total }}
         }"
@@ -39,9 +40,13 @@
 
                         onApprove: (data, actions) => {
                             return actions.order.capture().then(function(orderData) {
-                                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                                const transaction = orderData.purchase_units[0].payments.captures[0];
-                                alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                                $wire.set('gateway','paypal');
+                                $wire.set('intent.id',orderData.id);
+                                $wire.submitPayment();
+                                // actions.redirect('{{ route('order.index') }}');
+                                // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                                // const transaction = orderData.purchase_units[0].payments.captures[0];
+                                // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
                                 // Go to another URL:  actions.redirect('thank_you.html');
                             });
                         }
@@ -55,12 +60,15 @@
             .catch((error) => {
                 console.error('failed to load the PayPal JS SDK script', error);
             });
+            Livewire.on('paymentConfirmed', () =>{
+                window.location.href = '{{ route('order.index') }}';
+            });
         "
     >
         <div id="paypal-buttons"></div>
     </div>
 
-    @if($intent)
+    @if($gateway=='stripe' && $intent)
     <!-- Delete User Confirmation Modal -->
     <x-jet-dialog-modal wire:model="confirmingPayment">
         <x-slot name="title">

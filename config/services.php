@@ -32,14 +32,14 @@ return [
     ],
 
     'stripe' => [
-        'key' => env('STRIPE_KEY'),
-        'secret' => env('STRIPE_SECRET'),
-        'signing_secret' => env('STRIPE_WEBHOOK_SECRET'),
+        'key' => env('STRIPE_KEY',''),
+        'secret' => env('STRIPE_SECRET',''),
+        'signing_secret' => env('STRIPE_WEBHOOK_SECRET',''),
     ],
 
     'paypal' => [
-        'client' => env('PAYPAL_CLIENT'),
-        'secret' => env('PAYPAL_SECRET'),
+        'client' => env('PAYPAL_CLIENT',''),
+        'secret' => env('PAYPAL_SECRET',''),
     ],
 
 ];

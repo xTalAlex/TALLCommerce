@@ -293,7 +293,7 @@ class Create extends Component
         }
     }
 
-    public function createOrder($payment_id)
+    public function createOrder($payment_id, $gateway)
     {
         $validated = $this->validate([
             'shipping_price.price' => 'required|min:0',
@@ -339,7 +339,7 @@ class Create extends Component
         if ($avaiable) {
             $pending_id = OrderStatus::where('name', 'pending')->first()->id;
             $this->order = Order::firstOrCreate([
-            'payment_gateway' => 'stripe',
+            'payment_gateway' => $gateway,
             'payment_id' => $payment_id,
             ],[
             'shipping_address' => $this->addressShipping->toJson(),

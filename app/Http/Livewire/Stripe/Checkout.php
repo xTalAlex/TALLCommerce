@@ -15,6 +15,7 @@ class Checkout extends Component
     public $confirmingPayment;
     public $total;
     public $submitDisabled;
+    public $gateway;
 
     protected $listeners = [
         'orderCreated',
@@ -42,6 +43,7 @@ class Checkout extends Component
     public function confirmPayment()
     {
         $this->confirmingPayment = true;
+        $this->gateway = 'stripe';
 
         $metadata = array();
 
@@ -59,9 +61,9 @@ class Checkout extends Component
     {
         $this->submitDisabled = true;
         if($this->update)
-            $this->emit('updateOrder',$this->intent['id']);
+            $this->emit('updateOrder',$this->intent['id'],$this->gateway);
         else
-            $this->emit('createOrder',$this->intent['id']);
+            $this->emit('createOrder',$this->intent['id'],$this->gateway);
     }
 
     public function render()
