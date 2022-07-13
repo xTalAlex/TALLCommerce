@@ -337,7 +337,10 @@ class Create extends Component
         }
         
         if ($avaiable) {
-            $pending_id = OrderStatus::where('name', 'pending')->first()->id;
+            if($gateway == 'paypal')
+                $status_id = OrderStatus::where('name', 'paied')->first()->id;
+            else
+                $status_id = OrderStatus::where('name', 'pending')->first()->id;
             $this->order = Order::firstOrCreate([
             'payment_gateway' => $gateway,
             'payment_id' => $payment_id,
@@ -352,7 +355,7 @@ class Create extends Component
             'total' => $this->total + $this->shipping_price->price,
             'coupon_id' => $this->coupon ? $this->coupon->id : null,
             'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,
-            'order_status_id' => $pending_id,
+            'order_status_id' => $status_id,
             'user_id' => auth()->user() ? auth()->user()->id : null,
             'shipping_price_id' => $this->shipping_price_id,
             'shipping_price' => $this->shipping_price->price,
@@ -377,7 +380,7 @@ class Create extends Component
             }
 
             $this->order->history()->create([
-                'order_status_id' => $pending_id,
+                'order_status_id' => $status_id,
             ]);
 
             Cart::instance('default')->destroy();

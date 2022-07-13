@@ -39,16 +39,17 @@
                         },
 
                         onApprove: (data, actions) => {
-                            return actions.order.capture().then(function(orderData) {
-                                $wire.set('gateway','paypal');
-                                $wire.set('intent.id',orderData.id);
-                                $wire.submitPayment();
-                                // actions.redirect('{{ route('order.index') }}');
-                                // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                                // const transaction = orderData.purchase_units[0].payments.captures[0];
-                                // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-                                // Go to another URL:  actions.redirect('thank_you.html');
-                            });
+                            return actions.order.capture()
+                                .then(function(orderData) {
+                                    if(orderData.status=='COMPLETED'){
+                                        $wire.set('gateway','paypal');
+                                        $wire.set('intent.id',orderData.id);
+                                        $wire.submitPayment();
+                                    }
+                                    else{
+                                        return actions.restart();
+                                    }
+                                });
                         }
                         
                     })
@@ -61,7 +62,7 @@
                 console.error('failed to load the PayPal JS SDK script', error);
             });
             Livewire.on('paymentConfirmed', () =>{
-                window.location.href = '{{ route('order.index') }}';
+                $wire.redirectToSuccess();
             });
         "
     >
