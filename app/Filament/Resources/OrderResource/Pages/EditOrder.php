@@ -22,7 +22,7 @@ class EditOrder extends EditRecord
             $paied= Action::make('paied')
                 ->label(__('Set as Paied'))
                 ->action(function (array $data): void {
-                    $status_id = \App\Models\OrderStatus::where('name', 'like','Paied')->first()->id;
+                    $status_id = \App\Models\OrderStatus::where('name', 'like','paied')->first()->id;
                     $this->record->status()->associate($status_id);
                     $this->record->save();
                     $this->record->history()->create([
@@ -35,7 +35,7 @@ class EditOrder extends EditRecord
                     Select::make('payment_gateway')
                         ->label(__('Payment Gateway'))
                         ->options(config('custom.payment_gateways'))
-                        ->default('stripe')
+                        ->default($this->record->gateway)
                         ->disablePlaceholderSelection()
                         ->required(),
                     TextInput::make('payment_id')
@@ -50,7 +50,7 @@ class EditOrder extends EditRecord
             $prearing= Action::make('preparing')
                 ->label(__('Prepare for Shipping'))
                 ->action(function (array $data): void {
-                    $status_id = \App\Models\OrderStatus::where('name', 'like','Preparing')->first()->id;
+                    $status_id = \App\Models\OrderStatus::where('name', 'like','preparing')->first()->id;
                     $this->record->status()->associate($status_id);
                     $this->record->save();
                     $this->record->history()->create([
@@ -66,7 +66,7 @@ class EditOrder extends EditRecord
             $shipped= Action::make('shipped')
                 ->label(__('Set as Shipped'))
                 ->action(function (array $data): void {
-                    $status_id = \App\Models\OrderStatus::where('name', 'like','Shipped')->first()->id;
+                    $status_id = \App\Models\OrderStatus::where('name', 'like','shipped')->first()->id;
                     $this->record->status()->associate($status_id);
                     $this->record->tracking_number= $data['tracking_number'];
                     $this->record->save();
@@ -89,7 +89,7 @@ class EditOrder extends EditRecord
                 ->label(__('Set as Refunded'))
                 ->color('danger')
                 ->action(function (array $data): void {
-                    $status_id = \App\Models\OrderStatus::where('name', 'like','Refunded')->first()->id;
+                    $status_id = \App\Models\OrderStatus::where('name', 'like','refunded')->first()->id;
                     $this->record->status()->associate($status_id);
                     $this->record->save();
                     $this->record->history()->create([
