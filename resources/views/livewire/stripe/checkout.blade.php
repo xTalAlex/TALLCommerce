@@ -5,6 +5,61 @@
         </x-jet-danger-button>
     </div>
 
+    <div class="mx-auto text-center"> {{ __('or')}}</div>
+
+    <div
+        x-data="{
+            total : {{ $total }}
+        }"
+        x-init="
+            window.paypalLoadScript({ 
+                'client-id': '{{ config('services.paypal.client') }}', 
+                currency: 'EUR' 
+            })
+            .then((paypal) => {
+                paypal
+                    .Buttons({
+
+                        style: {
+                            layout: 'vertical',
+                            color:  'gold',
+                            shape:  'rect',
+                            label:  'pay',
+                        },
+
+                        createOrder: (data, actions) => {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: total,
+                                    }
+                                }]
+                            });
+                        },
+
+                        onApprove: (data, actions) => {
+                            return actions.order.capture().then(function(orderData) {
+                                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                                const transaction = orderData.purchase_units[0].payments.captures[0];
+                                alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                                // Go to another URL:  actions.redirect('thank_you.html');
+                            });
+                        }
+                        
+                    })
+                    .render('#paypal-buttons')
+                    .catch((error) => {
+                        console.error('failed to render the PayPal Buttons', error);
+                    });
+            })
+            .catch((error) => {
+                console.error('failed to load the PayPal JS SDK script', error);
+            });
+        "
+    >
+        <div id="paypal-buttons"></div>
+    </div>
+
     @if($intent)
     <!-- Delete User Confirmation Modal -->
     <x-jet-dialog-modal wire:model="confirmingPayment">
@@ -31,7 +86,9 @@
                             if(error) {
                                 this.errorMessage = error.message;
                                 @this.set('submitDisabled', false);
-                            } else {}
+                            } else {
+                                console.log('qualcosa non torna');
+                            }
                         }
                     }"
 

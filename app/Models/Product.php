@@ -228,7 +228,7 @@ class Product extends Model implements Buyable , HasMedia
 
     public function hasImage()
     {
-        return $this->getFirstMediaUrl('gallery') !="";
+        return $this->getFirstMediaUrl('gallery') != "";
     }
 
     protected function originalPrice(): Attribute

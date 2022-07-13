@@ -37,4 +37,9 @@ return [
         'signing_secret' => env('STRIPE_WEBHOOK_SECRET'),
     ],
 
+    'paypal' => [
+        'client' => env('PAYPAL_CLIENT'),
+        'secret' => env('PAYPAL_SECRET'),
+    ],
+
 ];

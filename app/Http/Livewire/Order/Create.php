@@ -296,7 +296,7 @@ class Create extends Component
     public function createOrder($payment_id)
     {
         $validated = $this->validate([
-            'shipping_price.price' => 'required|min:50',
+            'shipping_price.price' => 'required|min:0',
             'shipping_price.id' => 'required|exists:shipping_prices,id',
             'shipping_price.name' => 'required'
         ]);

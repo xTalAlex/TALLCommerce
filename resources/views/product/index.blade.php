@@ -23,13 +23,13 @@
                 }
             });
             search.addWidgets([
-                window.searchBox({
+                window.algoliaWidgets.searchBox({
                     container: '#searchbox',
                     placeholder: '{{ __('Search...') }}',
                     autofocus : true,
                 }),
 
-                window.voiceSearch({
+                window.algoliaWidgets.voiceSearch({
                     container: '#voicesearch',
                     searchAsYouSpeak: true,
                     language: '{{ config('app.locale') }}',
@@ -38,13 +38,13 @@
                     },
                 }),
 
-                window.configure({
+                window.algoliaWidgets.configure({
                     hitsPerPage: 9,
                     attributesToSnippet: ['name:5','short_description:5','description:5'],
                     snippetEllipsisText: '&hellip;'
                 }),
 
-                window.infiniteHits({
+                window.algoliaWidgets.infiniteHits({
                     container: '#infinite-hits',
                     templates : {
                         empty : document.getElementById('empty').innerHTML,
@@ -55,7 +55,7 @@
                     }
                 }),
 
-                window.sortBy({
+                window.algoliaWidgets.sortBy({
                     container: '#sort-by',
                     items: [
                         { label: '{{ __('general.searchbar.options.featured') }}', value: '{{ config('scout.prefix') }}products' },
@@ -65,7 +65,7 @@
                     ]
                 }),
 
-                window.hierarchicalMenu({
+                window.algoliaWidgets.hierarchicalMenu({
                     container: '#hierarchical-menu',
                     attributes: [
                         'hierarchicalCategories.lvl0',
@@ -78,7 +78,7 @@
                     separator: '>',
                 }),
 
-                {{-- window.currentRefinements({
+                {{-- window.algoliaWidgets.currentRefinements({
                     container: '#current-refinements',
                     transformItems(items) {
                         return items
@@ -87,7 +87,7 @@
                     },
                 }), --}}
 
-                window.clearRefinements({
+                window.algoliaWidgets.clearRefinements({
                     container: '#clear-refinements',
                     templates: {
                         resetLabel() {
@@ -96,7 +96,7 @@
                     },
                 }),
 
-                window.breadcrumb({
+                window.algoliaWidgets.breadcrumb({
                     container: '#breadcrumb',
                     attributes: [
                         'hierarchicalCategories.lvl0',
@@ -111,7 +111,7 @@
                     },
                 }),
 
-                window.stats({
+                window.algoliaWidgets.stats({
                     container: '#stats',
                     templates: {
                         text(data) {
@@ -130,11 +130,11 @@
                     },
                 }),
 
-                window.poweredBy({
+                window.algoliaWidgets.poweredBy({
                     container: '#powered-by',
                 }),
 
-                {{-- window.refinementList({
+                {{-- window.algoliaWidgets.refinementList({
                     container: '#refinement-list',
                     attribute: 'categories.name',
                     operator: 'or',
