@@ -43,7 +43,7 @@
                     slider.on('animationEnded', nextTimeout)
                     slider.on('updated', nextTimeout)
                     slider.on('slideChanged', () => {
-                        currentIdx = slider.track.details.abs % nSlides + 1;
+                        currentIdx = slider.track.absToRel(slider.track.details.abs)+1;
                     })
                 },
             ]
@@ -64,12 +64,12 @@
                 </span>    
             </div>
             @endforeach
-        </div>
-        <div x-on:click="slider.prev()" class="absolute w-8 h-8 -translate-y-1/2 cursor-pointer left-1 fill-white top-1/2">
-            <x-icons.chevron-left></x-icons.chevron-left>
-        </div>
-        <div x-on:click="slider.next()" class="absolute w-8 h-8 -translate-y-1/2 cursor-pointer right-1 fill-white top-1/2">
-            <x-icons.chevron-right></x-icons.chevron-right>
+            <div x-on:click="slider.prev()" class="absolute flex items-center justify-center w-8 h-8 -translate-y-1/2 cursor-pointer left-1 fill-white top-1/2">
+                <x-icons.chevron-left></x-icons.chevron-left>
+            </div>
+            <div x-on:click="slider.next()" class="absolute flex items-center justify-center w-8 h-8 -translate-y-1/2 cursor-pointer right-1 fill-white top-1/2">
+                <x-icons.chevron-right></x-icons.chevron-right>
+            </div>
         </div>
         <div class="flex justify-center py-2">
             @foreach($products as $product)
