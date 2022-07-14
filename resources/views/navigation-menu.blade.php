@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="z-50 h-16 bg-white border-b border-gray-100 fixed w-full">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -166,31 +166,11 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="absolute inset-x-0 z-50 hidden bg-white sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                {{ __('Home') }}
-            </x-jet-responsive-nav-link>
-                        <x-jet-responsive-nav-link href="{{ route('product.index') }}" :active="request()->routeIs('product.index')">
-                {{ __('Shop') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('cart.index') }}" :active="request()->routeIs('cart.index')">
-                {{ __('Cart') }}
-                <x-cart-counter class="w-5 h-5 text-xs text-center bg-yellow-300 rounded-full"/>
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('wishlist.index') }}" :active="request()->routeIs('wishlist.index')">
-                {{ __('Wishlist') }}
-                <x-wishlist-counter class="w-5 h-5 text-xs text-center bg-yellow-300 rounded-full"/>
-            </x-jet-responsive-nav-link>
-            @auth
-            <x-jet-responsive-nav-link href="{{ route('order.index') }}" :active="request()->routeIs('order.index')">
-                {{ __('Orders') }}
-            </x-jet-responsive-nav-link>
-            @endauth
-        </div>
-
+    <div :class="{'block': open, 'hidden': ! open}" class="absolute inset-x-0 z-50 hidden bg-white sm:hidden overflow-y-scroll"
+        style="max-height: calc(100vh - 4rem);"
+    >
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
+        <div class="pt-4 pb-3">
             <div class="flex items-center px-4">
                 @auth
                     @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -275,6 +255,28 @@
                     @endforeach
                 @endif
             </div>
+            @endauth
+        </div>
+
+        <div class="pt-2 pb-1 space-y-1 border-t border-gray-200 ">
+            <x-jet-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                {{ __('Home') }}
+            </x-jet-responsive-nav-link>
+                        <x-jet-responsive-nav-link href="{{ route('product.index') }}" :active="request()->routeIs('product.index')">
+                {{ __('Shop') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('cart.index') }}" :active="request()->routeIs('cart.index')">
+                {{ __('Cart') }}
+                <x-cart-counter class="w-5 h-5 text-xs text-center bg-yellow-300 rounded-full"/>
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('wishlist.index') }}" :active="request()->routeIs('wishlist.index')">
+                {{ __('Wishlist') }}
+                <x-wishlist-counter class="w-5 h-5 text-xs text-center bg-yellow-300 rounded-full"/>
+            </x-jet-responsive-nav-link>
+            @auth
+            <x-jet-responsive-nav-link href="{{ route('order.index') }}" :active="request()->routeIs('order.index')">
+                {{ __('Orders') }}
+            </x-jet-responsive-nav-link>
             @endauth
         </div>
     </div>
