@@ -66,7 +66,7 @@ class ReviewPolicy
                 $user->reviews()
                     ->where('product_id',$product->id)
                     ->when($defaultVariant, fn($query) =>
-                        $query->orWhere('product_id.id',$defaultVariant->id)
+                        $query->orWhere('product_id',$defaultVariant->id)
                     )
                     ->when($variants, fn($query) =>
                         $query->orWhereIn('product_id', $variants->pluck('id')->toArray())
