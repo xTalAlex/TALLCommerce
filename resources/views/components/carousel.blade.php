@@ -2,7 +2,7 @@
     x-data="{
         slider : null,
         nSlides : {{ $products->count() }},
-        currentIdx : 1,
+        currentIdx : 0,
         timeout : null,
         mouseOver : false,
         visible : false,
@@ -43,7 +43,7 @@
                     slider.on('animationEnded', nextTimeout)
                     slider.on('updated', nextTimeout)
                     slider.on('slideChanged', () => {
-                        currentIdx = slider.track.absToRel(slider.track.details.abs)+1;
+                        currentIdx = slider.track.absToRel(slider.track.details.abs);
                     })
                 },
             ]
@@ -74,8 +74,8 @@
         <div class="flex justify-center py-2">
             @foreach($products as $product)
                 <div class="w-3 h-3 p-1 mx-1 border-none rounded-full cursor-pointer"
-                    x-bind:class="currentIdx == {{ $loop->iteration }} ? 'bg-black' : 'bg-gray-400 '"
-                    x-on:click="slider.moveToIdx({{ $loop->iteration }})" 
+                    x-bind:class="currentIdx == {{ $loop->index }} ? 'bg-black' : 'bg-gray-400 '"
+                    x-on:click="slider.moveToIdx({{ $loop->index }})" 
                 ></div>
             @endforeach
         </div>
