@@ -49,11 +49,18 @@ class ReviewPolicy
      */
     public function create(User $user, Product $product)
     {
+        $defaultVariant = $product->defaultVariant;
+        $variants = $product->variants;
+
         return  $user->orders()
                     ->whereHas('products', fn($query) => 
                         $query->where('products.id',$product->id)
-                            ->orWhere('products.id',$product->defaultVariant()->id)
-                            ->orWhereIn('products.id', $product->variants()->pluck('id')->toArray())
+                            ->when($defaultVariant, fn($query) =>
+                                $query->orWhere('products.id',$defaultVariant->id)
+                            )
+                            ->when($variants, fn($query) =>
+                                $query->orWhereIn('products.id', $variants->pluck('id')->toArray())
+                            )
                     )->exists()
                 &&
                 $user->reviews()->where('product_id',$product->id)->doesntExist();
