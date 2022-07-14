@@ -35,7 +35,7 @@ class EditOrder extends EditRecord
                     Select::make('payment_gateway')
                         ->label(__('Payment Gateway'))
                         ->options(config('custom.payment_gateways'))
-                        ->default(strtolower($this->record->gateway))
+                        ->default($this->record->payment_gateway)
                         ->disablePlaceholderSelection()
                         ->required(),
                     TextInput::make('payment_id')

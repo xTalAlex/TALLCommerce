@@ -1,13 +1,11 @@
 <div>
-    <div class="mt-5">
-        <x-jet-danger-button wire:click="confirmPayment" wire:loading.attr="disabled">
+    <div class="mt-1">
+        <x-jet-danger-button class="rounded-[4px]" wire:click="confirmPayment" wire:loading.attr="disabled">
             {{ __('Complete Payment') }}
         </x-jet-danger-button>
     </div>
 
-    <div class="mx-auto text-center"> {{ __('or')}}</div>
-
-    <div
+    <div class="mt-1"
         wire:ignore
         x-data="{
             total : {{ $total }}
@@ -15,11 +13,14 @@
         x-init="
             window.paypalLoadScript({ 
                 'client-id': '{{ config('services.paypal.client') }}', 
-                currency: 'EUR' 
+                currency: 'EUR',
+                components : 'buttons,funding-eligibility',
             })
             .then((paypal) => {
                 paypal
                     .Buttons({
+
+                        fundingSource: paypal.FUNDING.PAYPAL,
 
                         style: {
                             layout: 'vertical',
@@ -30,10 +31,30 @@
 
                         createOrder: (data, actions) => {
                             return actions.order.create({
+
+                                application_context : {
+                                    shipping_preference : 'NO_SHIPPING',
+                                },
+
                                 purchase_units: [{
                                     amount: {
                                         value: total,
+                                    },
+
+                                    shipping: {
+                                        shipping_detail : {
+                                            name: {
+                                                full_name: 'Hans Muller'
+                                            },
+                                            address: {
+                                                address_line_1: 'MyStreet 12',
+                                                admin_area_2: 'New York',
+                                                postal_code: '10001',
+                                                country_code: 'US',
+                                            }
+                                        }
                                     }
+                                    
                                 }]
                             });
                         },
@@ -50,7 +71,11 @@
                                         return actions.restart();
                                     }
                                 });
-                        }
+                        },
+
+                        onError: function (err) {
+                            console.log('qualcosa non torna :'+err);
+                        },
                         
                     })
                     .render('#paypal-buttons')
