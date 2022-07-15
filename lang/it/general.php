@@ -10,10 +10,10 @@ return [
         'sort_label' => 'Ordina per',
         'placeholder' => 'Cerca...',
         'options' => [
-            'featured' => 'In Evidenza',
-            'recent' => 'Più recenti',
-            'price_asc' => 'Più economici',
-            'price_desc' => 'Più costosi'
+            'featured' => 'In Rvidenza',
+            'recent' => 'Recenti',
+            'price_asc' => 'Più Economici',
+            'price_desc' => 'Più Costosi'
         ]
     ],
 

@@ -31,7 +31,12 @@ class AttributeResource extends Resource
         return __('Attributes');
     }
 
-    protected static ?int $navigationSort = 4;
+    public static function getNavigationGroup(): string
+    {
+        return  __('Settings');
+    }
+
+    protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
     {

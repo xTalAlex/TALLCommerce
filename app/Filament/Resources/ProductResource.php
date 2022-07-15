@@ -44,6 +44,11 @@ class ProductResource extends Resource
         return __('Products');
     }
 
+    public static function getNavigationGroup(): string
+    {
+        return  __('Shop');
+    }
+
     protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';

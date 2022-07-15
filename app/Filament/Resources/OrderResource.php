@@ -43,6 +43,11 @@ class OrderResource extends Resource
         return __('Orders');
     }
 
+    public static function getNavigationGroup(): string
+    {
+        return  __('Shop');
+    }
+
     protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';

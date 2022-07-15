@@ -30,7 +30,12 @@ class CouponResource extends Resource
         return __('Coupons');
     }
 
-    protected static ?int $navigationSort = 6;
+    public static function getNavigationGroup(): string
+    {
+        return  __('Shop');
+    }
+
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
 

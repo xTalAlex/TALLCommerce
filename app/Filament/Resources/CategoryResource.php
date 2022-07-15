@@ -32,8 +32,12 @@ class CategoryResource extends Resource
         return __('Categories');
     }
 
+    public static function getNavigationGroup(): string
+    {
+        return  __('Settings');
+    }
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 5;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
