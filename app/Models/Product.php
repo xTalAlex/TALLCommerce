@@ -129,6 +129,11 @@ class Product extends Model implements Buyable , HasMedia
         return $this->belongsTo(Product::class,'variant_id');
     }
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
     public function attributeValues()
     {
         return $this->belongsToMany(AttributeValue::class);
