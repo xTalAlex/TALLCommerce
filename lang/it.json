@@ -17,6 +17,8 @@
     "Addresses" : "Indirizzi",
     "Label" : "Etichetta",
     "Shipping/Billing" : "Spedizione/Fatturazione",
+    "Shipping" : "Spedizione",
+    "Billing" : "Fatturazione",
 
     "Product" : "Prodotto",
     "Products" : "Prodotti",
@@ -228,6 +230,9 @@
     "results" : "risultati",
 
     "or" : "o",
+    "Done": "Fatto",
+    "Created": "Creato",
+    "Saved": "Salvato",
 
     "Brand": "Brand",
     "Brands": "Brands",

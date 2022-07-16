@@ -138,6 +138,8 @@ class CategoryResource extends Resource
 
     protected static function getGlobalSearchEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()->with(['parent','children']);
+        return parent::getGlobalSearchEloquentQuery()
+                            ->with(['parent','children'])
+                            ->withCount(['products']);
     }
 }

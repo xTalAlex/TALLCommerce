@@ -41,19 +41,21 @@ class AddressesRelationManager extends HasManyRelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('label')
-                    ->label(__('Etichetta'))
+                Tables\Columns\TextColumn::make('label')->label(__('Etichetta'))
                     ->html(),
-                BadgeColumn::make('billing')
-                    ->label(__('Shipping/Billing'))
+                Tables\Columns\BadgeColumn::make('billing')->label(__('Type'))
                     ->enum([
-                        0 => 'Shipping',
-                        1 => 'Billing',
+                        0 => __('Shipping'),
+                        1 => __('Billing'),
                     ])
                     ->colors([
                         'primary' => 0,
                         'secondary' => 1,
-                    ])
+                    ]),
+                Tables\Columns\BooleanColumn::make('default')->label(__('Default Address'))
+                    ->trueColor('primary')
+                    ->falseColor('secondary')
+                    ->sortable(),
                 
             ])
             ->filters([

@@ -126,6 +126,8 @@ class AttributeResource extends Resource
     
     protected static function getGlobalSearchEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()->with(['values']);
+        return parent::getGlobalSearchEloquentQuery()
+                            ->with(['values'])
+                            ->withCount(['values']);
     }
 }

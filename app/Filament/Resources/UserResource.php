@@ -11,15 +11,9 @@ use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Fieldset;
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Forms\Components\RichEditor;
+use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
@@ -55,14 +49,7 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Toggle::make('is_admin')->label(__('Is Admin')),
-                Fieldset::make('Default Address')->label(__('Default Address'))
-                    ->relationship('defaultAddress')
-                    ->schema([
-                        RichEditor::make('label')
-                            ->disableLabel(true),
-                    ])
-                    ->visibleOn(Pages\ViewUser::class),
+                Forms\Components\Toggle::make('is_admin')->label(__('Is Admin')),
             ]);
     }
 
@@ -70,34 +57,38 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('profile_photo_url')->label(__('Profile Photo'))
+                Tables\Columns\ImageColumn::make('profile_photo_url')->label(__('Profile Photo'))
                     ->rounded()
-                    ->size(40),
-                TextColumn::make('name')->label(__('Name'))
+                    ->size(40)
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('name')->label(__('Name'))
                     ->searchable(),
-                TextColumn::make('email')->label(__('Email'))
+                Tables\Columns\TextColumn::make('email')->label(__('Email'))
                     ->searchable(),
-                BadgeColumn::make('email_verified_at')->label(__('Email verified at'))
+                Tables\Columns\BadgeColumn::make('email_verified_at')->label(__('Email verified at'))
                     ->colors([
                         'success' => fn ($state): bool => $state !== null,
                     ])
-                    ->dateTime(),
-                TextColumn::make('orders_count')->label(__('Orders Count'))
-                    ->counts('orders'),
-                TextColumn::make('created_at')->label(__('Created at'))
-                    ->dateTime()
-                    ->sortable(),
+                    ->dateTime(config('custom.datetime_format'))
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('orders_count')->label(__('Orders Count'))
+                    ->counts('orders')
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
+                    ->dateTime(config('custom.datetime_format'))
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->filters([
                 Filter::make('is_admin')
                     ->query(fn (Builder $query): Builder => $query->where('is_admin', true))
                     ->label(__('Admin')),
             ])
-            ->prependActions([
+            ->actions([
                 Action::make('Email')->label(__('Email'))
                     ->color('success')
                     ->icon('heroicon-o-mail')
-                    ->action(function (Model $record, array $data): void {
+                    ->action(function (User $record, array $data): void {
                         $record->notify(new \App\Notifications\AdminMessage($data['subject'], $data['message']));
                         Filament::notify('success', 'Email sent');
                     })
@@ -109,6 +100,7 @@ class UserResource extends Resource
                             ->label(__('Message'))
                             ->required(),
                     ]),
+                Tables\Actions\EditAction::make(),
             ]);
     }
     
@@ -127,5 +119,12 @@ class UserResource extends Resource
             'view' => Pages\ViewUser::route('/{record}'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    protected static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()
+                        ->with(['addresses','defaultAddress'])
+                        ->withCount(['orders']);
     }
 }
