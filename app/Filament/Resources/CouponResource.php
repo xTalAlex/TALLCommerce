@@ -9,12 +9,11 @@ use App\Models\Coupon;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DateTimePicker;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CouponResource\Pages;
-use App\Filament\Resources\CouponResource\RelationManagers;
+use App\Filament\Resources\CategoryResource\RelationManagers;
+use Carbon\Carbon;
 
 class CouponResource extends Resource
 {
@@ -43,54 +42,80 @@ class CouponResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('code')
-                    ->label(__('Code'))
-                    ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                Toggle::make('is_fixed_amount')
-                    ->label(__('Is Fixed Amount'))
-                    ->reactive(),
-                TextInput::make('amount')
-                    ->label(__('Amount'))
-                    ->prefix(fn (Closure $get) => $get('is_fixed_amount') ? '€' : null )
-                    ->suffix(fn (Closure $get) => $get('is_fixed_amount') ? null : '%' )
-                    ->mask(fn (TextInput\Mask $mask) => $mask
-                            ->numeric()
-                            ->decimalPlaces(2)
-                            ->decimalSeparator('.')
-                            ->mapToDecimalSeparator([',','.'])
-                            ->thousandsSeparator(',')
-                            ->maxValue(999999)
-                        ),
-                TextInput::make('redemptions')
-                    ->label(__('Redemptions'))
-                    ->numeric()
-                    ->disabled()
-                    ->dehydrated(false)
-                    ->minValue(0),
-                TextInput::make('max_redemptions')
-                    ->label(__('Max Redemptions'))
-                    ->numeric()
-                    ->minValue(1),
-                TextInput::make('min_total')
-                    ->label(__('Min Total'))
-                    ->required()
-                    ->prefix('€')
-                    ->mask(fn (TextInput\Mask $mask) => $mask
-                        ->numeric()
-                        ->decimalPlaces(2)
-                        ->decimalSeparator('.')
-                        ->mapToDecimalSeparator([',','.'])
-                        ->thousandsSeparator(',')
-                        ->maxValue(999999)
-                    ),
-                DateTimePicker::make('expires_on')
-                    ->label(__('Expires on')),
-                DateTimePicker::make('created_at')
-                    ->label(__('Created at'))
-                    ->visibleOn(Pages\ViewCoupon::class),
-                DateTimePicker::make('updated_at')
-                    ->label(__('Updated at'))
-                    ->visibleOn(Pages\ViewCoupon::class),
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\Group::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('code')->label(__('Code'))
+                                    ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
+                                    ->required(),
+                                Forms\Components\TextInput::make('amount')->label(__('Amount'))
+                                    ->prefix(fn (Closure $get) => $get('is_fixed_amount') ? '€' : null )
+                                    ->suffix(fn (Closure $get) => $get('is_fixed_amount') ? null : '%' )
+                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                            ->numeric()
+                                            ->decimalPlaces(2)
+                                            ->decimalSeparator('.')
+                                            ->mapToDecimalSeparator([',','.'])
+                                            ->thousandsSeparator(',')
+                                            ->maxValue(999999)
+                                    )
+                                    ->required(),
+                            ])->columns([
+                                'md' => 2
+                            ])->columnSpan('full'),
+                        Forms\Components\Toggle::make('is_fixed_amount')->label(__('Is Fixed Amount'))
+                            ->reactive()
+                            ->columnSpan('full'),
+
+                        Forms\Components\Fieldset::make('restrictions')->label(__('Restrictions'))
+                            ->schema([
+                                Forms\Components\TextInput::make('min_total')->label(__('Min Total'))
+                                    ->prefix('€')
+                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                        ->numeric()
+                                        ->decimalPlaces(2)
+                                        ->decimalSeparator('.')
+                                        ->mapToDecimalSeparator([',','.'])
+                                        ->thousandsSeparator(',')
+                                        ->maxValue(999999)
+                                    ),
+                                Forms\Components\TextInput::make('max_redemptions')->label(__('Max Redemptions'))
+                                    ->numeric()
+                                    ->minValue(1),
+                                Forms\Components\DatePicker::make('expires_on')->label(__('Expires on'))
+                                    ->displayFormat(config('custom.date_format')),
+                            ])
+                            ->columns([
+                                'md' => 3,
+                                'lg' => null,
+                            ])
+                            ->columnSpan('full'),
+                    ])
+                    ->columns([
+                        'md' => 3
+                    ])
+                    ->columnSpan(2),
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Card::make()
+                        ->schema([
+                            Forms\Components\Placeholder::make('redemptions')->label(__('Redemptions'))
+                                ->content(fn (?Coupon $record): string => $record ? $record->redemptions : '-'),
+                        ]),
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
+                                    ->content(fn (?Coupon $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
+                                Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
+                                    ->content(fn (?Coupon $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
+                            ]),
+                    ])
+                    ->columnSpan(1),
+            ])
+            ->columns([
+                'md' => 3,
+                'lg' => null,
             ]);
     }
 
@@ -98,29 +123,47 @@ class CouponResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('code')
-                    ->label(__('Code'))
+                Tables\Columns\TextColumn::make('code')->label(__('Code'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('label')
-                    ->label(__('Label'))
+                Tables\Columns\TextColumn::make('label')->label(__('Amount'))
                     ->searchable(['amount']),
-                TextColumn::make('redemptions')
-                    ->label(__('Redemptions'))
+                Tables\Columns\TextColumn::make('redemptions')->label(__('Redemptions'))
                     ->sortable(),
-                TextColumn::make('max_redemptions')
-                    ->label(__('Max Redemptions'))
-                    ->sortable(),
-                TextColumn::make('expires_on')
-                    ->label(__('Expires On'))
-                    ->dateTime()
-                    ->sortable(),    
-                TextColumn::make('updated_at')
-                    ->label(__('Updated at'))
-                    ->dateTime()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('max_redemptions')->label(__('Max Redemptions'))
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('expires_on')->label(__('Expires on'))
+                    ->dateTime(config('custom.date_format'))
+                    ->sortable()
+                    ->toggleable(),    
+                Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
+                    ->dateTime(config('custom.datetime_format'))
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->filters([
+                Filter::make('active')->label(__('Active'))
+                    ->query(fn (Builder $query): Builder => 
+                        $query->where( fn($query) =>
+                                    $query->whereNotNull('max_redemptions')
+                                        ->whereColumn('max_redemptions', '>', 'redemptions')
+                                )
+                                ->orWhere( fn($query) =>
+                                    $query->whereNotNull('expires_on')
+                                        ->where('expires_on', '>', Carbon::now())
+                                )
+                                ->orWhere( fn($query) =>
+                                    $query->whereNull('max_redemptions')
+                                        ->whereNull('expires_on')
+                                )
+                ),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
                 //
             ]);
     }

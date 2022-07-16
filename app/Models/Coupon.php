@@ -30,6 +30,8 @@ class Coupon extends Model
     ];
 
     protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'amount' => 'decimal:2',
         'min_total' => 'decimal:2',
     ];

@@ -61,6 +61,7 @@
     "Set as Refunded" : "Segna come Rimborsato",
     "Preparing for Shipping" : "In Lavorazione",
 
+    "Coupons" : "Coupon",
     "Coupon Code" : "Codice Coupon",
     "Code" : "Codice",
     "Is Fixed Amount" : "Valore Fisso",
@@ -69,6 +70,8 @@
     "Max Redemptions" : "Riscatti possibili",
     "Expires on" : "Scadenza",
     "Min Total" : "Spesa Minima",
+    "Active" : "Attivo",
+    "Restrictions" : "Limitazioni",
 
     "Category" : "Categoria",
     "Categories" : "Categorie",
