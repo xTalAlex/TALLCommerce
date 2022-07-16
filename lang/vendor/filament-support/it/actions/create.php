@@ -13,11 +13,11 @@ return [
             'actions' => [
 
                 'create' => [
-                    'label' => 'Nuovo',
+                    'label' => 'Salva',
                 ],
 
                 'create_another' => [
-                    'label' => 'Nuovo & un altro nuovo',
+                    'label' => 'Salva & nuovo',
                 ],
 
             ],
@@ -25,7 +25,7 @@ return [
         ],
 
         'messages' => [
-            'created' => 'Creato',
+            'created' => 'Salvato',
         ],
 
     ],

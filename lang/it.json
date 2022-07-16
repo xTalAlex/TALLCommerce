@@ -72,6 +72,7 @@
     "Categories" : "Categorie",
     "Parent" : "Categoria Principale",
     "Hero" : "Hero",
+    "Products Count": "N. Prodotti",
 
     "Children Categories" : "Sottocategorie",
 
@@ -211,6 +212,9 @@
     "Value" : "Valore",
     "Values" : "Valori", 
     "Values Count" : "N. Valori",
+    "Type": "Tipo",
+    "Select": "Selezione",
+    "Radio": "Bottoni",
 
     "Search..." : "Cerca...",
     "No results" : "Nessun risultato",
@@ -226,5 +230,7 @@
     "or" : "o",
 
     "Brand": "Brand",
-    "Brands": "Brands"
+    "Brands": "Brands",
+    "Color": "Colore",
+    "Colors": "Colori"
 }

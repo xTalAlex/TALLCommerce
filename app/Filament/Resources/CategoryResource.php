@@ -9,13 +9,8 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Filters\Layout;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Select;
+use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CategoryResource\Pages;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 
 class CategoryResource extends Resource
@@ -45,21 +40,45 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label(__('Name'))
-                    ->required(),
-                TextInput::make('description')
-                    ->label(__('Description')),
-                Select::make('parent_id')
-                    ->label(__('Parent'))
-                    ->relationship('parent', 'name')
-                    ->placeholder('-'),
-                SpatieMediaLibraryFileUpload::make('hero')
-                    ->label(__('Hero'))
-                    ->collection('hero'),
-                DateTimePicker::make('updated_at')
-                    ->label(__('Updated at'))
-                    ->visibleOn(Pages\ViewCategory::class),
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')->label(__('Name'))
+                            ->required(),
+                        Forms\Components\Select::make('parent_id')->label(__('Parent'))
+                            ->relationship('parent', 'name')
+                            ->placeholder('-'),
+                        Forms\Components\Textarea::make('description')->label(__('Description'))
+                            ->rows(3)
+                            ->maxLength(255)
+                            ->autosize(true)
+                            ->columnSpan([
+                                'md' => 2,
+                            ]),
+                    ])
+                    ->columns([
+                        'md' => 2,
+                    ])
+                    ->columnSpan(2),
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Card::make()
+                        ->schema([
+                            Forms\Components\SpatieMediaLibraryFileUpload::make('hero')->label(__('Hero'))
+                                ->collection('hero'),
+                        ]),
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
+                                    ->content(fn (?Category $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
+                                Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
+                                    ->content(fn (?Category $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
+                            ]),
+                    ])
+                    ->columnSpan(1),
+            ])
+            ->columns([
+                'md' => 3,
+                'lg' => null,
             ]);
     }
 
@@ -67,32 +86,37 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('Name'))
+                Tables\Columns\TextColumn::make('name')->label(__('Name'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('parent.name')
-                    ->label(__('Parent'))
+                Tables\Columns\TextColumn::make('parent.name')->label(__('Parent'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('description')
-                    ->label(__('Description'))
+                Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
+                    ->counts('products')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('description')->label(__('Description'))
                     ->wrap()
                     ->visibleFrom('lg')
-                    ->searchable(),
-                SpatieMediaLibraryImageColumn::make('hero')
+                    ->searchable()
+                    ->toggleable(),
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('hero')
                     ->label(__('Hero'))
-                    ->visibleFrom('md'),
-                TextColumn::make('updated_at')
-                    ->label(__('Updated at'))
-                    ->dateTime()
-                    ->sortable(),
+                    ->visibleFrom('md')
+                    ->toggleable(),
             ])
             ->filters([
                     //
                 ],
                 layout: Layout::AboveContent,
             )
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                //
+            ])
             ->defaultSort('name');
     }
     
@@ -108,8 +132,12 @@ class CategoryResource extends Resource
         return [
             'index' => Pages\ListCategories::route('/'),
             'create' => Pages\CreateCategory::route('/create'),
-            'view' => Pages\ViewCategory::route('/{record}'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
+    }
+
+    protected static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['parent','children']);
     }
 }

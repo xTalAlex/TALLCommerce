@@ -8,12 +8,8 @@ use App\Models\Attribute;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AttributeResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\AttributeResource\RelationManagers;
 
 class AttributeResource extends Resource
 {
@@ -42,10 +38,50 @@ class AttributeResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label('Name')
-                    ->required()
-                    ->unique(),
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('name')->label(__('Name'))
+                                    ->required()
+                                    ->unique(ignorable: fn (?Attribute $record): ?Attribute => $record), 
+                                Forms\Components\Select::make('type')->label(__('Type'))
+                                    ->options( collect(config('custom.attribute_types'))->map(fn($option)=> __($option)) )
+                                    ->required(),
+                            ])->columns([
+                                'md' => 2,
+                            ]),  
+
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\Repeater::make('values')->label(__('Values'))
+                                ->relationship()
+                                ->schema([
+                                    Forms\Components\TextInput::make('value')
+                                        ->disableLabel()
+                                        ->required()
+                                        ->columnSpan([
+                                            'md' => 1,
+                                        ]),
+                                ])
+                                ->columns([
+                                    'md' => 3,
+                                ]),
+                            ]),
+                    ])->columnSpan(2),
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
+                            ->content(fn (?Attribute $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
+                        Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
+                            ->content(fn (?Attribute $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
+                    ])
+                    ->columnSpan(1),    
+
+            ])
+            ->columns([
+                'md' => 3,
+                'lg' => null,
             ]);
     }
 
@@ -53,29 +89,29 @@ class AttributeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('Name'))
+                Tables\Columns\TextColumn::make('name')->label(__('Name'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('values_count')
-                    ->label(__('Values Count'))
-                    ->counts('values'),
+                Tables\Columns\TextColumn::make('values_count')->label(__('Values Count'))
+                    ->counts('values')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                //
             ]);
     }
     
     public static function getRelations(): array
     {
         return [
-            RelationManagers\ValuesRelationManager::class,
+            //
         ];
     }
     
@@ -86,5 +122,10 @@ class AttributeResource extends Resource
             'create' => Pages\CreateAttribute::route('/create'),
             'edit' => Pages\EditAttribute::route('/{record}/edit'),
         ];
-    }    
+    }   
+    
+    protected static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['values']);
+    }
 }

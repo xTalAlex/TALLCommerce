@@ -11,6 +11,12 @@ class Attribute extends Model
 
     protected $fillable = [
         'name',
+        'type',
+    ];
+
+    protected $casts = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
     ];
 
     public function values()

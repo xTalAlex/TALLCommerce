@@ -45,17 +45,16 @@ class ChildrenRelationManager extends HasManyRelationManager
                 TextInput::make('name')
                     ->label(__('Name'))
                     ->required(),
-                TextInput::make('description')
-                    ->label(__('Description')),
-                // BelongsToSelect::make('parent_id')
-                //     ->relationship('parent', 'name'),
+                Forms\Components\Textarea::make('description')
+                    ->label(__('Description'))
+                    ->rows(3)
+                    ->maxLength(255)
+                    ->autosize(true),
                 SpatieMediaLibraryFileUpload::make('hero')
                     ->label(__('Hero'))
                     ->collection('hero'),
-                DateTimePicker::make('updated_at')
-                    ->label(__('Update at')) 
-                    ->visibleOn(Pages\ViewCategory::class),
-            ]);
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -71,12 +70,11 @@ class ChildrenRelationManager extends HasManyRelationManager
                 TextColumn::make('description')
                     ->label(__('Description'))
                     ->wrap()
-                    ->visibleFrom('md')
-                    ->searchable(),
-                TextColumn::make('updated_at')
-                    ->label(__('Updated at'))
-                    ->dateTime()
-                    ->sortable(),
+                    ->searchable()
+                    ->toggleable(),
+                SpatieMediaLibraryImageColumn::make('hero')
+                    ->label(__('Hero'))
+                    ->toggleable(),
             ])
             ->filters([
                 //
