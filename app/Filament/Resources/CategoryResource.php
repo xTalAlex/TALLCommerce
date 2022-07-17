@@ -64,7 +64,10 @@ class CategoryResource extends Resource
                         Forms\Components\Card::make()
                         ->schema([
                             Forms\Components\SpatieMediaLibraryFileUpload::make('hero')->label(__('Hero'))
-                                ->collection('hero'),
+                                ->collection('hero')
+                                ->panelLayout('circular')
+                                ->imageCropAspectRatio('16:9')
+                                ->panelAspectRatio('16:9'),
                         ]),
                         Forms\Components\Card::make()
                             ->schema([

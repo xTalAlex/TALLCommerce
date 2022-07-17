@@ -46,6 +46,8 @@ Route::middleware([
 });
 
 Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
     'admin'
 ])
 ->prefix('admin')
