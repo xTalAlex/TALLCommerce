@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="z-50 h-16 bg-white border-b border-gray-100 fixed w-full">
+<nav x-data="{ open: false }" class="fixed z-50 w-full h-16 bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -166,7 +166,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="absolute inset-x-0 z-50 hidden bg-white sm:hidden overflow-y-scroll"
+    <div :class="{'block': open, 'hidden': ! open}" class="absolute inset-x-0 z-50 hidden overflow-y-scroll bg-white sm:hidden"
         style="max-height: calc(100vh - 4rem);"
     >
         <!-- Responsive Settings Options -->
