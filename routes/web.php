@@ -31,6 +31,8 @@ Route::get('/order/create', App\Http\Livewire\Order\Create::class )->name('order
 Route::get('/order/{order}', [App\Http\Controllers\OrderController::class , 'show'] )->name('order.show');
 Route::get('/order/update/{order}', App\Http\Livewire\Order\Update::class )->name('order.update');
 
+Route::get('/order/{order}/invoice', [App\Http\Controllers\InvoiceController::class , 'show'] )->name('invoice.show');
+
 Route::get('/checkout/response/stripe', [App\Http\Controllers\StripeController::class , 'handleCheckoutResponse'] )->name('stripe.handle.checkout.response');
 
 Route::middleware([

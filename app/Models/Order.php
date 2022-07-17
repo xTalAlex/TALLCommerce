@@ -170,7 +170,7 @@ class Order extends Model
 
     public function canBeInvoiced()
     {
-        strtolower($this->status->name) !='pending' && strtolower($this->status->name) !='payment_failed';
+        return strtolower($this->status->name) !='pending' && strtolower($this->status->name) !='payment_failed';
     }
 
     public function restock()
