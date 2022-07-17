@@ -253,7 +253,6 @@ class Product extends Model implements Buyable , HasMedia
                 return $value ?? ($attributes['original_price'] ?? null);
             },
             set: function ($value, $attributes) {
-                
                 return $value ?
                     number_format(  $value , 2)
                     : $attributes['original_price'];

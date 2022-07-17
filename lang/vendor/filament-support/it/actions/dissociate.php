@@ -28,16 +28,16 @@ return [
 
     'multiple' => [
 
-        'label' => 'Dissocia selezionato',
+        'label' => 'Dissocia',
 
         'modal' => [
 
-            'heading' => 'Dissocia selezionato :label',
+            'heading' => 'Dissocia :label',
 
             'actions' => [
 
                 'dissociate' => [
-                    'label' => 'Dissocia selezionato',
+                    'label' => 'Dissocia',
                 ],
 
             ],
@@ -45,7 +45,7 @@ return [
         ],
 
         'messages' => [
-            'dissociated' => 'Dissociato',
+            'dissociated' => 'Dissociati',
         ],
 
     ],

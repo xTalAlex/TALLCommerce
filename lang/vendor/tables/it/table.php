@@ -2,6 +2,14 @@
 
 return [
 
+    'columns' => [
+
+        'tags' => [
+            'more' => 'e altri :count',
+        ],
+
+    ],
+
     'fields' => [
 
         'search_query' => [
@@ -59,19 +67,6 @@ return [
 
     ],
 
-    'actions' => [
-
-        'replicate' => [
-
-            'label' => 'Duplica',
-
-            'messages' => [
-                'replicated' => 'Record duplicato',
-            ],
-        ],
-
-    ],
-
     'empty' => [
         'heading' => 'Nessun risultato trovato',
     ],
@@ -97,10 +92,22 @@ return [
         'select' => [
             'placeholder' => 'Tutti',
         ],
+
+        'trashed' => [
+
+            'label' => 'Elementi eliminati',
+
+            'only_trashed' => 'Solo eliminati',
+
+            'with_trashed' => 'Con eliminati',
+
+            'without_trashed' => 'Senza eliminati',
+
+        ],
     ],
 
     'selection_indicator' => [
-        'selected_count' => '1 record selezionato.|:count records selezionati.',
+        'selected_count' => '1 elemento selezionato.|:count elementi selezionati.',
         'buttons' => [
 
             'select_all' => [

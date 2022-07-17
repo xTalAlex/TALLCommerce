@@ -4,11 +4,11 @@ return [
 
     'single' => [
 
-        'label' => 'Elimina',
+        'label' => 'Elimina definitivamente',
 
         'modal' => [
 
-            'heading' => 'Elimina :label',
+            'heading' => 'Elimina :label definitivamente',
 
             'actions' => [
 
@@ -28,11 +28,11 @@ return [
 
     'multiple' => [
 
-        'label' => 'Elimina',
+        'label' => 'Elimina definitivamente',
 
         'modal' => [
 
-            'heading' => 'Elimina :label',
+            'heading' => 'Elimina :label definitivamente',
 
             'actions' => [
 
@@ -45,7 +45,7 @@ return [
         ],
 
         'messages' => [
-            'deleted' => 'Eliminati',
+            'deleted' => 'Elminati',
         ],
 
     ],

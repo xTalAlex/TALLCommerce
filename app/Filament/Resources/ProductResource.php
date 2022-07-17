@@ -5,29 +5,15 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Product;
-use App\Models\Category;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Scopes\NotHiddenScope;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Card;
 use Filament\Tables\Filters\Filter;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Fieldset;
-use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\MultiSelect;
-use Filament\Tables\Columns\BooleanColumn;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Tables\Filters\MultiSelectFilter;
 use App\Filament\Resources\ProductResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationGroup;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\ProductResource\RelationManagers;
 
 class ProductResource extends Resource
@@ -53,43 +39,38 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->withoutGlobalScopes([NotHiddenScope::class]);
-    }
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                    Card::make()
+                    Forms\Components\Card::make()
                         ->schema([
-                            TextInput::make('name')
+                            Forms\Components\TextInput::make('name')
                                 ->label(__('Name'))
                                 ->required(),
-                            TextInput::make('unique_name')
+                            Forms\Components\TextInput::make('unique_name')
                                 ->label(__('Unique Name'))
-                                ->unique(ignorable: fn (?Model $record): ?Model => $record),     
-                            Select::make('variant')
+                                ->unique(ignorable: fn (?Product $record): ?Product => $record),     
+                            Forms\Components\Select::make('variant')
                                 ->label(__('Variant Of'))
                                 ->relationship('defaultVariant','unique_name'),
-                            TextInput::make('SKU')
+                            Forms\Components\TextInput::make('SKU')
                                 ->label(__('SKU'))
                                 ->columnSpan([
                                     'sm' => 2,
                                 ]),
-                            TextInput::make('short_description')
+                            Forms\Components\TextInput::make('short_description')
                                 ->label(__('Short Description'))
                                 ->maxLength(255)
                                 ->columnSpan([
                                     'sm' => 3,
                                 ]),
-                            RichEditor::make('description')
+                            Forms\Components\RichEditor::make('description')
                                 ->label(__('Description'))
                                 ->columnSpan([
                                     'sm' => 3,
                                 ]),
-                            MultiSelect::make('categories')
+                            Forms\Components\MultiSelect::make('categories')
                                 ->label(__('Categories'))
                                 ->relationship('categories','name',
                                     fn (Builder $query, callable $get) => 
@@ -121,14 +102,14 @@ class ProductResource extends Resource
                                 ->columnSpan([
                                     'sm' => 3,
                                 ]),
-                            Fieldset::make('Pricing')
+                            Forms\Components\Fieldset::make('Pricing')
                                 ->label(__('Pricing'))
                                 ->schema([
-                                    TextInput::make('original_price')
+                                Forms\Components\TextInput::make('original_price')
                                         ->label(__('OriginalPrice'))
                                         ->required()
                                         ->prefix('€')
-                                        ->mask(fn (TextInput\Mask $mask) => $mask
+                                        ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
                                             ->numeric()
                                             ->decimalPlaces(2)
                                             ->decimalSeparator('.')
@@ -136,10 +117,10 @@ class ProductResource extends Resource
                                             ->thousandsSeparator(',')
                                             ->maxValue(999999)
                                         ),
-                                    TextInput::make('selling_price')
+                                    Forms\Components\TextInput::make('selling_price')
                                         ->label(__('Selling Price'))
                                         ->prefix('€')
-                                        ->mask(fn (TextInput\Mask $mask) => $mask
+                                        ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
                                             ->numeric()
                                             ->decimalPlaces(2)
                                             ->decimalSeparator('.')
@@ -147,11 +128,11 @@ class ProductResource extends Resource
                                             ->thousandsSeparator(',')
                                             ->maxValue(999999)
                                         ),
-                                    TextInput::make('tax')
+                                    Forms\Components\TextInput::make('tax')
                                         ->label(__('Tax'))
                                         ->numeric()
                                         ->suffix('%')
-                                        ->mask(fn (TextInput\Mask $mask) => $mask
+                                        ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
                                             ->numeric()
                                             ->decimalPlaces(2)
                                             ->decimalSeparator('.')
@@ -160,18 +141,18 @@ class ProductResource extends Resource
                                             ->maxValue(99)
                                         ),
                                 ]),
-                            TextInput::make('quantity')
+                            Forms\Components\TextInput::make('quantity')
                                 ->label(__('Quantity'))
                                 ->required()
                                 ->numeric()
                                 ->default(0),
-                            TextInput::make('low_stock_threshold')
+                            Forms\Components\TextInput::make('low_stock_threshold')
                                 ->label(__('Low Stock Threshold'))
                                 ->numeric(),
-                            TextInput::make('weight')
+                            Forms\Components\TextInput::make('weight')
                                 ->label(__('Weight'))
                                 ->prefix('Kg')
-                                ->mask(fn (TextInput\Mask $mask) => $mask
+                                ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
                                     ->numeric()
                                     ->decimalPlaces(2)
                                     ->decimalSeparator('.')
@@ -179,25 +160,25 @@ class ProductResource extends Resource
                                     ->thousandsSeparator(',')
                                     ->maxValue(999999)
                                 ),
-                            Fieldset::make('Settings')
+                            Forms\Components\Fieldset::make('Settings')
                                 ->label(__('Settings'))
                                 ->schema([
-                                    Toggle::make('featured')
+                                    Forms\Components\Toggle::make('featured')
                                         ->label(__('Featured')),
-                                    Toggle::make('hidden')->label(__('Hidden')),
+                                    Forms\Components\Toggle::make('hidden')->label(__('Hidden')),
                                 ]),
-                            DateTimePicker::make('created_at')
+                            Forms\Components\DateTimePicker::make('created_at')
                                 ->label(__('Created at'))
                                 ->visibleOn(Pages\ViewProduct::class),
-                            DateTimePicker::make('updated_at')
+                            Forms\Components\DateTimePicker::make('updated_at')
                                 ->label(__('Updated at'))
                                 ->visibleOn(Pages\ViewProduct::class),
                         ])
                         ->columns(3)
                         ->columnSpan(2),
-                    Card::make()
+                    Forms\Components\Card::make()
                         ->schema([
-                            SpatieMediaLibraryFileUpload::make('gallery')
+                            Forms\Components\SpatieMediaLibraryFileUpload::make('gallery')
                                 ->label(__('Gallery'))
                                 ->collection('gallery')
                                 ->multiple()
@@ -212,48 +193,37 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->label(__('Name'))
+                Tables\Columns\TextColumn::make('name')->label(__('Name'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('short_description')
-                    ->label(__('Short Description'))
-                    ->searchable()
-                    ->hidden(),
-                TextColumn::make('description')
-                    ->label(__('Description'))
-                    ->searchable()
-                    ->hidden(),
-                SpatieMediaLibraryImageColumn::make('image')
-                    ->label(__('Image')),
-                TextColumn::make('orders_count')
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('image')->label(__('Image'))
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('orders_count')->label(__('Orders'))
+                    ->counts('orders')
                     ->sortable()
-                    ->label(__('Orders'))
-                    ->counts('orders'),
-                TextColumn::make('price')
-                    ->label(__('Price'))
-                    ->money('eur'),
-                TextColumn::make('quantity')
-                    ->sortable()
-                    ->label(__('Quantity')),
-                BooleanColumn::make('featured')
-                    ->label(__('Featured'))
-                    ->trueColor('primary')
-                    ->falseColor('secondary'),
-                BooleanColumn::make('hidden')
-                    ->label(__('Hidden'))
-                    ->trueColor('primary')
-                    ->falseColor('secondary'),
-                TextColumn::make('updated_at')
-                    ->label(__('Updated at'))
-                    ->dateTime()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('price')->label(__('Price'))
+                    ->money('eur')
+                    ->sortable(['selling_price','original_price']),
+                Tables\Columns\TextColumn::make('quantity')->label(__('Quantity'))
                     ->sortable(),
+                Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
+                    ->trueColor('primary')
+                    ->falseColor('secondary')
+                    ->toggleable(),
+                Tables\Columns\BooleanColumn::make('hidden')->label(__('Hidden'))
+                    ->trueColor('primary')
+                    ->falseColor('secondary')
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('updated_at')->label(__('Updated at'))
+                    ->dateTime(config('custom.datetime_format'))
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 
             ])
             ->filters([
-                    MultiSelectFilter::make('categories')
-                        ->label(__('Categories'))
-                        ->options(Category::all()->pluck('name','id'))
+                    Tables\Filters\MultiSelectFilter::make('categories')->label(__('Categories'))
+                        ->options(\App\Models\Category::all()->pluck('name','id'))
                         ->query(function (Builder $query, array $data): Builder {
                             return $query
                                 ->when(
@@ -262,19 +232,15 @@ class ProductResource extends Resource
                                         $query->whereHas('categories', fn($query) => $query->whereIn('categories.id', $values)),
                                 );
                         }),
-                    Filter::make('featured')
-                        ->label(__('Featured'))
+                    Filter::make('featured')->label(__('Featured'))
                         ->query(fn (Builder $query): Builder => $query->where('featured', true)),
-                    Filter::make('hidden')
-                        ->label(__('Hidden'))
+                    Filter::make('hidden')->label(__('Hidden'))
                         ->query(fn (Builder $query): Builder => $query->where('hidden', true)),
-                    Filter::make('discounted')
-                        ->label(trans_choice('Discounted',2))
+                    Filter::make('discounted')->label(trans_choice('Discounted',2))
                         ->query(fn (Builder $query): Builder => $query->whereColumn('selling_price', '<', 'original_price')),
                     Filter::make('quantity')
                         ->form([
-                            TextInput::make('quantity')
-                                ->label(__('Quantity'))
+                            Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
                                 ->numeric()
                                 ->suffix('or less'),
                         ])
@@ -285,8 +251,17 @@ class ProductResource extends Resource
                                     fn (Builder $query, $quantity): Builder => $query->where('quantity', '<=', $quantity),
                                 );
                         }),
+                    Tables\Filters\TrashedFilter::make(),
                 ],
-            );
+            )->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\RestoreBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\ForceDeleteBulkAction::make(),
+            ]);
     }
     
     public static function getRelations(): array
@@ -308,5 +283,15 @@ class ProductResource extends Resource
             'view' => Pages\ViewProduct::route('/{record}'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+                NotHiddenScope::class,
+            ])
+            ->with(['media','attributeValues','defaultVariant','variants']);
     }
 }

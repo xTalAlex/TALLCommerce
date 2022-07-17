@@ -13,7 +13,7 @@ return [
             'actions' => [
 
                 'close' => [
-                    'label' => 'Close',
+                    'label' => 'Chiudi',
                 ],
 
             ],
