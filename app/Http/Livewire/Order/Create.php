@@ -39,7 +39,7 @@ class Create extends Component
     public $billing_postal_code;
 
     public $same_address;
-    public $message;
+    public $note;
 
     public $subtotal;
     public $discountedSubtotal;
@@ -349,7 +349,7 @@ class Create extends Component
             'billing_address' => $this->addressBilling->toJson(),
             'email' => $this->email,
             //'phone' => $this->phone,
-            'message' => $this->message,
+            'note' => $this->note,
             'subtotal' => $this->subtotal,
             'tax'   => $this->tax,
             'total' => $this->total + $this->shipping_price->price,

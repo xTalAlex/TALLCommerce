@@ -6,12 +6,10 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Resources\RelationManagers\HasManyRelationManager;
+use Filament\Resources\RelationManagers\RelationManager;
 use Illuminate\Database\Eloquent\Model;
 
-class AddressesRelationManager extends HasManyRelationManager
+class AddressesRelationManager extends RelationManager
 {
     protected static string $relationship = 'addresses';
 

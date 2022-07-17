@@ -10,7 +10,7 @@ return [
         'sort_label' => 'Ordina per',
         'placeholder' => 'Cerca...',
         'options' => [
-            'featured' => 'In Rvidenza',
+            'featured' => 'In Evidenza',
             'recent' => 'Recenti',
             'price_asc' => 'Più Economici',
             'price_desc' => 'Più Costosi'
@@ -26,7 +26,14 @@ return [
         'payment_failed' => 'Pagamento Fallito',
         'pending' => 'In Sospeso',
         'refunded' => 'Rimborsato',
-        'shipped' => 'Spedito'
+        'shipped' => 'Spedito',
+
+        'changes' => [
+            'paied' => 'Stato dell\'ordine aggiornato',
+            'preparing' => 'Stato dell\'ordine aggiornato',
+            'shipped' => 'Stato dell\'ordine aggiornato',
+            'refunded' => 'Stato dell\'ordine aggiornato',
+        ]
     ],
 
 ];

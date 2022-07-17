@@ -7,13 +7,11 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
-use Filament\Resources\RelationManagers\BelongsToManyRelationManager;
+use Filament\Resources\RelationManagers\RelationManager;
 
-class ProductsRelationManager extends BelongsToManyRelationManager
+class ProductsRelationManager extends RelationManager
 {
     protected static string $relationship = 'products';
 
@@ -70,13 +68,15 @@ class ProductsRelationManager extends BelongsToManyRelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('sku')->label(__('SKU')),
-                TextColumn::make('name')->label(__('Name')),
-                SpatieMediaLibraryImageColumn::make('image')->label(__('Image')),
-                TextColumn::make('pivot_quantity')->label(__('Quantity')),
-                TextColumn::make('pivot_price')->label(__('Price'))->money('eur'),
-                TextColumn::make('pivot_discount')->label(__('Discount'))->money('eur'),
-                TextColumn::make('total')->label(__('Total')),
+                Tables\Columns\TextColumn::make('sku')->label(__('SKU')),
+                Tables\Columns\TextColumn::make('name')->label(__('Name')),
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('image')->label(__('Image')),
+                Tables\Columns\TextColumn::make('pivot_quantity')->label(__('Quantity')),
+                Tables\Columns\TextColumn::make('pivot_price')->label(__('Price'))
+                    ->money('eur'),
+                Tables\Columns\TextColumn::make('pivot_discount')->label(__('Discount'))
+                    ->money('eur'),
+                Tables\Columns\TextColumn::make('total')->label(__('Total')),
             ])
             ->filters([
                 //

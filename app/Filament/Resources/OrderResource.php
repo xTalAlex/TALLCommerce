@@ -12,22 +12,10 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Fieldset;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\BelongsToSelect;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
-use Filament\Resources\RelationManagers\RelationManager;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderResource extends Resource
 {
@@ -61,82 +49,128 @@ class OrderResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Select::make('status')
-                    ->label(__('Status'))
-                    ->disabled()
-                    ->dehydrated(false)
-                    ->relationship('status', 'name')
-                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->label}"),
-                TextInput::make('tracking_number')
-                    ->label(__('Tracking Number')),
-                RichEditor::make('shipping_label')
-                    ->label(__('Shipping Label'))
-                    ->columnSpan(2)
+            ->schema([ 
+
+                Forms\Components\Placeholder::make('note')->label(__('Note'))
+                    ->hidden(fn (?Order $record) => $record->note == null)
+                    ->content(fn (?Order $record) => $record->note)
+                    ->columnSpan('full')
                     ->visibleOn(Pages\ViewOrder::class),
-                Fieldset::make('Payment')
-                    ->label(__('Payment'))
+
+                Forms\Components\Card::make()
                     ->schema([
-                        Select::make('payment_gateway')
-                            ->label(__('Payment Gateway'))
-                            ->options(config('custom.payment_gateways'))
-                            ->disablePlaceholderSelection(),
-                        TextInput::make('payment_id')
-                            ->label(__('Payment ID')),
-                        Select::make('coupon')
-                            ->label(__('Coupon'))
-                            ->relationship('coupon','code')
+
+                        Forms\Components\Group::make()
+                            ->schema([
+                                Forms\Components\Placeholder::make('number')->label(__('Number'))
+                                    ->content(fn (?Order $record): string => $record ? $record->number : '-'),  
+                                Forms\Components\TextInput::make('tracking_number')->label(__('Tracking Number')),
+                            ])
+                            ->columns([
+                                'md' => 2
+                            ])
+                            ->columnSpan('full'),
+
+                        
+                        Forms\Components\Fieldset::make('Shipping')->label(__('Shipping Details'))
+                            ->schema([
+                                Forms\Components\RichEditor::make('shipping_label')->label(__('Shipping Label'))
+                                    ->columnSpan(2),
+                                Forms\Components\Placeholder::make('shippingPrice.name')->label(__('Shipping'))
+                                    ->content(fn (?Order $record): string => $record ? $record->shippingPrice->name : '-'),                                    
+                            ])
                             ->visibleOn(Pages\ViewOrder::class),
-                        TextInput::make('coupon_discount')
-                            ->label(__('Coupon Discount'))
-                            ->prefix('€')
-                            ->visibleOn(Pages\ViewOrder::class),
-                        TextInput::make('subtotal')
-                            ->label(__('Subtotal'))
-                            ->prefix('€')
-                            ->visibleOn(Pages\ViewOrder::class),
-                        TextInput::make('tax')
-                            ->label(__('Tax'))
-                            ->prefix('%')
-                            ->visibleOn(Pages\ViewOrder::class),
-                        Select::make('shipping')
-                            ->relationship('shippingPrice','name')
-                            ->label(__('Shipping'))
-                            ->visibleOn(Pages\ViewOrder::class),
-                        TextInput::make('shipping_price')
-                            ->label(__('Price'))
-                            ->prefix('€')
-                            ->visibleOn(Pages\ViewOrder::class),
-                        TextInput::make('total')
-                            ->label(__('Total'))
-                            ->prefix('€')
-                            ->visibleOn(Pages\ViewOrder::class),
-                        RichEditor::make('billing_label')
-                            ->label(__('Billing Label'))
-                            ->columnSpan(2)
-                            ->visibleOn(Pages\ViewOrder::class),
-                    ]),
-                Fieldset::make('User')
-                    ->schema([
-                        TextInput::make('user.name')
-                            ->label(__('Name')),
-                        TextInput::make('email')
-                            ->label(__('Email'))
-                            ->email(),
-                        TextInput::make('phone')
-                            ->label(__('Telefono')),
-                    ])->visibleOn(Pages\ViewOrder::class),
-                Textarea::make('message')
-                    ->label(__('Message'))
-                    ->hidden(fn ($state) => $state==null)
-                    ->columnSpan(2)
-                    ->visibleOn(Pages\ViewOrder::class),                
-                DateTimePicker::make('created_at')
-                    ->label(__('Created at'))    
-                    ->visibleOn(Pages\ViewOrder::class),
-                DateTimePicker::make('updated_at')
-                    ->label(__('Updated at'))
-                    ->visibleOn(Pages\ViewOrder::class),
+
+                        Forms\Components\Fieldset::make('Payment')->label(__('Payment Details'))
+                            ->schema([
+
+                                Forms\Components\Group::make()
+                                    ->schema([
+                                        Forms\Components\Select::make('payment_gateway')->label(__('Payment Gateway'))
+                                            ->options(config('custom.payment_gateways'))
+                                            ->disablePlaceholderSelection(),
+                                        Forms\Components\TextInput::make('payment_id')->label(__('Payment ID'))
+                                            ->columnSpan([
+                                                'md' => 2,
+                                            ]),
+                                    ])
+                                    ->columns([
+                                        'md' => 3
+                                    ])
+                                    ->columnSpan('full'),
+
+                                Forms\Components\Group::make()
+                                    ->schema([
+
+                                        Forms\Components\TextInput::make('subtotal')->label(__('Subtotal'))
+                                            ->prefix('€'),
+                                        Forms\Components\TextInput::make('tax')->label(__('Tax'))
+                                            ->prefix('€'),
+
+                                        Forms\Components\TextInput::make('shipping_price')->label(__('Shipping'))
+                                            ->prefix('€'),
+                               
+                                        Forms\Components\TextInput::make('total')->label(__('Total'))
+                                            ->prefix('€'),
+
+                                        Forms\Components\Fieldset::make('coupon')->label(__('Coupon'))
+                                            ->schema([
+                                                Forms\Components\Select::make('coupon')->label(__('Code'))
+                                                    ->relationship('coupon','code')
+                                                    ->placeholder('-'),
+                                                Forms\Components\TextInput::make('coupon_discount')->label(__('Discount'))
+                                                    ->prefix('€'),
+                                            ])
+                                            ->hidden(fn (?Order $record) => $record->coupon == null)
+                                            ->columns([
+                                                'md' => 2
+                                            ])
+                                            ->columnSpan('full'),
+
+                                        Forms\Components\RichEditor::make('billing_label')->label(__('Billing Label'))
+                                            ->columnSpan('full'),
+                                    ])
+                                    ->columns([
+                                        'md' => 2
+                                    ])
+                                    ->columnSpan('full')
+                                    ->visibleOn(Pages\ViewOrder::class),
+
+                            ])
+                            ->columnSpan('full'),
+
+                    ])
+                    ->columnSpan(2),
+                    
+                    Forms\Components\Group::make()
+                        ->schema([
+                            Forms\Components\Card::make()
+                                ->schema([
+                                    Forms\Components\Select::make('user.name')->label(__('User'))
+                                        ->relationship('user','name')
+                                        ->placeholder('-'),
+                                    Forms\Components\TextInput::make('email')->label(__('Email'))
+                                        ->email(),
+                                    Forms\Components\TextInput::make('phone')->label(__('Telefono')),
+                                ]),
+                            Forms\Components\Card::make()
+                                ->schema([
+                                    Forms\Components\Placeholder::make('status')->label(__('Status'))
+                                        ->content(fn (?Order $record): string => $record ? $record->status->label : '-'),
+                                ])->columns(1),
+                            Forms\Components\Card::make()
+                                ->schema([
+                                    Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
+                                        ->content(fn (?Order $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
+                                    Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
+                                        ->content(fn (?Order $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
+                                ]),
+                        ])
+                        ->columnSpan(1),
+            ])
+            ->columns([
+                'md' => 3,
+                'lg' => null,
             ]);
     }
 
@@ -144,46 +178,60 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->searchable(),
-                BadgeColumn::make('status.label')
-                    ->label(__('Status'))
+                Tables\Columns\TextColumn::make('number')
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        if(str_starts_with($search,'#'))
+                            $search = substr($search,1);
+                        return $query->when(is_numeric($search), fn($query) => 
+                                $query->orWhere('id', $search - 1000 )
+                            );
+                    })
+                    ->sortable(['id']),
+                Tables\Columns\BadgeColumn::make('status.label')->label(__('Status'))
                     ->colors([
                         'secondary',
-                        'primary' => 'Shipped',
-                        'success' => 'Completed',
-                        'warning' => 'Paied',
-                        'danger' => 'Cancelled',
+                        'primary' => fn ($state): bool => 
+                                        $state === __('general.order_statuses.shipped') || 
+                                        $state === __('general.order_statuses.preparing'),
+                        'success' => __('general.order_statuses.completed'),
+                        'warning' => __('general.order_statuses.paied'),
+                        'danger' => __('general.order_statuses.cancelled'),
                     ]),
-                TextColumn::make('user.name')
-                    ->label(__('Name'))
-                    ->searchable()
+                Tables\Columns\TextColumn::make('user.name')->label(__('Name'))
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->with('user')
+                                ->orWhereHas('user', fn($query) => 
+                                    $query->where( 'name', 'like', "%{$search}%")
+                                );
+                    })
                     ->url(fn (Order $record): string => 
                         $record->user ?
                             route('filament.resources.users.view', $record->user->id )
                             : route('filament.resources.users.index')
-                    ),
-                TextColumn::make('email')
-                    ->label(__('Email'))
-                    ->searchable(),
-                TextColumn::make('total')
-                    ->label(__('Total'))
+                    )
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('email')->label(__('Email'))
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->orWhere('email', 'like', "%{$search}%");
+                    }),
+                Tables\Columns\TextColumn::make('total')->label(__('Total'))
                     ->money('eur')
-                    ->sortable(),
-                TextColumn::make('updated_at')
-                    ->label(__('Updated at'))
-                    ->dateTime()
-                    ->sortable(), 
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('updated_at')->label(__('Updated at'))
+                    ->dateTime(config('custom.datetime_format'))
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->defaultSort('updated_at','desc')
             ->filters([
-                SelectFilter::make('status')
+                Tables\Filters\SelectFilter::make('status')
                     ->label(__('Status'))
                     ->relationship('status', 'name')
                     ->options(fn() => \App\Models\OrderStatus::all()->pluck('label','id')),
                 Filter::make('total')
                     ->form([
-                        TextInput::make('total')
+                        Forms\Components\TextInput::make('total')
                             ->label(__('Total'))
                             ->numeric()
                             ->suffix(__('or more')),
@@ -198,7 +246,7 @@ class OrderResource extends Resource
                 ],
                 layout: Layout::AboveContent,
             )
-            ->prependActions([
+            ->actions([
                 Action::make('Email')
                     ->color('success')
                     ->icon('heroicon-o-mail')
@@ -209,11 +257,13 @@ class OrderResource extends Resource
                     ->form([
                         Forms\Components\TextInput::make('subject')
                             ->label(__('Subject'))
+                            ->default(fn(Order $record) => __('Order Update'). " " . $record->number )
                             ->required(),
                         Forms\Components\RichEditor::make('message')
                             ->label(__('Message'))
                             ->required(),
                     ]),
+                Tables\Actions\EditAction::make(),
             ]);
     }
     
@@ -233,5 +283,11 @@ class OrderResource extends Resource
             'view' => Pages\ViewOrder::route('/{record}'),
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
+    }
+
+    protected static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()
+                            ->with(['user','status','shipping','coupon','products.media','history']);
     }
 }

@@ -16,6 +16,6 @@ return [
     ],
 
     'datetime_format' => 'j/n/y H:i',
-    'date_format' => 'j/n/y'
+    'date_format' => 'j/n/y',
 
 ];

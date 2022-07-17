@@ -51,7 +51,6 @@ Route::middleware([
 ->prefix('admin')
 ->group(function () {
     Route::get('login', fn() => redirect('login') )->name('filament.auth.login');
-
     Route::prefix('mail')->group( function() {
         Route::get('order/placed', function() {
             return "Email";

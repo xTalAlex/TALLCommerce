@@ -12,7 +12,7 @@ class Order extends Model
     protected $fillable = [
         'shipping_address',
         'billing_address',
-        'message',
+        'note',
         'tracking_number',
         'payment_gateway',
         'payment_id',
@@ -37,6 +37,7 @@ class Order extends Model
     protected $appends = [
         'shipping_label',
         'billing_label',
+        'number ',
     ];
 
     /**
@@ -109,9 +110,9 @@ class Order extends Model
         return $this->billingAddress()->label;
     }
 
-    public function getIdAttribute($value)
+    public function getNumberAttribute()
     {
-        return $value;
+        return '#'. ($this->id + 1000) ;
     }
 
     public function statusCanBecome(String $status)

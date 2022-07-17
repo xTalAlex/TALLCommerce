@@ -26,7 +26,14 @@ return [
         'payment_failed' => 'Payment Failed',
         'pending' => 'Pending',
         'refunded' => 'Refunded',
-        'shipped' => 'Shipped'
+        'shipped' => 'Shipped',
+
+        'changes' => [
+            'paied' => 'Set as Paied',
+            'preparing' => 'Preparing for Shipping',
+            'shipped' => 'Set as Shipped',
+            'refunded' => 'Set as Refunded',
+        ]
     ],
 
 ];

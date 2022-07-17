@@ -6,15 +6,9 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\BelongsToSelect;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Resources\RelationManagers\HasManyRelationManager;
+use Filament\Resources\RelationManagers\RelationManager;
 
-class ChildrenRelationManager extends HasManyRelationManager
+class ChildrenRelationManager extends RelationManager
 {
     protected static string $relationship = 'children';
 
@@ -42,16 +36,13 @@ class ChildrenRelationManager extends HasManyRelationManager
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label(__('Name'))
+                Forms\Components\TextInput::make('name')->label(__('Name'))
                     ->required(),
-                Forms\Components\Textarea::make('description')
-                    ->label(__('Description'))
+                Forms\Components\Textarea::make('description')->label(__('Description'))
                     ->rows(3)
                     ->maxLength(255)
                     ->autosize(true),
-                SpatieMediaLibraryFileUpload::make('hero')
-                    ->label(__('Hero'))
+                Forms\Components\SpatieMediaLibraryFileUpload::make('hero')->label(__('Hero'))
                     ->collection('hero'),
             ])
             ->columns(1);
@@ -61,24 +52,21 @@ class ChildrenRelationManager extends HasManyRelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                ->label(__('Name'))
+                Tables\Columns\TextColumn::make('name')->label(__('Name'))
                     ->sortable()
                     ->searchable(),
-                // TextColumn::make('parent.name')->sortable()
-                //     ->searchable(),
-                TextColumn::make('description')
-                    ->label(__('Description'))
+                Tables\Columns\TextColumn::make('description')->label(__('Description'))
                     ->wrap()
                     ->searchable()
                     ->toggleable(),
-                SpatieMediaLibraryImageColumn::make('hero')
-                    ->label(__('Hero'))
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('hero')->label(__('Hero'))
                     ->toggleable(),
             ])
             ->filters([
                 //
             ])
-            ->bulkActions([]);
+            ->bulkActions([
+                //
+            ]);
     }
 }

@@ -41,7 +41,6 @@ class Update extends Component
             'billing_address.province' => 'exclude_if:same_address,true|required',
             'billing_address.country_region' => 'exclude_if:same_address,true|required',
             'billing_address.postal_code' => 'exclude_if:same_address,true|required|min:5',
-    
         ];
     }
     

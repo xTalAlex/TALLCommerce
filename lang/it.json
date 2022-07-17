@@ -46,6 +46,7 @@
     "Order" : "Ordine",
     "Orders" : "Ordini",
     "Status" : "Stato",
+    "Number": "Numero",
     "Tracking Number" : "Codice Spedizione",
     "Shipping Label" : "Etichetta di Spedizione",
     "Payment" : "Pagamento",
@@ -59,7 +60,10 @@
     "Set as Paied" : "Segna come Pagato",
     "Set as Shipped" : "Segna come Spedito",
     "Set as Refunded" : "Segna come Rimborsato",
-    "Preparing for Shipping" : "In Lavorazione",
+    "Prepare for Shipping" : "Segna come In Lavorazione",
+    "History" : "Cronologia",
+    "Order Update" : "Aggiornamento Ordine",
+    "Note" : "Nota",
 
     "Coupons" : "Coupon",
     "Coupon Code" : "Codice Coupon",
@@ -198,6 +202,7 @@
     "or less" : "o meno",
     "Details" : "Dettagli",
     "Payment Details" : "Dettagli di pagamento",
+    "Shipping Details" : "Dettagli di spedizione",
 
     "Review" : "Recensione",
     "Reviews" : "Recensioni",
@@ -233,12 +238,14 @@
     "results" : "risultati",
 
     "or" : "o",
-    "Done": "Fatto",
-    "Created": "Creato",
-    "Saved": "Salvato",
+    "Done" : "Fatto",
+    "Created" : "Creato",
+    "Saved" : "Salvato",
+    "Overview" : "Riepilogo",
+    "Date" : "Data",
 
-    "Brand": "Brand",
-    "Brands": "Brands",
-    "Color": "Colore",
-    "Colors": "Colori"
+    "Brand" : "Brand",
+    "Brands" : "Brands",
+    "Color" : "Colore",
+    "Colors" : "Colori"
 }
