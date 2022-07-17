@@ -18,4 +18,9 @@ return [
     "order.deleted" => "Ordine eliminato",
     "order.not_deleted" => "Impossibile eliminare questo ordine",
 
+    "payment.succeeded" => "Pagamento effettuato con successo",
+    "payment.processing" => "Pagamento in elaborazione",
+    "payment.failed" => "Pagamento fallito. Prova con un altro metodo di pagamento",
+    "payment.error" => "Qualcosa è andato storto",
+    "payment.not_found" => "Errore durante il recupero delle informazioni di pagamento",
 ];

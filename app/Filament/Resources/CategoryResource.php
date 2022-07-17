@@ -45,7 +45,9 @@ class CategoryResource extends Resource
                         Forms\Components\TextInput::make('name')->label(__('Name'))
                             ->required(),
                         Forms\Components\Select::make('parent_id')->label(__('Parent'))
-                            ->relationship('parent', 'name')
+                            ->relationship('parent', 'name', fn(?Category $record, $query) => 
+                                $query->when($record, fn($query) => $query->whereNot('id', $record->id))
+                            )
                             ->placeholder('-'),
                         Forms\Components\Textarea::make('description')->label(__('Description'))
                             ->rows(3)

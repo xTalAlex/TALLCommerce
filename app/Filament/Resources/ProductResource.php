@@ -45,33 +45,63 @@ class ProductResource extends Resource
             ->schema([
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')
-                            ->label(__('Name'))
-                            ->required(),
-                        Forms\Components\TextInput::make('unique_name')
-                            ->label(__('Unique Name'))
-                            ->unique(ignorable: fn (?Product $record): ?Product => $record),     
-                        Forms\Components\Select::make('variant')
-                            ->label(__('Variant Of'))
-                            ->relationship('defaultVariant','unique_name'),
-                        Forms\Components\TextInput::make('SKU')
-                            ->label(__('SKU'))
-                            ->columnSpan([
-                                'sm' => 2,
-                            ]),
-                        Forms\Components\TextInput::make('short_description')
-                            ->label(__('Short Description'))
+                        Forms\Components\TextInput::make('name')->label(__('Name'))
+                            ->required()
+                            ->columnSpan('full'),   
+                        Forms\Components\Group::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('SKU')->label(__('SKU')),
+                                Forms\Components\Select::make('variant')->label(__('Variant Of'))
+                                    ->relationship('defaultVariant','unique_name'),                            
+                            ])
+                            ->columns([
+                                'md' => 2,
+                            ])
+                            ->columnSpan('full'),
+                        Forms\Components\TextInput::make('short_description')->label(__('Short Description'))
                             ->maxLength(255)
-                            ->columnSpan([
-                                'sm' => 3,
+                            ->columnSpan('full'),
+                        Forms\Components\RichEditor::make('description')->label(__('Description'))
+                            ->columnSpan('full'),
+                        Forms\Components\TextInput::make('weight')->label(__('Weight'))
+                            ->prefix('Kg')
+                            ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                ->numeric()
+                                ->decimalPlaces(2)
+                                ->decimalSeparator('.')
+                                ->mapToDecimalSeparator([',','.'])
+                                ->thousandsSeparator(',')
+                                ->maxValue(999999)
+                            ),
+                        Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
+                            ->required()
+                            ->numeric()
+                            ->default(0),
+                        Forms\Components\Fieldset::make('price')->label(__('Price'))
+                            ->schema([
+                            Forms\Components\TextInput::make('original_price')->label(__('Original Price'))
+                                    ->required()
+                                    ->prefix('€')
+                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                        ->numeric()
+                                        ->decimalPlaces(2)
+                                        ->decimalSeparator('.')
+                                        ->mapToDecimalSeparator([',','.'])
+                                        ->thousandsSeparator(',')
+                                        ->maxValue(999999)
+                                    ),
+                                Forms\Components\TextInput::make('selling_price')->label(__('Selling Price'))
+                                    ->prefix('€')
+                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                        ->numeric()
+                                        ->decimalPlaces(2)
+                                        ->decimalSeparator('.')
+                                        ->mapToDecimalSeparator([',','.'])
+                                        ->thousandsSeparator(',')
+                                        ->maxValue(999999)
+                                    ),
                             ]),
-                        Forms\Components\RichEditor::make('description')
-                            ->label(__('Description'))
-                            ->columnSpan([
-                                'sm' => 3,
-                            ]),
-                        Forms\Components\MultiSelect::make('categories')
-                            ->label(__('Categories'))
+                        Forms\Components\MultiSelect::make('categories')->label(__('Categories'))
                             ->relationship('categories','name',
                                 fn (Builder $query, callable $get) => 
                                     $query->whereNotIn('id', $get('categories'))
@@ -99,69 +129,12 @@ class ProductResource extends Resource
                                 }while($removed);
                                 $set('categories',$selectedCategories->pluck('id')->toArray());
                             })
-                            ->columnSpan([
-                                'sm' => 3,
-                            ]),
-                        Forms\Components\Fieldset::make('Pricing')
-                            ->label(__('Pricing'))
-                            ->schema([
-                            Forms\Components\TextInput::make('original_price')
-                                    ->label(__('OriginalPrice'))
-                                    ->required()
-                                    ->prefix('€')
-                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                        ->numeric()
-                                        ->decimalPlaces(2)
-                                        ->decimalSeparator('.')
-                                        ->mapToDecimalSeparator([',','.'])
-                                        ->thousandsSeparator(',')
-                                        ->maxValue(999999)
-                                    ),
-                                Forms\Components\TextInput::make('selling_price')
-                                    ->label(__('Selling Price'))
-                                    ->prefix('€')
-                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                        ->numeric()
-                                        ->decimalPlaces(2)
-                                        ->decimalSeparator('.')
-                                        ->mapToDecimalSeparator([',','.'])
-                                        ->thousandsSeparator(',')
-                                        ->maxValue(999999)
-                                    ),
-                                Forms\Components\TextInput::make('tax')
-                                    ->label(__('Tax'))
-                                    ->numeric()
-                                    ->suffix('%')
-                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                        ->numeric()
-                                        ->decimalPlaces(2)
-                                        ->decimalSeparator('.')
-                                        ->mapToDecimalSeparator([','])
-                                        ->thousandsSeparator(',')
-                                        ->maxValue(99)
-                                    ),
-                            ]),
-                        Forms\Components\TextInput::make('quantity')
-                            ->label(__('Quantity'))
-                            ->required()
-                            ->numeric()
-                            ->default(0),
-                        Forms\Components\TextInput::make('low_stock_threshold')
-                            ->label(__('Low Stock Threshold'))
-                            ->numeric(),
-                        Forms\Components\TextInput::make('weight')
-                            ->label(__('Weight'))
-                            ->prefix('Kg')
-                            ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                ->numeric()
-                                ->decimalPlaces(2)
-                                ->decimalSeparator('.')
-                                ->mapToDecimalSeparator([',','.'])
-                                ->thousandsSeparator(',')
-                                ->maxValue(999999)
-                            ),
+                            ->columnSpan('full'),
+                        
                     ])
-                    ->columns(3)
+                    ->columns([
+                        'md' => 2,
+                    ])
                     ->columnSpan(2),
                 
                 Forms\Components\Group::make()
@@ -177,8 +150,25 @@ class ProductResource extends Resource
                             ]),
                         Forms\Components\Section::make(__('Settings'))
                             ->schema([
+                                Forms\Components\TextInput::make('slug')->label(__('Slug'))
+                                    ->unique(ignorable: fn (?Product $record): ?Product => $record), 
                                 Forms\Components\Toggle::make('featured')->label(__('Featured')),
                                 Forms\Components\Toggle::make('hidden')->label(__('Hidden')),
+                                Forms\Components\TextInput::make('tax')->label(__('Tax'))
+                                    ->placeholder(config('cart.tax'))
+                                    ->numeric()
+                                    ->suffix('%')
+                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                        ->numeric()
+                                        ->decimalPlaces(2)
+                                        ->decimalSeparator('.')
+                                        ->mapToDecimalSeparator([','])
+                                        ->thousandsSeparator(',')
+                                        ->maxValue(99)
+                                    ),
+                                Forms\Components\TextInput::make('low_stock_threshold')->label(__('Low Stock Threshold'))
+                                    ->placeholder(config('custom.stock_threshold'))
+                                    ->numeric(),
                             ]),
                         Forms\Components\Card::make()
                             ->schema([
@@ -261,6 +251,13 @@ class ProductResource extends Resource
                     Tables\Filters\TrashedFilter::make(),
                 ],
             )->actions([
+                Tables\Actions\ReplicateAction::make()
+                    ->excludeAttributes([
+                        'unique_name',
+                        'slug',
+                        'sku',
+                        'discount'
+                    ]),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

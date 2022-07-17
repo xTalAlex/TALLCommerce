@@ -18,9 +18,9 @@ return [
     "order.deleted" => "Order deleted",
     "order.not_deleted" => "Cannot delete this order",
 
-    "payment.succeeded" => "Success! Payment received.",
-    "payment.processing" => "Payment processing. We'll update you when payment is received.",
-    "payment.failed" => "Payment failed. Please try another payment method.",
-    "payment.error" => "Something went wrong.",
+    "payment.succeeded" => "Success! Payment received",
+    "payment.processing" => "Payment processing. We'll update you when payment is received",
+    "payment.failed" => "Payment failed. Please try another payment method",
+    "payment.error" => "Something went wrong",
     "payment.not_found" => "Error while fetching payment info",
 ];

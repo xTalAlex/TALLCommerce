@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\CategoryResource\RelationManagers;
 
+use Closure;
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Category;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -24,13 +26,14 @@ class ChildrenRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $inverseRelationship = 'children';
-
-    protected static bool $hasAssociateAction = true;
-    
-    protected static bool $hasDissociateAction = true;
+    protected static ?string $inverseRelationship = 'parent';
 
     protected static bool $shouldPreloadAssociateFormRecordSelectOptions = true;
+
+    protected function getTableRecordUrlUsing(): Closure
+    {
+        return fn (Category $record): string => route('filament.resources.categories.edit', ['record' => $record]);
+    }
 
     public static function form(Form $form): Form
     {
@@ -65,8 +68,16 @@ class ChildrenRelationManager extends RelationManager
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\AssociateAction::make()
+                    ->preloadRecordSelect(true),
+                Tables\Actions\CreateAction::make(),
+            ])
+            ->actions([
+                Tables\Actions\DissociateAction::make(),
+            ])
             ->bulkActions([
-                //
+                Tables\Actions\DissociateBulkAction::make(),
             ]);
     }
 }

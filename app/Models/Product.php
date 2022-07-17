@@ -27,6 +27,7 @@ class Product extends Model implements Buyable , HasMedia
         'selling_price',
         'tax',
         'quantity',
+        'weight',
         'low_stock_threshold',
         'featured',
         'hidden',

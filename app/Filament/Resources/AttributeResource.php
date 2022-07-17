@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Closure;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Attribute;
@@ -47,6 +48,7 @@ class AttributeResource extends Resource
                                     ->unique(ignorable: fn (?Attribute $record): ?Attribute => $record), 
                                 Forms\Components\Select::make('type')->label(__('Type'))
                                     ->options( collect(config('custom.attribute_types'))->map(fn($option)=> __($option)) )
+                                    ->reactive()
                                     ->required(),
                             ])->columns([
                                 'md' => 2,
@@ -55,7 +57,7 @@ class AttributeResource extends Resource
                         Forms\Components\Card::make()
                             ->schema([
                                 Forms\Components\Repeater::make('values')->label(__('Values'))
-                                ->relationship()
+                                ->relationship('values')
                                 ->schema([
                                     Forms\Components\TextInput::make('value')
                                         ->disableLabel()
@@ -63,9 +65,15 @@ class AttributeResource extends Resource
                                         ->columnSpan([
                                             'md' => 1,
                                         ]),
+                                    Forms\Components\ColorPicker::make('color')
+                                        ->disableLabel()
+                                        ->hidden(fn (Closure $get) => $get('type') !== 'color')
+                                        ->columnSpan([
+                                            'md' => 1,
+                                        ]),
                                 ])
                                 ->columns([
-                                    'md' => 3,
+                                    'md' => 2,
                                 ]),
                             ]),
                     ])->columnSpan(2),
