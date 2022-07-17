@@ -4,13 +4,9 @@ namespace App\Filament\Resources\ProductResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Review;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class ReviewsRelationManager extends RelationManager
@@ -30,18 +26,16 @@ class ReviewsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Select::make('user')
-                    ->relationship('user', 'name')
-                    ->label(__('User')),
-                TextInput::make('rating')
-                    ->label(__('Rating'))
-                    ->numeric(),
-                TextInput::make('description')
-                    ->label(__('Description')),
-                DateTimePicker::make('created_at')
-                    ->label(__('Created at')),
-                DateTimePicker::make('updated_at')
-                    ->label(__('Updated at')),
+                Forms\Components\Select::make('user')->label(__('User'))
+                    ->relationship('user', 'email'),
+                    Forms\Components\Placeholder::make('rating')->label(__('Rating'))
+                    ->content(fn (?Review $record): string => $record ? $record->rating : '-'),
+                Forms\Components\TextInput::make('description')->label(__('Description'))
+                    ->columnSpan('full'),
+                Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
+                    ->content(fn (?Review $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
+                Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
+                    ->content(fn (?Review $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
             ]);
     }
 
@@ -49,13 +43,12 @@ class ReviewsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('user.name')->label(__('User')),
-                TextColumn::make('rating')->label(__('Rating')),
-                TextColumn::make('description')->label(__('Description'))
+                Tables\Columns\TextColumn::make('user.name')->label(__('User')),
+                Tables\Columns\TextColumn::make('rating')->label(__('Rating')),
+                Tables\Columns\TextColumn::make('description')->label(__('Description'))
                     ->wrap(),
-                TextColumn::make('updated_at')
-                    ->label(__('Updated at'))
-                    ->dateTime()
+                Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
+                    ->dateTime(config('custom.datetime_format'))
                     ->sortable(),
             ])
             ->filters([

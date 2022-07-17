@@ -296,6 +296,6 @@ class ProductResource extends Resource
                 SoftDeletingScope::class,
                 NotHiddenScope::class,
             ])
-            ->with(['media','attributeValues','defaultVariant','variants']);
+            ->with(['media','attributeValues','defaultVariant','variants','reviews']);
     }
 }

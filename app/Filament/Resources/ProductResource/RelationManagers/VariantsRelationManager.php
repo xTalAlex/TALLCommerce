@@ -7,12 +7,8 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 
 class VariantsRelationManager extends RelationManager
 {
@@ -49,11 +45,13 @@ class VariantsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('sku')->label(__('SKU')),
-                TextColumn::make('name')->label(__('Name')),
-                SpatieMediaLibraryImageColumn::make('image')->label(__('Image')),
-                TextColumn::make('quantity')->label(__('Quantity')),
-                TextColumn::make('price')->label(__('Price'))->money('eur'),
+                Tables\Columns\TextColumn::make('sku')->label(__('SKU'))
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('name')->label(__('Name')),
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('image')->label(__('Image'))
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('quantity')->label(__('Quantity')),
+                Tables\Columns\TextColumn::make('price')->label(__('Price'))->money('eur'),
             ])
             ->filters([
                 //

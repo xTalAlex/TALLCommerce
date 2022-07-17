@@ -2,17 +2,10 @@
 
 namespace App\Filament\Resources\ProductResource\RelationManagers;
 
-use Closure;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class AttributeValuesRelationManager extends RelationManager
@@ -43,12 +36,10 @@ class AttributeValuesRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                TextColumn::make('attribute.name')
-                    ->label(__('Name'))
+                Tables\Columns\TextColumn::make('attribute.name')->label(__('Name'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('value')
-                    ->label(__('Value')),
+                Tables\Columns\TextColumn::make('value')->label(__('Value')),
             ])
             ->filters([
                 //
@@ -56,14 +47,12 @@ class AttributeValuesRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\AttachAction::make()
                     ->form(fn (Tables\Actions\AttachAction $action): array => [
-                        Select::make('attribute')
-                            ->label(('Name'))
+                        Forms\Components\Select::make('attribute')->label(('Name'))
                             ->relationship('attribute','name')
                             ->reactive()
                             ->dehydrated(false)
                             ->afterStateUpdated(fn(callable $set) => $set('recordId', null ) ),
-                        $action->getRecordSelect()
-                            ->label(('Value'))
+                        $action->getRecordSelect()->label(('Value'))
                             ->disableLabel(false)
                             ->options(function(callable $get) {
                                 $attribute = \App\Models\Attribute::find($get('attribute'));
