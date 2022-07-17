@@ -68,15 +68,23 @@ class ProductsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sku')->label(__('SKU')),
+                Tables\Columns\TextColumn::make('sku')->label(__('SKU'))
+                    ->default('-')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('name')->label(__('Name')),
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('image')->label(__('Image')),
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('image')->label(__('Image'))
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('pivot_quantity')->label(__('Quantity')),
                 Tables\Columns\TextColumn::make('pivot_price')->label(__('Price'))
-                    ->money('eur'),
+                    ->money('eur')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('pivot_discount')->label(__('Discount'))
-                    ->money('eur'),
-                Tables\Columns\TextColumn::make('total')->label(__('Total')),
+                    ->money('eur')
+                    ->default(0)
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('total')->label(__('Total'))
+                    ->money('eur')
+                    ->toggleable(),
             ])
             ->filters([
                 //
