@@ -1,9 +1,9 @@
 <div class="max-w-sm mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-    <a href="{{ route('product.show', $product->id) }}">
+    <a href="{{ route('product.show', $product) }}">
         <img class="object-contain w-full p-8 rounded-t-lg h-96" src="{{ $product->image }}" alt="product image">
     </a>
     <div class="px-5 pb-5">
-        <a href="{{ route('product.show', $product->id) }}">
+        <a href="{{ route('product.show', $product) }}">
             <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $product->name }}</h5>
         </a>
         <div class="flex items-center mt-2.5 mb-5">

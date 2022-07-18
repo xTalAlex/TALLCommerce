@@ -21,7 +21,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/shop', [App\Http\Controllers\ProductController::class , 'index'] )->name('product.index');
-Route::get('/shop/{product}', App\Http\Livewire\Product\Show::class )->name('product.show');
+Route::get('/shop/{product:slug}', App\Http\Livewire\Product\Show::class )->name('product.show');
 
 Route::get('/cart', App\Http\Livewire\Cart\Index::class )->name('cart.index');
 
@@ -29,7 +29,7 @@ Route::get('/wishlist', App\Http\Livewire\Wishlist\Index::class )->name('wishlis
 
 Route::get('/order/create', App\Http\Livewire\Order\Create::class )->name('order.create');
 Route::get('/order/{order}', [App\Http\Controllers\OrderController::class , 'show'] )->name('order.show');
-Route::get('/order/update/{order}', App\Http\Livewire\Order\Update::class )->name('order.update');
+Route::get('/order/{order}/update', App\Http\Livewire\Order\Update::class )->name('order.update');
 
 Route::get('/order/{order}/invoice', [App\Http\Controllers\InvoiceController::class , 'show'] )->name('invoice.show');
 

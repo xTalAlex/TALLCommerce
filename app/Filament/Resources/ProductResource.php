@@ -52,7 +52,7 @@ class ProductResource extends Resource
                             ->schema([
                                 Forms\Components\TextInput::make('SKU')->label(__('SKU')),
                                 Forms\Components\Select::make('variant')->label(__('Variant Of'))
-                                    ->relationship('defaultVariant','unique_name'),                            
+                                    ->relationship('defaultVariant','slug'),                            
                             ])
                             ->columns([
                                 'md' => 2,
@@ -92,6 +92,7 @@ class ProductResource extends Resource
                                     ),
                                 Forms\Components\TextInput::make('selling_price')->label(__('Selling Price'))
                                     ->prefix('€')
+                                    ->lte('original_price')
                                     ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
                                         ->numeric()
                                         ->decimalPlaces(2)
@@ -253,7 +254,6 @@ class ProductResource extends Resource
             )->actions([
                 Tables\Actions\ReplicateAction::make()
                     ->excludeAttributes([
-                        'unique_name',
                         'slug',
                         'sku',
                         'discount'

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -16,6 +17,7 @@ class Category extends Model implements HasMedia
 
     protected $fillable = [
         'name',
+        'slug',
         'description',
         'parent_id',
     ];
@@ -63,6 +65,13 @@ class Category extends Model implements HasMedia
     {
         if($value) $this->addMedia($value)->toMediaCollection('hero');
     }
+
+    public function setSlugAttribute($value)
+    {
+        if (static::whereNot('id',$this->id)->whereSlug($slug = Str::slug($value))->exists())
+            $slug = "{$slug}-{$this->id}";
+        $this->attributes['slug'] = $slug;
+    } 
 
     public function ancestorsIds()
     {

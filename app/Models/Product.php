@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 use App\Scopes\NotHiddenScope;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Scout\Searchable;
 
 class Product extends Model implements Buyable , HasMedia
 {
@@ -20,6 +21,7 @@ class Product extends Model implements Buyable , HasMedia
     
     protected $fillable = [
         'name',
+        'slug',
         'sku',
         'short_description',
         'description',
@@ -31,7 +33,6 @@ class Product extends Model implements Buyable , HasMedia
         'low_stock_threshold',
         'featured',
         'hidden',
-        'unique_name',
         'variant_id',
     ];
 
@@ -162,9 +163,11 @@ class Product extends Model implements Buyable , HasMedia
         return $this->weight ?? 0;
     }
 
-    public function getUniqueNameAttribute()
+    public function setSlugAttribute($value)
     {
-        return $this->attributes['unique_name'] ?? $this->id.'-'.$this->name;
+        if (static::whereNot('id',$this->id)->whereSlug($slug = Str::slug($value))->exists())
+            $slug = "{$slug}-{$this->id}";
+        $this->attributes['slug'] = $slug;
     } 
 
     public function getStockStatusAttribute()
