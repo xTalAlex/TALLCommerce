@@ -30,7 +30,7 @@ class VariantsRelationManager extends RelationManager
 
     protected function getTableRecordUrlUsing(): Closure
     {
-        return fn (Model $record): string => route('filament.resources.products.view', ['record' => $record]);
+        return fn (Model $record): string => route('filament.resources.products.edit', ['record' => $record]);
     }
 
     public static function form(Form $form): Form
