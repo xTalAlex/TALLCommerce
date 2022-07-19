@@ -92,6 +92,7 @@ class UserResource extends Resource
                     ->sortable()
                     ->toggleable(),
             ])
+            ->defaultSort('created_at','desc')
             ->filters([
                 Filter::make('is_admin')
                     ->query(fn (Builder $query): Builder => $query->where('is_admin', true))
