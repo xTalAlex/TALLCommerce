@@ -9,6 +9,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use Illuminate\Support\HtmlString;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Model;
@@ -49,7 +50,19 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('is_admin')->label(__('Is Admin')),
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Toggle::make('is_admin')->label(__('Is Admin')),
+                    ])
+                    ->columnSpan(2),
+                Forms\Components\Group::make()
+                    ->schema([
+                        //
+                    ])->columnSpan(1),
+            ])
+            ->columns([
+                'md' => 3,
+                'lg' => null,
             ]);
     }
 

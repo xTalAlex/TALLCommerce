@@ -24,7 +24,7 @@
         <script src="https://js.stripe.com/v3/"></script>
         
     </head>
-    <body class="font-serif antialiased">
+    <body class="font-sans antialiased">
         <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">

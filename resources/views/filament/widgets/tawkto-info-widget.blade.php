@@ -44,7 +44,7 @@
 
         </div>
             
-        <img class="absolute bottom-0 left-0 h-12" style="bottom : -0.25rem;" src="img/logos/tawkto-icon.png"/>
+        <img class="absolute left-0 h-12 -bottom-1" src="img/logos/tawkto-icon.png"/>
             
     </x-filament::card>
 </x-filament::widget>

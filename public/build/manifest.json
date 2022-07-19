@@ -5,8 +5,13 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app.9d53867f.css",
+    "file": "assets/app.56af8764.css",
     "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/filament.css": {
+    "file": "assets/filament.3eaab5be.css",
+    "src": "resources/css/filament.css",
     "isEntry": true
   }
 }

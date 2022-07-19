@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 module.exports = {
     content: [
@@ -6,12 +7,19 @@ module.exports = {
         './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './vendor/filament/**/*.blade.php',
     ],
 
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                sans: ['DM Sans' , ...defaultTheme.fontFamily.sans],
+            },
+            colors: { 
+                primary: colors.yellow,
+                danger: colors.rose,
+                success: colors.green,
+                warning: colors.amber,
             },
         },
     },
