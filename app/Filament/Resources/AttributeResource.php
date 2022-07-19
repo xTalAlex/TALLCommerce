@@ -11,6 +11,7 @@ use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AttributeResource\Pages;
+use App\Models\AttributeValue;
 
 class AttributeResource extends Resource
 {
@@ -65,6 +66,8 @@ class AttributeResource extends Resource
                                         ->columnSpan([
                                             'md' => 1,
                                         ]),
+                                    Forms\Components\Placeholder::make('users_count')->label(__('Products Count'))
+                                        ->content(fn (?AttributeValue $record): string => $record ? $record->products()->count() : '-'),
                                     Forms\Components\ColorPicker::make('color')
                                         ->disableLabel()
                                         ->hidden(fn (Closure $get) => $get('type') !== 'color')
@@ -134,6 +137,6 @@ class AttributeResource extends Resource
     {
         return parent::getGlobalSearchEloquentQuery()
                             ->with(['values'])
-                            ->withCount(['values']);
+                            ->withCount(['values','products']);
     }
 }

@@ -34,6 +34,7 @@ class Product extends Model implements Buyable , HasMedia
         'featured',
         'hidden',
         'variant_id',
+        'brand_id',
     ];
 
     protected $casts = [

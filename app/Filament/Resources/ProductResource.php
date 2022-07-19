@@ -47,6 +47,19 @@ class ProductResource extends Resource
                     ->schema([
                         Forms\Components\Card::make()
                             ->schema([
+                                Forms\Components\Group::make()
+                                    ->schema([
+                                        Forms\Components\TextInput::make('name')->label(__('Name'))
+                                            ->required()
+                                            ->columnSpan([
+                                                'md' => 2,
+                                            ]), 
+                                        Forms\Components\Select::make('brand')->label(__('Brand'))
+                                            ->relationship('brand','name'), 
+                                    ])
+                                    ->columns([
+                                        'md' => 3,    
+                                    ]),
                                 Forms\Components\TextInput::make('name')->label(__('Name'))
                                     ->required(), 
                                 Forms\Components\TextInput::make('short_description')->label(__('Short Description'))

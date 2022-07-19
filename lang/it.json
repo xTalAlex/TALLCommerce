@@ -245,7 +245,8 @@
     "Date" : "Data",
 
     "Brand" : "Brand",
-    "Brands" : "Brands",
+    "Brands" : "Brand",
     "Color" : "Colore",
-    "Colors" : "Colori"
-}
+    "Colors" : "Colori",
+    "Visit" : "Visita"
+} 

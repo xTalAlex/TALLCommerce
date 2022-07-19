@@ -11,6 +11,8 @@ class Brand extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
+    const PATH = "brands";
+
     protected $fillable = [
         'name',
         'link',
