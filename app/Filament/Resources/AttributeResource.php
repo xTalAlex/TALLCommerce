@@ -126,7 +126,7 @@ class AttributeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAttributes::route('/'),
+            'index' => Pages\ManageAttributes::route('/'),
         ];
     }   
     
