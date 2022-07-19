@@ -127,8 +127,6 @@ class AttributeResource extends Resource
     {
         return [
             'index' => Pages\ListAttributes::route('/'),
-            'create' => Pages\CreateAttribute::route('/create'),
-            'edit' => Pages\EditAttribute::route('/{record}/edit'),
         ];
     }   
     
