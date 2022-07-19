@@ -269,7 +269,11 @@ class ProductResource extends Resource
                         'slug',
                         'sku',
                         'discount'
-                    ]),
+                    ])
+                    ->beforeReplicaSaved(function (Product $replica, array $data): void {
+                        $data['hidden'] = true;
+                        $replica->fill($data);
+                    }),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
