@@ -49,6 +49,7 @@ class CategoryResource extends Resource
                                 $query->when($record, fn($query) => $query->whereNot('id', $record->id))
                             )
                             ->placeholder('-'),
+                        Forms\Components\Toggle::make('featured')->label(__('Featured')),
                         Forms\Components\Textarea::make('description')->label(__('Description'))
                             ->rows(3)
                             ->maxLength(255)

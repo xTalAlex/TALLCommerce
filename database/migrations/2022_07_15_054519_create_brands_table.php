@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('link')->nullable();
+            $table->boolean('featured')->default(0);
             $table->timestamps();
         });
 

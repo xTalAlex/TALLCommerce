@@ -13,7 +13,8 @@ class Brand extends Model implements HasMedia
 
     protected $fillable = [
         'name',
-        'link'
+        'link',
+        'featured',
     ];
 
     protected $casts = [

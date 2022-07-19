@@ -7,6 +7,7 @@ use Filament\Tables;
 use App\Models\Review;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class ReviewsRelationManager extends RelationManager
@@ -21,21 +22,44 @@ class ReviewsRelationManager extends RelationManager
     {
         return __('Reviews');
     }
+    
+    public static function getRecordTitle(?Model $record): ?string
+    {
+        return __('Review');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user')->label(__('User'))
-                    ->relationship('user', 'email'),
-                    Forms\Components\Placeholder::make('rating')->label(__('Rating'))
-                    ->content(fn (?Review $record): string => $record ? $record->rating : '-'),
-                Forms\Components\TextInput::make('description')->label(__('Description'))
-                    ->columnSpan('full'),
-                Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
-                    ->content(fn (?Review $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
-                Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
-                    ->content(fn (?Review $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\Select::make('user')->label(__('User'))
+                            ->relationship('user', 'email'),
+                        Forms\Components\Placeholder::make('rating')->label(__('Rating'))
+                            ->content(fn (?Review $record): string => $record ? $record->rating : '-'),
+                        Forms\Components\RichEditor::make('description')->label(__('Description'))
+                            ->columnSpan('full'),
+                    ])
+                    ->columns([
+                        'sm' => 2,
+                    ])
+                    ->columnSpan([
+                        'sm' => fn (?Review $record) => $record === null ? 3 : 2,
+                    ]),
+                Forms\Components\Card::make()
+                        ->schema([
+                            Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
+                                ->content(fn (?Review $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
+                            Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
+                                ->content(fn (?Review $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
+                        ])
+                        ->columnSpan(1)
+                        ->hidden(fn (?Review $record) => $record === null),
+            ])
+            ->columns([
+                'sm' => 3,
+                'lg' => null,
             ]);
     }
 
@@ -43,7 +67,7 @@ class ReviewsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')->label(__('User')),
+                Tables\Columns\TextColumn::make('user.email')->label(__('User')),
                 Tables\Columns\TextColumn::make('rating')->label(__('Rating')),
                 Tables\Columns\TextColumn::make('description')->label(__('Description'))
                     ->wrap(),

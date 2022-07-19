@@ -20,6 +20,7 @@ class Category extends Model implements HasMedia
         'slug',
         'description',
         'parent_id',
+        'featured',
     ];
 
     /**

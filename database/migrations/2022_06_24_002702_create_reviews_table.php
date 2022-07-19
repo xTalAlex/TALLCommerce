@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('rating');
             $table->text('description')->nullable();
+            $table->boolean('approved')->default(false);
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')

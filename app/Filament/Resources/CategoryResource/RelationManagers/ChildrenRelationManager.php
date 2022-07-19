@@ -41,6 +41,7 @@ class ChildrenRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('name')->label(__('Name'))
                     ->required(),
+                Forms\Components\Toggle::make('featured')->label(__('Featured')),
                 Forms\Components\Textarea::make('description')->label(__('Description'))
                     ->rows(3)
                     ->maxLength(255)

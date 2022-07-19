@@ -43,95 +43,107 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')->label(__('Name'))
-                            ->required()
-                            ->columnSpan('full'),   
-                        Forms\Components\Group::make()
+                        Forms\Components\Card::make()
                             ->schema([
-                                Forms\Components\TextInput::make('SKU')->label(__('SKU')),
+                                Forms\Components\TextInput::make('name')->label(__('Name'))
+                                    ->required(), 
+                                Forms\Components\TextInput::make('short_description')->label(__('Short Description'))
+                                    ->maxLength(255),
+                                Forms\Components\RichEditor::make('description')->label(__('Description'))
+                                    ->disableToolbarButtons([
+                                        'attachFiles',
+                                    ]),
+
+                                Forms\Components\MultiSelect::make('categories')->label(__('Categories'))
+                                    ->relationship('categories','name',
+                                        fn (Builder $query, callable $get) => 
+                                            $query->whereNotIn('id', $get('categories'))
+                                                    ->where(fn ($query) =>
+                                                        $query->whereNull('parent_id')
+                                                            ->orWhereIn('parent_id', $get('categories'))
+                                                    )
+                                    )
+                                    ->preload(true)
+                                    ->reactive()
+                                    ->afterStateUpdated(function(callable $get, callable $set){
+                                        $selectedCategories = \App\Models\Category::findMany($get('categories'));
+                                        $removed = false;
+                                        do{
+                                            $removed = false;
+                                            foreach ($selectedCategories as $category) {
+                                                if ($category->parent && !$selectedCategories->contains($category->parent)) {
+                                                    $selectedCategories = $selectedCategories->filter(
+                                                        fn ($selectedCategory) =>
+                                                        $selectedCategory->id!=$category->id
+                                                    );
+                                                    $removed = true;
+                                                }
+                                            }
+                                        }while($removed);
+                                        $set('categories',$selectedCategories->pluck('id')->toArray());
+                                    })
+                                    ->columnSpan('full'),
+
+                            ])
+                            ->columnSpan('full'),
+
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\Fieldset::make('pricing')->label(__('Pricing'))
+                                ->schema([
+                                    Forms\Components\TextInput::make('original_price')->label(__('Original Price'))
+                                            ->required()
+                                            ->prefix('€')
+                                            ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                                ->numeric()
+                                                ->decimalPlaces(2)
+                                                ->decimalSeparator('.')
+                                                ->mapToDecimalSeparator([',','.'])
+                                                ->thousandsSeparator(',')
+                                                ->maxValue(999999)
+                                            ),
+                                    Forms\Components\TextInput::make('selling_price')->label(__('Selling Price'))
+                                            ->prefix('€')
+                                            ->lte('original_price')
+                                            ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                                ->numeric()
+                                                ->decimalPlaces(2)
+                                                ->decimalSeparator('.')
+                                                ->mapToDecimalSeparator([',','.'])
+                                                ->thousandsSeparator(',')
+                                                ->maxValue(999999)
+                                            ),
+                                ]),
+                            ])
+                            ->columnSpan('full'),
+
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('SKU')->label(__('SKU')),   
                                 Forms\Components\Select::make('variant')->label(__('Variant Of'))
-                                    ->relationship('defaultVariant','slug'),                            
+                                    ->relationship('defaultVariant','slug'), 
+                                Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
+                                    ->required()
+                                    ->numeric()
+                                    ->default(0),    
+                                Forms\Components\TextInput::make('weight')->label(__('Weight'))
+                                    ->prefix('Kg')
+                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                        ->numeric()
+                                        ->decimalPlaces(2)
+                                        ->decimalSeparator('.')
+                                        ->mapToDecimalSeparator([',','.'])
+                                        ->thousandsSeparator(',')
+                                        ->maxValue(999999)
+                                    ),
                             ])
                             ->columns([
                                 'md' => 2,
                             ])
                             ->columnSpan('full'),
-                        Forms\Components\TextInput::make('short_description')->label(__('Short Description'))
-                            ->maxLength(255)
-                            ->columnSpan('full'),
-                        Forms\Components\RichEditor::make('description')->label(__('Description'))
-                            ->columnSpan('full'),
-                        Forms\Components\TextInput::make('weight')->label(__('Weight'))
-                            ->prefix('Kg')
-                            ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                ->numeric()
-                                ->decimalPlaces(2)
-                                ->decimalSeparator('.')
-                                ->mapToDecimalSeparator([',','.'])
-                                ->thousandsSeparator(',')
-                                ->maxValue(999999)
-                            ),
-                        Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
-                            ->required()
-                            ->numeric()
-                            ->default(0),
-                        Forms\Components\Fieldset::make('price')->label(__('Price'))
-                            ->schema([
-                            Forms\Components\TextInput::make('original_price')->label(__('Original Price'))
-                                    ->required()
-                                    ->prefix('€')
-                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                        ->numeric()
-                                        ->decimalPlaces(2)
-                                        ->decimalSeparator('.')
-                                        ->mapToDecimalSeparator([',','.'])
-                                        ->thousandsSeparator(',')
-                                        ->maxValue(999999)
-                                    ),
-                                Forms\Components\TextInput::make('selling_price')->label(__('Selling Price'))
-                                    ->prefix('€')
-                                    ->lte('original_price')
-                                    ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                        ->numeric()
-                                        ->decimalPlaces(2)
-                                        ->decimalSeparator('.')
-                                        ->mapToDecimalSeparator([',','.'])
-                                        ->thousandsSeparator(',')
-                                        ->maxValue(999999)
-                                    ),
-                            ]),
-                        Forms\Components\MultiSelect::make('categories')->label(__('Categories'))
-                            ->relationship('categories','name',
-                                fn (Builder $query, callable $get) => 
-                                    $query->whereNotIn('id', $get('categories'))
-                                            ->where(fn ($query) =>
-                                                $query->whereNull('parent_id')
-                                                    ->orWhereIn('parent_id', $get('categories'))
-                                            )
-                            )
-                            ->preload(true)
-                            ->reactive()
-                            ->afterStateUpdated(function(callable $get, callable $set){
-                                $selectedCategories = \App\Models\Category::findMany($get('categories'));
-                                $removed = false;
-                                do{
-                                    $removed = false;
-                                    foreach ($selectedCategories as $category) {
-                                        if ($category->parent && !$selectedCategories->contains($category->parent)) {
-                                            $selectedCategories = $selectedCategories->filter(
-                                                fn ($selectedCategory) =>
-                                                $selectedCategory->id!=$category->id
-                                            );
-                                            $removed = true;
-                                        }
-                                    }
-                                }while($removed);
-                                $set('categories',$selectedCategories->pluck('id')->toArray());
-                            })
-                            ->columnSpan('full'),
-                        
+        
                     ])
                     ->columns([
                         'md' => 2,
