@@ -8,7 +8,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <img class="h-6" src="img/logos/tawkto-noicon.png" />
+                    <img class="h-6 px-2 py-0.5 bg-white rounded-lg" src="img/logos/tawkto-noicon.png" />
                 </a>
             </div>
 

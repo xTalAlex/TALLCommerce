@@ -114,6 +114,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             return mb_substr($segment, 0, 1);
         })->join(' '));
 
-        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=000000&background=EAB308';
+        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&background=F97316&color=4C1D95';
     }
 }

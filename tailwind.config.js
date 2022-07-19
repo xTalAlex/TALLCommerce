@@ -9,14 +9,15 @@ module.exports = {
         './resources/views/**/*.blade.php',
         './vendor/filament/**/*.blade.php',
     ],
-
+    darkMode: 'class',
     theme: {
         extend: {
             fontFamily: {
                 sans: ['DM Sans' , ...defaultTheme.fontFamily.sans],
             },
             colors: { 
-                primary: colors.yellow,
+                primary: colors.orange,
+                gray : colors.violet,
                 danger: colors.rose,
                 success: colors.green,
                 warning: colors.amber,
