@@ -22,6 +22,42 @@
                     }
                 }
             });
+
+            categoriesPanel = window.algoliaWidgets.panel({
+                templates: {
+                    header: '{{__('Categories')}}',
+                },
+            })(window.algoliaWidgets.hierarchicalMenu);
+
+            brandsPanel = window.algoliaWidgets.panel({
+                templates: {
+                    header: '{{__('Brands')}}',
+                },
+            })(window.algoliaWidgets.refinementList);
+            
+            refinementListWithPanel = window.algoliaWidgets.panel({
+                templates: {
+                    header: 'Brand',
+                },
+            })(window.algoliaWidgets.refinementList({
+                    container: '#refinement-list',
+                    attribute: 'brand.name',
+                    operator: 'or',
+                    limit: 5,
+                    showMore: true,
+                    searchable: false,
+                    searchablePlaceholder: '{{ __('Brands') }}...',
+                    searchableIsAlwaysActive: false,
+                    templates: {
+                        searchableNoResults() { 
+                            return '{{ __('No results') }}';
+                        },
+                        showMoreText(data) {
+                            return data.isShowingMore ? '{{ __('Hide') }}' : '{{ __('Show') }}';
+                        },
+                    },
+                }));
+
             search.addWidgets([
                 window.algoliaWidgets.searchBox({
                     container: '#searchbox',
@@ -65,7 +101,7 @@
                     ]
                 }),
 
-                window.algoliaWidgets.hierarchicalMenu({
+                categoriesPanel({
                     container: '#hierarchical-menu',
                     attributes: [
                         'hierarchicalCategories.lvl0',
@@ -134,24 +170,24 @@
                     container: '#powered-by',
                 }),
 
-                {{-- window.algoliaWidgets.refinementList({
-                    container: '#refinement-list',
-                    attribute: 'categories.name',
-                    operator: 'or',
-                    limit: 5,
-                    showMore: true,
-                    searchable: true,
-                    searchablePlaceholder: '{{ __('Category') }}...',
-                    searchableIsAlwaysActive: false,
-                    templates: {
-                        searchableNoResults() { 
-                            return '{{ __('No results') }}';
+                brandsPanel({
+                        container: '#refinement-list',
+                        attribute: 'brand.name',
+                        operator: 'or',
+                        limit: 5,
+                        showMore: true,
+                        searchable: false,
+                        searchablePlaceholder: '{{ __('Brands') }}...',
+                        searchableIsAlwaysActive: false,
+                        templates: {
+                            searchableNoResults() { 
+                                return '{{ __('No results') }}';
+                            },
+                            showMoreText(data) {
+                                return data.isShowingMore ? '{{ __('Hide') }}' : '{{ __('Show') }}';
+                            },
                         },
-                        showMoreText(data) {
-                            return data.isShowingMore ? '{{ __('Hide') }}' : '{{ __('Show') }}';
-                        },
-                    },
-                }), --}}
+                    }),
 
             ]);
             search.start();
