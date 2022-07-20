@@ -7,6 +7,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Brand extends Model implements HasMedia
 {
@@ -16,6 +17,7 @@ class Brand extends Model implements HasMedia
 
     protected $fillable = [
         'name',
+        'slug',
         'link',
         'featured',
     ];
@@ -34,6 +36,12 @@ class Brand extends Model implements HasMedia
         $this->addMediaCollection('hero')
             ->useDisk(config('media-library.disk_name'))
             ->singleFile();
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('logo-gray')
+            ->greyscale();
     }
 
     public function products()
