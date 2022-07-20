@@ -26,7 +26,8 @@ class BrandObserver
      */
     public function updated(Brand $brand)
     {
-        $brand->update(['slug' => Str::slug($brand->name)]);
+        $brand->slug = Str::slug($brand->name);
+        $brand->saveQuietly();
     }
 
     /**

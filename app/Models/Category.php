@@ -33,6 +33,15 @@ class Category extends Model implements HasMedia
         'updated_at'    => 'datetime',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'hero',
+    ];
+
 
     public function registerMediaCollections(): void
     {

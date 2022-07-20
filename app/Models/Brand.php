@@ -27,6 +27,17 @@ class Brand extends Model implements HasMedia
         'updated_at'    => 'datetime',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'logo',
+        'gray_logo',
+        'hero',
+    ];
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('logo')
@@ -41,7 +52,8 @@ class Brand extends Model implements HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('logo-gray')
-            ->greyscale();
+            ->greyscale()
+            ->performOnCollections('logo');
     }
 
     public function products()
@@ -62,6 +74,11 @@ class Brand extends Model implements HasMedia
     public function getLogoAttribute()
     {
         return $this->getFirstMediaUrl('logo');
+    }
+
+    public function getGrayLogoAttribute()
+    {
+        return $this->getFirstMediaUrl('logo','thumb');
     }
 
     public function setLogoAttribute($value)

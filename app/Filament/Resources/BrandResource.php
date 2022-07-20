@@ -68,7 +68,6 @@ class BrandResource extends Resource
                                 Forms\Components\SpatieMediaLibraryFileUpload::make('logo')->label(__('Logo'))
                                     ->collection('logo')
                                     ->panelLayout('circular')
-                                    ->imageCropAspectRatio('1:1')
                                     ->panelAspectRatio('1:1'),
                             ]),
                         Forms\Components\Card::make()
