@@ -27,11 +27,17 @@
                 templates: {
                     header: '{{__('Categories')}}',
                 },
+                hidden(options) {
+                    return options.items.length === 0;
+                },
             })(window.algoliaWidgets.hierarchicalMenu);
 
             brandsPanel = window.algoliaWidgets.panel({
                 templates: {
                     header: '{{__('Brands')}}',
+                },
+                hidden(options) {
+                    return options.items.length  === 0;
                 },
             })(window.algoliaWidgets.refinementList);
             
