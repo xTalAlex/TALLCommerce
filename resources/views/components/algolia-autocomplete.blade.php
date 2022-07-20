@@ -107,12 +107,10 @@
         ];
       },
       onSubmit({state}){
-        if(state.query!=''){
-          url = new URL('{{ route('product.index') }}');
-          var searchParams = new URLSearchParams(url.search);
-          searchParams.set('keyword', state.query);
-          window.location.href = url +'/?'+ searchParams.toString();
-        }
+        url = new URL('{{ route('product.index') }}');
+        var searchParams = new URLSearchParams(url.search);
+        searchParams.set('keyword', state.query.trim());
+        window.location.href = url +'/?'+ searchParams.toString();
       },
       navigator: {
         navigate({itemUrl}) {
