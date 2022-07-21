@@ -8,6 +8,9 @@ use Filament\Tables;
 use App\Models\Category;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use App\Scopes\NotHiddenScope;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class ChildrenRelationManager extends RelationManager
@@ -59,6 +62,8 @@ class ChildrenRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('name')->label(__('Name'))
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('description')->label(__('Description'))
                     ->wrap()
                     ->searchable()
@@ -80,5 +85,17 @@ class ChildrenRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DissociateBulkAction::make(),
             ]);
+    }
+
+    public function getTableQuery(): Builder
+    {
+        return parent::getTableQuery()
+                            ->with(['parent','children'])
+                            ->withCount(['products' => function ($query) {
+                                return $query->withoutGlobalScopes([
+                                    SoftDeletingScope::class,
+                                    NotHiddenScope::class,
+                                ]);
+                            }]);
     }
 }

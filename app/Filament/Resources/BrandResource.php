@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BrandResource\Pages;
-use App\Filament\Resources\BrandResource\RelationManagers;
-use App\Models\Brand;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
 use Filament\Tables;
+use App\Models\Brand;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\BrandResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\BrandResource\RelationManagers;
+use App\Scopes\NotHiddenScope;
 
 class BrandResource extends Resource
 {
@@ -19,7 +21,7 @@ class BrandResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-office-building';
 
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 5;
 
     public static function getLabel(): string
     {
@@ -97,14 +99,14 @@ class BrandResource extends Resource
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('logo')->label(__('Logo'))
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
-                    ->counts('products')
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
                     ->toggleable(),
             ])
             ->filters([
-                //
+                Filter::make('featured')->label(__('Featured'))
+                    ->query(fn (Builder $query): Builder => $query->where('featured', true)),
             ])
             ->actions([
                 Tables\Actions\Action::make('visit')->label(__('Visit'))
@@ -121,7 +123,7 @@ class BrandResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ProductsRelationManager::class,
         ];
     }
     
@@ -132,11 +134,16 @@ class BrandResource extends Resource
             'create' => Pages\CreateBrand::route('/create'),
             'edit' => Pages\EditBrand::route('/{record}/edit'),
         ];
-    }    
-
-    protected static function getGlobalSearchEloquentQuery(): Builder
+    }   
+    
+    public static function getEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()
-                            ->withCount(['products']);
+        return parent::getEloquentQuery()
+                            ->withCount(['products' => function ($query) {
+                                return $query->withoutGlobalScopes([
+                                    SoftDeletingScope::class,
+                                    NotHiddenScope::class,
+                                ]);
+                            }]);
     }
 }

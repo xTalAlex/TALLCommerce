@@ -7,10 +7,13 @@ use Filament\Tables;
 use App\Models\Category;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use App\Scopes\NotHiddenScope;
 use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CategoryResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 
 class CategoryResource extends Resource
@@ -32,7 +35,7 @@ class CategoryResource extends Resource
         return  __('Settings');
     }
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -99,8 +102,9 @@ class CategoryResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
-                    ->counts('products')
                     ->sortable(),
+                Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('description')->label(__('Description'))
                     ->wrap()
                     ->visibleFrom('lg')
@@ -112,10 +116,9 @@ class CategoryResource extends Resource
                     ->toggleable(),
             ])
             ->filters([
-                    //
-                ],
-                layout: Layout::AboveContent,
-            )
+                Filter::make('featured')->label(__('Featured'))
+                    ->query(fn (Builder $query): Builder => $query->where('featured', true)),
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
@@ -130,6 +133,7 @@ class CategoryResource extends Resource
     {
         return [
             RelationManagers\ChildrenRelationManager::class,
+            RelationManagers\ProductsRelationManager::class,
         ];
     }
     
@@ -142,10 +146,14 @@ class CategoryResource extends Resource
         ];
     }
 
-    protected static function getGlobalSearchEloquentQuery(): Builder
+    public static function getEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()
-                            ->with(['parent','children'])
-                            ->withCount(['products']);
+        return parent::getEloquentQuery()
+                            ->withCount(['products' => function ($query) {
+                                return $query->withoutGlobalScopes([
+                                    SoftDeletingScope::class,
+                                    NotHiddenScope::class,
+                                ]);
+                            }]);
     }
 }

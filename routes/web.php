@@ -15,9 +15,9 @@ use Intervention\Image\Facades\Image;
 */
 
 Route::get('/', function () {
-    $carousel_products = App\Models\Product::inRandomOrder()->take(5)->get();
+    $featured_categories = App\Models\Category::featured()->take(5)->get();
     $featured_products = App\Models\Product::featured()->inRandomOrder()->take(1)->get();
-    return view('welcome', compact('carousel_products','featured_products') );
+    return view('welcome', compact('featured_categories','featured_products') );
 })->name('home');
 
 Route::get('/shop', [App\Http\Controllers\ProductController::class , 'index'] )->name('product.index');

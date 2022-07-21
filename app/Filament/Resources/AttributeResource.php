@@ -8,10 +8,12 @@ use Filament\Tables;
 use App\Models\Attribute;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use App\Models\AttributeValue;
+use App\Scopes\NotHiddenScope;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AttributeResource\Pages;
-use App\Models\AttributeValue;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AttributeResource extends Resource
 {
@@ -34,7 +36,7 @@ class AttributeResource extends Resource
         return  __('Settings');
     }
 
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
     {
@@ -66,8 +68,13 @@ class AttributeResource extends Resource
                                         ->columnSpan([
                                             'md' => 1,
                                         ]),
-                                    Forms\Components\Placeholder::make('users_count')->label(__('Products Count'))
-                                        ->content(fn (?AttributeValue $record): string => $record ? $record->products()->count() : '-'),
+                                    Forms\Components\Placeholder::make('products_count')->label(__('Products Count'))
+                                        ->content(fn (?AttributeValue $record): string => $record ? 
+                                                            $record->products()->withoutGlobalScopes([
+                                                                    SoftDeletingScope::class,
+                                                                    NotHiddenScope::class,
+                                                            ])->count() 
+                                                            : 0 ),
                                     Forms\Components\ColorPicker::make('color')
                                         ->disableLabel()
                                         ->hidden(fn (Closure $get) => $get('type') !== 'color')
@@ -131,12 +138,11 @@ class AttributeResource extends Resource
         return [
             'index' => Pages\ManageAttributes::route('/'),
         ];
-    }   
+    } 
     
-    protected static function getGlobalSearchEloquentQuery(): Builder
+    public static function getEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()
-                            ->with(['values'])
-                            ->withCount(['values','products']);
+        return parent::getEloquentQuery()
+                            ->with(['values']);
     }
 }

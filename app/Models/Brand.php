@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Scopes\NotHiddenScope;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
@@ -54,6 +56,11 @@ class Brand extends Model implements HasMedia
         $this->addMediaConversion('logo-gray')
             ->greyscale()
             ->performOnCollections('logo');
+    }
+
+    public function scopeFeatured($query)
+    {
+        $query->where('featured', true);
     }
 
     public function products()

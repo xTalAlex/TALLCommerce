@@ -285,9 +285,9 @@ class OrderResource extends Resource
         ];
     }
 
-    protected static function getGlobalSearchEloquentQuery(): Builder
+    public static function getEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()
-                            ->with(['user','status','shipping','coupon','products.media','history']);
+        return parent::getEloquentQuery()
+                        ->with(['user','status','shippingPrice','coupon','products.media','history']);
     }
 }

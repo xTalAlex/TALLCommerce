@@ -135,9 +135,9 @@ class UserResource extends Resource
         ];
     }
 
-    protected static function getGlobalSearchEloquentQuery(): Builder
+    public static function getEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()
+        return parent::getEloquentQuery()
                         ->with(['addresses','defaultAddress'])
                         ->withCount(['orders']);
     }

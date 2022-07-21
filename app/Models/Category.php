@@ -54,6 +54,11 @@ class Category extends Model implements HasMedia
         $query->whereDoesntHave('parent');
     }
 
+    public function scopeFeatured($query)
+    {
+        $query->where('featured', true);
+    }
+
     public function products(){
         return $this->belongsToMany(Product::class);
     }
@@ -79,7 +84,10 @@ class Category extends Model implements HasMedia
     public function setSlugAttribute($value)
     {
         if (static::whereNot('id',$this->id)->whereSlug($slug = Str::slug($value))->exists())
+        {
             $slug = "{$slug}-{$this->id}";
+        }
+            
         $this->attributes['slug'] = $slug;
     } 
 

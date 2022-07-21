@@ -199,15 +199,15 @@
             search.start();
         "
     >
-        <div class="flex flex-col w-full mx-auto md:space-x-3 md:flex-row md:inline-flex max-w-7xl sm:px-6 lg:px-8">
+        <div class="flex flex-col w-full mx-auto md:space-x-10 md:flex-row md:inline-flex max-w-7xl sm:px-6 lg:px-8">
             
-            <div class="flex flex-col w-full mb-2 space-x-2 md:w-64 md:mb-auto" aria-label="Sidebar">
+            <div class="flex flex-col w-full py-2 mb-2 space-x-2 md:w-64 md:mb-auto" aria-label="Sidebar">
                 <div class="flex flex-row items-center justify-center w-full mb-4 space-x-1">
                     <span id="voicesearch"></span>
                     <div id="searchbox"></div>
                 </div>
                 
-                <div class="px-1">
+                <div class="px-4 md:px-1">
                     <div class="mb-2" id="sort-by"></div>
                     <div class="mb-2" id="hierarchical-menu"></div>
                     <div class="mb-2" id="refinement-list"></div>
@@ -221,6 +221,7 @@
                 </div>
                 
             </div>
+
             <div class="w-full overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 <div id="infinite-hits"></div>
             </div>

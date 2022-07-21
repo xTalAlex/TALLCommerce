@@ -9,7 +9,7 @@
         <x-algolia-autocomplete class="w-full mx-4 md:w-72"/>
     </div>
 
-    <x-carousel :products="$carousel_products"/>
+    <x-carousel :items="$featured_categories"/>
 
     @foreach($featured_products as $product)
     <div class="py-12">

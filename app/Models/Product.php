@@ -129,7 +129,7 @@ class Product extends Model implements Buyable , HasMedia
 
     public function defaultVariant()
     {
-        return $this->belongsTo(Product::class,'variant_id');
+        return $this->belongsTo(Product::class,'variant_id')->withoutGlobalScopes();
     }
 
     public function brand()

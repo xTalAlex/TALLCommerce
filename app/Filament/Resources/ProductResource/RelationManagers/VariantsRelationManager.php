@@ -8,6 +8,7 @@ use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class VariantsRelationManager extends RelationManager
@@ -66,4 +67,14 @@ class VariantsRelationManager extends RelationManager
                 Tables\Actions\DissociateBulkAction::make(),
             ]);
     }    
+
+    protected function getTableQuery(): Builder
+    {
+        return parent::getTableQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+                NotHiddenScope::class,
+            ])
+            ->with(['media']);
+    }
 }
