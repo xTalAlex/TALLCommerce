@@ -23,7 +23,7 @@
                     }
                     function nextTimeout() {
                         clearTimeout(timeout)
-                        if (!mouseOver)
+                        if (!mouseOver && nSlides>1)
                             timeout = setTimeout(() => {
                                 slider.next()
                             }, 3000)

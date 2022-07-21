@@ -11,19 +11,25 @@
       transformSource({ source, onRemove }) {
         return {
           ...source,
+          getItemUrl({ item }) {
+            return '{{ route('product.index') }}?keyword=${item.label}';
+          },
           templates: {
             ...source.templates,
             item(params) {
               const { item, html } = params;
               return html`<a
                 class='aa-ItemLink'
-                href='{{ route('product.index') }}?keyword=${item.label}'
+                href='${item.url}'
               >
                 ${source.templates.item(params).props.children}
               </a>`;
             },
           },
         };
+      },
+      search({ query, items, limit }) {
+        return items.filter((item) => item.label.trim()!='');
       },
     });
     window.autocomplete({
