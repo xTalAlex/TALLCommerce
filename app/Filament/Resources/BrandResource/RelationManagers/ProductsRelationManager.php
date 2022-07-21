@@ -82,6 +82,19 @@ class ProductsRelationManager extends RelationManager
                                         $query->whereHas('categories', fn($query) => $query->whereIn('categories.id', $values)),
                                 );
                         }),
+                    Tables\Filters\MultiSelectFilter::make('attributes')->label(__('Attributes'))
+                        ->options(\App\Models\AttributeValue::all()->sortBy('attribute_id')->pluck('label','id'))
+                        ->query(function (Builder $query, array $data): Builder {
+                            $values = $data['values'];
+                            if($values){
+                                $query->whereHas('attributeValues', function($query) use ($values) {
+                                    foreach($values as $value)
+                                        $query->where('attribute_values.id', $value);
+                                    return $query;
+                                });
+                            }
+                            return $query;
+                        }),
                     Filter::make('featured')->label(__('Featured'))
                         ->query(fn (Builder $query): Builder => $query->where('featured', true)),
                     Filter::make('hidden')->label(__('Hidden'))
