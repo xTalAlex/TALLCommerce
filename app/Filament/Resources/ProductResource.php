@@ -145,8 +145,10 @@ class ProductResource extends Resource
                             Forms\Components\TextInput::make('SKU')->label(__('SKU')),   
                             Forms\Components\Select::make('variant')->label(__('Variant Of'))
                                 ->relationship('defaultVariant', 'slug', fn(?Product $record, $query) => 
-                                $query->whereNull('variant_id')->orWhereColumn('variant_id','id')
-                            ),
+                                    $query->withoutGlobalScopes([SoftDeletingScope::class,NotHiddenScope::class])->whereNull('variant_id')
+                                        ->when($record, fn($query) => $query->whereNot('id', $record->id))
+                                )
+                                ->disabled(fn(?Product $record) => $record ? $record->variants()->exists() : false ),
                             Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
                                 ->required()
                                 ->numeric()
@@ -348,6 +350,12 @@ class ProductResource extends Resource
                 SoftDeletingScope::class,
                 NotHiddenScope::class,
             ])
-            ->with(['media','attributeValues','defaultVariant','variants','reviews']);
+            ->with(['media','attributeValues','defaultVariant', 'reviews', 
+                'variants' => function($query) {
+                    return $query->withoutGlobalScopes([
+                        SoftDeletingScope::class,
+                        NotHiddenScope::class,
+                    ]);
+                }]);
     }
 }
