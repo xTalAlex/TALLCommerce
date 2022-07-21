@@ -19,6 +19,8 @@ class CouponResource extends Resource
 {
     protected static ?string $model = Coupon::class;
 
+    protected static ?string $recordTitleAttribute = 'code';
+
     public static function getLabel(): string
     {
         return __('Coupon');

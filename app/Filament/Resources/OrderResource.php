@@ -21,6 +21,8 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
+    protected static ?string $recordTitleAttribute = 'number';
+
     public static function getLabel(): string
     {
         return __('Order');
@@ -72,11 +74,11 @@ class OrderResource extends Resource
                             ->columnSpan('full'),
 
                         
-                        Forms\Components\Fieldset::make('Shipping')->label(__('Shipping Details'))
+                        Forms\Components\Fieldset::make('shipping')->label(__('Shipping Details'))
                             ->schema([
                                 Forms\Components\RichEditor::make('shipping_label')->label(__('Shipping Label'))
                                     ->columnSpan(2),
-                                Forms\Components\Placeholder::make('shippingPrice.name')->label(__('Shipping'))
+                                Forms\Components\Placeholder::make('shipping_price.name')->label(__('Shipping'))
                                     ->content(fn (?Order $record): string => $record ? $record->shippingPrice->name : '-'),                                    
                             ])
                             ->visibleOn(Pages\ViewOrder::class),
@@ -107,7 +109,7 @@ class OrderResource extends Resource
                                         Forms\Components\TextInput::make('tax')->label(__('Tax'))
                                             ->prefix('€'),
 
-                                        Forms\Components\TextInput::make('shipping_price')->label(__('Shipping'))
+                                        Forms\Components\TextInput::make('shipping_price.price')->label(__('Shipping'))
                                             ->prefix('€'),
                                
                                         Forms\Components\TextInput::make('total')->label(__('Total'))
@@ -146,7 +148,7 @@ class OrderResource extends Resource
                         ->schema([
                             Forms\Components\Card::make()
                                 ->schema([
-                                    Forms\Components\Select::make('user.name')->label(__('User'))
+                                    Forms\Components\Select::make('user.id')->label(__('User'))
                                         ->relationship('user','name')
                                         ->placeholder('-'),
                                     Forms\Components\TextInput::make('email')->label(__('Email'))

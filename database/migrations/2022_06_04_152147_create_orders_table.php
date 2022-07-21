@@ -22,6 +22,7 @@ return new class extends Migration
 
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('number')->unique()->nullable();
             $table->json('shipping_address');
             $table->json('billing_address');
             $table->text('note')->nullable();

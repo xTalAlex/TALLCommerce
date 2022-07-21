@@ -10,6 +10,7 @@ use Filament\Resources\Table;
 use App\Scopes\NotHiddenScope;
 use Filament\Resources\Resource;
 use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProductResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -19,6 +20,15 @@ use App\Filament\Resources\ProductResource\RelationManagers;
 class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Slug' => $record->slug,
+        ];
+    }
 
     public static function getLabel(): string
     {

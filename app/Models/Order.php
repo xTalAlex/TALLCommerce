@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Order extends Model
 {
@@ -110,10 +111,17 @@ class Order extends Model
         return $this->billingAddress()->label;
     }
 
-    public function getNumberAttribute()
+    public function getNumberAttribute($value)
     {
-        return '#'. ($this->id + 1000) ;
+        return '#'. ($this->id + 1000);
     }
+
+    // protected function number(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn ( $value , $attributes ) => '#'. ($attributes['id'] + 1000),
+    //     );
+    // }
 
     public function statusCanBecome(String $status)
     {
