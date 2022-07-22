@@ -49,6 +49,7 @@ class ReviewController extends Controller
             'user_id' => auth()->user()->id,
             'rating' => $validated['rating'],
             'description' => $validated['description'],
+            'approved' => config('custom.reviews.approved_by_default') ?? false,
         ]);
 
         return redirect()->route('product.show', compact('product'));

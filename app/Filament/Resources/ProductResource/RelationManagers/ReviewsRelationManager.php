@@ -75,6 +75,7 @@ class ReviewsRelationManager extends RelationManager
                     ->dateTime(config('custom.datetime_format'))
                     ->sortable(),
             ])
+            ->defaultSort('created_at','desc')
             ->filters([
                 //
             ])

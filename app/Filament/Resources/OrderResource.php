@@ -180,15 +180,9 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('number')
-                    ->searchable(query: function (Builder $query, string $search): Builder {
-                        if(str_starts_with($search,'#'))
-                            $search = substr($search,1);
-                        return $query->when(is_numeric($search), fn($query) => 
-                                $query->orWhere('id', $search - 1000 )
-                            );
-                    })
-                    ->sortable(['id']),
+                Tables\Columns\TextColumn::make('number')->label(__('Number'))
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\BadgeColumn::make('status.label')->label(__('Status'))
                     ->colors([
                         'secondary',
@@ -200,12 +194,7 @@ class OrderResource extends Resource
                         'danger' => __('general.order_statuses.cancelled'),
                     ]),
                 Tables\Columns\TextColumn::make('user.name')->label(__('Name'))
-                    ->searchable(query: function (Builder $query, string $search): Builder {
-                        return $query->with('user')
-                                ->orWhereHas('user', fn($query) => 
-                                    $query->where( 'name', 'like', "%{$search}%")
-                                );
-                    })
+                    ->searchable()
                     ->url(fn (Order $record): string => 
                         $record->user ?
                             route('filament.resources.users.view', $record->user->id )
@@ -213,11 +202,13 @@ class OrderResource extends Resource
                     )
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('email')->label(__('Email'))
-                    ->searchable(query: function (Builder $query, string $search): Builder {
-                        return $query->orWhere('email', 'like', "%{$search}%");
-                    }),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('total')->label(__('Total'))
                     ->money('eur')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
+                    ->dateTime(config('custom.datetime_format'))
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('updated_at')->label(__('Updated at'))
@@ -225,7 +216,7 @@ class OrderResource extends Resource
                     ->sortable()
                     ->toggleable(),
             ])
-            ->defaultSort('updated_at','desc')
+            ->defaultSort('created_at','desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->label(__('Status'))

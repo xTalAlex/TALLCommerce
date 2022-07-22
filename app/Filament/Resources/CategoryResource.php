@@ -117,6 +117,7 @@ class CategoryResource extends Resource
                     ->visibleFrom('md')
                     ->toggleable(),
             ])
+            ->defaultSort('name')
             ->filters([
                 Filter::make('featured')->label(__('Featured'))
                     ->query(fn (Builder $query): Builder => $query->where('featured', true)),
@@ -127,8 +128,7 @@ class CategoryResource extends Resource
             ])
             ->bulkActions([
                 //
-            ])
-            ->defaultSort('name');
+            ]);
     }
     
     public static function getRelations(): array

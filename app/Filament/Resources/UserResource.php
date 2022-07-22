@@ -15,6 +15,7 @@ use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
+use Filament\Resources\RelationManagers\RelationGroup;
 use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
@@ -123,6 +124,8 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
+            RelationManagers\OrdersRelationManager::class,
+            //RelationManagers\ReviewsRelationManager::class,
             RelationManagers\AddressesRelationManager::class,
         ];
     }
