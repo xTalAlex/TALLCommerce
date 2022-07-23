@@ -52,8 +52,6 @@ class BrandResource extends Resource
                                     ->unique(ignorable: fn (?Brand $record): ?Brand => $record), 
                                 Forms\Components\TextInput::make('link')->label(__('Link'))
                                     ->url(),
-                                Forms\Components\Toggle::make('featured')->label(__('Featured'))
-                                    ->columnSpan('full'),
                                 Forms\Components\SpatieMediaLibraryFileUpload::make('hero')->label(__('Hero'))
                                     ->collection('hero')
                                     ->panelLayout('circular')
@@ -64,7 +62,7 @@ class BrandResource extends Resource
                                 'md' => 2,
                             ]),  
                     ])->columnSpan(2),
-                Forms\Components\Card::make()
+                Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\Card::make()
                             ->schema([
@@ -72,6 +70,11 @@ class BrandResource extends Resource
                                     ->collection('logo')
                                     ->panelLayout('circular')
                                     ->panelAspectRatio('1:1'),
+                            ]),
+                        Forms\Components\Section::make(__('Settings'))
+                            ->schema([
+                                Forms\Components\Toggle::make('featured')->label(__('Featured'))
+                                    ->columnSpan('full'),
                             ]),
                         Forms\Components\Card::make()
                             ->schema([
@@ -103,6 +106,8 @@ class BrandResource extends Resource
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
+                    ->trueColor('primary')
+                    ->falseColor('secondary')
                     ->toggleable(),
             ])
             ->filters([

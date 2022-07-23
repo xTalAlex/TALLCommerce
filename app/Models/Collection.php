@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
+use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ class Collection extends Model implements HasMedia
         'description',
         'brand_id',
         'featured',
+        'hidden',
     ];
 
     /**
@@ -46,6 +48,16 @@ class Collection extends Model implements HasMedia
         $this->addMediaCollection('hero')
             ->useDisk(config('media-library.disk_name'))
             ->singleFile();
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new NotHiddenScope);
     }
 
     public function scopeFeatured($query)

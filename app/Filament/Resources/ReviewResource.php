@@ -107,6 +107,8 @@ class ReviewResource extends Resource
                     ->limit(100)
                     ->wrap(),
                 Tables\Columns\BooleanColumn::make('approved')->label(__('Approved'))
+                    ->trueColor('primary')
+                    ->falseColor('secondary')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
                     ->dateTime(config('custom.datetime_format'))

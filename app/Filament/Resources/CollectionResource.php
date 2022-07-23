@@ -8,6 +8,7 @@ use App\Models\Collection;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
+use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -53,7 +54,6 @@ class CollectionResource extends Resource
                         Forms\Components\Select::make('brand_id')->label(__('Brand'))
                             ->relationship('brand', 'name')
                             ->placeholder('-'),
-                        Forms\Components\Toggle::make('featured')->label(__('Featured')),
                         Forms\Components\Textarea::make('description')->label(__('Description'))
                             ->rows(3)
                             ->maxLength(255)
@@ -69,13 +69,18 @@ class CollectionResource extends Resource
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\Card::make()
-                        ->schema([
-                            Forms\Components\SpatieMediaLibraryFileUpload::make('hero')->label(__('Hero'))
-                                ->collection('hero')
-                                ->panelLayout('circular')
-                                ->imageCropAspectRatio('16:9')
-                                ->panelAspectRatio('16:9'),
-                        ]),
+                            ->schema([
+                                Forms\Components\SpatieMediaLibraryFileUpload::make('hero')->label(__('Hero'))
+                                    ->collection('hero')
+                                    ->panelLayout('circular')
+                                    ->imageCropAspectRatio('16:9')
+                                    ->panelAspectRatio('16:9'),
+                            ]),
+                        Forms\Components\Section::make(__('Settings'))
+                            ->schema([   
+                                Forms\Components\Toggle::make('featured')->label(__('Featured')),
+                                Forms\Components\Toggle::make('hidden')->label(__('Hidden')),
+                            ]),
                         Forms\Components\Card::make()
                             ->schema([
                                 Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
@@ -105,6 +110,12 @@ class CollectionResource extends Resource
                 Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
                     ->sortable(),
                 Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
+                    ->trueColor('primary')
+                    ->falseColor('secondary')
+                    ->toggleable(),
+                Tables\Columns\BooleanColumn::make('hidden')->label(__('Hidden'))
+                    ->trueColor('primary')
+                    ->falseColor('secondary')
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('description')->label(__('Description'))
                     ->limit(100)
@@ -119,7 +130,9 @@ class CollectionResource extends Resource
             ])
             ->filters([
                 Tables\Filters\Filter::make('featured')->label(__('Featured'))
-                    ->query(fn (Builder $query): Builder => $query->where('featured', true)),
+                        ->query(fn (Builder $query): Builder => $query->where('featured', true)),
+                Tables\Filters\Filter::make('hidden')->label(__('Hidden'))
+                    ->query(fn (Builder $query): Builder => $query->where('hidden', true)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -148,12 +161,13 @@ class CollectionResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-                            ->withCount(['products' => function ($query) {
-                                return $query->withoutGlobalScopes([
-                                    SoftDeletingScope::class,
-                                    NotHiddenScope::class,
-                                ]);
-                            }]);
+                        ->withoutGlobalScopes([ NotHiddenScope::class ])
+                        ->withCount(['products' => function ($query) {
+                            return $query->withoutGlobalScopes([
+                                SoftDeletingScope::class,
+                                NotHiddenScope::class,
+                            ]);
+                        }]);
     }
     
     public static function getGlobalSearchResultDetails(Model $record): array

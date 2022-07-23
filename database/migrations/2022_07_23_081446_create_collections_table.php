@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->boolean('featured')->default(0);
+            $table->boolean('hidden')->default(0);
             $table->timestamps();
 
             $table->unique(['name','brand_id']);

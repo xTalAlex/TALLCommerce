@@ -53,7 +53,6 @@ class CategoryResource extends Resource
                                 $query->when($record, fn($query) => $query->whereNot('id', $record->id))
                             )
                             ->placeholder('-'),
-                        Forms\Components\Toggle::make('featured')->label(__('Featured')),
                         Forms\Components\Textarea::make('description')->label(__('Description'))
                             ->rows(3)
                             ->maxLength(255)
@@ -76,6 +75,10 @@ class CategoryResource extends Resource
                                 ->imageCropAspectRatio('16:9')
                                 ->panelAspectRatio('16:9'),
                         ]),
+                        Forms\Components\Section::make(__('Settings'))
+                            ->schema([
+                                Forms\Components\Toggle::make('featured')->label(__('Featured')),
+                            ]),
                         Forms\Components\Card::make()
                             ->schema([
                                 Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
@@ -105,6 +108,8 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
                     ->sortable(),
                 Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
+                    ->trueColor('primary')
+                    ->falseColor('secondary')
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('description')->label(__('Description'))
                     ->limit(100)

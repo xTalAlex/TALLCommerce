@@ -330,7 +330,7 @@ class ProductResource extends Resource
                     })
                     ->form([
                         Forms\Components\Select::make('collectionId')->label(__('Collection'))
-                            ->options(\App\Models\Collection::query()->pluck('name', 'id'))
+                            ->options(\App\Models\Collection::query()->withoutGlobalScopes([ NotHiddenScope::class ])->pluck('name', 'id'))
                             ->required(),
                     ]),
                 Tables\Actions\RestoreBulkAction::make(),
