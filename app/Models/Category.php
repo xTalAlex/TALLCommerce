@@ -42,7 +42,6 @@ class Category extends Model implements HasMedia
         'hero',
     ];
 
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('hero')

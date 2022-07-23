@@ -19,6 +19,20 @@ class Attribute extends Model
         'updated_at'    => 'datetime',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($model) {
+            \App\Models\Product::whereHas('attributeValues', fn($query) => 
+                $query->where('attribute_id', $model->id) )
+                ->get()
+                ->filter(function ($item) {
+                return $item->shouldBeSearchable();
+            })->searchable();
+        });
+    }
+
     public function values()
     {
         return $this->hasMany(AttributeValue::class);

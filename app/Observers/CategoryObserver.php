@@ -16,6 +16,10 @@ class CategoryObserver
     public function created(Category $category)
     {
         $category->update(['slug' => Str::slug($category->name)]);
+
+        $category->products->filter(function ($item) {
+            return $item->shouldBeSearchable();
+        })->searchable();
     }
 
     /**

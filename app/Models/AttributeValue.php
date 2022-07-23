@@ -18,6 +18,16 @@ class AttributeValue extends Model
         'label',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($model) {
+            $model->products->filter(function ($item) {
+                return $item->shouldBeSearchable();
+            })->searchable();
+        });
+    }
 
     public function attribute()
     {
