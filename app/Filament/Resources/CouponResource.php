@@ -102,7 +102,7 @@ class CouponResource extends Resource
                         Forms\Components\Card::make()
                         ->schema([
                             Forms\Components\Placeholder::make('redemptions')->label(__('Redemptions'))
-                                ->content(fn (?Coupon $record): string => $record ? $record->redemptions : '-'),
+                                ->content(fn (?Coupon $record): string => $record && $record->redemptions ? $record->redemptions : '-'),
                         ]),
                         Forms\Components\Card::make()
                             ->schema([

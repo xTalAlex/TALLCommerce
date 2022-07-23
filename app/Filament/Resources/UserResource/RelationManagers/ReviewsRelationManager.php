@@ -36,7 +36,7 @@ class ReviewsRelationManager extends RelationManager
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\Placeholder::make('rating')->label(__('Rating'))
-                            ->content(fn (?Review $record): string => $record ? $record->rating : '-')
+                            ->content(fn (?Review $record): string => $record && $record->rating ? $record->rating : '-')
                             ->disabled(),
                         Forms\Components\RichEditor::make('description')->label(__('Description'))
                             ->disabled(),
@@ -49,10 +49,10 @@ class ReviewsRelationManager extends RelationManager
                             Forms\Components\Card::make()
                                 ->schema([
                                     Forms\Components\Placeholder::make('product')->label(__('Product'))
-                                        ->content(fn (?Review $record) => $record ? $record->product->name : '-'),
+                                        ->content(fn (?Review $record) => $record && $record->product ? $record->product->name : '-'),
                                     Forms\Components\Placeholder::make('product.image')->label(__('Image'))
                                         ->disableLabel()
-                                        ->content(fn (?Review $record) => $record ? new HtmlString("<img class='h-48 mx-auto' src='{$record->product->image}'/>") : '-'),
+                                        ->content(fn (?Review $record) => $record && $record->product ? new HtmlString("<img class='h-48 mx-auto' src='{$record->product->image}'/>") : '-'),
                                 ]),
                             Forms\Components\Card::make()
                                 ->schema([
@@ -107,9 +107,7 @@ class ReviewsRelationManager extends RelationManager
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                //
@@ -121,7 +119,6 @@ class ReviewsRelationManager extends RelationManager
         return parent::getTableQuery()
             ->withoutGlobalScopes([
                 ApprovedScope::class
-            ])
-            ->with('product.media');
+            ]);
     }
 }

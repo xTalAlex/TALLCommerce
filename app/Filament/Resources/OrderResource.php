@@ -78,7 +78,7 @@ class OrderResource extends Resource
                                 Forms\Components\RichEditor::make('shipping_label')->label(__('Shipping Label'))
                                     ->columnSpan(2),
                                 Forms\Components\Placeholder::make('shipping_price.name')->label(__('Shipping'))
-                                    ->content(fn (?Order $record): string => $record ? $record->shippingPrice->name : '-'),                                    
+                                    ->content(fn (?Order $record): string => $record && $record->shippingPrice ? $record->shippingPrice->name : '-'),                                    
                             ])
                             ->visibleOn(Pages\ViewOrder::class),
 

@@ -34,11 +34,10 @@ class ReviewsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\Select::make('user')->label(__('User'))
-                            ->relationship('user', 'email')
-                            ->disabled(),
+                        Forms\Components\Placeholder::make('user')->label(__('User'))
+                            ->content(fn (?Review $record): string => $record && $record->user ? $record->user->email : '-'),
                         Forms\Components\Placeholder::make('rating')->label(__('Rating'))
-                            ->content(fn (?Review $record): string => $record ? $record->rating : '-')
+                            ->content(fn (?Review $record): string => $record && $record->rating ? $record->rating : '-')
                             ->disabled(),
                         Forms\Components\RichEditor::make('description')->label(__('Description'))
                             ->disabled()
@@ -100,9 +99,7 @@ class ReviewsRelationManager extends RelationManager
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                //
