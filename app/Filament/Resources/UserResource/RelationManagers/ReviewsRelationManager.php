@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filament\Resources\ProductResource\RelationManagers;
+namespace App\Filament\Resources\UserResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Review;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use Illuminate\Support\HtmlString;
 use App\Models\Scopes\ApprovedScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,13 +17,13 @@ class ReviewsRelationManager extends RelationManager
 {
     protected static string $relationship = 'reviews';
 
-    protected static ?string $inverseRelationship = 'product';
+    protected static ?string $inverseRelationship = 'user';
 
     public static function getTitle(): string
     {
         return __('Reviews');
     }
-    
+
     public static function getRecordTitle(?Model $record): ?string
     {
         return __('Review');
@@ -34,24 +35,25 @@ class ReviewsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\Select::make('user')->label(__('User'))
-                            ->relationship('user', 'email')
-                            ->disabled(),
                         Forms\Components\Placeholder::make('rating')->label(__('Rating'))
                             ->content(fn (?Review $record): string => $record ? $record->rating : '-')
                             ->disabled(),
                         Forms\Components\RichEditor::make('description')->label(__('Description'))
-                            ->disabled()
-                            ->columnSpan('full'),
-                    ])
-                    ->columns([
-                        'sm' => 2,
+                            ->disabled(),
                     ])
                     ->columnSpan([
                         'sm' => fn (?Review $record) => $record === null ? 3 : 2,
                     ]),
                 Forms\Components\Group::make()
                         ->schema([
+                            Forms\Components\Card::make()
+                                ->schema([
+                                    Forms\Components\Placeholder::make('product')->label(__('Product'))
+                                        ->content(fn (?Review $record) => $record ? $record->product->name : '-'),
+                                    Forms\Components\Placeholder::make('product.image')->label(__('Image'))
+                                        ->disableLabel()
+                                        ->content(fn (?Review $record) => $record ? new HtmlString("<img class='h-48 mx-auto' src='{$record->product->image}'/>") : '-'),
+                                ]),
                             Forms\Components\Card::make()
                                 ->schema([
                                     Forms\Components\Toggle::make('approved')->label(__('Approved')),
@@ -77,14 +79,19 @@ class ReviewsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.email')->label(__('User'))
-                    ->searchable(['name', 'email']),
+                Tables\Columns\TextColumn::make('product.name')->label(__('Product'))
+                    ->url( fn (Review $record): string => route('filament.resources.products.edit', ['record' => $record->product]) )
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\ImageColumn::make('product.image')->label(__('Image'))
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('rating')->label(__('Rating'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description')->label(__('Description'))
                     ->limit(100)
                     ->wrap(),
-                Tables\Columns\BooleanColumn::make('approved')->label(__('Approved')),
+                Tables\Columns\BooleanColumn::make('approved')->label(__('Approved'))
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
                     ->dateTime(config('custom.datetime_format'))
                     ->sortable(),
@@ -107,13 +114,14 @@ class ReviewsRelationManager extends RelationManager
             ->bulkActions([
                //
             ]);
-    }  
+    }
     
     protected function getTableQuery(): Builder
     {
         return parent::getTableQuery()
             ->withoutGlobalScopes([
                 ApprovedScope::class
-            ]);
+            ])
+            ->with('product.media');
     }
 }

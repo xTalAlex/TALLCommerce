@@ -9,13 +9,10 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
-use Illuminate\Support\HtmlString;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
-use Filament\Resources\RelationManagers\RelationGroup;
 use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
@@ -97,7 +94,7 @@ class UserResource extends Resource
             ])
             ->defaultSort('created_at','desc')
             ->filters([
-                Filter::make('is_admin')
+                Tables\Filters\Filter::make('is_admin')
                     ->query(fn (Builder $query): Builder => $query->where('is_admin', true))
                     ->label(__('Admin')),
             ])
@@ -125,7 +122,7 @@ class UserResource extends Resource
     {
         return [
             RelationManagers\OrdersRelationManager::class,
-            //RelationManagers\ReviewsRelationManager::class,
+            RelationManagers\ReviewsRelationManager::class,
             RelationManagers\AddressesRelationManager::class,
         ];
     }

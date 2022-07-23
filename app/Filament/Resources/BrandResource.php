@@ -8,12 +8,11 @@ use App\Models\Brand;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\BrandResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BrandResource\RelationManagers;
-use App\Scopes\NotHiddenScope;
+use App\Models\Scopes\NotHiddenScope;
 
 class BrandResource extends Resource
 {
@@ -23,7 +22,7 @@ class BrandResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-office-building';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
 
     public static function getLabel(): string
     {
@@ -107,7 +106,7 @@ class BrandResource extends Resource
                     ->toggleable(),
             ])
             ->filters([
-                Filter::make('featured')->label(__('Featured'))
+                Tables\Filters\Filter::make('featured')->label(__('Featured'))
                     ->query(fn (Builder $query): Builder => $query->where('featured', true)),
             ])
             ->actions([

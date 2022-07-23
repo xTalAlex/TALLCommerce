@@ -7,9 +7,8 @@ use Filament\Tables;
 use App\Models\Category;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use App\Scopes\NotHiddenScope;
+use App\Models\Scopes\NotHiddenScope;
 use Filament\Resources\Resource;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CategoryResource\Pages;
@@ -37,7 +36,7 @@ class CategoryResource extends Resource
         return  __('Settings');
     }
 
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 7;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -108,6 +107,7 @@ class CategoryResource extends Resource
                 Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('description')->label(__('Description'))
+                    ->limit(100)
                     ->wrap()
                     ->visibleFrom('lg')
                     ->searchable()
@@ -119,7 +119,7 @@ class CategoryResource extends Resource
             ])
             ->defaultSort('name')
             ->filters([
-                Filter::make('featured')->label(__('Featured'))
+                Tables\Filters\Filter::make('featured')->label(__('Featured'))
                     ->query(fn (Builder $query): Builder => $query->where('featured', true)),
             ])
             ->actions([

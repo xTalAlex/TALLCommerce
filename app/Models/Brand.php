@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Scopes\NotHiddenScope;
+use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;

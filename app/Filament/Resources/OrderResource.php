@@ -10,7 +10,6 @@ use Filament\Resources\Table;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -222,7 +221,7 @@ class OrderResource extends Resource
                     ->label(__('Status'))
                     ->relationship('status', 'name')
                     ->options(fn() => \App\Models\OrderStatus::all()->pluck('label','id')),
-                Filter::make('total')
+                Tables\Filters\Filter::make('total')
                     ->form([
                         Forms\Components\TextInput::make('total')
                             ->label(__('Total'))

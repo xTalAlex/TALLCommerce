@@ -63,7 +63,7 @@ class ReviewPolicy
                             )
                     )->exists()
                 &&
-                $user->reviews()
+                $user->reviews()->withoutGlobalScope(App\Models\Scope\ApprovedScope::class)
                     ->where('product_id',$product->id)
                     ->when($defaultVariant, fn($query) =>
                         $query->orWhere('product_id',$defaultVariant->id)

@@ -7,8 +7,7 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use App\Scopes\NotHiddenScope;
-use Filament\Tables\Filters\Filter;
+use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -95,13 +94,13 @@ class ProductsRelationManager extends RelationManager
                             }
                             return $query;
                         }),
-                    Filter::make('featured')->label(__('Featured'))
+                    Tables\Filters\Filter::make('featured')->label(__('Featured'))
                         ->query(fn (Builder $query): Builder => $query->where('featured', true)),
-                    Filter::make('hidden')->label(__('Hidden'))
+                    Tables\Filters\Filter::make('hidden')->label(__('Hidden'))
                         ->query(fn (Builder $query): Builder => $query->where('hidden', true)),
-                    Filter::make('discounted')->label(trans_choice('Discounted',1))
+                    Tables\Filters\Filter::make('discounted')->label(trans_choice('Discounted',1))
                         ->query(fn (Builder $query): Builder => $query->whereColumn('selling_price', '<', 'original_price')),
-                    Filter::make('quantity')
+                    Tables\Filters\Filter::make('quantity')
                         ->form([
                             Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
                                 ->numeric()

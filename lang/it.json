@@ -237,12 +237,16 @@
     "result" : "risultato",
     "results" : "risultati",
 
+    "Yes" : "Si",
+    "No" : "No",
     "or" : "o",
     "Done" : "Fatto",
     "Created" : "Creato",
     "Saved" : "Salvato",
     "Overview" : "Riepilogo",
     "Date" : "Data",
+    "Approved" : "Approvato",
+    "Not Approved" : "Non Approvato",
 
     "Brand" : "Brand",
     "Brands" : "Brand",

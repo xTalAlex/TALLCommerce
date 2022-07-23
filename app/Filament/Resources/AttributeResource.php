@@ -9,7 +9,7 @@ use App\Models\Attribute;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Models\AttributeValue;
-use App\Scopes\NotHiddenScope;
+use App\Models\Scopes\NotHiddenScope;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AttributeResource\Pages;
@@ -36,7 +36,7 @@ class AttributeResource extends Resource
         return  __('Settings');
     }
 
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 8;
 
     public static function form(Form $form): Form
     {

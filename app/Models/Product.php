@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
-use App\Scopes\NotHiddenScope;
+use App\Models\Scopes\NotHiddenScope;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;

@@ -8,7 +8,7 @@ use Filament\Tables;
 use App\Models\Category;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use App\Scopes\NotHiddenScope;
+use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -65,6 +65,7 @@ class ChildrenRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description')->label(__('Description'))
+                    ->limit(100)
                     ->wrap()
                     ->searchable()
                     ->toggleable(),

@@ -9,7 +9,6 @@ use App\Models\Coupon;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CouponResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
@@ -145,7 +144,7 @@ class CouponResource extends Resource
                     ->toggleable(),
             ])
             ->filters([
-                Filter::make('active')->label(__('Active'))
+                Tables\Filters\Filter::make('active')->label(__('Active'))
                     ->query(fn (Builder $query): Builder => 
                         $query->where( fn($query) =>
                                     $query->whereNotNull('max_redemptions')

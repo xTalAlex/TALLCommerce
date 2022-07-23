@@ -7,9 +7,8 @@ use Filament\Tables;
 use App\Models\Product;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use App\Scopes\NotHiddenScope;
+use App\Models\Scopes\NotHiddenScope;
 use Filament\Resources\Resource;
-use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProductResource\Pages;
@@ -281,13 +280,13 @@ class ProductResource extends Resource
                             }
                             return $query;
                         }),
-                    Filter::make('featured')->label(__('Featured'))
+                    Tables\Filters\Filter::make('featured')->label(__('Featured'))
                         ->query(fn (Builder $query): Builder => $query->where('featured', true)),
-                    Filter::make('hidden')->label(__('Hidden'))
+                    Tables\Filters\Filter::make('hidden')->label(__('Hidden'))
                         ->query(fn (Builder $query): Builder => $query->where('hidden', true)),
-                    Filter::make('discounted')->label(trans_choice('Discounted',1))
+                    Tables\Filters\Filter::make('discounted')->label(trans_choice('Discounted',1))
                         ->query(fn (Builder $query): Builder => $query->whereColumn('selling_price', '<', 'original_price')),
-                    Filter::make('quantity')
+                    Tables\Filters\Filter::make('quantity')
                         ->form([
                             Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
                                 ->numeric()
@@ -326,11 +325,11 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationGroup::make('', [
+            RelationGroup::make(__('Details'), [
                 RelationManagers\AttributeValuesRelationManager::class,
                 RelationManagers\VariantsRelationManager::class,
-                RelationManagers\ReviewsRelationManager::class,
             ]),
+            RelationManagers\ReviewsRelationManager::class,
         ];
     }
     
@@ -350,7 +349,7 @@ class ProductResource extends Resource
                 SoftDeletingScope::class,
                 NotHiddenScope::class,
             ])
-            ->with(['media','attributeValues','defaultVariant', 'reviews', 
+            ->with(['media','attributeValues','defaultVariant', 
                 'variants' => function($query) {
                     return $query->withoutGlobalScopes([
                         SoftDeletingScope::class,
