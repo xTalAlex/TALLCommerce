@@ -91,12 +91,11 @@ class ChildrenRelationManager extends RelationManager
     public function getTableQuery(): Builder
     {
         return parent::getTableQuery()
-                            ->with(['parent','children'])
-                            ->withCount(['products' => function ($query) {
-                                return $query->withoutGlobalScopes([
-                                    SoftDeletingScope::class,
-                                    NotHiddenScope::class,
-                                ]);
-                            }]);
+                        ->withCount(['products' => function ($query) {
+                            return $query->withoutGlobalScopes([
+                                SoftDeletingScope::class,
+                                NotHiddenScope::class,
+                            ]);
+                        }]);
     }
 }

@@ -74,7 +74,6 @@ class VariantsRelationManager extends RelationManager
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
                 NotHiddenScope::class,
-            ])
-            ->with(['media']);
+            ]);
     }
 }

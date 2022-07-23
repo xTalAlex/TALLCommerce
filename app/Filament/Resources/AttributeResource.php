@@ -142,7 +142,6 @@ class AttributeResource extends Resource
     
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-                            ->with(['values']);
+        return parent::getEloquentQuery();
     }
 }

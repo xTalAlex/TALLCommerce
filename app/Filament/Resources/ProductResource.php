@@ -365,13 +365,6 @@ class ProductResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
                 NotHiddenScope::class,
-            ])
-            ->with(['media','attributeValues','defaultVariant', 
-                'variants' => function($query) {
-                    return $query->withoutGlobalScopes([
-                        SoftDeletingScope::class,
-                        NotHiddenScope::class,
-                    ]);
-                }]);
+            ]);
     }
 }

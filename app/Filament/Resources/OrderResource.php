@@ -279,7 +279,6 @@ class OrderResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-                        ->with(['user','status','shippingPrice','coupon','products.media','history']);
+        return parent::getEloquentQuery();
     }
 }

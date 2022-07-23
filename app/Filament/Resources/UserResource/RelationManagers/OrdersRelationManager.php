@@ -108,7 +108,6 @@ class OrdersRelationManager extends RelationManager
     
     protected function getTableQuery(): Builder
     {
-        return parent::getTableQuery()
-                        ->with(['status']);
+        return parent::getTableQuery();
     }
 }

@@ -139,8 +139,6 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-                        ->with(['addresses','defaultAddress'])
-                        ->withCount(['orders']);
+        return parent::getEloquentQuery();
     }
 }

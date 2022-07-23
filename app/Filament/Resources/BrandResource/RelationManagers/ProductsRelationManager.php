@@ -132,7 +132,6 @@ class ProductsRelationManager extends RelationManager
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
                 NotHiddenScope::class,
-            ])
-            ->with(['media']);
+            ]);
     }
 }

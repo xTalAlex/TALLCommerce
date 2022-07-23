@@ -140,7 +140,6 @@ class ReviewResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 ApprovedScope::class,
-            ])
-            ->with(['user','product']);
+            ]);
     }
 }
