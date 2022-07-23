@@ -1,5 +1,5 @@
 <div {{ $attributes->merge(['class' => ''])}}
-    x-data
+    x-data=""
     x-init="
     searchClient = window.algoliasearch(
       '{{ config('scout.algolia.id') }}',
@@ -32,15 +32,16 @@
         return items.filter((item) => item.label.trim()!='');
       },
     });
-    window.autocomplete({
+    autocomplete = window.autocomplete({
       detachedMediaQuery: '(min-width: 0px)',
       translations : {
         detachedCancelButtonText: '{{ __('Cancel') }}'
       },
       container: '#autocomplete',
       plugins: [recentSearchesPlugin],
+      autofocus: true,
       openOnFocus: true,
-      placeholder: '{{__('Search...')}}',
+      placeholder: '{{__('Search...')}} \'Ctrl+C\'',
       debug:false,
       getSources({ query }) {
         return [
@@ -124,9 +125,19 @@
         },
       }
     });
+  
+    document.addEventListener('keyup', (event) => {
+      if (event.ctrlKey && event.key === 'c') {
+        event.preventDefault();
+        if(!autocomplete.isOpen){
+          autocomplete.setIsOpen(true);
+        }
+      }
+    });
   "
 >
-    <div id="autocomplete">
+    <div id="autocomplete"
+    >
     </div>
 </div>
 
