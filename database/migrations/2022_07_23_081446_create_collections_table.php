@@ -16,17 +16,24 @@ return new class extends Migration
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->nullable();
+            $table->string('description')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
+            $table->boolean('featured')->default(0);
             $table->timestamps();
 
+            $table->unique(['name','brand_id']);
             $table->foreign('brand_id')->references('id')->on('brands')
                 ->onDelete('cascade')->onUpdate('cascade');
         });
 
-        Schema::create('products', function (Blueprint $table) {
-            $table->unsignedBigInteger('collection_id')->before('created_at')->nullable();
+        Schema::create('collection_product', function (Blueprint $table) {
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('collection_id');
 
-            $table->foreign('brand_id')->references('id')->on('brands')
+            $table->foreign('product_id')->references('id')->on('products')
+                ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('collection_id')->references('id')->on('collections')
                 ->onDelete('cascade')->onUpdate('cascade');
         });
     }
@@ -38,10 +45,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropForeign(['collection_id']);
-            $table->dropColumn('collection_id');
-        });
+        Schema::dropIfExists('collection_product');
         Schema::dropIfExists('collections');
     }
 };

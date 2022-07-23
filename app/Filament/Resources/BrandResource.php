@@ -111,9 +111,10 @@ class BrandResource extends Resource
             ])
             ->actions([
                 Tables\Actions\Action::make('visit')->label(__('Visit'))
-                    ->url(fn (Brand $record): string => url($record->link))
+                    ->url(fn (Brand $record): string => url($record->link ?? '' ) )
                     ->openUrlInNewTab()
-                    ->icon('heroicon-o-external-link'),
+                    ->icon('heroicon-o-external-link')
+                    ->disabled(fn (Brand $record): bool  => $record->link == null ),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

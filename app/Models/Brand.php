@@ -68,6 +68,11 @@ class Brand extends Model implements HasMedia
         return $this->hasMany(Product::class);
     }
 
+    public function collections()
+    {
+        return $this->hasMany(Collection::class);
+    }
+
     public function getHeroAttribute()
     {
         return $this->getFirstMediaUrl('hero');

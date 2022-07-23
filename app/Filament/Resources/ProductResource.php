@@ -190,7 +190,8 @@ class ProductResource extends Resource
                             Forms\Components\TextInput::make('slug')->label(__('Slug'))
                                 ->unique(ignorable: fn (?Product $record): ?Product => $record), 
                             Forms\Components\Toggle::make('featured')->label(__('Featured')),
-                            Forms\Components\Toggle::make('hidden')->label(__('Hidden')),
+                            Forms\Components\Toggle::make('hidden')->label(__('Hidden'))
+                                ->default(true),
                             Forms\Components\TextInput::make('tax')->label(__('Tax'))
                                 ->placeholder(config('cart.tax'))
                                 ->numeric()
@@ -257,6 +258,7 @@ class ProductResource extends Resource
             ])
             ->defaultSort('updated_at','desc')
             ->filters([
+                    Tables\Filters\TrashedFilter::make(),
                     Tables\Filters\MultiSelectFilter::make('categories')->label(__('Categories'))
                         ->options(\App\Models\Category::all()->pluck('name','id'))
                         ->query(function (Builder $query, array $data): Builder {
@@ -280,12 +282,6 @@ class ProductResource extends Resource
                             }
                             return $query;
                         }),
-                    Tables\Filters\Filter::make('featured')->label(__('Featured'))
-                        ->query(fn (Builder $query): Builder => $query->where('featured', true)),
-                    Tables\Filters\Filter::make('hidden')->label(__('Hidden'))
-                        ->query(fn (Builder $query): Builder => $query->where('hidden', true)),
-                    Tables\Filters\Filter::make('discounted')->label(trans_choice('Discounted',1))
-                        ->query(fn (Builder $query): Builder => $query->whereColumn('selling_price', '<', 'original_price')),
                     Tables\Filters\Filter::make('quantity')
                         ->form([
                             Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
@@ -299,8 +295,15 @@ class ProductResource extends Resource
                                     fn (Builder $query, $quantity): Builder => $query->where('quantity', '<=', $quantity),
                                 );
                         }),
-                    Tables\Filters\TrashedFilter::make(),
+                    Tables\Filters\Filter::make('discounted')->label(trans_choice('Discounted',1))
+                        ->query(fn (Builder $query): Builder => $query->whereColumn('selling_price', '<', 'original_price')),
+                    Tables\Filters\Filter::make('featured')->label(__('Featured'))
+                        ->query(fn (Builder $query): Builder => $query->where('featured', true)),
+                    Tables\Filters\Filter::make('hidden')->label(__('Hidden'))
+                        ->query(fn (Builder $query): Builder => $query->where('hidden', true)),
+            
                 ],
+                //Tables\Filters\Layout::AboveContent
             )->actions([
                 Tables\Actions\ReplicateAction::make()
                     ->excludeAttributes([

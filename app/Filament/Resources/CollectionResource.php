@@ -4,41 +4,40 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Category;
+use App\Models\Collection;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use App\Models\Scopes\NotHiddenScope;
 use Filament\Resources\Resource;
-use Filament\Tables\Filters\Layout;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Resources\CollectionResource\Pages;
+use App\Filament\Resources\CollectionResource\RelationManagers;
 
-class CategoryResource extends Resource
+class CollectionResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Collection::class;
 
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function getLabel(): string
     {
-        return __('Category');
+        return __('Collection');
     }
 
     public static function getPluralLabel(): string
     {
-        return __('Categories');
+        return __('Collections');
     }
 
     public static function getNavigationGroup(): string
     {
         return  __('Settings');
     }
+    
+    protected static ?int $navigationSort = 7;
 
-    protected static ?int $navigationSort = 8;
-
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-database';
 
     public static function form(Form $form): Form
     {
@@ -48,10 +47,8 @@ class CategoryResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('name')->label(__('Name'))
                             ->required(),
-                        Forms\Components\Select::make('parent_id')->label(__('Parent'))
-                            ->relationship('parent', 'name', fn(?Category $record, $query) => 
-                                $query->when($record, fn($query) => $query->whereNot('id', $record->id))
-                            )
+                        Forms\Components\Select::make('brand_id')->label(__('Brand'))
+                            ->relationship('brand', 'name')
                             ->placeholder('-'),
                         Forms\Components\Toggle::make('featured')->label(__('Featured')),
                         Forms\Components\Textarea::make('description')->label(__('Description'))
@@ -79,9 +76,9 @@ class CategoryResource extends Resource
                         Forms\Components\Card::make()
                             ->schema([
                                 Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
-                                    ->content(fn (?Category $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
+                                    ->content(fn (?Collection $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
                                 Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
-                                    ->content(fn (?Category $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
+                                    ->content(fn (?Collection $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
                             ]),
                     ])
                     ->columnSpan(1),
@@ -99,7 +96,7 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('name')->label(__('Name'))
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('parent.name')->label(__('Parent'))
+                Tables\Columns\TextColumn::make('brand.name')->label(__('Brand'))
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
@@ -111,20 +108,18 @@ class CategoryResource extends Resource
                     ->wrap()
                     ->visibleFrom('lg')
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('hero')
                     ->label(__('Hero'))
                     ->visibleFrom('md')
                     ->toggleable(),
             ])
-            ->defaultSort('name')
             ->filters([
                 Tables\Filters\Filter::make('featured')->label(__('Featured'))
                     ->query(fn (Builder $query): Builder => $query->where('featured', true)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -134,7 +129,6 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\ChildrenRelationManager::class,
             RelationManagers\ProductsRelationManager::class,
         ];
     }
@@ -142,9 +136,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListCollections::route('/'),
+            'create' => Pages\CreateCollection::route('/create'),
+            'edit' => Pages\EditCollection::route('/{record}/edit'),
         ];
     }
 
@@ -157,5 +151,18 @@ class CategoryResource extends Resource
                                     NotHiddenScope::class,
                                 ]);
                             }]);
+    }
+    
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        $details = [];
+        if($record->brand)
+            $details = [__('Brand') => $record->brand->name,];
+        return $details;
+    }
+
+    protected static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['brand']);
     }
 }

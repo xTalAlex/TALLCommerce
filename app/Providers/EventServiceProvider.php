@@ -31,7 +31,7 @@ class EventServiceProvider extends ServiceProvider
         \App\Models\Order::class => [\App\Observers\OrderObserver::class],
         \App\Models\Category::class => [\App\Observers\CategoryObserver::class],
         \App\Models\Brand::class => [\App\Observers\BrandObserver::class],
-        
+        \App\Models\Collection::class => [\App\Observers\CollectionObserver::class],
     ];
 
     /**
