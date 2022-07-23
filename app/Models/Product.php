@@ -142,6 +142,11 @@ class Product extends Model implements Buyable , HasMedia
         return $this->belongsToMany(Collection::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     public function attributeValues()
     {
         return $this->belongsToMany(AttributeValue::class);

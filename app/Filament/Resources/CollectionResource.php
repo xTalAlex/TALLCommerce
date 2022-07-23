@@ -46,7 +46,10 @@ class CollectionResource extends Resource
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\TextInput::make('name')->label(__('Name'))
-                            ->required(),
+                            ->required()
+                            ->unique(callback: function (\Illuminate\Validation\Rules\Unique $rule, callable $get) {
+                                return $rule->where('brand_id', $get('brand_id'));
+                            }, ignorable: fn (?Model $record): ?Model => $record),
                         Forms\Components\Select::make('brand_id')->label(__('Brand'))
                             ->relationship('brand', 'name')
                             ->placeholder('-'),
