@@ -34,7 +34,7 @@ class ReviewResource extends Resource
         return  __('Shop');
     }
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 14;
 
     public static function form(Form $form): Form
     {

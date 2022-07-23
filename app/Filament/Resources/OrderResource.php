@@ -37,7 +37,7 @@ class OrderResource extends Resource
         return  __('Shop');
     }
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 10;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 

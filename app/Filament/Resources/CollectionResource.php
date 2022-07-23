@@ -32,10 +32,10 @@ class CollectionResource extends Resource
 
     public static function getNavigationGroup(): string
     {
-        return  __('Settings');
+        return  __('Shop');
     }
     
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 12;
 
     protected static ?string $navigationIcon = 'heroicon-o-database';
 

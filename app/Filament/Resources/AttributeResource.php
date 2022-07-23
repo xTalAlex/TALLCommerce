@@ -36,7 +36,7 @@ class AttributeResource extends Resource
         return  __('Settings');
     }
 
-    protected static ?int $navigationSort = 9;
+    protected static ?int $navigationSort = 23;
 
     public static function form(Form $form): Form
     {

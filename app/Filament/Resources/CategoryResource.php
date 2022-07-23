@@ -36,7 +36,7 @@ class CategoryResource extends Resource
         return  __('Settings');
     }
 
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 21;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
