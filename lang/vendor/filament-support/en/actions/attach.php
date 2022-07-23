@@ -4,11 +4,11 @@ return [
 
     'single' => [
 
-        'label' => 'Collega',
+        'label' => 'Attach',
 
         'modal' => [
 
-            'heading' => 'Collega :label',
+            'heading' => 'Attach :label',
 
             'fields' => [
 
@@ -21,11 +21,11 @@ return [
             'actions' => [
 
                 'attach' => [
-                    'label' => 'Collega',
+                    'label' => 'Attach',
                 ],
 
                 'attach_another' => [
-                    'label' => 'Collega & collega altro',
+                    'label' => 'Attach & attach another',
                 ],
 
             ],
@@ -33,23 +33,23 @@ return [
         ],
 
         'messages' => [
-            'attached' => 'Collegato',
+            'attached' => 'Attached',
         ],
 
     ],
 
     'multiple' => [
 
-        'label' => 'Collega',
+        'label' => 'Attach selected',
 
         'modal' => [
 
-            'heading' => 'Collega :label',
+            'heading' => 'Attach selected :label',
 
             'actions' => [
 
-                'attach' => [
-                    'label' => 'Collega',
+                'Attach' => [
+                    'label' => 'Attach',
                 ],
 
             ],
@@ -57,7 +57,7 @@ return [
         ],
 
         'messages' => [
-            'attached' => 'Collegati',
+            'Attachd' => 'Attachd',
         ],
 
     ],

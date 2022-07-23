@@ -7,8 +7,8 @@ use Filament\Tables;
 use App\Models\Product;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
-use App\Models\Scopes\NotHiddenScope;
 use Filament\Resources\Resource;
+use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProductResource\Pages;
@@ -319,6 +319,20 @@ class ProductResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
+                Tables\Actions\BulkAction::make('collection')->label(__('Add to Collection'))
+                    ->icon('heroicon-o-database')
+                    ->action(function ( \Illuminate\Database\Eloquent\Collection $records, array $data): void {
+                        foreach ($records as $record) {
+                            $record->collections()->syncWithoutDetaching($data['collectionId']);
+                            $record->save();
+                        }
+                        \Filament\Facades\Filament::notify('success', __('filament-support::actions/attach.multiple.messages.attached') );
+                    })
+                    ->form([
+                        Forms\Components\Select::make('collectionId')->label(__('Collection'))
+                            ->options(\App\Models\Collection::query()->pluck('name', 'id'))
+                            ->required(),
+                    ]),
                 Tables\Actions\RestoreBulkAction::make(),
                 Tables\Actions\DeleteBulkAction::make(),
                 Tables\Actions\ForceDeleteBulkAction::make(),
