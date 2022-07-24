@@ -114,7 +114,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     public function getProfilePhotoUrlAttribute()
     {
         return $this->profile_photo_path
-                    ? Str::of(Storage::disk($this->profilePhotoDisk())->url(''))->rtrim('\\') . '/' . $this->profile_photo_path
+                    ? Str::of(Storage::disk($this->profilePhotoDisk())->url(''))->replace('\\','/') . $this->profile_photo_path
                     : $this->defaultProfilePhotoUrl();
     }
 
