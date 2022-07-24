@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Support\Facades\Storage;
+use Filament\Models\Contracts\HasAvatar;
+use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Sanctum\HasApiTokens;
-use Filament\Models\Contracts\HasAvatar;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
@@ -102,6 +104,18 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get the URL to the user's profile photo.
+     *
+     * @return string
+     */
+    public function getProfilePhotoUrlAttribute()
+    {
+        return $this->profile_photo_path
+                    ? Str::of(Storage::disk($this->profilePhotoDisk())->url(''))->rtrim('\\') . '/' . $this->profile_photo_path
+                    : $this->defaultProfilePhotoUrl();
     }
 
     /**
