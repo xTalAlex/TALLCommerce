@@ -46,7 +46,6 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'root' => env('AWS_ROOT',''),
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
@@ -59,8 +58,8 @@ return [
             'driver' => 's3',
             'key' => env('DIGITALOCEAN_SPACES_KEY'),
             'secret' => env('DIGITALOCEAN_SPACES_SECRET'),
-            'region' => env('DIGITALOCEAN_SPACES_REGION'),
             'bucket' => env('DIGITALOCEAN_SPACES_BUCKET'),
+            'region' => env('DIGITALOCEAN_SPACES_REGION'),
             'endpoint' => env('DIGITALOCEAN_SPACES_ENDPOINT'),
             'visibility' => 'public',
         ],

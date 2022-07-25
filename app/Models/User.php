@@ -107,18 +107,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     }
 
     /**
-     * Get the URL to the user's profile photo.
-     *
-     * @return string
-     */
-    public function getProfilePhotoUrlAttribute()
-    {
-        return $this->profile_photo_path
-                    ? Str::of(Storage::disk($this->profilePhotoDisk())->url(''))->replace('\\','/') . $this->profile_photo_path
-                    : $this->defaultProfilePhotoUrl();
-    }
-
-    /**
      * Get the default profile photo URL if no profile photo has been uploaded.
      *
      * @return string
