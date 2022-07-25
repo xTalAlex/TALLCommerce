@@ -334,10 +334,11 @@ class Product extends Model implements Buyable , HasMedia
     {
         $allCategories = $this->categories;
         $hierarchicalCategories = array();
-        $hasMoreLevels = false;
+        $hasMoreLevels = $allCategories != null ? true : false;
         $level = 0;
         $hierarchicalCategories[$level] = array();
-        do{
+        
+        while($hasMoreLevels){
             $levelCategories = array();
             $hasMoreLevels = false;
             foreach($allCategories as $category)
@@ -365,7 +366,7 @@ class Product extends Model implements Buyable , HasMedia
                 $hierarchicalCategories[$level] = $levelCategories;
                 $level ++;
             }
-        }while($hasMoreLevels);
+        };
 
         return $hierarchicalCategories;
      }
