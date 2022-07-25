@@ -13,7 +13,9 @@
                 <x-jet-section-border />
             @endif
 
-            @livewire('profile.update-default-address-form')
+            <div class="mt-10 sm:mt-0">
+                @livewire('profile.update-default-address-form')
+            </div>
 
             <x-jet-section-border />
             
