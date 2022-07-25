@@ -70,7 +70,7 @@ class Product extends Model implements Buyable , HasMedia
      */
     protected static function booted()
     {
-        static::addGlobalScope(new NotHiddenScope);
+        //static::addGlobalScope(new NotHiddenScope);
     }
 
     public function scopeFeatured($query)
@@ -379,7 +379,7 @@ class Product extends Model implements Buyable , HasMedia
 
     public function shouldBeSearchable()
     {
-        return ( $this->hidden != "true" ) && ( !$this->variant_id || ($this->variant_id == $this->id) );
+        return ( !$this->attributes['hidden'] ) && ( !$this->variant_id || ($this->variant_id == $this->id) );
     }
 
     /**
