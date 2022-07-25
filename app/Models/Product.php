@@ -178,7 +178,7 @@ class Product extends Model implements Buyable , HasMedia
 
     public function setSlugAttribute($value)
     {
-        if (static::whereNot('id',$this->id)->whereSlug($slug = Str::slug($value))->exists())
+        if (static::withoutGlobalScopes()->whereNot('id',$this->id)->whereSlug($slug = Str::slug($value))->exists())
             $slug = "{$slug}-{$this->id}";
         $this->attributes['slug'] = $slug;
     } 
