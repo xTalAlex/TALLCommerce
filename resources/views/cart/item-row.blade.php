@@ -18,12 +18,14 @@
         {{ $product->name }}
     </td>
     <td class="px-6 py-4">
-        @foreach($product->categories as $category)
-            {{ $category->name}}
-            @if(!$loop->last)
-                , 
-            @endif
-        @endforeach
+        @if($product->categories)
+            @foreach($product->categories as $category)
+                {{ $category->name}}
+                @if(!$loop->last)
+                    , 
+                @endif
+            @endforeach
+        @endif
     </td>
     <td class="px-6 py-4">
         {{-- <select wire:model.lazy="item.qty">

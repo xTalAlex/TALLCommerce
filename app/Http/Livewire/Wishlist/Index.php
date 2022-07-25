@@ -20,8 +20,22 @@ class Index extends Component
 
     public function mount()
     {  
+        $this->checkProducts();
         $this->content = Cart::instance('wishlist')->content();
         $this->count = Cart::instance('wishlist')->count();
+    }
+
+    public function checkProducts()
+    {
+        foreach(Cart::instance('wishlist')->content() as $key=>$item)
+        {
+            if (!$item->model)
+            {
+                Cart::remove($key);
+                $this->count = Cart::instance('wishlist')->count();
+                //notify user item no more avaiable
+            }
+        }
     }
 
     public function render()

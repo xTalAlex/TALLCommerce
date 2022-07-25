@@ -63,12 +63,14 @@
                                 <a href="{{ route('product.show', $item->model) }}">{{ $item->model->name }}</a>
                             </td>
                             <td class="px-6 py-4">
-                                @foreach($item->model->categories as $category)
-                                    {{ $category->name}}
-                                    @if(!$loop->last)
-                                        , 
-                                    @endif
-                                @endforeach
+                                @if($item->model->categories)
+                                    @foreach($item->model->categories as $category)
+                                        {{ $category->name}}
+                                        @if(!$loop->last)
+                                            , 
+                                        @endif
+                                    @endforeach
+                                @endif
                             </td>
                             <td class="px-6 py-4">
                                 {{ $item->model->quantity ? trans_choice('Avaiable',1) : __('Out of Stock') }}

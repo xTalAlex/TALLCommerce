@@ -38,8 +38,19 @@ class Index extends Component
         $price_changed = false;
         foreach(Cart::instance('default')->content() as $key=>$item)
         {
-            if($item->model->price != $item->price) $price_changed = true;
-            Cart::instance('default')->update($key,$item->model);
+            if ($item->model)
+            {
+                if ($item->model->price != $item->price) {
+                    $price_changed = true;
+                }
+                Cart::instance('default')->update($key, $item->model);
+            }
+            else
+            {
+                Cart::remove($key);
+                $this->count = Cart::instance('default')->count();
+                //notify user item no more avaiable
+            }
         }
         return $price_changed;
     }

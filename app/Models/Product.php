@@ -44,6 +44,7 @@ class Product extends Model implements Buyable , HasMedia
         'avg_rating' => 'decimal:1',
         'categories' => 'array',
         'tags' => 'array',
+        'hidden' => 'boolean',
     ];
 
     /**
@@ -378,7 +379,7 @@ class Product extends Model implements Buyable , HasMedia
 
     public function shouldBeSearchable()
     {
-        return !$this->hidden && ( !$this->variant_id || ($this->variant_id == $this->id) );
+        return ( $this->hidden != "true" ) && ( !$this->variant_id || ($this->variant_id == $this->id) );
     }
 
     /**

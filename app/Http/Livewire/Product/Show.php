@@ -39,7 +39,7 @@ class Show extends Component
             }
             else
             {
-                $this->gallery = $this->product->image;
+                $this->gallery = [$this->product->image];
             }
         }
         $this->reviews = $this->product->defaultVaraint ? $this->product->defaultVariant->reviews : $this->product->reviews;
