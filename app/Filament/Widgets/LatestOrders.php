@@ -18,7 +18,7 @@ class LatestOrders extends BaseWidget
 
     protected function getTableHeading(): string
     {
-        return trans('widgets.reviews.latest.label');
+        return trans('widgets.orders.latest.label');
     }
 
     protected function getTableQuery(): Builder
