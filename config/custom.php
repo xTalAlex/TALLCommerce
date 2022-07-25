@@ -19,6 +19,8 @@ return [
 
     'datetime_format' => 'j/n/y H:i',
     'date_format' => 'j/n/y',
+    'datenoyear_format' => 'j/n',
+    'monthyear_format' => 'n/y',
 
     'stock_threshold' => 3,
 ];

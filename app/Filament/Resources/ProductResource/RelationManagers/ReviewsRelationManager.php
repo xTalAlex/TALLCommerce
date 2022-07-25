@@ -84,8 +84,8 @@ class ReviewsRelationManager extends RelationManager
                     ->limit(100)
                     ->wrap(),
                 Tables\Columns\BooleanColumn::make('approved')->label(__('Approved'))
-                    ->trueColor('primary')
-                    ->falseColor('secondary'),
+                    ->trueColor('success')
+                    ->falseColor('danger'),
                 Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
                     ->dateTime(config('custom.datetime_format'))
                     ->sortable(),

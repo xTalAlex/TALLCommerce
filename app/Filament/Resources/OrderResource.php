@@ -9,7 +9,6 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Layout;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -77,7 +76,7 @@ class OrderResource extends Resource
                             ->schema([
                                 Forms\Components\RichEditor::make('shipping_label')->label(__('Shipping Label'))
                                     ->columnSpan(2),
-                                Forms\Components\Placeholder::make('shipping_price.name')->label(__('Shipping'))
+                                Forms\Components\Placeholder::make('shippingPrice.name')->label(__('Shipping'))
                                     ->content(fn (?Order $record): string => $record && $record->shippingPrice ? $record->shippingPrice->name : '-'),                                    
                             ])
                             ->visibleOn(Pages\ViewOrder::class),
@@ -108,7 +107,7 @@ class OrderResource extends Resource
                                         Forms\Components\TextInput::make('tax')->label(__('Tax'))
                                             ->prefix('€'),
 
-                                        Forms\Components\TextInput::make('shipping_price.price')->label(__('Shipping'))
+                                        Forms\Components\TextInput::make('shipping_price')->label(__('Shipping'))
                                             ->prefix('€'),
                                
                                         Forms\Components\TextInput::make('total')->label(__('Total'))
@@ -239,7 +238,7 @@ class OrderResource extends Resource
                 layout: Layout::AboveContent,
             )
             ->actions([
-                Action::make('Email')
+                Tables\Actions\Action::make('Email')
                     ->color('success')
                     ->icon('heroicon-o-mail')
                     ->action(function (Order $record, array $data): void {
