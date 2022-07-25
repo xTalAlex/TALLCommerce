@@ -8,7 +8,9 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap">
 
         <!-- Styles -->
         @vite('resources/css/app.css')
@@ -20,5 +22,8 @@
         <div class="font-sans antialiased text-gray-900">
             {{ $slot }}
         </div>
+
+        <x-tawkto-widget/>
+        
     </body>
 </html>
