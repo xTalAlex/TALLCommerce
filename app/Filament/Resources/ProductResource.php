@@ -29,6 +29,11 @@ class ProductResource extends Resource
         ];
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['slug','tags.name'];
+    }
+
     public static function getLabel(): string
     {
         return __('Product');
@@ -75,7 +80,6 @@ class ProductResource extends Resource
                                 ->disableToolbarButtons([
                                     'attachFiles',
                                 ]),
-
                             Forms\Components\MultiSelect::make('categories')->label(__('Categories'))
                                 ->relationship('categories','name',
                                     fn (Builder $query, callable $get) => 
@@ -105,6 +109,9 @@ class ProductResource extends Resource
                                     $set('categories',$selectedCategories->pluck('id')->toArray());
                                 })
                                 ->columnSpan('full'),
+                            Forms\Components\MultiSelect::make('tags')->label(__('Tags'))
+                                ->relationship('tags', 'name')
+                                ->preload(true),
 
                         ])
                         ->columnSpan('full'),
@@ -267,6 +274,16 @@ class ProductResource extends Resource
                                     $data['values'],
                                     fn (Builder $query, $values): Builder => 
                                         $query->whereHas('categories', fn($query) => $query->whereIn('categories.id', $values)),
+                                );
+                        }),
+                    Tables\Filters\MultiSelectFilter::make('tags')->label(__('Tags'))
+                        ->options(\App\Models\Tag::all()->pluck('name','id'))
+                        ->query(function (Builder $query, array $data): Builder {
+                            return $query
+                                ->when(
+                                    $data['values'],
+                                    fn (Builder $query, $values): Builder => 
+                                        $query->whereHas('tags', fn($query) => $query->whereIn('tags.id', $values)),
                                 );
                         }),
                     Tables\Filters\MultiSelectFilter::make('attributes')->label(__('Attributes'))

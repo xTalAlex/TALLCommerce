@@ -42,6 +42,8 @@ class Product extends Model implements Buyable , HasMedia
         'selling_price' => 'decimal:2',
         'price'         => 'decimal:2',
         'avg_rating' => 'decimal:1',
+        'categories' => 'array',
+        'tags' => 'array',
     ];
 
     /**
