@@ -95,7 +95,6 @@ class StatsOverview extends BaseWidget
                 ->color($revenueData['color']),
 
             Card::make( trans('widgets.stats.orders.label'), $ordersData['total'])
-                ->description('7% increase')
                 ->chart( $ordersData['chart'] )
                 ->description($ordersData['description'])
                 ->descriptionIcon($ordersData['icon'])

@@ -26,6 +26,19 @@ return [
         'latest' => [
             'label' => 'Nuovi Ordini',
         ],
+        'stats' => [
+            'ctr' => 'Totale Ordini',
+            'open' => 'Ordini Aperti',
+            'avg_total' => 'Spesa Media',
+        ],
+    ],
+
+    'products' => [
+        'stats' => [
+            'ctr' => 'Totale Prodotti',
+            'inventory' => 'Inventario',
+            'out_of_stock' => 'Esauriti',
+        ],
     ],
 
     'users' => [

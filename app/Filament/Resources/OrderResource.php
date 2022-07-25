@@ -265,6 +265,13 @@ class OrderResource extends Resource
             RelationManagers\HistoryRelationManager::class,
         ];
     }
+
+    public static function getWidgets(): array
+    {
+        return [
+            Widgets\OrdersOverview::class,
+        ];
+    }
     
     public static function getPages(): array
     {

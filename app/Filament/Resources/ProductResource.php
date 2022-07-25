@@ -12,6 +12,7 @@ use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\Widgets;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationGroup;
 use App\Filament\Resources\ProductResource\RelationManagers;
@@ -368,7 +369,14 @@ class ProductResource extends Resource
             RelationManagers\ReviewsRelationManager::class,
         ];
     }
-    
+
+    public static function getWidgets(): array
+    {
+        return [
+            Widgets\ProductsOverview::class,
+        ];
+    }
+
     public static function getPages(): array
     {
         return [
