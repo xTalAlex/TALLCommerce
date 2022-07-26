@@ -33,6 +33,7 @@ class EventServiceProvider extends ServiceProvider
         \App\Models\Brand::class => [\App\Observers\BrandObserver::class],
         \App\Models\Collection::class => [\App\Observers\CollectionObserver::class],
         \App\Models\Tag::class => [\App\Observers\TagObserver::class],
+        \Spatie\MediaLibrary\MediaCollections\Models\Media::class => [\App\Observers\MediaObserver::class],
     ];
 
     /**
