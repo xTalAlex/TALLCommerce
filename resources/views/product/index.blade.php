@@ -7,15 +7,18 @@
     </x-slot>
 
     <div class="flex justify-center py-8 mx-auto"
-        x-data
+        x-data="{
+            indexName : '{{ config('scout.prefix') }}products',
+        }"
         x-init="
             searchClient = window.algoliasearch(
                 '{{ config('scout.algolia.id') }}',
                 '{{ config('scout.algolia.client') }}'
             );
             search = window.instantsearch({
-                indexName: '{{ config('scout.prefix') }}products',
+                indexName: indexName,
                 searchClient,
+                routing: true,
                 initialUiState: {
                     '{{ config('scout.prefix') }}products': {
                         query: new URLSearchParams(window.location.search).get('keyword'),
