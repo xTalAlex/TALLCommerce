@@ -12,7 +12,7 @@
         return {
           ...source,
           getItemUrl({ item }) {
-            return '{{ route('product.index') }}?keyword=${item.label}';
+            return '{{ route('product.index') }}?q=${item.label}';
           },
           templates: {
             ...source.templates,
@@ -116,7 +116,7 @@
       onSubmit({state}){
         url = new URL('{{ route('product.index') }}');
         var searchParams = new URLSearchParams(url.search);
-        searchParams.set('keyword', state.query.trim());
+        searchParams.set('q', state.query.trim());
         window.location.href = url +'/?'+ searchParams.toString();
       },
       navigator: {

@@ -9,6 +9,8 @@
     <div class="flex justify-center py-8 mx-auto"
         x-data="{
             indexName : '{{ config('scout.prefix') }}products',
+            query : new URLSearchParams(window.location.search).get('q'),
+            category : '{{ $category_hierarchy_path }}',
         }"
         x-init="
             searchClient = window.algoliasearch(
@@ -21,7 +23,12 @@
                 routing: true,
                 initialUiState: {
                     '{{ config('scout.prefix') }}products': {
-                        query: new URLSearchParams(window.location.search).get('keyword'),
+                        query: query,
+                        hierarchicalMenu: {
+                            'hierarchicalCategories.lvl0': [
+                                category,
+                            ], 
+                        }
                     }
                 }
             });

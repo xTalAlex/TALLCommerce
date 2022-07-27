@@ -16,14 +16,15 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        // $products = Product::filter($request->only(['keyword','category','orderby']))->paginate(12);
+        $category_hierarchy_path = null;
+        if(request()->category)
+        {
+            $category = \App\Models\Category::whereSlug(request()->category)->first();
+            if($category)
+                $category_hierarchy_path = $category->hierarchyPath();
+        }
 
-        // $category = null;
-        // if($request->category)
-        //     $category = Category::findOrFail($request->category);
-
-        // return view( 'product.index', compact('products','category') );
-        return view('product.index');
+        return view('product.index', compact('category_hierarchy_path'));
     }
 
     /**

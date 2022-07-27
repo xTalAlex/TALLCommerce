@@ -90,17 +90,16 @@ class Category extends Model implements HasMedia
         $this->attributes['slug'] = $slug;
     } 
 
-    public function ancestorsIds()
+    public function hierarchyPath()
     {
-        $ancestors = collect([]);
-
+        $path = $this->name;
         $parent = $this->parent;
     
         while($parent) {
-            $ancestors->push($parent);
+            $path=$parent->name.'>'.$path;
             $parent = $parent->parent;
         }
     
-        return $ancestors->map( fn($model) => $model->id);
+        return $path;
     }
 }
