@@ -13,75 +13,59 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 
 class Create extends Component
 {
-    public $step;
-    public $addresses_confirmed;
-
-    public $email;
-   
-    public Address $addressShipping;
-    public $full_name;
-    public $company;
-    public $address;
-    public $address2;
-    public $city;
-    public $province;
-    public $country_region;
-    public $postal_code;
-
-    public Address $addressBilling;
-    public $billing_full_name;
-    public $billing_company;
-    public $billing_address;
-    public $billing_address2;
-    public $billing_city;
-    public $billing_province;
-    public $billing_country_region;
-    public $billing_postal_code;
+    public Address $shipping_address;
+    public Address $billing_address;
 
     public $same_address;
+    public $addresses_confirmed;
+
+    public Order $order;
+
+    public $email;
     public $note;
 
+    public $content;
     public $subtotal;
     public $discountedSubtotal;
     public $tax;
     public $total;
-    public $coupon_code;
-    public $coupon;
-    public $coupon_error;
-
-    public $order;
-    public $content;
 
     public $shipping_prices;
     public $shipping_price_id;
     public $shipping_price;
 
-    protected $listeners = ['createOrder'];
+    public $coupon_code;
+    public $coupon;
+    public $coupon_error;
+
+    protected $listeners = [
+        'createOrder',
+    ];
 
     protected function rules()
     {
         return [
             'email' => 'required|email'. ( auth()->user() ? '' : '|unique:users,email'),
     
-            'full_name' => '',        
-            'company' => 'required_without:full_name',        
-            'address' => 'required',        
-            'address2' => '',        
-            'city' => 'required',
-            'province' => 'required',
-            'country_region' => 'required',
-            'postal_code' => 'required|min:5',
+            'shipping_address.full_name' => '',        
+            'shipping_address.company' => 'required_without:shipping_address.full_name',        
+            'shipping_address.address' => 'required',        
+            'shipping_address.address2' => '',        
+            'shipping_address.city' => 'required',
+            'shipping_address.province' => 'required',
+            'shipping_address.country_region' => 'required',
+            'shipping_address.postal_code' => 'required|min:5',
 
             'same_address' => '',
     
-            'billing_full_name' => 'exclude_if:same_address,true',        
-            'billing_company' => 'exclude_if:same_address,true|required_without:billing_full_name',        
-            'billing_address' => 'exclude_if:same_address,true|required',        
-            'billing_address2' => 'exclude_if:same_address,true|',        
-            'billing_city' => 'exclude_if:same_address,true|required',
-            'billing_province' => 'exclude_if:same_address,true|required',
-            'billing_country_region' => 'exclude_if:same_address,true|required',
-            'billing_postal_code' => 'exclude_if:same_address,true|required|min:5',
+            'billing_address.full_name' => 'exclude_if:same_address,true',        
+            'billing_address.company' => 'exclude_if:same_address,true|required_without:billing_address.full_name',        
+            'billing_address.address' => 'exclude_if:same_address,true|required',        
+            'billing_address.address2' => 'exclude_if:same_address,true|',        
+            'billing_address.city' => 'exclude_if:same_address,true|required',
+            'billing_address.province' => 'exclude_if:same_address,true|required',
+            'billing_address.country_region' => 'exclude_if:same_address,true|required',
+            'billing_address.postal_code' => 'exclude_if:same_address,true|required|min:5',
     
         ];
     }
@@ -89,9 +73,7 @@ class Create extends Component
     public function mount()
     {
         if(!Cart::instance('default') || !Cart::instance('default')->count())
-        {
             $this->redirect(route('cart.index'));
-        }
 
         if($this->updatePrices())
         {
@@ -103,19 +85,10 @@ class Create extends Component
 
         $this->content = Cart::instance('default')->content();
         $this->addresses_confirmed = false;
-        $this->step = 'shipping';
         $this->email = Auth::user() ? Auth::user()->email : null;
+        //if addresses in session load instead of default
         if(Auth::user() && Auth::user()->defaultAddress){
-            $address = Auth::user()->defaultAddress;
-            $this->full_name = $address->full_name;
-            $this->company = $address->company;
-            $this->address = $address->address;
-            $this->address2 = $address->address2;
-            $this->city = $address->city;
-            $this->province = $address->province;
-            $this->country_region = $address->country_region;
-            $this->postal_code = $address->postal_code;
-            $this->full_name = $address->full_name;
+            $this->shipping_address = Auth::user()->defaultAddress;
         }
         $this->same_address = true;
 
@@ -167,29 +140,9 @@ class Create extends Component
     {
         $this->validate();
 
-        $this->addressShipping = new Address([
-            'email' => Auth::user() ? Auth::user()->email : $this->email,
-            //'phone' => $this->phone,
-            'full_name' => $this->full_name,
-            'company' => $this->company,
-            'address' => $this->address,
-            'address2' => $this->address2,
-            'city' => $this->city,
-            'province' => $this->province,
-            'country_region' => $this->country_region,
-            'postal_code' => $this->postal_code,
-        ]);
-
-        $this->addressBilling = new Address([
-            'full_name' => $this->same_address ? $this->full_name : $this->billing_full_name,
-            'company' => $this->same_address ? $this->company : $this->billing_company,
-            'address' => $this->same_address ? $this->address : $this->billing_address,
-            'address2' => $this->same_address ? $this->address2 : $this->billing_address2,
-            'city' => $this->same_address ? $this->city : $this->billing_city,
-            'province' => $this->same_address ? $this->province : $this->billing_province,
-            'country_region' => $this->same_address ? $this->country_region : $this->billing_country_region,
-            'postal_code' => $this->same_address ? $this->postal_code : $this->billing_postal_code,
-        ]);
+        if($this->same_address) $this->billing_address = $this->shipping_address;
+        
+        //save both addresses in session
 
         $this->addresses_confirmed = true;
     }
@@ -199,14 +152,14 @@ class Create extends Component
         $defaultAddress = Auth::user()->defaultAddress()->updateOrCreate([
             'user_id' => Auth::user()->id,
         ],[
-            'full_name' => $this->full_name,
-            'company' => $this->company,
-            'address' => $this->address,
-            'address2' => $this->address2,
-            'city' => $this->city,
-            'province' => $this->province,
-            'country_region' => $this->country_region,
-            'postal_code' => $this->postal_code,
+            'full_name' => $this->shipping_address->full_name,
+            'company' => $this->shipping_address->company,
+            'address' => $this->shipping_address->address,
+            'address2' => $this->shipping_address->address2,
+            'city' => $this->shipping_address->city,
+            'province' => $this->shipping_address->province,
+            'country_region' => $this->shipping_address->country_region,
+            'postal_code' => $this->shipping_address->postal_code,
             'default' => true,
         ]);
 
@@ -225,11 +178,6 @@ class Create extends Component
             'message' => $banner_message,
             'style' => $banner_style,
         ]);
-    }
-
-    public function submitBilling()
-    {
-        $this->step = "payment";
     }
 
     public function checkCoupon()
@@ -296,33 +244,9 @@ class Create extends Component
     public function createOrder($payment_id, $gateway)
     {
         $validated = $this->validate([
-            'shipping_price.price' => 'required|min:0',
             'shipping_price.id' => 'required|exists:shipping_prices,id',
+            'shipping_price.price' => 'required|min:0',          
             'shipping_price.name' => 'required'
-        ]);
-
-        $this->addressShipping = new Address([
-            'email' => Auth::user() ? Auth::user()->email : $this->email,
-            //'phone' => $this->phone,
-            'full_name' => $this->full_name,
-            'company' => $this->company,
-            'address' => $this->address,
-            'address2' => $this->address2,
-            'city' => $this->city,
-            'province' => $this->province,
-            'country_region' => $this->country_region,
-            'postal_code' => $this->postal_code,
-        ]);
-
-        $this->addressBilling = new Address([
-            'full_name' => $this->same_address ? $this->full_name : $this->billing_full_name,
-            'company' => $this->same_address ? $this->company : $this->billing_company,
-            'address' => $this->same_address ? $this->address : $this->billing_address,
-            'address2' => $this->same_address ? $this->address2 : $this->billing_address2,
-            'city' => $this->same_address ? $this->city : $this->billing_city,
-            'province' => $this->same_address ? $this->province : $this->billing_province,
-            'country_region' => $this->same_address ? $this->country_region : $this->billing_country_region,
-            'postal_code' => $this->same_address ? $this->postal_code : $this->billing_postal_code,
         ]);
 
         //CHECK PRODUCT AVAIABILITY
@@ -342,23 +266,23 @@ class Create extends Component
             else
                 $status_id = OrderStatus::where('name', 'pending')->first()->id;
             $this->order = Order::firstOrCreate([
-            'payment_gateway' => $gateway,
-            'payment_id' => $payment_id,
+                'payment_gateway' => $gateway,
+                'payment_id' => $payment_id,
             ],[
-            'shipping_address' => $this->addressShipping->toJson(),
-            'billing_address' => $this->addressBilling->toJson(),
-            'email' => $this->email,
-            //'phone' => $this->phone,
-            'note' => $this->note,
-            'subtotal' => $this->subtotal,
-            'tax'   => $this->tax,
-            'total' => $this->total + $this->shipping_price->price,
-            'coupon_id' => $this->coupon ? $this->coupon->id : null,
-            'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,
-            'order_status_id' => $status_id,
-            'user_id' => auth()->user() ? auth()->user()->id : null,
-            'shipping_price_id' => $this->shipping_price_id,
-            'shipping_price' => $this->shipping_price->price,
+                'shipping_address' => $this->shipping_address->toJson(),
+                'billing_address' => $this->billing_address->toJson(),
+                'email' => $this->email,
+                //'phone' => $this->phone,
+                'note' => $this->note,
+                'subtotal' => $this->subtotal,
+                'tax'   => $this->tax,
+                'total' => $this->total + $this->shipping_price->price,
+                'coupon_id' => $this->coupon ? $this->coupon->id : null,
+                'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,
+                'order_status_id' => $status_id,
+                'user_id' => auth()->user() ? auth()->user()->id : null,
+                'shipping_price_id' => $this->shipping_price_id,
+                'shipping_price' => $this->shipping_price->price,
             ]);
 
             $pivots = [];

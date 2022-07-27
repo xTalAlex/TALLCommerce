@@ -12,6 +12,7 @@ class Update extends Component
     public Order $order;
     public Address $shipping_address;
     public Address $billing_address;
+    
     public $same_address;
     public $addresses_confirmed;
 
