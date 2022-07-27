@@ -58,7 +58,7 @@ class VariantsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\AssociateAction::make()->preloadRecordSelect(),
+                //Tables\Actions\AssociateAction::make()->preloadRecordSelect(),
             ])
             ->actions([
                 Tables\Actions\DissociateAction::make(),

@@ -12,7 +12,7 @@ class OrdersChart extends LineChartWidget
 
     protected static ?int $sort = 2;
     
-    public ?string $filter = 'month';
+    public ?string $filter = 'week';
     
     protected function getHeading(): string
     {
