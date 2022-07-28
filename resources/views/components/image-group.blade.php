@@ -1,8 +1,8 @@
 <div class="container flex flex-wrap px-5 py-24 mx-auto">
-    <div class="mx-auto lg:w-2/3">
+    <div class="w-full mx-auto">
 
         @if($items->count())
-        <div class="relative flex flex-wrap w-full px-10 py-32 mb-4 bg-gray-100">
+        <div class="relative flex flex-wrap w-full px-10 pb-40 mb-4 bg-gray-100">
             <img alt="{{ $items[0]['name']}}" class="absolute inset-0 block object-cover object-center w-full opacity-60 h-96" src="{{ $items[0]['hero'] }}">
             <div class="relative z-10 w-full text-center">
                 <h2 class="mb-2 text-2xl font-medium text-gray-900 title-font">{{ $items[0]['name']}}</h2>
