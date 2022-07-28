@@ -15,7 +15,7 @@
             ])
         >
         @foreach($items as $item)
-            <div class="p-4 mx-auto">
+            <div class="p-4 m-auto">
                 <a href="{{ $item['url'] }}">
                     <img src="{{ $item['logo'] }}" class="w-32 " alt="">
                 </a>
