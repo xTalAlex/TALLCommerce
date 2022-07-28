@@ -24,7 +24,7 @@ Route::get('/', function () {
         $brands = $brands->mapWithKeys(fn($brand,$key) => [
             $key => [
                 'logo' => $brand->logo_gray,
-                'url' => route('product.index', ['brand' => $brand->name])
+                'url' => route('product.index', ['brand' => $brand->slug])
             ]
         ]);
     $collections = App\Models\Collection::featured()->inRandomOrder()->take(3)->get();

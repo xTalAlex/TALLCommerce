@@ -264,7 +264,7 @@ class ProductResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 
             ])
-            ->defaultSort('updated_at','desc')
+            ->defaultSort('created_at','desc')
             ->filters([
                     Tables\Filters\TrashedFilter::make(),
                     Tables\Filters\MultiSelectFilter::make('categories')->label(__('Categories'))
