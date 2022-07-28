@@ -11,12 +11,19 @@
             indexName : '{{ config('scout.prefix') }}products',
             query : new URLSearchParams(window.location.search).get('q'),
             category : '{{ $category_hierarchy_path }}',
+            brand : '{{ $brand ?  $brand->name : null }}',
+            collection : '{{ $collection ?  $collection->name : null }}',
         }"
         x-init="
+
+            if(brand) brand = [brand];
+            if(collection) collection = [collection];
+
             searchClient = window.algoliasearch(
                 '{{ config('scout.algolia.id') }}',
                 '{{ config('scout.algolia.client') }}'
             );
+
             search = window.instantsearch({
                 indexName: indexName,
                 searchClient,
@@ -28,7 +35,11 @@
                             'hierarchicalCategories.lvl0': [
                                 category,
                             ], 
-                        }
+                        },
+                        refinementList: {
+                            'brand.name' : brand,
+                            collections : collection,
+                        },
                     }
                 }
             });
@@ -50,29 +61,15 @@
                     return options.items.length  === 0;
                 },
             })(window.algoliaWidgets.refinementList);
-            
-            refinementListWithPanel = window.algoliaWidgets.panel({
+
+            collectionsPanel = window.algoliaWidgets.panel({
                 templates: {
-                    header: 'Brand',
+                    header: '{{__('Collections')}}',
                 },
-            })(window.algoliaWidgets.refinementList({
-                    container: '#refinement-list',
-                    attribute: 'brand.name',
-                    operator: 'or',
-                    limit: 5,
-                    showMore: true,
-                    searchable: false,
-                    searchablePlaceholder: '{{ __('Brands') }}...',
-                    searchableIsAlwaysActive: false,
-                    templates: {
-                        searchableNoResults() { 
-                            return '{{ __('No results') }}';
-                        },
-                        showMoreText(data) {
-                            return data.isShowingMore ? '{{ __('Hide') }}' : '{{ __('Show') }}';
-                        },
-                    },
-                }));
+                hidden(options) {
+                    return options.items.length  === 0;
+                },
+            })(window.algoliaWidgets.refinementList);
 
             search.addWidgets([
                 window.algoliaWidgets.searchBox({
@@ -187,13 +184,32 @@
                 }),
 
                 brandsPanel({
-                        container: '#refinement-list',
+                        container: '#brands-list',
                         attribute: 'brand.name',
                         operator: 'or',
                         limit: 5,
                         showMore: true,
                         searchable: false,
                         searchablePlaceholder: '{{ __('Brands') }}...',
+                        searchableIsAlwaysActive: false,
+                        templates: {
+                            searchableNoResults() { 
+                                return '{{ __('No results') }}';
+                            },
+                            showMoreText(data) {
+                                return data.isShowingMore ? '{{ __('Hide') }}' : '{{ __('Show') }}';
+                            },
+                        },
+                    }),
+
+                collectionsPanel({
+                        container: '#collections-list',
+                        attribute: 'collections',
+                        operator: 'or',
+                        limit: 5,
+                        showMore: true,
+                        searchable: false,
+                        searchablePlaceholder: '{{ __('Collections') }}...',
                         searchableIsAlwaysActive: false,
                         templates: {
                             searchableNoResults() { 
@@ -220,7 +236,8 @@
                 <div class="px-4 md:px-1">
                     <div class="mb-2" id="sort-by"></div>
                     <div class="mb-2" id="hierarchical-menu"></div>
-                    <div class="mb-2" id="refinement-list"></div>
+                    <div class="mb-2" id="brands-list"></div>
+                    <div class="mb-2" id="collections-list"></div>
                     <div class="mb-2" id="current-refinements"></div>
                     <div class="mb-2" id="clear-refinements"></div>
                 </div>

@@ -409,6 +409,9 @@ class Product extends Model implements Buyable , HasMedia
         $array['has_variants'] = $this->defaultVariant()->exists() || $this->variants()->exists();
         $array['avg_rating'] = $this->avg_rating;
         $array['brand'] = $this->brand ? collect($this->brand->toArray())->only(['id','name','logo']) : null;
+        $array['collections'] = $this->collections->map(function ($collection) {
+                                    return $collection['name'];
+                                })->toArray();
 
         $array['hierarchicalCategories'] = [];
         foreach($this->hierarchicalCategories() as $level=>$categories)

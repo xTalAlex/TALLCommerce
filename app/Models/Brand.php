@@ -36,7 +36,7 @@ class Brand extends Model implements HasMedia
      */
     protected $appends = [
         'logo',
-        'gray_logo',
+        'logo_gray',
         'hero',
     ];
 
@@ -88,9 +88,9 @@ class Brand extends Model implements HasMedia
         return $this->getFirstMediaUrl('logo');
     }
 
-    public function getGrayLogoAttribute()
+    public function getLogoGrayAttribute()
     {
-        return $this->getFirstMediaUrl('logo','thumb');
+        return $this->getFirstMediaUrl('logo','logo-gray');
     }
 
     public function setLogoAttribute($value)

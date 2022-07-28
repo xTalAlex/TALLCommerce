@@ -4,16 +4,18 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Searchbar extends Component
+class CollectionGroup extends Component
 {
+    public $items;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($items)
     {
-        //
+        $this->items = $items;
     }
 
     /**
@@ -23,6 +25,6 @@ class Searchbar extends Component
      */
     public function render()
     {
-        return view('components.searchbar');
+        return view('components.image-group');
     }
 }

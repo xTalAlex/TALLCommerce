@@ -58,10 +58,12 @@
         >
             @foreach($items as $item)
             <div class="relative w-full h-full bg-white keen-slider__slide">
+                <a href="{{ route('product.index', ['category' => $item->slug] ) }}">
                 <img class="object-cover w-full h-full" src="{{$item->hero}}"/>
                 <span class="absolute z-30 flex items-center justify-center w-full h-20 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-50 top-1/2 left-1/2 sm:text-3xl">
                     {{ $item->name }} 
                 </span>    
+                </a>
             </div>
             @endforeach
             @if($items->count() > 1)

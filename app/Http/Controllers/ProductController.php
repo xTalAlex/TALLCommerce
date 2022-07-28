@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -17,14 +16,26 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $category_hierarchy_path = null;
+        $brand = null;
+        $collection = null;
+
         if(request()->category)
         {
             $category = \App\Models\Category::whereSlug(request()->category)->first();
             if($category)
                 $category_hierarchy_path = $category->hierarchyPath();
         }
+        if(request()->brand)
+        {
+            $brand = \App\Models\Brand::whereSlug(request()->brand)->first();
+        }
+        if(request()->collection)
+        {
+            $collection = \App\Models\Collection::whereSlug(request()->collection)->first();
+        }
 
-        return view('product.index', compact('category_hierarchy_path'));
+
+        return view('product.index', compact('category_hierarchy_path','brand','collection'));
     }
 
     /**

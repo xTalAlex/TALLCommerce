@@ -17,7 +17,27 @@ use Intervention\Image\Facades\Image;
 Route::get('/', function () {
     $featured_categories = App\Models\Category::featured()->take(5)->get();
     $featured_products = App\Models\Product::featured()->inRandomOrder()->take(1)->get();
-    return view('welcome', compact('featured_categories','featured_products') );
+    $brands = App\Models\Brand::whereHas('media', fn($query)=>
+        $query->whereJsonLength('generated_conversions->logo-gray', '>', 0))
+        ->get();
+    if($brands->count())
+        $brands = $brands->mapWithKeys(fn($brand,$key) => [
+            $key => [
+                'logo' => $brand->logo_gray,
+                'url' => route('product.index', ['brand' => $brand->name])
+            ]
+        ]);
+    $collections = App\Models\Collection::featured()->inRandomOrder()->take(3)->get();
+    if($collections->count())
+        $collections = $collections->mapWithKeys(fn($collection,$key) => [
+            $key => [
+                'hero' => $collection->hero,
+                'url' => route('product.index', ['collection' => $collection->slug]),
+                'name' => $collection->name,
+                'description' => $collection->description
+            ]
+        ]);
+    return view('welcome', compact('featured_categories','featured_products','brands','collections') );
 })->name('home');
 
 Route::get('/shop', [App\Http\Controllers\ProductController::class , 'index'] )->name('product.index');
