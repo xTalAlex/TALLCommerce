@@ -18,7 +18,7 @@ Route::get('/', function () {
     $featured_categories = App\Models\Category::featured()->take(5)->get();
     $featured_products = App\Models\Product::featured()->inRandomOrder()->take(1)->get();
     $brands = App\Models\Brand::whereHas('media', fn($query)=>
-            $query->whereCollectioName('logo')
+            $query->whereCollectionName('logo')
         )->get();
     if($brands->count())
         $brands = $brands->mapWithKeys(fn($brand,$key) => [
