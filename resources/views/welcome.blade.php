@@ -9,16 +9,22 @@
         <x-algolia-autocomplete class="w-full mx-4 md:w-72"/>
     </div>
 
+    <div class="mt-12">
     @foreach($featured_products as $product)
         <livewire:product.featured
             :product="$product"
         />
     @endforeach
+    </div>
 
-    <x-image-group :items="$collections"/>
+    <div class="mt-12">
+        <x-image-group :items="$collections"/>
+    </div>
 
-    <x-carousel :items="$featured_categories"/>
+    <div class="mt-12">
+        <x-carousel :items="$featured_categories"/>
+    </div>
 
-    <x-logo-cloud class="my-12" :items="$brands"/>
+    <x-logo-cloud class="mt-12" :items="$brands"/>
     
 </x-app-layout>

@@ -1,4 +1,4 @@
-<div class="container flex flex-wrap px-5 pt-12 pb-40 mx-auto">
+<div class="container flex flex-wrap px-5 pb-32 mx-auto">
     <div class="w-full mx-auto">
 
         @if($items->count())

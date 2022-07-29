@@ -1,6 +1,6 @@
 <footer class="text-gray-600 body-font">
 
-  <div class="container px-5 mx-auto md:py-24">
+  <div class="container px-5 py-12 mx-auto md:py-24">
     <div class="flex flex-wrap order-first text-center md:text-left">
 
       <div class="w-full px-4 lg:w-1/4 md:w-1/2">
