@@ -23,9 +23,12 @@ class AttributeValue extends Model
         parent::boot();
 
         static::saved(function ($model) {
-            $model->products->filter(function ($item) {
-                return $item->shouldBeSearchable();
-            })->searchable();
+            if($model->products)
+                optional(
+                    $model->products->filter(function ($item) {
+                        return $item->shouldBeSearchable();
+                    })
+                )->searchable();
         });
     }
 

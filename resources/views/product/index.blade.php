@@ -234,12 +234,12 @@
                 </div>
                 
                 <div class="px-4 md:px-1">
-                    <div class="mb-2" id="sort-by"></div>
-                    <div class="mb-2" id="hierarchical-menu"></div>
-                    <div class="mb-2" id="brands-list"></div>
-                    <div class="mb-2" id="collections-list"></div>
-                    <div class="mb-2" id="current-refinements"></div>
-                    <div class="mb-2" id="clear-refinements"></div>
+                    <div class="mb-4" id="sort-by"></div>
+                    <div class="" id="hierarchical-menu"></div>
+                    <div class="" id="brands-list"></div>
+                    <div class="" id="collections-list"></div>
+                    <div class="" id="current-refinements"></div>
+                    <div class="" id="clear-refinements"></div>
                 </div>
 
                 <div class="flex justify-between px-1 mt-4">

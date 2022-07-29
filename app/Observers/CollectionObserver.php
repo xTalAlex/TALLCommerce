@@ -17,9 +17,12 @@ class CollectionObserver
     {
         $collection->update(['slug' => Str::slug($collection->name)]);
 
-        $collection->products->filter(function ($item) {
-            return $item->shouldBeSearchable();
-        })->searchable();
+        if($collection->products)
+        optional(
+            $collection->products->filter(function ($item) {
+                return $item->shouldBeSearchable();
+            })
+        )->searchable();
     }
 
     /**
