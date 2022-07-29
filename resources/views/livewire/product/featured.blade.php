@@ -57,7 +57,7 @@
 
     <div class="order-first w-5/6 mb-12 md:mb-0 md:order-last lg:max-w-lg lg:w-full md:w-1/2">
         <a href="{{ route('product.show', $product) }}">
-            <img class="object-cover object-center mx-auto rounded h-96" alt="{{ $product->name }}" src="{{ $product->image }}">
+            <img class="object-cover object-center mx-auto rounded h-72" alt="{{ $product->name }}" src="{{ $product->image }}">
         </a>
     </div>
 
