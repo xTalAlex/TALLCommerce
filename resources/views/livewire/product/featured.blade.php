@@ -1,5 +1,5 @@
-<section class="text-gray-600 lg:px-32 body-font">
-  <div class="container flex flex-col items-center px-5 py-24 mx-auto md:flex-row">
+<section class="py-24 pb-12 text-gray-600 lg:px-32 body-font">
+  <div class="container flex flex-col items-center px-5 mx-auto md:flex-row">
     
     <div class="flex flex-col items-center mb-16 text-center lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:items-start md:text-left md:mb-0">
       
