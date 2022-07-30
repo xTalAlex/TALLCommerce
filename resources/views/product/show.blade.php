@@ -8,11 +8,11 @@
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
        
         <section class="overflow-hidden text-gray-600 body-font">
-            <div class="container px-5 py-24 mx-auto">
-                <div class="flex flex-wrap mx-auto lg:w-4/5">
+            <div class="container px-5 py-12 mx-auto">
+                <div class="flex flex-wrap mx-auto">
 
                     {{-- Left Side --}}
-                    <div class="flex flex-col md:w-1/2" wire:key='{{$product->id}}'
+                    <div class="flex flex-col mx-auto md:w-1/2" wire:key='{{$product->id}}'
                         x-data="{
                                 curImage : '{{ $this->gallery[0]}}',
                                 show : true,
@@ -30,13 +30,16 @@
                             }"
                     >
 
-                        <img alt="{{ $product->name }}" class="object-contain object-center w-full h-64 mx-auto rounded lg:w-1/2 lg:h-96"
-                            :src="curImage"
-                            x-transition.duration.500ms
-                            x-show = "show ">
-                            
+                        <div class="h-64 w-full lg:w-1/2 lg:h-96 rounded mx-auto">
+                            <a :href="curImage">
+                            <img alt="{{ $product->name }}" class="m-auto cursor-zoom-in hover:scale-150 transition-all ease-in object-contain object-center h-full max-h-full"
+                                :src="curImage"
+                                x-transition.duration.500ms
+                                x-show = "show ">
+                            </a>
+                        </div>
                         @if(count($this->gallery) > 2)
-                            <div class="inline-flex mx-auto mt-6 space-x-2">
+                            <div class="inline-flex mx-auto mt-12 space-x-2">
                             @foreach ($this->gallery as $image )
                                 <div class="border cursor-pointer"
                                     @click="changeImage('{{ $image }}')"
@@ -52,7 +55,7 @@
                     {{-- End Left Side --}}
 
                     {{-- Right Side --}}
-                    <div class="w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0">
+                    <div class="w-full mt-12 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0">
                         
                         @if($product->brand)
                         <h2 class="text-sm tracking-widest text-gray-500 title-font">{{ $product->brand->name}}</h2>
