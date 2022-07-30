@@ -35,13 +35,7 @@ trait WithShoppingLists
 
     public function addToWishlist()
     {
-        $product = $this->product; 
-
-        $duplicates = Cart::instance($this->wishlistInstance)->search(function ($item, $row) use ($product) {
-            return $item->id === $product->id;
-        });
-
-        if (!$duplicates->count()) {
+        if (!$this->wishlistContains($this->product)) {
             Cart::instance($this->wishlistInstance)->add($this->product, 1);
             $this->persist($this->wishlistInstance);
             $this->notifyWishlist();
@@ -86,17 +80,10 @@ trait WithShoppingLists
     {
         if ($product->quantity) {
             Cart::instance($this->cartInstance)->add($product, 1);
-            $items = Cart::instance($this->wishlistInstance)->search(function ($item, $rowId) use ($product) {
-                return $item->id === $product->id;
-            });
-            if ($items) {
-                Cart::instance($this->wishlistInstance)->remove($items->first()->rowId);
-            }
+            $this->removeFromWishlist($product);
 
             $this->persist($this->cartInstance);
-            $this->persist($this->wishlistInstance);
             $this->notifyCart();
-            $this->notifyWishlist();
             $this->notifyBanner(__('shopping_cart.added.cart'));
         }
         else
@@ -107,23 +94,12 @@ trait WithShoppingLists
 
     public function moveToWishlist(Product $product)
     {
-        $duplicates = Cart::instance($this->wishlistInstance)->search(function ($item, $row) use ($product) {
-            return $item->id === $product->id;
-        });
-        if (!$duplicates->count()) {
+        if (!$this->wishlistContains($product)) {
             Cart::instance($this->wishlistInstance)->add($product, 1);
         }
+        $this->removeFromCart($product);
 
-        $items = Cart::instance($this->cartInstance)->search(function ($item, $rowId) use ($product) {
-            return $item->id === $product->id;
-        });
-        if ($items) {
-            Cart::instance($this->cartInstance)->remove($items->first()->rowId);
-        }
-
-        $this->persist($this->cartInstance);
         $this->persist($this->wishlistInstance);
-        $this->notifyCart();
         $this->notifyWishlist();
         $this->notifyBanner(__('shopping_cart.added.wishlist'));
     }
@@ -135,26 +111,29 @@ trait WithShoppingLists
      * 
      * **/
 
-    public function removeFromCart(Product $product)
+    public function removeFromCart(?Product $product)
     {
-        $items = Cart::instance($this->cartInstance)->search(function ($item, $rowId) use ($product) {
-            return $item->id === $product->id;
-        });
-        foreach( $items as $item)
-            Cart::instance($this->cartInstance)->remove($item->rowId);
+        if(!$product->id) $product = $this->product;
+        $this->remove($this->cartInstance, $product);
         $this->persist($this->cartInstance);
         $this->notifyCart();
     }
 
-    public function removeFromWishlist(Product $product)
+    public function removeFromWishlist(?Product $product)
     {
-        $items = Cart::instance($this->wishlistInstance)->search(function ($item, $rowId) use ($product) {
+        if(!$product->id) $product = $this->product;
+        $this->remove($this->wishlistInstance, $product);
+        $this->persist($this->wishlistInstance);
+        $this->notifyWishlist();
+    }
+    
+    public function remove(string $instance, Product $product)
+    {
+        $items = Cart::instance($instance)->search(function ($item, $rowId) use ($product) {
             return $item->id === $product->id;
         });
         foreach( $items as $item)
-            Cart::instance($this->wishlistInstance)->remove($item->rowId);
-        $this->persist($this->wishlistInstance);
-        $this->notifyWishlist();
+            Cart::instance($instance)->remove($item->rowId);
     }
 
 
@@ -225,8 +204,30 @@ trait WithShoppingLists
             Cart::instance($instance)->restore(Auth::user()->email);
             Cart::instance($instance)->store(Auth::user()->email);
         }
-
     }
 
+    
+    /** 
+     * 
+     *      UTILITIES
+     * 
+     * **/
+
+    public function cartContains(Product $product)
+    {
+        return $this->contains($this->cartInstance, $product);
+    }
+
+    public function wishlistContains(Product $product)
+    {
+        return $this->contains($this->wishlistInstance, $product);
+    }
+
+    public function contains(string $instance, Product $product)
+    {
+        return Cart::instance($instance)->search(function ($item, $row) use ($product) {
+            return $item->id === $product->id;
+        })->isNotEmpty();
+    } 
 
 }

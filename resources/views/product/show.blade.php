@@ -174,11 +174,20 @@
                                     <button disabled class="flex px-6 py-2 ml-auto text-white bg-gray-500 border-0 rounded focus:outline-none"
                                     >{{ __('Out of Stock') }}</button>
                                 @endif
+
+                                @if(!$this->wishlistContains($product))
                                 <button class="inline-flex items-center justify-center w-10 h-10 p-0 ml-4 text-gray-500 bg-gray-200 border-0 rounded-full"
                                     wire:click="addToWishlist"
                                 >
-                                    <x-icons.heart/>
+                                    <x-icons.heart filled="false"/>
                                 </button>
+                                @else
+                                <button class="inline-flex items-center justify-center w-10 h-10 p-0 ml-4 text-gray-500 bg-gray-200 border-0 rounded-full"
+                                    wire:click="removeFromWishlist"
+                                >
+                                    <x-icons.heart filled="true"/>
+                                </button>
+                                @endif
                             </div>
                         </div>
                         

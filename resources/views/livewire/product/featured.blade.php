@@ -1,5 +1,5 @@
 <section class="text-gray-600 lg:px-32 body-font">
-  <div class="container flex flex-col items-center px-5 mx-auto md:flex-row">
+  <div class="container flex flex-col items-center py-12 px-5 mx-auto md:flex-row">
     
     <div class="flex flex-col items-center mb-16 text-center lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:items-start md:text-left md:mb-0">
       
@@ -43,11 +43,20 @@
                 {{ __('Out of Stock') }}
             </button>
             @endif
-            <button class="inline-flex px-6 py-2 ml-4 text-lg text-gray-700 bg-gray-100 border-0 rounded focus:outline-none hover:bg-gray-200"
-                wire:click='addToWishlist'
-            >
-                <x-icons.heart/>
-            </button>
+
+            @if(!$this->wishlistContains($product))
+                <button class="inline-flex px-6 py-2 ml-4 text-lg text-gray-700 bg-gray-100 border-0 rounded focus:outline-none hover:bg-gray-200"
+                    wire:click='addToWishlist'
+                >
+                    <x-icons.heart filled="false"/>
+                </button>
+            @else
+                <button class="inline-flex px-6 py-2 ml-4 text-lg text-gray-700 bg-gray-100 border-0 rounded focus:outline-none hover:bg-gray-200"
+                    wire:click='removeFromWishlist()'
+                >
+                    <x-icons.heart filled="true"/>
+                </button>
+            @endif
         </div>
 
 
