@@ -1,9 +1,10 @@
 <div>
-    <div class="flex flex-col w-full text-center">
-        <h1 class="mb-4 text-2xl font-medium text-gray-900 sm:text-3xl title-font">{{__('Reviews')}}</h1>
-    </div>
-
+    @if($reviews->count())
     <section class="text-gray-600 body-font">
+        <div class="flex flex-col w-full text-center">
+            <h1 class="mb-4 text-2xl font-medium text-gray-900 sm:text-3xl title-font">{{__('Reviews')}}</h1>
+        </div>
+
         <div class="w-full container flex flex-wrap py-12 mx-auto">
             
             <div class="flex flex-wrap w-full">
@@ -44,6 +45,7 @@
         </div>
         
     </section>
+    @endif
 
     @can('create',[App\Models\Review::class,$product])
     <section class="relative text-gray-600 body-font">
