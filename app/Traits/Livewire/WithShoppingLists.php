@@ -16,7 +16,7 @@ trait WithShoppingLists
      * 
      *      ADD
      * 
-     * **/
+     **/
 
     public function addToCart()
     {
@@ -48,7 +48,7 @@ trait WithShoppingLists
      * 
      *      UPDATE
      * 
-     * **/
+     **/
 
     public function updateCartProductQty($rowId, $qty)
     {
@@ -74,7 +74,7 @@ trait WithShoppingLists
      * 
      *      MOVE
      * 
-     * **/
+     **/
 
     public function moveToCart(Product $product)
     {
@@ -109,7 +109,7 @@ trait WithShoppingLists
      * 
      *      REMOVE
      * 
-     * **/
+     **/
 
     public function removeFromCart(?Product $product)
     {
@@ -141,7 +141,7 @@ trait WithShoppingLists
      * 
      *      CLEAR
      * 
-     * **/
+     **/
 
     public function deleteCart()
     {
@@ -162,7 +162,7 @@ trait WithShoppingLists
      * 
      *      NOTIFICATIONS
      * 
-     * **/
+     **/
 
     public function notifyCart()
     {
@@ -194,7 +194,7 @@ trait WithShoppingLists
      * 
      *      PERSIST LIST TO DB
      * 
-     * **/
+     **/
 
     public function persist($instance)
     {
@@ -211,7 +211,7 @@ trait WithShoppingLists
      * 
      *      UTILITIES
      * 
-     * **/
+     **/
 
     public function cartContains(Product $product)
     {

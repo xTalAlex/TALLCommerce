@@ -60,7 +60,7 @@
             <div class="relative w-full h-full bg-white keen-slider__slide">
                 <a href="{{ route('product.index', ['category' => $item->slug] ) }}">
                 <img class="object-cover w-full h-full" src="{{$item->hero}}"/>
-                <span class="absolute z-30 flex items-center justify-center w-full h-20 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-50 top-1/2 left-1/2 sm:text-3xl">
+                <span class="absolute z-30 flex items-center justify-center w-full h-20 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 bg-gray-900 bg-opacity-50 top-1/2 left-1/2 sm:text-3xl">
                     {{ $item->name }} 
                 </span>    
                 </a>
@@ -79,7 +79,7 @@
             <div class="flex justify-center py-2">
                 @foreach($items as $item)
                     <div class="w-3 h-3 p-1 mx-1 border-none rounded-full cursor-pointer"
-                        x-bind:class="currentIdx == {{ $loop->index }} ? 'bg-black' : 'bg-gray-400 '"
+                        x-bind:class="currentIdx == {{ $loop->index }} ? 'bg-gray-900' : 'bg-gray-400 '"
                         x-on:click="slider.moveToIdx({{ $loop->index }})" 
                     ></div>
                 @endforeach

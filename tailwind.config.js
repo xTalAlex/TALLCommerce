@@ -16,8 +16,8 @@ module.exports = {
                 sans: ['DM Sans' , ...defaultTheme.fontFamily.sans],
             },
             colors: { 
-                primary: colors.orange,
-                secondary : colors.violet,
+                primary: colors.violet,
+                secondary : colors.orange,
                 gray : colors.gray,
                 danger: colors.rose,
                 success: colors.green,

@@ -1,98 +1,103 @@
-<tr @class([
-            'border-b ', 
-            'dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-70' => !$invalid,
-            'dark:bg-red-600 dark:border-red-500 odd:bg-red-300 even:bg-red-400 odd:dark:bg-red-600 even:dark:bg-red-500' => $invalid
-        ]) 
->
-    <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-            wire:click.prevent="removeFromCart({{ $product->id }})"
-        >
-            {{ __('Remove') }}
-        </a>
-    </td>
-    <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-        <img class="h-20" src="{{ $product->image }}"/>
-    </td>
-    <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-        {{ $product->name }}
-    </td>
-    <td class="px-6 py-4">
-        @if($product->categories)
-            @foreach($product->categories as $category)
-                {{ $category->name}}
-                @if(!$loop->last)
-                    , 
-                @endif
-            @endforeach
-        @endif
-    </td>
-    <td class="px-6 py-4">
-        {{-- <select wire:model.lazy="item.qty">
-            @for( $i=1 ; $i<=($product->quantity>10 ? 10 : $product->quantity ) ; $i++)
-                <option value="{{$i}}" >{{ $i }}</option>
-            @endfor
-        </select> --}}
-        <div class="flex flex-col items-center justify-center"
-            x-data="{
-                initialValue : {{ $item['qty'] }},
-                min : $refs.inputNumber.min,
-                modified : false,
-                validate(event){
-                    {{-- if(event.target.value < event.target.min)
-                        event.target.value = event.target.min; --}}
-                        if(!$refs.inputNumber.value ||  $refs.inputNumber.value<0)
-                             $refs.inputNumber.value = 1;
-                        $dispatch('change', $refs.inputNumber.value);
-                        this.modified = false;
-                        $refs.inputNumber.value = {{ $item['qty']}};
-                },
-                increase(event){
-                    {{-- if(this.max && this.$refs.inputNumber.value<this.max)
-                    { --}}
-                        this.$refs.inputNumber.value++;
-                        this.modified = true;
-                    {{-- } --}}
-                },
-                decrease(event){
-                    if(this.min && this.$refs.inputNumber.value>this.min)
-                    {
-                        this.$refs.inputNumber.value--;
-                        this.modified = true;
-                    }
-                },
-            }"
-            wire:model.lazy="item.qty"
-        >
-            <div class="flex items-center justify-center">
-                <span class="w-8 h-full p-2 mr-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
-                    @click="decrease($event)"
-                >-</span>
-                <x-jet-input type="number" value="{{$item['qty']}}" min="1" max="999"
-                    @change.stop="modified=true"
-                    @input.stop=""
-                    x-ref="inputNumber"
-                />
-                <span class="w-8 h-full p-2 ml-2 font-medium text-center bg-gray-200 rounded-lg cursor-pointer select-none"
-                    @click="increase($event)"
-                >+</span>
+<div class="relative flex flex-wrap items-center mb-6 -mx-4 md:mb-3">
+    <div class="w-full px-4 mb-6 md:w-4/6 lg:w-6/12 md:mb-0">
+        <div class="flex flex-wrap items-center -mx-4">
+            <div class="w-full px-4 mb-3 md:w-1/3">
+                <a href="{{ route('product.show', $product) }}">
+                <div class="flex items-center justify-center w-full h-32 bg-gray-100 md:w-24"
+                >
+                    <img class="object-contain h-full" src="{{ $product->image }}" alt="{{ $product->name }}">
+                </div>
+                </a>
             </div>
-            <span class="px-1 py-1 mt-2 bg-green-200 rounded-lg cursor-pointer " style="display:none;" 
-                @click="validate()"
-                x-show="modified"
-            >{{ __('Check') }}</span>
+            <div class="w-full px-4 md:w-2/3">
+                <a href="{{ route('product.show', $product) }}">
+                <h3 @class([
+                        'mb-2 text-xl font-bold font-heading text',
+                        'text-red-500' => $invalid
+                    ])
+                >{{ $product->name }}</h3>
+                </a>
+                <p class="text-gray-500">
+                    @foreach($product->attributeValues as $attributeValue)
+                        {{ $attributeValue->value}}
+                        @if(!$loop->last)
+                            , 
+                        @endif
+                    @endforeach
+                </p>
+            </div>
         </div>
-    </td>
-    <td class="px-6 py-4">
-
-        <span >{{ $product->pricePerQuantity($item['qty']!='' ? $item['qty'] : 1) }}€</span>
-        
-    </td>
-    <td class="px-6 py-4 text-right">
-        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+        <a href="#" class="mt-2 text-sm font-medium text-primary-600 dark:text-primary-500 hover:underline"
             wire:click.prevent="moveToWishlist({{$product}})"
         >
             {{ __('shopping_cart.move.wishlist') }}
         </a>
-    </td>
-</tr>
+    </div>
+    <div class="hidden px-4 lg:block lg:w-2/12">
+        <p class="text-lg font-bold text-primary-500 font-heading">{{ $product->price }}€</p>
+        {{-- <span class="text-xs text-gray-500 line-through">$33.69</span> --}}
+    </div>
+    <div class="w-auto text-center md:w-1/6 lg:w-2/12"
+        x-data="{
+            initialValue : {{ $item['qty'] }},
+            min : $refs.inputNumber.min,
+            modified : false,
+            validate(){
+                {{-- if(event.target.value < event.target.min)
+                    event.target.value = event.target.min; --}}
+                    if(!$refs.inputNumber.value ||  $refs.inputNumber.value<0)
+                        $refs.inputNumber.value = 1;
+                    $dispatch('change', $refs.inputNumber.value);
+                    this.modified = false;
+                    $refs.inputNumber.value = {{ $item['qty']}};
+            },
+            increase(event){
+                {{-- if(this.max && this.$refs.inputNumber.value<this.max)
+                { --}}
+                    this.$refs.inputNumber.value++;
+                    this.modified = true;
+                    this.validate();
+                {{-- } --}}
+            },
+            decrease(event){
+                if(this.min && this.$refs.inputNumber.value>this.min)
+                {
+                    this.$refs.inputNumber.value--;
+                    this.modified = true;
+                    this.validate();
+                }
+            },
+        }"
+        wire:model.lazy="item.qty"
+    >
+        <div class="inline-flex items-center px-4 mx-auto font-semibold text-gray-500 border border-gray-200 rounded-md font-heading focus:ring-primary-300 focus:border-primary-300">
+            <button class="py-2 hover:text-gray-700"
+                @click="decrease($event)"
+            >
+                <x-icons.minus/>
+            </button>
+            <input class="w-12 px-2 py-4 m-0 text-center border-0 rounded-md md:text-right focus:ring-transparent focus:outline-none"
+                type="number" 
+                value="{{$item['qty']}}" min="1" max="999"
+                @change.stop="validate"
+                @input.stop=""
+                x-ref="inputNumber"
+            >
+            <button class="py-2 hover:text-gray-700"
+                @click="increase($event)"
+            >
+                <x-icons.plus/>
+            </button>
+        </div>
+    </div>
+    <div class="w-auto px-4 text-right md:w-1/6 lg:w-2/12">
+        <p class="text-lg font-bold text-primary-500 font-heading">
+            {{ $product->pricePerQuantity($item['qty']!='' ? $item['qty'] : 1) }}€
+        </p>
+    </div>
+    <a href="#" class="absolute top-0 right-0 font-medium text-primary-600 dark:text-primary-500 hover:underline"
+        wire:click.prevent="removeFromCart({{ $product->id }})"
+    >
+        <x-icons.x class="w-4 h-4 text-gray-600"/>
+    </a>
+</div>

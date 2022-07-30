@@ -27,7 +27,7 @@
     "Pricing" : "Pricing",
     "Original Price" : "Prezzo Originale",
     "Selling Price" : "Prezzo di vendita",
-    "Tax" : "Tassa",
+    "Tax" : "IVA",
     "Quantity" : "Quantità",
     "Low Stock Threshold" : "Soglia di \"In Esaurimento\"",
     "Settings" : "Impostazioni",
@@ -76,6 +76,7 @@
     "Min Total" : "Spesa Minima",
     "Active" : "Attivo",
     "Restrictions" : "Limitazioni",
+    "Apply Coupon Code" : "Applica Codice Coupon",
 
     "Category" : "Categoria",
     "Categories" : "Categorie",

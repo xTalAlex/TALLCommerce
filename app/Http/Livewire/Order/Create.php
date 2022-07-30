@@ -9,13 +9,15 @@ use Livewire\Component;
 use App\Models\OrderStatus;
 use App\Models\ShippingPrice;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\Livewire\WithCartTotals;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class Create extends Component
 {
+    use WithCartTotals;
+
     public Address $shipping_address;
     public Address $billing_address;
-
     public $same_address;
     public $addresses_confirmed;
 
@@ -24,19 +26,8 @@ class Create extends Component
     public $email;
     public $note;
 
-    public $content;
-    public $subtotal;
-    public $discountedSubtotal;
-    public $tax;
-    public $total;
-
     public $shipping_prices;
     public $shipping_price_id;
-    public $shipping_price;
-
-    public $coupon_code;
-    public $coupon;
-    public $coupon_error;
 
     protected $listeners = [
         'createOrder',
@@ -83,21 +74,18 @@ class Create extends Component
             $this->redirect(route('cart.index'));
         }
 
-        $this->content = Cart::instance('default')->content();
         $this->addresses_confirmed = false;
         $this->email = Auth::user() ? Auth::user()->email : null;
         //if addresses in session load instead of default
         if(Auth::user() && Auth::user()->defaultAddress){
             $this->shipping_address = Auth::user()->defaultAddress;
         }
+        else $this->shipping_address = new Address();
         $this->same_address = true;
 
         if((Auth::user() && Auth::user()->defaultAddress)){
             $this->confirmAddresses();
         }
-
-        $this->coupon_code = session()->get('coupon');
-        $this->coupon = Coupon::where('code',$this->coupon_code)->first();
 
         $this->shipping_prices = \App\Models\ShippingPrice::all();
         $this->shipping_price_id = session()->get('shipping_price') ?? $this->shipping_prices->first()->id;
@@ -105,17 +93,7 @@ class Create extends Component
             $this->shipping_price = $this->shipping_prices->where('id',$this->shipping_price_id)->first();
         }
 
-        if ($this->coupon) {
-            $this->subtotal = Cart::instance('default')->subtotal(); 
-            $this->discountedSubtotal = Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal());
-            $this->tax = round(config('cart.tax')/100 * $this->discountedSubtotal, 2);
-            $this->total = $this->discountedSubtotal + $this->tax;
-        }
-        else{
-            $this->subtotal = Cart::instance('default')->subtotal();
-            $this->tax = Cart::instance('default')->tax();
-            $this->total = Cart::instance('default')->total();
-        }
+        $this->refreshTotals();
         
     }
 
@@ -180,67 +158,6 @@ class Create extends Component
         ]);
     }
 
-    public function checkCoupon()
-    {
-        if ($this->coupon_code) {
-            $coupon = Coupon::where('code', $this->coupon_code)->first();
-            if ($coupon) {
-                if ($coupon->max_redemptions && $coupon->max_redemptions <= $coupon->redemptions)
-                {    
-                    $this->coupon=null;
-                    $this->coupon_error=__('Coupon Already Redeemed');
-                }
-                elseif($coupon->expires_on && $coupon->expires_on<now())
-                {
-                    $this->coupon=null;
-                    $this->coupon_error=__("Expired Coupon");
-                }
-                elseif($coupon->min_total && $this->total<$coupon->min_total)
-                {
-                    $this->coupon=null;
-                    $this->coupon_error=__("Required minimum total of").' '.($coupon->min_total).'€';
-                }
-                else
-                {
-                    $this->coupon=$coupon;
-                    $this->coupon_error=null;
-                    session()->put('coupon', $this->coupon->code);   
-                }
-            } else {
-                $this->coupon=null;
-                $this->coupon_error=__('Invalid Coupon');
-            }
-
-            if ($this->coupon) {
-                $this->subtotal = Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal());
-                $this->tax = round(config('cart.tax')/100 * $this->subtotal, 2 );
-                $this->total = $this->subtotal + $this->tax;
-            } else {
-                $this->subtotal = Cart::instance('default')->subtotal();
-                $this->tax = Cart::instance('default')->tax();
-                $this->total = Cart::instance('default')->total();
-            }
-        }
-    }
-
-    public function removeCoupon()
-    {
-        $this->coupon=null;
-        $this->coupon_code=null;
-        session()->forget('coupon');
-
-        if ($this->coupon) {
-            $this->subtotal = Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal());
-            $this->tax = round(config('cart.tax')/100);
-            $this->total = $this->subtotal + $this->tax;
-        }
-        else{
-            $this->subtotal = Cart::instance('default')->subtotal();
-            $this->tax = Cart::instance('default')->tax();
-            $this->total = Cart::instance('default')->total();
-        }
-    }
-
     public function createOrder($payment_id, $gateway)
     {
         $validated = $this->validate([
@@ -286,13 +203,13 @@ class Create extends Component
             ]);
 
             $pivots = [];
-            foreach ($this->content as $item) {
-                $pivots[$item['id']] = [
-                'price' => $item['price'],
-                'quantity' => $item['qty'],
+            foreach (Cart::instance('default')->content() as $item) {
+                $pivots[$item->id] = [
+                'price' => $item->price,
+                'quantity' => $item->qty,
             ];
-                $product=\App\Models\Product::find($item['id']);
-                $product->quantity = ($product->quantity >$item['qty']) ? $product->quantity-$item['qty'] : 0;
+                $product=\App\Models\Product::find($item->id);
+                $product->quantity = ($product->quantity >$item->qty) ? $product->quantity-$item->qty : 0;
                 $product->save();
             }
             $this->order->products()->attach($pivots);

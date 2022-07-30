@@ -15,7 +15,7 @@
             <x-icons.star/>
             <x-icons.star/>
             <x-icons.star/>
-            <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3"
+            <span class="bg-primary-100 text-primary-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 ml-3"
             >5.0</span>
         </div>
 
@@ -32,7 +32,7 @@
 
         <div class="flex justify-center">
             @if($product->quantity)
-            <button class="inline-flex px-6 py-2 text-lg text-white bg-indigo-500 border-0 rounded focus:outline-none hover:bg-indigo-600"
+            <button class="inline-flex px-6 py-2 text-lg text-white bg-primary-500 border-0 rounded focus:outline-none hover:bg-primary-600"
                 wire:click='addToCart'
             >
                 {{ __('Add to cart') }}<x-icons.cart class="ml-1" />

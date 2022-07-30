@@ -4,20 +4,17 @@ namespace App\Http\Livewire\Cart;
 
 use App\Models\Product;
 use Livewire\Component;
+use App\Traits\Livewire\WithCartTotals;
 use App\Traits\Livewire\WithShoppingLists;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class Index extends Component
 {
-    use WithShoppingLists;
+    use WithShoppingLists, WithCartTotals;
     
     public $invalid_quantity_row_ids;
     public $content;
     public $count;
-
-    public $subtotal;
-    public $tax;
-    public $total;
 
     protected $listeners = [
         'updatedCart' => 'mount',
@@ -28,26 +25,24 @@ class Index extends Component
         $this->content = Cart::instance('default')->content();
         $this->count = Cart::instance('default')->count();
         $this->updatePrices();
-        $this->subtotal =  Cart::instance('default')->subtotal();
-        $this->tax =  Cart::instance('default')->tax();
-        $this->total =  Cart::instance('default')->total();
+        $this->refreshTotals();
     }
 
     public function updatePrices()
     {
         $price_changed = false;
-        foreach(Cart::instance('default')->content() as $key=>$item)
+        foreach($this->content as $rowId=>$item)
         {
             if ($item->model)
             {
                 if ($item->model->price != $item->price) {
                     $price_changed = true;
                 }
-                Cart::instance('default')->update($key, $item->model);
+                Cart::instance('default')->update($rowId, $item->model);
             }
             else
             {
-                Cart::remove($key);
+                Cart::remove($rowId);
                 $this->count = Cart::instance('default')->count();
                 //notify user item no more avaiable
             }
@@ -57,12 +52,13 @@ class Index extends Component
 
     public function checkProductsQuantity()
     {
+        $this->content = Cart::instance('default')->content();
         $this->invalid_quantity_row_ids = array();
-        foreach($this->content as $item)
+        foreach($this->content as $rowId=>$item)
         {
             if($item->model->quantity < $item->qty)
             {
-                array_push($this->invalid_quantity_row_ids, $item->rowId);
+                array_push($this->invalid_quantity_row_ids, $rowId);
             }
         }
     }

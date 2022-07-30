@@ -126,7 +126,7 @@
                                     <div class="flex items-center ml-6">
                                         <span class="mr-3 capitalize">{{$name}}</span>
                                         <div class="relative">
-                                            <select class="py-2 pl-3 pr-10 text-base border border-gray-300 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500"
+                                            <select class="py-2 pl-3 pr-10 text-base border border-gray-300 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500"
                                                 wire:model="selection.{{$id}}"
                                             >
                                                 @foreach ( $variantsAttributeValues->where('attribute.id',$id) as $attributeValue )
@@ -167,7 +167,7 @@
 
                             <div class="flex">
                                 @if($product->quantity)
-                                    <button class="flex px-6 py-2 ml-auto text-white bg-indigo-500 border-0 rounded focus:outline-none hover:bg-indigo-600"
+                                    <button class="flex px-6 py-2 ml-auto text-white bg-primary-500 border-0 rounded focus:outline-none hover:bg-primary-600"
                                         wire:click="addToCart"
                                     >{{ __('Add to cart') }}<x-icons.cart class="ml-1" /></button>
                                 @else

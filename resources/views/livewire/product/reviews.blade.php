@@ -11,13 +11,13 @@
                 @foreach($reviews as $review)
                 <div class="w-full p-4">
                     <div class="bg-white flex flex-col p-8 border-2 border-gray-200 border-opacity-50 rounded-lg sm:flex-row">
-                    <div class="inline-flex items-center justify-center flex-shrink-0 w-16 h-16 mb-4 text-indigo-500 bg-indigo-100 rounded-full sm:mr-8 sm:mb-0">
+                    <div class="inline-flex items-center justify-center flex-shrink-0 w-16 h-16 mb-4 text-primary-500 bg-primary-100 rounded-full sm:mr-8 sm:mb-0">
                         <img src="{{ $review->user->profile_photo_url }}" class="rounded-full" />
                     </div>
                     <div class="flex-grow">
                         <h2 class="text-lg font-medium text-gray-900 title-font">{{ $review->user->name }}</h2>
                         <p class="text-xs text-gray-600">{{ $review->created_at->format(config('custom.datetime_format')) }}</p>
-                        <p class="inline-flex items-center mt-4 text-indigo-500">
+                        <p class="inline-flex items-center mt-4 text-primary-500">
                             @for ($i = 1; $i <= $review->rating; $i++) 
                                 <x-icons.star/>  
                             @endfor
@@ -66,7 +66,7 @@
                             }"
                         >
                             <label for="rating" class="text-sm leading-7 text-gray-600">{{ __('Rating') }}</label>
-                            <input type="number" id="rating" min="0" max="5" name="rating" class="hidden w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200"
+                            <input type="number" id="rating" min="0" max="5" name="rating" class="hidden w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-200"
                                 x-bind:value="rating"
                             >
                             <div>
@@ -90,7 +90,7 @@
                                     max_chars : 500,
                                 }"
                         >
-                            <textarea id="description" name="description" :maxlength="max_chars" class="w-full h-32 px-3 py-1 text-base leading-6 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none resize-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200"
+                            <textarea id="description" name="description" :maxlength="max_chars" class="w-full h-32 px-3 py-1 text-base leading-6 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none resize-none focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-200"
                                 x-model="value"
                             ></textarea>
                             <p class="text-xs"
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="w-full p-2">
-                        <button type="submit" class="flex px-8 py-2 mx-auto text-lg text-white bg-indigo-500 border-0 rounded focus:outline-none hover:bg-indigo-600">{{ __('Submit') }}</button>
+                        <button type="submit" class="flex px-8 py-2 mx-auto text-lg text-white bg-primary-500 border-0 rounded focus:outline-none hover:bg-primary-600">{{ __('Submit') }}</button>
                     </div>
                 </div>
                 </form>

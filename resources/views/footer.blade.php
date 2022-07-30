@@ -56,9 +56,9 @@
         <div class="flex flex-wrap items-end justify-center xl:flex-nowrap md:flex-nowrap lg:flex-wrap md:justify-start">
           <div class="relative w-40 mr-2 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4">
             <label for="footer-field" class="text-sm leading-7 text-gray-600"></label>
-            <input type="text" id="footer-field" name="footer-field" class="w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:bg-transparent focus:ring-2 focus:ring-purple-200 focus:border-purple-500">
+            <input type="text" id="footer-field" name="footer-field" class="w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:bg-transparent focus:ring-2 focus:ring-secondary-200 focus:border-secondary-500">
           </div>
-          <button class="inline-flex flex-shrink-0 px-6 py-2 text-white bg-purple-500 border-0 rounded lg:mt-2 xl:mt-0 focus:outline-none hover:bg-purple-600">Button</button>
+          <button class="inline-flex flex-shrink-0 px-6 py-2 text-white border-0 rounded bg-secondary-500 lg:mt-2 xl:mt-0 focus:outline-none hover:bg-secondary-600">Button</button>
         </div>
         <p class="mt-2 text-sm text-center text-gray-500 md:text-left">{{ __('Register to our newsletter') }}
         </p>
