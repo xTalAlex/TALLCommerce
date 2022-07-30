@@ -38,9 +38,10 @@
                         @if(count($this->gallery) > 2)
                             <div class="inline-flex mx-auto mt-6 space-x-2">
                             @foreach ($this->gallery as $image )
-                                <div class="border">
-                                    <img class="object-contain w-24 h-24" src="{{ $image }}" 
-                                        @click="changeImage('{{ $image }}')"
+                                <div class="border cursor-pointer"
+                                    @click="changeImage('{{ $image }}')"
+                                >
+                                    <img class="object-contain w-24 h-24" src="{{ $image }}"     
                                     />
                                 </div>
                             @endforeach
