@@ -288,7 +288,7 @@
                         @{{/avg_rating}}
                         
                     </h2>
-                    <h3 class="mb-2 font-medium">
+                    <h3 class="h-12 mb-2 font-medium">
                         @{{#short_description}}
                             @{{#helpers.snippet}}
                                     { "attribute": "short_description" }
@@ -301,9 +301,9 @@
                                 @{{stock_status}}
                             @{{/has_variants}}
                         </span>
-                        <div class="flex flex-col">
+                        <div class="relative flex flex-col">
                             @{{#discount}}
-                                <span class="ml-4 text-base text-gray-900 line-through dark:text-white">
+                                <span class="absolute ml-4 text-base text-gray-900 line-through -right-2 -top-4 dark:text-white">
                                     @{{original_price}}€
                                 </span>
                             @{{/discount}}

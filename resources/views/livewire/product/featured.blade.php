@@ -38,8 +38,7 @@
                 {{ __('Add to cart') }}<x-icons.cart class="ml-1" />
             </button>
             @else
-            <button class="inline-flex px-6 py-2 text-lg text-white bg-gray-500 border-0 rounded focus:outline-none hover:bg-gray-600"
-                wire:click='addToCart'
+            <button class="inline-flex px-6 py-2 text-lg text-white bg-gray-500 border-0 rounded focus:outline-none"
             >
                 {{ __('Out of Stock') }}
             </button>

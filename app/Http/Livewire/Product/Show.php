@@ -10,15 +10,15 @@ class Show extends Component
 {
     use WithShoppingLists;
 
+    public $variant_id;
     public $variantsAttributeValues;
     public $variantsAttributeSets;
     public $attributes;
     public $selection;
-    public $reviews;
-    public $gallery;
 
     public function mount()
     {
+        $this->variant_id = $this->product->variant_id == null || $this->product->variant_id == $this->id ? $this->product->id :  $this->product->variant_id;
         $this->variantsAttributeValues = $this->product->variantsAttributeValues();
         $this->variantsAttributeSets = $this->product->variantsAttributeSets();
         if ($this->variantsAttributeValues) {
@@ -27,22 +27,6 @@ class Show extends Component
                 $this->selection[$attributeValue->attribute->id] = $attributeValue->id;
             }
         }
-        if($this->product->hasImage())
-        {
-            $this->gallery = $this->product->gallery;
-        }
-        else
-        {
-            if($this->product->defaultVariant()->exists())
-            {
-                $this->gallery = $this->product->defaultVariant->gallery;
-            }
-            else
-            {
-                $this->gallery = [$this->product->image];
-            }
-        }
-        $this->reviews = $this->product->defaultVaraint ? $this->product->defaultVariant->reviews : $this->product->reviews;
     }
 
     public function variantExists($attribute,$value)
@@ -54,17 +38,70 @@ class Show extends Component
 
     public function updatedSelection($value)
     {
-        $product = Product::withCount(['attributeValues' => fn($query) => $query->whereIn('id',$this->selection)])
+        $product = Product::where(fn($query) => $query->where('variant_id',$this->variant_id)->orWhere('id',$this->variant_id))
+                        ->withCount(['attributeValues' => fn($query) => $query->whereIn('id',$this->selection)])
                         ->having('attribute_values_count','=',count($this->selection))->first();
         if(!$product)
-            $product = Product::whereHas('attributeValues', fn($query) => $query->where('id',$value))->first();
-
+            $product = Product::where(fn($query) => $query->where('variant_id',$this->variant_id)->orWhere('id',$this->variant_id))
+                        ->whereHas('attributeValues', fn($query) => $query->where('id',$value))->first();
         $this->product = $product;
             
         foreach($this->product->attributeValues as $attributeValue)
         {
             $this->selection[$attributeValue->attribute->id] = $attributeValue->id;
         }
+    }
+
+    public function getGalleryProperty()
+    {
+        if($this->product->hasImage())
+        {
+            $gallery = $this->product->gallery;
+        }
+        else
+        {
+            if($this->product->defaultVariant()->exists())
+            {
+                $gallery = $this->product->defaultVariant->gallery;
+            }
+            else
+            {
+                $gallery = [$this->product->image];
+            }
+        }
+
+        return $gallery;
+    }
+
+    public function getDescriptionProperty()
+    {
+        $description = $this->product->description;
+        if(!$description && $this->product->defaultVariant)
+            $description = $this->product->defaultVariant->description;
+        return $description;
+    }
+
+    public function getAvgRatingProperty()
+    {
+        return $this->product->variant_id == null || $this->product->variant_id == $this->id ? 
+                    $this->product->avg_rating : $this->product->defaultVariant->avg_rating;
+    }
+
+    public function getReviewsProperty()
+    {
+        return $this->product->defaultVaraint ? $this->product->defaultVariant->reviews : $this->product->reviews;
+    }
+
+    public function shouldSelectVariantByImage()
+    {
+        return ($this->product->defaultVariant || $this->product->variants()->count()) 
+                && !$this->variantsAttributeSets;
+    }
+
+    public function shouldSelectVariantByAttribute()
+    {
+        return ($this->product->defaultVariant || $this->product->variants()->count()) 
+                && $this->variantsAttributeSets;
     }
 
     public function render()

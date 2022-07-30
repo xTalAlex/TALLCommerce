@@ -39,7 +39,7 @@ class ReviewController extends Controller
 
         $validated = $request->validate([
             'rating' => 'required|numeric|min:0|max:5',
-            'description' => 'nullable',
+            'description' => 'nullable|max:500',
         ]);
 
         if($product->defaultVariant)
