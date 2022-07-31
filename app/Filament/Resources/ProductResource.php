@@ -304,7 +304,7 @@ class ProductResource extends Resource
                         ->form([
                             Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
                                 ->numeric()
-                                ->suffix('or less'),
+                                ->suffix(__('or less')),
                         ])
                         ->query(function (Builder $query, array $data): Builder {
                             return $query
