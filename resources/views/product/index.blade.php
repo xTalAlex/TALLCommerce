@@ -254,7 +254,59 @@
             </div>
             
         </div>
-        
+    
+    </div>
+
+    <div class="mt-12 bg-white dark:bg-gray-800"
+        x-data="{
+            playing : false,
+            togglePlaying(){
+                this.playing = !this.playing;
+                if(this.playing)
+                    $refs.audio.play();
+                else
+                    $refs.audio.pause();
+            }
+        }"
+        x-init="
+        "
+    >
+        <div class="flex flex-col max-w-5xl px-6 pt-12 mx-auto overflow-hidden md:flex-row">
+            
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-900 font-display dark:text-white sm:text-3xl">
+                    {{ __('Shopping Music') }}
+                </h2>
+                
+                <p class="max-w-xl mt-2 text-base text-gray-400">
+                    {{ __('Play some music while you search your products') }}
+                </p>
+                
+                <div class="mt-6 sm:flex jusitfy-start">
+                    <div class="flex flex-col justify-center w-3/4 max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0">
+                        <button class="flex-shrink-0 w-1/2 px-4 py-2 text-base font-semibold text-white uppercase rounded-lg shadow-md bg-secondary-600 hover:bg-secondary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-primary-200" type="submit"
+                            x-text="playing ? 'Pause' : 'Play'"
+                            x-on:click="togglePlaying"
+                        >
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ml-auto mr-0">
+                <audio src="/music/fleta.mp3"
+                    x-ref="audio"
+                >
+                        Your browser does not support the
+                        <code>audio</code> element.
+                </audio>
+                <picture>
+                    <source srcset="img/fleta.gif" type="image/gif"/>
+                    <img class="object-contain w-1/2 mx-auto maw-w-44" alt="shopping item"/>
+                </picture>
+            </div>
+            
+        </div>
     </div>
 
     @push('scripts')
