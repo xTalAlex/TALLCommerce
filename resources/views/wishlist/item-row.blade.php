@@ -30,18 +30,12 @@
     <div class="w-full px-4 text-center md:w-1/5">
         <div @class([
                 'p-2 pl-5 pr-5  text-gray-100 text-lg rounded-lg focus:border-4 ',
-                'bg-green-500 border-green-300' => $product->quantity && $product->quantity > config('custom.stock_threshold'),
-                'bg-yellow-500 border-yellow-300' => $product->quantity && $product->quantity <= config('custom.stock_threshold'),
-                'bg-gray-500 border-gray-300' => !$product->quantity
+                'bg-green-500 border-green-300' => $product->quantity && !$product->isLowStock(),
+                'bg-yellow-500 border-yellow-300' => $product->quantity && $product->isLowStock(),
+                'bg-gray-800 border-gray-600' => !$product->quantity
             ])
         >
-            @if(!$product->quantity)
-                {{__('Out of Stock')}}
-            @elseif($product->quantity && $product->quantity > config('custom.stock_threshold'))
-                {{ trans_choice('Avaiable',1) }}
-            @else
-                {{ __('Low Stock') }}
-            @endif
+            {{ $product->stock_status }}
         </div>
     </div>
 

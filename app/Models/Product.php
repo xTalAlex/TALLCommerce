@@ -183,14 +183,20 @@ class Product extends Model implements Buyable , HasMedia
         $this->attributes['slug'] = $slug;
     } 
 
-    public function getStockStatusAttribute()
+    public function isLowStock()
     {
         $low_stock_threshold = $this->low_stock_threshold ?? config('custom.stock_threshold');
+        return $this->quantity >= 1 && $this->quantity <= $low_stock_threshold;
+    }
+
+    public function getStockStatusAttribute()
+    {
+        
         if($this->quantity < 1)
         {
             $status = __('Out of Stock');
         }
-        elseif($this->quantity >= 1 && $this->quantity <= $low_stock_threshold)
+        elseif($this->isLowStock())
         {
             $status = __('Low Stock');
         }
