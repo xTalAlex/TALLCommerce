@@ -260,14 +260,18 @@
     @push('scripts')
 
         <script id="empty" type="text/html">
-            <p class="mt-2 text-center">
-                @{{#query}}
-                {{__('No results for') }} <strong>@{{query}}
-                @{{/query}}
-                @{{^query}}
-                {{__('No results') }}
-                @{{/query}}
-            </strong></p>
+            <div class="flex flex-col items-center justify-center py-12">
+                <p class="mt-2 text-xl text-center">
+                    @{{#query}}
+                    {{__('No results for') }} 
+                    <strong>@{{query}}</strong>
+                    @{{/query}}
+                    @{{^query}}
+                    {{__('No results') }}
+                    @{{/query}}
+                </p>
+                <img class="h-64" src="{{ asset('img/searching.gif') }}"/>
+            </div>
         </script>
 
         <script id="item" type="text/html">
