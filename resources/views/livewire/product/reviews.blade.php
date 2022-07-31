@@ -5,13 +5,13 @@
             <h1 class="mb-4 text-2xl font-medium text-gray-900 sm:text-3xl title-font">{{__('Reviews')}}</h1>
         </div>
 
-        <div class="w-full container flex flex-wrap py-12 mx-auto">
+        <div class="container flex flex-wrap w-full py-12 mx-auto">
             
             <div class="flex flex-wrap w-full">
                 @foreach($reviews as $review)
                 <div class="w-full p-4">
-                    <div class="bg-white flex flex-col p-8 border-2 border-gray-200 border-opacity-50 rounded-lg sm:flex-row">
-                    <div class="inline-flex items-center justify-center flex-shrink-0 w-16 h-16 mb-4 text-primary-500 bg-primary-100 rounded-full sm:mr-8 sm:mb-0">
+                    <div class="flex flex-col p-8 bg-white border-2 border-gray-200 border-opacity-50 rounded-lg sm:flex-row">
+                    <div class="inline-flex items-center justify-center flex-shrink-0 w-16 h-16 mb-4 rounded-full text-primary-500 bg-primary-100 sm:mr-8 sm:mb-0">
                         <img src="{{ $review->user->profile_photo_url }}" class="rounded-full" />
                     </div>
                     <div class="flex-grow">
@@ -25,7 +25,7 @@
                                 <x-icons.star-empty/>  
                             @endfor
                         </p>
-                        <p class="text-base leading-relaxed mt-4">{{ $review->description }}</p>
+                        <p class="mt-4 text-base leading-relaxed">{{ $review->description }}</p>
                         
                         @can('delete', $review)
                         <div class="flex justify-end ">
@@ -38,7 +38,7 @@
                 @endforeach
             </div>
 
-            <div class="mt-6 w-full">
+            <div class="w-full mt-6">
                 {{ $reviews->links() }}
             </div>
 
@@ -49,13 +49,13 @@
 
     @can('create',[App\Models\Review::class,$product])
     <section class="relative text-gray-600 body-font">
-        <div class="w-full py-12 mx-auto bg-white">
+        <div class="w-full px-8 py-12 mx-auto bg-white md:px-0">
             <div class="flex flex-col w-full text-center">
                 <h1 class="mb-4 text-2xl font-medium text-gray-900 sm:text-3xl title-font">
                 {{__('Leave a Review')}}
                 </h1>
             </div>
-            <div class="mx-auto w-full md:w-1/2">
+            <div class="w-full mx-auto md:w-1/2">
                 <form action="{{ route('review.store', $product) }}" method="POST" >
                 @csrf
                 <div class="flex flex-wrap -m-2">
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="w-full p-2">
-                        <button type="submit" class="flex px-8 py-2 mx-auto text-lg text-white bg-primary-500 border-0 rounded focus:outline-none hover:bg-primary-600">{{ __('Submit') }}</button>
+                        <button type="submit" class="flex px-8 py-2 mx-auto text-lg text-white border-0 rounded bg-primary-500 focus:outline-none hover:bg-primary-600">{{ __('Submit') }}</button>
                     </div>
                 </div>
                 </form>
