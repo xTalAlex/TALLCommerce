@@ -293,7 +293,7 @@
                 </div>
             </div>
             
-            <div class="ml-auto mr-0">
+            <div class="mt-4 ml-auto mr-0 md:mt-0">
                 <audio src="/music/fleta.mp3"
                     x-ref="audio"
                 >
