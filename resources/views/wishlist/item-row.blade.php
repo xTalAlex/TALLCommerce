@@ -52,7 +52,7 @@
             @disabled(!$product->quantity)
             wire:click.prevent="moveToCart({{$product}})"
         >
-            {{ __('shopping_cart.move.cart') }}<x-icons.cart class="ml-1" /></button>
+            {{ __('shopping_cart.move.cart') }}<x-icons.cart class="ml-1" />
         </button>
         @endif
     </div>
