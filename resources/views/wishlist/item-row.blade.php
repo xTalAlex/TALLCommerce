@@ -29,7 +29,7 @@
 
     <div class="w-full px-4 text-center md:w-1/5">
         <div @class([
-                'p-2 pl-5 pr-5  text-gray-100 text-lg rounded-lg focus:border-4 ',
+                'p-2 w-32 mx-auto text-gray-100 rounded-md focus:border-4 ',
                 'bg-green-500 border-green-300' => $product->quantity && !$product->isLowStock(),
                 'bg-yellow-500 border-yellow-300' => $product->quantity && $product->isLowStock(),
                 'bg-gray-800 border-gray-600' => !$product->quantity
@@ -47,12 +47,14 @@
     </div>
 
     <div class="w-full px-4 mt-6 text-center md:w-1/5 md:mt-0">
+        @if($product->quantity)
         <button class="flex px-6 py-2 ml-auto text-white border-0 rounded disabled:bg-primary-400 bg-primary-500 focus:outline-none hover:bg-primary-600"
             @disabled(!$product->quantity)
             wire:click.prevent="moveToCart({{$product}})"
         >
-            {{ __('shopping_cart.move.cart') }}
+            {{ __('shopping_cart.move.cart') }}<x-icons.cart class="ml-1" />
         </button>
+        @endif
     </div>
 
     <a href="#" class="absolute top-0 right-0 font-medium text-primary-600 dark:text-primary-500 hover:underline"
