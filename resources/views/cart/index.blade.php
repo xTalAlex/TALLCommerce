@@ -7,10 +7,8 @@
 <div class="py-12">
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
+
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                @if(count($invalid_quantity_row_ids))
-                    <div class="px-4 py-2 my-4 text-red-500 bg-red-200"> {{ __('Some products are no more avaiable') }}</div>
-                @endif
 
                 <div class="px-4 mx-auto">
                     <div class="p-8 bg-white lg:p-20">
@@ -21,6 +19,10 @@
                         <h4 class="mb-20 text-lg text-gray-600 font-heading">
                             {!! trans_choice('shopping_cart.cart.count', $count) !!}
                         </h4>
+
+                        @if(count($invalid_quantity_row_ids))
+                            <div class="px-4 py-2 my-4 text-red-500 bg-red-200"> {{ __('Some products are no more avaiable') }}</div>
+                        @endif
 
                         @if($count)
                         <div class="flex flex-wrap items-center -mx-4">

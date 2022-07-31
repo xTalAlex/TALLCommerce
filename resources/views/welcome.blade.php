@@ -26,5 +26,9 @@
     </div>
 
     <x-logo-cloud class="mt-12" :items="$brands"/>
+
+    <div class="mt-12"> 
+        @include('contacts')
+    </div>
     
 </x-app-layout>

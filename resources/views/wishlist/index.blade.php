@@ -7,104 +7,85 @@
 <div class="py-12">
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-
+            
             @guest
-                <p class="p-2 my-2 bg-yellow-200">
-                    <a class="underline" href="{{ route('register') }}">{{ __('Register to save your wishlist') }}</a>
-                </p>
-            @endguest        
-                
+            <div class="relative h-auto text-white bg-opacity-50 bg-center bg-cover" 
+                style="background-image: url(https://images.unsplash.com/photo-1508849789987-4e5333c12b78?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=993&q=80)"
+            >
+                <div class="w-full h-full px-10 py-16 bg-black bg-opacity-50">
+                    <div class="md:w-1/2">
+                        <p class="text-sm font-bold uppercase">{{ __('Pro Tips') }}</p>
+                        <p class="text-3xl font-bold">{{ __('Register to save your wishlist') }}</p>
+                        <p class="mb-10 text-2xl leading-none">{{ __('E per rimanere aggiornato su tutte le novità') }}</p>
+                        <a href="{{ route('register') }}" class="px-8 py-4 text-xs font-bold text-white uppercase rounded bg-primary-800 hover:bg-gray-200 hover:text-gray-800"
+                        >{{ __('Register') }}</a>
+                    </div> 
+                </div>    
+            </div>
+            @endguest  
+
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
-                    <h3 class="my-3 ml-3">{!! trans_choice('shopping_cart.wishlist.count', $count) !!}</h3>
+                <div class="px-4 mx-auto">
+                    <div class="p-8 bg-white lg:p-20">
 
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                <span class="sr-only">{{ __('Remove') }}</span>
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                <span class="sr-only">{{ __('Image') }}</span>
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                {{ __('Name') }}
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                {{ __('Categories') }}
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                {{ trans_choice('Avaiable',1) }}
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                {{ __('Price') }}
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                <span class="sr-only">{{ __('shopping_cart.move.cart') }}</span>
-                            </th>
-                        </tr>
-                    </thead>
+                        <h2 class="mb-4 text-4xl font-bold font-heading">
+                            {{ __('Wishlist') }}
+                        </h2>
+                        <h4 class="mb-20 text-lg text-gray-600 font-heading">
+                            {!! trans_choice('shopping_cart.wishlist.count', $count) !!}
+                        </h4>
 
-                    <tbody>
-                        @foreach( Cart::instance('wishlist')->content() as $item)
-                        <tr class="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                <a href="#" class="font-medium text-primary-600 dark:text-primary-500 hover:underline"
-                                    wire:click.prevent="removeFromWishlist({{ $item->model->id }})"
-                                >
-                                    {{ __('Remove') }}
-                                </a>
-                            </td>
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                <img class="h-20" src="{{ $item->model->image }}"/>
-                            </td>
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                <a href="{{ route('product.show', $item->model) }}">{{ $item->model->name }}</a>
-                            </td>
-                            <td class="px-6 py-4">
-                                @if($item->model->categories)
-                                    @foreach($item->model->categories as $category)
-                                        {{ $category->name}}
-                                        @if(!$loop->last)
-                                            , 
-                                        @endif
+                        @if($count)
+                        <div class="flex flex-wrap items-center -mx-4">
+                            <div class="w-full px-4">
+
+                                <div class="hidden w-full lg:flex">
+                                    <div class="w-full lg:w-2/5">
+                                        <h4 class="mb-6 font-bold text-gray-500 font-heading">
+                                            {{__('Description')}}
+                                        </h4>
+                                    </div>
+                                    <div class="w-full text-center lg:w-1/5">
+                                        <h4 class="mb-6 font-bold text-gray-500 font-heading">
+                                            {{__('Avaiability')}}
+                                        </h4>
+                                    </div>
+                                    <div class="w-full text-center lg:w-1/5">
+                                        <h4 class="mb-6 font-bold text-gray-500 font-heading">
+                                            {{__('Price')}}
+                                        </h4>
+                                    </div>
+                                    <div class="w-full text-right lg:w-1/5">
+                                        <h4 class="mb-6 font-bold text-gray-500 sr-only font-heading">
+                                            {{ __('shopping_cart.move.cart') }}
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div class="py-6 mb-12 border-t border-b border-gray-200">
+                                    @foreach( $content as $rowId=>$item )
+                                        <livewire:wishlist.item-row 
+                                            :item="collect($item)"
+                                        />
                                     @endforeach
-                                @endif
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $item->model->quantity ? trans_choice('Avaiable',1) : __('Out of Stock') }}
+                                </div>
 
-                                @if($item->model->quantity && $item->model->quantity < config('custom.stock_threshold'))
-                                    {{ __('Low Stock') }}
-                                @endif
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $item->model->price}}€
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                @if($item->model->quantity)
-                                <a href="#" class="font-medium text-primary-600 dark:text-primary-500 hover:underline"
-                                    wire:click.prevent="moveToCart({{$item->model}})"
-                                >
-                                    {{ __('shopping_cart.move.cart') }}
-                                </a>
-                                @else
-                                <span>-</span>
-                                @endif
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            </div>
+                                                    
+                        </div>
+                        @endif
+
+                    </div>
+                </div>
                 
-                @if(Cart::instance('wishlist')->count())
-                    <div class="mt-10 sm:mt-0">
+                @if($count)
+                    <div class="flex items-center justify-between mx-5 mb-2">
                         @livewire('wishlist.destroy-form')
                     </div>
                 @endif
 
-            </div>
+            </div>      
           
         </div>
     </div>
