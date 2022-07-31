@@ -29,7 +29,7 @@
 
     <div class="w-full px-4 text-center md:w-1/5">
         <div @class([
-                'p-2 text-gray-100 rounded-md focus:border-4 ',
+                'p-2 w-32 mx-auto text-gray-100 rounded-md focus:border-4 ',
                 'bg-green-500 border-green-300' => $product->quantity && !$product->isLowStock(),
                 'bg-yellow-500 border-yellow-300' => $product->quantity && $product->isLowStock(),
                 'bg-gray-800 border-gray-600' => !$product->quantity
