@@ -15,7 +15,7 @@ class MediaObserver
      */
     public function created(Media $media)
     {
-        if( $media->model::class == "App\Models\Product" && $media->model->shouldBeSearchable() )
+        if( $media->model && $media->model::class == "App\Models\Product" && $media->model->shouldBeSearchable() )
             $media->model->searchable();
             
     }
@@ -28,7 +28,7 @@ class MediaObserver
      */
     public function updated(Media $media)
     {
-        if( $media->model::class == "App\Models\Product" && $media->model->shouldBeSearchable() )
+        if( $media->model && $media->model::class == "App\Models\Product" && $media->model->shouldBeSearchable() )
             $media->model->searchable();
     }
 
@@ -40,7 +40,7 @@ class MediaObserver
      */
     public function deleted(Media $media)
     {
-        if( $media->model::class == "App\Models\Product" && $media->model->shouldBeSearchable() )
+        if( $media->model && $media->model::class == "App\Models\Product" && $media->model->shouldBeSearchable() )
             $media->model->searchable();
     }
 

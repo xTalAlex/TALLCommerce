@@ -23,4 +23,6 @@ return [
     "payment.failed" => "Payment failed. Please try another payment method",
     "payment.error" => "Something went wrong",
     "payment.not_found" => "Error while fetching payment info",
+
+    "product.not_found" => "Product not avaiable",
 ];

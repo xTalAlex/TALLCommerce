@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Support\Facades\Storage;
 use Filament\Models\Contracts\HasAvatar;
@@ -113,10 +114,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
      */
     protected function defaultProfilePhotoUrl()
     {
-        $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
-            return mb_substr($segment, 0, 1);
-        })->join(' '));
-
-        return 'https://ui-avatars.com/api/?name='.urlencode($name).'&background=F97316&color=4C1D95';
+        // $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
+        //     return mb_substr($segment, 0, 1);
+        // })->join(' '));
+        // return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=8B5CF6&background=F97316&bold=true';
+        
+        return 'https://www.gravatar.com/avatar/'.Hash::make(Str::lower($this->email)).'?d=robohash';
     }
 }

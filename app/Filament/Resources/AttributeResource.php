@@ -51,6 +51,7 @@ class AttributeResource extends Resource
                                     ->unique(ignorable: fn (?Attribute $record): ?Attribute => $record), 
                                 Forms\Components\Select::make('type')->label(__('Type'))
                                     ->options( collect(config('custom.attribute_types'))->map(fn($option)=> __($option)) )
+                                    ->default(array_key_first(config('custom.attribute_types')))
                                     ->reactive()
                                     ->required(),
                             ])->columns([

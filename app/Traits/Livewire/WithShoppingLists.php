@@ -8,7 +8,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 
 trait WithShoppingLists
 {
-    public Product $product;
+    public $product;
     public $cartInstance = "default";
     public $wishlistInstance = "wishlist";
 
@@ -62,8 +62,8 @@ trait WithShoppingLists
         }
         else
         {
-            $this->notifyBanner(__('shopping_cart.left_quantity',
-                ['quantity' => Cart::instance($this->cartInstance)->get($rowId)->model->quantity]), 'danger');
+            $this->notifyBanner(trans_choice('shopping_cart.left_quantity',
+                ['count' => Cart::instance($this->cartInstance)->get($rowId)->model->quantity]), 'danger');
         }
 
         return $newQty;

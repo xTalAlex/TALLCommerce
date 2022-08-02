@@ -23,4 +23,6 @@ return [
     "payment.failed" => "Pagamento fallito. Prova con un altro metodo di pagamento",
     "payment.error" => "Qualcosa è andato storto",
     "payment.not_found" => "Errore durante il recupero delle informazioni di pagamento",
+
+    "product.not_found" => "Il prodotto non è più disponibile",
 ];

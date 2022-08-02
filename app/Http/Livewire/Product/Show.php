@@ -16,15 +16,24 @@ class Show extends Component
     public $attributes;
     public $selection;
 
-    public function mount()
+    public function mount($product)
     {
-        $this->variant_id = $this->product->variant_id == null || $this->product->variant_id == $this->id ? $this->product->id :  $this->product->variant_id;
-        $this->variantsAttributeValues = $this->product->variantsAttributeValues();
-        $this->variantsAttributeSets = $this->product->variantsAttributeSets();
-        if ($this->variantsAttributeValues) {
-            $this->attributes = $this->variantsAttributeValues->pluck('attribute.name','attribute.id')->unique();
-            foreach ($this->product->attributeValues as $attributeValue) {
-                $this->selection[$attributeValue->attribute->id] = $attributeValue->id;
+        if(!$this->product = Product::whereSlug($product)->first())
+        {
+            session()->flash('flash.banner', __('banner_notifications.product.not_found') );
+            session()->flash('flash.bannerStyle', 'danger');
+
+            $this->redirect(url()->previous());
+        }
+        else{
+            $this->variant_id = $this->product->variant_id == null || $this->product->variant_id == $this->id ? $this->product->id :  $this->product->variant_id;
+            $this->variantsAttributeValues = $this->product->variantsAttributeValues();
+            $this->variantsAttributeSets = $this->product->variantsAttributeSets();
+            if ($this->variantsAttributeValues) {
+                $this->attributes = $this->variantsAttributeValues->pluck('attribute.name','attribute.id')->unique();
+                foreach ($this->product->attributeValues as $attributeValue) {
+                    $this->selection[$attributeValue->attribute->id] = $attributeValue->id;
+                }
             }
         }
     }

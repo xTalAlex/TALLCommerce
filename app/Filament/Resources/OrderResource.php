@@ -38,7 +38,7 @@ class OrderResource extends Resource
 
     protected static ?int $navigationSort = 10;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
     public static function canCreate(): bool { return false; }
 
