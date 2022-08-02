@@ -119,6 +119,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         // })->join(' '));
         // return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=8B5CF6&background=F97316&bold=true';
         
-        return 'https://www.gravatar.com/avatar/'.Hash::make(Str::lower($this->email)).'?d=robohash';
+        return 'https://www.gravatar.com/avatar/'.md5(Str::lower($this->email)).'?d=robohash';
     }
 }
