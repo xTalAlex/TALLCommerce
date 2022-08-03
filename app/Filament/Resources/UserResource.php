@@ -73,6 +73,7 @@ class UserResource extends Resource
                 Tables\Columns\ImageColumn::make('profile_photo_url')->label(__('Profile Photo'))
                     ->rounded()
                     ->size(40)
+                    ->url(fn (User $record): string => $record->profile_photo_url)
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('name')->label(__('Name'))
                     ->searchable(),
