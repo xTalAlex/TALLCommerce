@@ -60,30 +60,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full px-4 mb-6 md:mb-0">
-                                        <div class="flex flex-wrap items-center -mx-4">
-                                            <div class="w-full px-4 mb-3 md:w-1/3">
-                                                <a href="{{ route('product.show', $product) }}">
-                                                    <div class="flex items-center justify-center w-full h-24 bg-gray-100 "
-                                                    >
-                                                        <img class="object-contain h-full" src="{{ $product->image }}" alt="{{ $product->name }}">
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div class="w-full px-4 md:w-2/3">
-                                                <a href="{{ route('product.show', $product) }}">
-                                                    <h3 class="mb-2 text-xl font-bold font-heading text"
-                                                    >{{ $product->name }}</h3>
-                                                </a>
-                                                <p class="text-gray-500">
-                                                    {{ $product->pivot->price}}€
-                                                </p>
-                                                <p class="text-gray-500">
-                                                    {{ __('Quantity') }} : {{ $product->pivot->quantity}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
                                 @endforeach
                                 </div>
                             </div>
