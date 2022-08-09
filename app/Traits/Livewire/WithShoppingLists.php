@@ -62,8 +62,11 @@ trait WithShoppingLists
         }
         else
         {
-            $this->notifyBanner(trans_choice('shopping_cart.left_quantity',
-                ['count' => Cart::instance($this->cartInstance)->get($rowId)->model->quantity]), 'danger');
+            $this->notifyBanner(
+                trans_choice(
+                    'shopping_cart.left_quantity', 
+                    Cart::instance($this->cartInstance)->get($rowId)->model->quantity
+                ), 'danger');
         }
 
         return $newQty;
