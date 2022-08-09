@@ -9,13 +9,13 @@
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="py-10 overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 
-                <div class="flex flex-col md:flex-row md:justify-between">
+                <div class="flex flex-col px-8 md:px-12 md:flex-row md:justify-between">
                     <div>
-                        <h3 class="flex items-center mt-4 mb-1 ml-4 text-lg font-semibold text-gray-900 dark:text-white"
+                        <h3 class="flex items-center mt-4 mb-1 text-lg font-semibold text-gray-900 dark:text-white"
                         >{{ __('Order') }}: #{{ $order->number }} 
                         </h3>
                         <div class="my-4">
-                            <span class="bg-primary-100  uppercase text-primary-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 ml-3"
+                            <span class="bg-primary-100  uppercase text-primary-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800"
                             >{{ $order->status->label }}</span>
                             @if($order->tracking_number)
                                 <p>{{ __('Tracking Number') }}: {{ $order->tracking_number }}</p>
@@ -23,7 +23,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 ml-4 mr-4 md:ml-0">
+                    <div class="mt-4 mr-4 md:ml-0">
                         <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
                             >{{ __('Created on') }} {{ $order->created_at->format(config('custom.datetime_format')) }}</time>
                     </div>
