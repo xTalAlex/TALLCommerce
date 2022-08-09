@@ -76,9 +76,9 @@ trait WithCartTotals
         
         if ($this->coupon) {
             $this->subtotal = Cart::instance('default')->subtotal(); 
-            $this->discounted_subtotal = Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal());
-            $this->tax = round(config('cart.tax')/100 * $this->discounted_subtotal, 2);
-            $this->total = $this->discounted_subtotal + $this->tax;
+            $this->discounted_subtotal = number_format( Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal()) , 2);
+            $this->tax = number_format( round(config('cart.tax')/100 * $this->discounted_subtotal, 2) , 2);
+            $this->total = number_format( $this->discounted_subtotal + $this->tax, 2);
         }
         else{
             $this->subtotal = Cart::instance('default')->subtotal();

@@ -1,6 +1,6 @@
 <div class="p-6 bg-primary-300 md:p-12">
 
-    <h2 class="mb-6 text-4xl font-bold text-white font-heading">{{ __('Total') }}</h2>
+    <h2 class="mb-6 text-4xl font-bold text-white font-heading">{{ isset($heading) ? $heading :  __('Total') }}</h2>
 
     <div class="flex items-center justify-between pb-5">
         <span class="text-primary-50">{{ __('Subtotal') }}</span>
@@ -8,8 +8,8 @@
     </div>
     @if($coupon)
     <div class="flex items-center justify-between pb-5">
-        <span class="text-primary-50">-{{ $coupon->label }}</span>
-        <span class="text-xl font-bold text-white font-heading">-{{ $subtotal - $discounted_subtotal }}€</span>
+        <span class="text-primary-50">-{{ $coupon->label }} {{ $coupon->code ?? '' }}</span>
+        <span class="text-xl font-bold text-white font-heading">-{{ number_format( $subtotal - $discounted_subtotal , 2) }}€</span>
     </div>
     <div class="flex items-center justify-between pb-5">
         <span class="text-primary-50"></span>
@@ -18,11 +18,20 @@
     @endif
     
     @if($tax)
-    <div class="flex items-center justify-between pb-5 mb-8 border-b border-primary-100">
+    <div class="flex items-center justify-between pb-5">
         <span class="text-primary-50">
             {{ __('Tax') }}
         </span>
         <span class="text-xl font-bold text-white font-heading">{{ $tax }}€</span>
+    </div>
+    @endif
+
+    @if(isset($shipping))
+    <div class="flex items-center justify-between pb-5">
+        <span class="text-primary-50">
+            {{ __('Shipping') }} : {{ $shipping->name }}
+        </span>
+        <span class="text-xl font-bold text-white font-heading">{{ $shipping_price }}€</span>
     </div>
     @endif
 
@@ -36,7 +45,7 @@
         <span class="text-xl font-bold text-white font-heading">-</span>
     </div> --}}
 
-    <div class="flex items-center justify-between mb-10">
+    <div class="flex items-center justify-between pt-8 mb-10 border-t border-primary-100">
         <span class="text-xl font-bold text-white font-heading">{{ __('Total') }}</span>
         <span class="text-xl font-bold text-white font-heading">{{ $total }}€</span>
     </div>

@@ -263,7 +263,7 @@ class Product extends Model implements Buyable , HasMedia
     {
         return Attribute::make(
             set: function ($value) {
-                return number_format(  $value , 2);
+                return number_format( $value , 2);
             },
         );
     }

@@ -233,7 +233,7 @@
                         @endif
                     <span>{{ __('Total') }}: 
                         <span wire:loading.remove>
-                            {{ $total + $shipping_price->price }}
+                            {{ number_format( $total + $shipping_price->price, 2) }}
                         </span>
                         <span wire:loading>
                             ...

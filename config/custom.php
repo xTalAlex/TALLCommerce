@@ -19,6 +19,7 @@ return [
 
     'datetime_format' => 'j/n/y H:i',
     'date_format' => 'j/n/y',
+    'hour_format' => 'H:i',
     'datenoyear_format' => 'j/n',
     'monthyear_format' => 'n/y',
 

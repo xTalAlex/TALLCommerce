@@ -111,9 +111,23 @@ class Order extends Model
         return $this->billingAddress()->label;
     }
 
+    protected function couponDiscount(): Attribute
+    {
+        return Attribute::make(
+            set: function ($value) {
+                return number_format( $value , 2);
+            },
+        );
+    }
+    
     public function getNumberAttribute($value)
     {
-        return '#'. ($this->id + 1000);
+        return $this->id + 1000;
+    }
+
+    public function getOriginalSubtotalAttribute($value)
+    {
+        return number_format( $this->subtotal + $this->coupon_discount, 2);
     }
 
     // protected function number(): Attribute

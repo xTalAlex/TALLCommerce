@@ -21,6 +21,11 @@ class OrderResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'number';
 
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return '#'.$record->number;
+    }
+
     public static function getLabel(): string
     {
         return __('Order');

@@ -20,7 +20,10 @@
                                     <x-icons.bag class="w-3 h-3"/>    
                                 </span>
                                 <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white"
-                                >{{ $order->number }} 
+                                >
+                                    <a href="{{ route('order.show', $order) }}">
+                                        #{{ $order->number }} 
+                                    </a>
                                     <span class="bg-primary-100  uppercase text-primary-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 ml-3"
                                     >{{ $order->status->label }}</span>
                                 </h3>
@@ -72,7 +75,7 @@
                                 </div>
                                 @if($order->canBePaied())
                                 <div class="w-full">
-                                    <a href="{{ route('order.update', $order ) }}" class="inline-flex items-center justify-center w-full px-4 py-2 mt-4 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-primary-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                    <a href="{{ route('order.update', $order ) }}" class="inline-flex items-center justify-center w-full px-4 py-2 mt-4 text-sm font-medium text-white border rounded-lg border-primary-200 bg-primary-500 hover:bg-primary-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-primary-200 focus:text-primary-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                     {{ __('Pay Now') }}</a>
                                 </div>
                                 @endif

@@ -1,80 +1,165 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Order').' #'.$order->id}} 
+            {{ __('Order').' #'.$order->number}} 
         </h2>
     </x-slot>
     
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-
-                <h3 class="flex items-center mt-4 mb-1 ml-4 text-lg font-semibold text-gray-900 dark:text-white"
-                >{{ __('Order ID') }}: #{{ $order->id }} 
-                </h3>
+            <div class="py-10 overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 
-                <div class="flex items-center justify-between ml-4">
-                    <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
-                    >{{ __('Created on') }} {{ $order->created_at }}</time>
-
-                    @if($order->canBeInvoiced())
-                    <a href="#" class="inline-flex items-center px-4 py-2 mt-4 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-primary-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"></path></svg>
-                    {{ __('Invoice') }}</a>
-                    @endif
-                    @if($order->canBeDeleted())
-                    <a href="{{ route('order.update', $order ) }}" class="inline-flex items-center px-4 py-2 mt-4 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-primary-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"></path></svg>
-                    {{ __('Pay Now') }}</a>
-                    @endif
-                    @if($order->canBeDeleted())
-                    <livewire:order.destroy-form :order='$order'/>
-                    @endif
-                </div>
-                
-                <div class="my-4">
-                    <span class="bg-primary-100  uppercase text-primary-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 ml-3"
-                    >{{ $order->status->label }}</span>
-                    @if($order->tracking_number)
-                        <p>{{ __('Tracking Number') }}: {{ $order->tracking_number }}</p>
-                    @endif
-                </div>
-                
-                <div class="flex justify-between w-full my-6">
-                    <div class="flex items-center justify-center w-full space-x-10 md:w-2/3">
-                        <div><h4 class="mb-2 font-bold">{{ __('Shipping Address') }}</h4><p>{!! $order->shippingAddress()->label !!}</p></div>
-                        <div><h4 class="mb-2 font-bold">{{ __('Billing Address') }}</h4><p>{!! $order->billingAddress()->label !!}</p></div>
+                <div class="flex flex-col md:flex-row md:justify-between">
+                    <div>
+                        <h3 class="flex items-center mt-4 mb-1 ml-4 text-lg font-semibold text-gray-900 dark:text-white"
+                        >{{ __('Order') }}: #{{ $order->number }} 
+                        </h3>
+                        <div class="my-4">
+                            <span class="bg-primary-100  uppercase text-primary-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800 ml-3"
+                            >{{ $order->status->label }}</span>
+                            @if($order->tracking_number)
+                                <p>{{ __('Tracking Number') }}: {{ $order->tracking_number }}</p>
+                            @endif
+                        </div>
                     </div>
-                    <div class="w-full md:w-1/3">
-                        <h4 class="mb-2 font-bold">{{ __('Payment Details') }}</h4>
-                        <p>{{ __('Gateway') }}: {{ $order->payment_gateway }}</p>
-                        <p>{{ __('Subtotal') }}: {{ $order->subtotal }}€</p>
-                        <p>{{ __('Tax') }}: {{ $order->tax }}€</p>
-                        @if($order->shipping_price)
-                        <p>{{ __('Shipping') }}: {{$order->shippingPrice->name ?? null}} {{ $order->shipping_price }}€</p>
-                        @endif
-                        <p>{{ __('Total') }}: {{ $order->total }}€</p>
+
+                    <div class="mt-4 ml-4 mr-4 md:ml-0">
+                        <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
+                            >{{ __('Created on') }} {{ $order->created_at->format(config('custom.datetime_format')) }}</time>
+                    </div>
+                </div>
+
+                <div class="flex flex-col w-full md:flex-row">
+                    
+                    <div class="flex flex-wrap items-start w-full md:w-2/3">
+
+                        <div class="w-full py-6 mb-6 md:px-12 md:mb-0">
+                            <div class="hidden w-full lg:flex">
+                                <div class="w-full lg:w-3/6">
+                                    <h4 class="mb-6 font-bold text-gray-500 font-heading">
+                                        {{__('Description')}}
+                                    </h4>
+                                </div>
+                                <div class="w-full lg:w-1/6">
+                                    <h4 class="mb-6 font-bold text-gray-500 font-heading">
+                                        {{__('Price')}}
+                                    </h4>
+                                </div>
+                                <div class="w-full text-center lg:w-1/6">
+                                    <h4 class="mb-6 font-bold text-gray-500 font-heading">
+                                        {{__('Quantity')}}
+                                    </h4>
+                                </div>
+                                <div class="w-full text-right lg:w-1/6">
+                                    <h4 class="mb-6 font-bold text-gray-500 font-heading">
+                                        {{__('Subtotal')}}
+                                    </h4>
+                                </div>
+                            </div>
                         
-                        @if($order->coupon)
-                            <hr>
-                            <p>{{ __('Coupon') }}: {{ $order->coupon->code}} </p>
-                            <p>{{ __('Discount') }}: {{ $order->coupon_discount }}€</p>
-                        @endif
+                            <div class="py-6 border-b border-gray-200 lg:border-t">
+                                @foreach($order->products as $product)
+                                <div class="relative flex flex-wrap items-center mb-6 md:mb-3">
+                                    <div class="w-full px-4 mb-6 md:w-4/6 lg:w-6/12 md:mb-0">
+                                        <div class="flex flex-wrap items-center">
+                                            <div class="w-full px-4 mb-3 md:w-1/3">
+                                                <a href="{{ route('product.show', $product) }}">
+                                                <div class="flex items-center justify-center w-full h-32 bg-gray-100 md:w-24"
+                                                >
+                                                    <img class="object-contain h-full" src="{{ $product->image }}" alt="{{ $product->name }}">
+                                                </div>
+                                                </a>
+                                            </div>
+                                            <div class="w-full px-12 md:w-2/3">
+                                                <a href="{{ route('product.show', $product) }}">
+                                                <h3 class="mb-2 text-xl font-bold font-heading text"
+                                                >{{ $product->name }}</h3>
+                                                </a>
+                                                <p class="text-gray-500">
+                                                    @foreach($product->attributeValues as $attributeValue)
+                                                        {{ $attributeValue->value}}
+                                                        @if(!$loop->last)
+                                                            , 
+                                                        @endif
+                                                    @endforeach
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hidden px-4 lg:block lg:w-2/12">
+                                        <p class="text-lg font-bold text-primary-500 font-heading">{{ $product->pivot->price }}€</p>
+                                        {{-- <span class="text-xs text-gray-500 line-through">$33.69</span> --}}
+                                    </div>
+                                    <div class="w-auto px-8 text-center md:px-auto md:w-1/6 lg:w-2/12"
+                                    >
+                                        <p class="text-lg font-bold text-primary-500 font-heading">
+                                            x{{ $product->pivot->quantity }}
+                                        </p>
+                                    </div>
+                                    <div class="w-auto px-4 text-right md:w-1/6 lg:w-2/12">
+                                        <p class="text-lg font-bold text-primary-500 font-heading">
+                                            {{ $product->pricePerQuantity($product->pivot->quantity,$product->pivot->price) }}€
+                                        </p>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="w-full px-8 mb-6 md:px-12">
+                            <div class="w-full">
+                                @include('cart._total',[
+                                    'heading' => __('Payment Details'),
+                                    'subtotal' => $order->coupon_discount ? $order->original_subtotal : $order->subtotal,
+                                    'discounted_subtotal' => $order->subtotal,
+                                    'tax'      => $order->tax,
+                                    'total'    => $order->total,
+                                    'coupon'   => $order->coupon,
+                                    'shipping' => $order->shippingPrice,
+                                    'shipping_price' => $order->shipping_price,
+                                    'checkoutable' => false,
+                                ])
+                            </div>
+                        </div> 
+                        
                     </div>
-                </div>
-                
-                <hr>
-                
-                <div class="flex mt-6 ml-10">
-                    @foreach($order->products as $product)
-                    <div class="w-full mb-4 ml-2 text-base font-normal text-gray-500 md:w-1/3 dark:text-gray-400">
-                        <a href="{{ route('product.show', $product) }}">
-                            {{ $product->name }}
-                            <img class="object-cover w-32 h-32" src="{{$product->image}}"/>
-                        </a>
-                        {{ $product->pivot->quantity }}
-                        x {{ $product->pivot->price }}€
-                        | {{ $product->pricePerQuantity($product->pivot->quantity,$product->pivot->price) }}€
+
+                    <div class="w-full px-8 md:w-1/3 md:px-4">
+
+                        <div class="w-full mb-4">
+                            <div><h4 class="mb-2 font-bold">{{ __('Shipping Address') }}</h4><p>{!! $order->shippingAddress()->label !!}</p></div>
+                        </div>
+
+                        <div class="w-full mb-4">
+                            <div><h4 class="mb-2 font-bold">{{ __('Billing Address') }}</h4><p>{!! $order->billingAddress()->label !!}</p></div>
+
+                            <div class="mt-2">{{ __('Payment Method') }}: <img class="inline-block h-5" src="/img/logos/{{$order->payment_gateway}}.svg" title="{{$order->payment_gateway}}" alt="{{$order->payment_gateway}} logo" {{ $order->payment_gateway }}/></div>
+                        </div>
+
+                        <div class="w-full mb-4 md:text-center">
+                            @if($order->canBeDeleted())
+                            <div class="w-full">
+                                <a href="{{ route('order.update', $order ) }}" class="inline-flex items-center justify-center w-full px-4 py-2 mt-4 text-sm font-medium text-white border rounded-lg border-primary-200 bg-primary-500 hover:bg-primary-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-primary-200 focus:text-primary-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                {{ __('Pay Now') }}</a>
+                            </div>
+                            @endif
+                            @if($order->canBeInvoiced())
+                            <div class="w-full">
+                                <a href="{{ route('invoice.show', $order ) }}" class="inline-flex items-center justify-center w-full px-4 py-2 mt-4 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-primary-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                {{ __('Invoice') }}
+                                <x-icons.document-download class="w-4 h-4"/>
+                                </a>
+                            <div>
+                            @endif
+                            @if($order->canBeDeleted())
+                            <div class="w-full">
+                                <livewire:order.destroy-form :order='$order'/>
+                            </div>
+                            @endif
+                        </div>
+
                     </div>
-                    @endforeach
+                    
                 </div>
 
             </div>
