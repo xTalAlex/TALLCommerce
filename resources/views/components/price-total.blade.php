@@ -1,4 +1,4 @@
-<div class="p-6 bg-primary-300 md:p-12">
+<div class="py-6 px-6 md:px-4 lg:px-6 bg-primary-300 md:p-12">
 
     <h2 class="mb-6 text-4xl font-bold text-white font-heading">{{ isset($heading) ? $heading :  __('Total') }}</h2>
 
@@ -9,11 +9,11 @@
     @if($coupon)
     <div class="flex items-center justify-between pb-5">
         <span class="text-primary-50">-{{ $coupon->label }} {{ $coupon->code ?? '' }}</span>
-        <span class="text-xl font-bold text-white font-heading">-{{ number_format( $subtotal - $discounted_subtotal , 2) }}€</span>
+        <span class="text-xl font-bold text-white font-heading">-{{ number_format( $subtotal - $discountedSubtotal , 2) }}€</span>
     </div>
     <div class="flex items-center justify-between pb-5">
         <span class="text-primary-50"></span>
-        <span class="text-xl font-bold text-white font-heading">{{ $discounted_subtotal }}€</span>
+        <span class="text-xl font-bold text-white font-heading">{{ $discountedSubtotal }}€</span>
     </div>
     @endif
     
@@ -31,7 +31,7 @@
         <span class="text-primary-50">
             {{ __('Shipping') }} : {{ $shipping->name }}
         </span>
-        <span class="text-xl font-bold text-white font-heading">{{ $shipping_price }}€</span>
+        <span class="text-xl font-bold text-white font-heading">{{ $shippingPrice }}€</span>
     </div>
     @endif
 
@@ -50,13 +50,8 @@
         <span class="text-xl font-bold text-white font-heading">{{ $total }}€</span>
     </div>
 
-    @if($checkoutable)
-        <form action="{{ route('order.create') }}" method="GET">
-        @csrf
-            <button class="block w-full py-4 font-bold text-center text-white uppercase transition duration-200 rounded-md bg-secondary-300 hover:bg-secondary-400 font-heading">
-                {{ __('Checkout') }}
-            </button>
-        </form>
+    @if(isset($actions))
+        {{ $actions }}
     @endif
 
 </div>

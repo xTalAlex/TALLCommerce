@@ -108,17 +108,17 @@
 
                         <div class="w-full px-8 mb-6 md:px-12">
                             <div class="w-full">
-                                @include('cart._total',[
-                                    'heading' => __('Payment Details'),
-                                    'subtotal' => $order->coupon_discount ? $order->original_subtotal : $order->subtotal,
-                                    'discounted_subtotal' => $order->subtotal,
-                                    'tax'      => $order->tax,
-                                    'total'    => $order->total,
-                                    'coupon'   => $order->coupon,
-                                    'shipping' => $order->shippingPrice,
-                                    'shipping_price' => $order->shipping_price,
-                                    'checkoutable' => false,
-                                ])
+                                <x-price-total
+                                    :heading="__('Payment Details')"
+                                    :subtotal="$order->subtotal"
+                                    :discounted-subtotal="$order->discounted_subtotal"
+                                    :tax="$order->tax"
+                                    :total="$order->total"
+                                    :coupon="$order->coupon"
+                                    :shipping="$order->shippingPrice"
+                                    :shipping-price="$order->shipping_price"
+                                >
+                                </x-price-total>
                             </div>
                         </div> 
                         

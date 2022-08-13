@@ -11,6 +11,7 @@
         "algolia/algoliasearch-client-php": "^3.2",
         "bumbummen99/shoppingcart": "^4.2",
         "cartalyst/stripe-laravel": "^14.0",
+        "doctrine/dbal": "^3.4",
         "filament/filament": "^2.12",
         "filament/spatie-laravel-media-library-plugin": "^2.12",
         "flowframe/laravel-trend": "^0.1.1",

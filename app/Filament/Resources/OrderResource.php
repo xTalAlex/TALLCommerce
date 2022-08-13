@@ -274,7 +274,7 @@ class OrderResource extends Resource
     public static function getWidgets(): array
     {
         return [
-            Widgets\OrdersOverview::class,
+            OrderResource\Widgets\OrdersOverview::class,
         ];
     }
     

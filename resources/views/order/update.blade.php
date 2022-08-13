@@ -217,7 +217,7 @@
                     >{{ __('Update Addresses') }}</button>
                 @endif
                 @if($addresses_confirmed && $order->canBePaied())
-                    <livewire:stripe.checkout :total="$order->total" update="true"/>
+                    <livewire:checkout :total="$order->total" update="true"/>
                 @endif
             </div>
         </div>

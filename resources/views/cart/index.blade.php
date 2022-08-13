@@ -88,14 +88,24 @@
 
                             @if($count)
                             <div class="w-full px-4 xl:w-4/12">
-                                @include('cart._total',[
-                                    'subtotal' => $subtotal,
-                                    'discounted_subtotal' => $discounted_subtotal,
-                                    'tax'      => $tax,
-                                    'total'    => $total,
-                                    'coupon'   => $coupon,
-                                    'checkoutable' => !count($invalid_quantity_row_ids),
-                                ])
+                                <x-price-total
+                                    :subtotal="$subtotal"
+                                    :discounted-subtotal="$discounted_subtotal"
+                                    :tax="$tax"
+                                    :total="$total"
+                                    :coupon="$coupon"
+                                >
+                                    <x-slot:actions>
+                                        @if(!count($invalid_quantity_row_ids))
+                                        <form action="{{ route('order.create') }}" method="GET">
+                                        @csrf
+                                            <button class="block w-full py-4 font-bold text-center text-white uppercase transition duration-200 rounded-md bg-secondary-300 hover:bg-secondary-400 font-heading">
+                                                {{ __('Checkout') }}
+                                            </button>
+                                        </form>
+                                        @endif
+                                    </x-slot>
+                                </x-price-total>
                             </div>
                             @endif
                             

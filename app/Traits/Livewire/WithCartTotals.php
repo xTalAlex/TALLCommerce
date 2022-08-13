@@ -3,6 +3,7 @@
 namespace App\Traits\Livewire;
 
 use App\Models\Coupon;
+use Illuminate\Support\Str;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 trait WithCartTotals
@@ -19,45 +20,48 @@ trait WithCartTotals
 
     public function checkCoupon()
     {
-        $coupon = Coupon::where('code', $this->coupon_code)->first();
-        $error = null;
+        if(Str::of($this->coupon_code)->trim()->isNotEmpty())
+        {
+            $coupon = Coupon::where('code', $this->coupon_code)->first();
+            $error = null;
 
-        if ($coupon) {
-            if ($coupon->max_redemptions && $coupon->max_redemptions <= $coupon->redemptions)
-            {    
+            if ($coupon) {
+                if ($coupon->max_redemptions && $coupon->max_redemptions <= $coupon->redemptions)
+                {    
+                    $this->coupon=null;
+                    $error=__('Coupon Already Redeemed');
+                }
+                elseif($coupon->expires_on && $coupon->expires_on<now())
+                {
+                    $this->coupon=null;
+                    $error=__("Expired Coupon");
+                }
+                elseif($coupon->min_total && $this->total<$coupon->min_total)
+                {
+                    $this->coupon=null;
+                    $error=__("Required minimum total of").' '.($coupon->min_total).'€';
+                }
+                else
+                {
+                    $this->coupon=$coupon;
+                    $error=null;
+                    session()->put('coupon', $this->coupon->code);   
+                }
+            } else {
                 $this->coupon=null;
-                $error=__('Coupon Already Redeemed');
+                $error=__('Invalid Coupon');
             }
-            elseif($coupon->expires_on && $coupon->expires_on<now())
-            {
-                $this->coupon=null;
-                $error=__("Expired Coupon");
-            }
-            elseif($coupon->min_total && $this->total<$coupon->min_total)
-            {
-                $this->coupon=null;
-                $error=__("Required minimum total of").' '.($coupon->min_total).'€';
-            }
-            else
-            {
-                $this->coupon=$coupon;
-                $error=null;
-                session()->put('coupon', $this->coupon->code);   
-            }
-        } else {
-            $this->coupon=null;
-            $error=__('Invalid Coupon');
+
+            $this->refreshTotals();
+
+            $this->coupon_error = $error;
+            if($error)
+                $this->dispatchBrowserEvent('banner-message', [
+                    'message' => $error,
+                    'style' => 'danger',
+                ]);
+            return $error;
         }
-
-        $this->refreshTotals();
-
-        $this->coupon_error = $error;
-        if($error)
-            $this->dispatchBrowserEvent('banner-message', [
-                'message' => $error,
-                'style' => 'danger',
-            ]);
-        return $error;
     }
 
     public function removeCoupon()

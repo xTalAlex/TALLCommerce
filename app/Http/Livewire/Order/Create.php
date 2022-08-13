@@ -82,7 +82,7 @@ class Create extends Component
 
         $this->shipping_price = session()->get('shipping_price') ? 
             $this->shipping_prices->where('id', session()->get('shipping_price') )->first() 
-            : $this->shipping_prices->first()->id;
+            : $this->shipping_prices->first();
 
         if(session()->get('shipping_address')){
             $this->shipping_address = session()->get('shipping_address');
@@ -140,6 +140,7 @@ class Create extends Component
         session()->put('billing_address', $this->shipping_address);
 
         $this->addresses_confirmed = true;
+        $this->emit('addressesConfirmed');
     }
 
     public function updateDefaultAddress()

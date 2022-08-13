@@ -11,16 +11,22 @@
 <div class="py-12">
     <div class="mx-auto md:flex max-w-7xl sm:px-6 lg:px-8">
 
-        <div class="flex w-full overflow-hidden bg-white shadow-xl sm:rounded-lg">
+        <div class="w-full overflow-hidden bg-white shadow-xl md:flex sm:rounded-lg">
         
-            <div class="md:w-2/3">
+            <div class="w-full md:w-2/3">
 
                 <div class="px-8 pt-6 pb-12" 
                     x-data="{ 
-                        selected: {{ $addresses_confirmed ? 'null' : 1 }},
+                        selected: @js($addresses_confirmed ? null : 1),
                         same_address : @entangle('same_address'),
                         addresses_confirmed : @entangle('addresses_confirmed'),
                     }"
+                    x-init="
+                        Livewire.on('addressesConfirmed', () => {
+                            if(selected != 4)
+                                selected = null;
+                        });
+                    "
                 >
                     <x-jet-validation-errors class="my-4 mb-4" />
 
@@ -43,6 +49,7 @@
                                         ])
                                     >
                                         {{ __('Shipping Address') }}
+                                        
                                     </span>
                                     <span
                                         x-show="!addresses_confirmed"
@@ -261,6 +268,69 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="relative border-b-2 border-gray-200">
+
+                            <button type="button" class="w-full py-6 text-left"
+                                @click="selected !== 4 ? selected = 4 : selected = null">
+                                <div class="flex items-center justify-between">
+                                    <span @class([
+                                            'text-lg font-semibold text-gray-900',
+                                            'text-red-500' => $errors->has('coupon.*'),
+                                        ])
+                                    >
+                                        {{ __('Coupon') }}
+                                    </span>
+                                    <span>
+                                        <x-icons.plus/>
+                                    </span>
+                                </div>
+                                
+                                @if($coupon) 
+                                <div class="flex p-2"
+                                    x-show="selected != 4"
+                                    x-transition:enter.delay.200ms
+                                    x-cloak
+                                >
+                                    <div class="inline-block w-48 p-2 text-left border-4 border-transparent rounded-md shadow-md cursor-pointer"
+                                    >
+                                        <div class="mb-2 text-sm font-bold">{{ $coupon->code }}</div>
+                                        <p class="">{{ $coupon->label }}</p>
+                                    </div>
+                                </div>
+                                @endif
+                                    
+                            </button>
+
+                            <div class="relative overflow-hidden transition-all duration-300 max-h-0" style=""
+                                x-ref="container4"
+                                x-bind:style="selected == 4 ? 'max-height: ' + $refs.container4.scrollHeight + 'px' : ''"
+                            >
+                                <div class="w-full p-6">
+                                    <input @class([
+                                            "disabled:bg-gray-100  flex-1 px-8 py-4 mb-4 mr-6 font-bold placeholder-gray-400 border rounded-md md:flex-none sm:mr-0 md:mr-6 font-heading",
+                                            "text-red-500" => $coupon_error
+                                        ]) type="text" 
+                                        placeholder="{{ __('Coupon Code') }}"
+                                        @disabled($coupon!=null)
+                                        x-data
+                                        wire:model.lazy="coupon_code"
+                                        x-on:input="$event.target.value=$event.target.value.toUpperCase()"
+                                    >
+                                    @if($coupon)
+                                    <div class="flex-1 inline-block px-4 py-4 mb-4 font-bold text-center text-white uppercase bg-gray-800 rounded-md cursor-pointer md:flex-none font-heading hover:bg-gray-700" 
+                                        wire:click="removeCoupon"
+                                    ><x-icons.x/></div>
+                                    @else
+                                    <div class="flex-1 inline-block px-4 py-4 mb-4 font-bold text-center text-white uppercase bg-gray-800 rounded-md cursor-pointer md:flex-none font-heading hover:bg-gray-700" 
+                                        wire:click="checkCoupon('{{ $coupon_code }}')"
+                                    >{{ __('Check') }}</div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        
                         
                         @if($addresses_confirmed)
                         <button type="button" class="mt-5 text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
@@ -269,74 +339,38 @@
                         @endif
 
                     </form>
+
+                    
+
                 </div>
             </div>
 
-            <div class="md:w-1/3">
-                <div class="flex px-6 py-12"
-                >
-                    <div class="flex flex-col w-full">
-                        <span>{{ __('Subtotal') }}: 
-                            <span wire:loading.remove>
-                                {{ $subtotal }}
-                            </span>
-                            @if($coupon)
-                            <span wire:loading.remove>
-                                - {{ $coupon->label }} = {{ $discounted_subtotal }}
-                            </span>
-                            @endif
-                            <span wire:loading>
-                                ...
-                            </span>
-                        </span>
-                        <span>{{ __('Tax') }}: {{ $tax }}
-                        </span>
-                        @if($shipping_price)
-                            <span wire:loading.remove>
-                                {{ __('Shipping') }} : {{ $shipping_price->price }}€
-                            </span>
-                        @endif
-                        <span>{{ __('Total') }}: 
-                            <span wire:loading.remove>
-                                {{ number_format( $total + $shipping_price->price, 2) }}
-                            </span>
-                            <span wire:loading>
-                                ...
-                            </span>
-                        </span>
+            <div class="w-full md:w-1/3">
 
-                        <div class="mt-5 space-x-2">
-                            @if($coupon)
-                                <span>{{ $coupon->code }}</span>
-                                <x-jet-button type="button" wire:click="removeCoupon">
-                                    X
-                                </x-jet-button>
-                            @endif
-                            <input class="@if($this->coupon_error) text-red-500  bg-red-300 @endif" type="text" name="coupon_code" 
-                                placeholder="{{ __('Coupon Code') }}"
-                                wire:model.lazy="coupon_code"
-                                x-on:input="$event.target.value=$event.target.value.toUpperCase()"
-                            />
-                            <x-jet-button type="button" wire:click="checkCoupon">
-                                {{ __('Check') }}
-                            </x-jet-button>
-                            @if($coupon_error)
-                            <label>{{$coupon_error}}</label>
-                            @endif
-                        </div>
-                    </div>
-                    
+                <div class="pl-8 md:pl-0 pr-8 pt-6 pb-12">
+                    <x-price-total
+                        :subtotal="$subtotal"
+                        :discounted-subtotal="$discounted_subtotal"
+                        :tax="$tax"
+                        :total="number_format( $total + $shipping_price->price, 2)"
+                        :coupon="$coupon"
+                        :shipping="$shipping_price"
+                        :shipping-price="$shipping_price->price"
+                    >
+                        <x-slot:actions>
+                            <div class="flex justify-center">
+                                @if($addresses_confirmed)
+                                    <livewire:checkout :total="$total+$shipping_price->price" :key="$shipping_price->id"/>
+                                @else
+                                    <button type="button" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                        wire:click.prevent='confirmAddresses'
+                                    >{{ __('Confirm Addresses') }}</button>
+                                @endif
+                            </div>
+                        </x-slot>
+                    </x-price-total>
                 </div>
 
-                <div class="flex justify-center">
-                    @if($addresses_confirmed)
-                        <livewire:stripe.checkout :total="$total+$shipping_price->price" :key="$shipping_price->id"/>
-                    @else
-                        <button type="button" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                            wire:click.prevent='confirmAddresses'
-                        >{{ __('Confirm Addresses') }}</button>
-                    @endif
-                </div>
             </div>
 
         </div>

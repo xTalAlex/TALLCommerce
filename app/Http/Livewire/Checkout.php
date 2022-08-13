@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Stripe;
+namespace App\Http\Livewire;
 
 use App\Models\Coupon;
 use Livewire\Component;
@@ -81,6 +81,6 @@ class Checkout extends Component
 
     public function render()
     {
-        return view('livewire.stripe.checkout');
+        return view('livewire.checkout');
     }
 }

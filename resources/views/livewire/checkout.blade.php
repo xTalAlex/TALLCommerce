@@ -1,8 +1,8 @@
-<div>
+<div class="w-full">
     <div class="mt-1">
-        <x-jet-danger-button class="rounded-[4px]" wire:click="confirmPayment" wire:loading.attr="disabled">
+        <x-jet-button class="justify-center rounded-[4px] w-full text-md py-4" wire:click="confirmPayment" wire:loading.attr="disabled">
             {{ __('Complete Payment') }}
-        </x-jet-danger-button>
+        </x-jet-button>
     </div>
 
     <div class="mt-1"
