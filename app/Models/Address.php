@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Address extends Model
 {
@@ -48,28 +49,32 @@ class Address extends Model
     public function getLabelAttribute()
     {
         $label=null;
-
-        if ($this->address) {
-            $label="$this->full_name";
-            if ($this->full_name && $this->company) {
-                $label.="($this->company)";
-            } elseif (!$this->full_name) {
-                $label.="$this->company";
-            }
-
-            $label.="\n";
-            $label.="$this->address";
-            if ($this->address2) {
-                $label.="($this->address2)";
-            }
-            $label.="";
-
-            $label.="\n";
-            $label.="$this->city ($this->province), $this->postal_code";
-
-            $label.="\n";
-            $label.="$this->country_region";
+        
+        $label="$this->full_name";
+        if ($this->full_name && $this->company) {
+            $label.="($this->company)";
+        } elseif (!$this->full_name) {
+            $label.="$this->company";
         }
+
+        if(Str::length($label)) $label.="\n";
+
+        $label.="$this->address";
+        if ($this->address2) {
+            $label.="($this->address2)";
+        }
+        $label.="";
+
+        if(Str::length($label)) $label.="\n";
+        $label.="$this->city";
+        if($this->province)
+            $label.=" ($this->province)";
+        if($this->postal_code && ($this->city || $this->province))
+            $label.=", ";
+        $label.="$this->postal_code";
+
+        if(Str::length($label)) $label.="\n";
+        $label.="$this->country_region";
 
         return $label ? nl2br(e($label)) : null;
     }

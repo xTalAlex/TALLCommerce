@@ -91,7 +91,7 @@
             });
         "
     >
-        <div id="paypal-buttons"></div>
+        <div id="paypal-buttons" class="relative z-0"></div>
     </div>
 
     @if($gateway=='stripe' && $intent)

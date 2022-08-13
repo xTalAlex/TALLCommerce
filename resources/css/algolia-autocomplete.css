@@ -696,7 +696,7 @@
     grid-gap: var(--aa-spacing-half);
     gap: var(--aa-spacing-half);
     grid-auto-flow: column;
-    justify-content: start;
+    justify-content: flex-start;
   }
   .aa-ItemContentSubtitle--standalone .aa-ItemContentSubtitleIcon::before {
     border-radius: 0 0 0 3px;

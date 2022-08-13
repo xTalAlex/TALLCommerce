@@ -22,10 +22,13 @@ class UpdateDefaultAddressForm extends Component
         'address.postal_code' => 'required|min:5',
     ];
 
+    protected $listeners = ['defaultAddressDeleted' => 'defaultAddressDeleted'];
+
+
     public function mount()
     {
         $this->user = Auth::user();
-        $this->address = Auth::user()->defaultAddress ?? Address::make();
+        $this->address = Auth::user()->defaultAddress ?? new Address();
     }
 
     public function updateAddress()
@@ -47,6 +50,11 @@ class UpdateDefaultAddressForm extends Component
         ]);
 
         $this->emit('saved');
+    }
+
+    public function defaultAddressDeleted()
+    {
+        $this->address = new Address();
     }
 
     public function render()

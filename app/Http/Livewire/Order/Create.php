@@ -27,7 +27,6 @@ class Create extends Component
     public $note;
 
     public $shipping_prices;
-    public $shipping_price_id;
 
     protected $listeners = [
         'createOrder',
@@ -57,6 +56,8 @@ class Create extends Component
             'billing_address.province' => 'exclude_if:same_address,true|required',
             'billing_address.country_region' => 'exclude_if:same_address,true|required',
             'billing_address.postal_code' => 'exclude_if:same_address,true|required|min:5',
+
+            'shipping_price.id' => 'required|exists:shipping_prices,id', 
     
         ];
     }
@@ -76,21 +77,36 @@ class Create extends Component
 
         $this->addresses_confirmed = false;
         $this->email = Auth::user() ? Auth::user()->email : null;
-        //if addresses in session load instead of default
-        if(Auth::user() && Auth::user()->defaultAddress){
-            $this->shipping_address = Auth::user()->defaultAddress;
-        }
-        else $this->shipping_address = new Address();
-        $this->same_address = true;
 
-        if((Auth::user() && Auth::user()->defaultAddress)){
+        $this->shipping_prices = ShippingPrice::all();
+
+        $this->shipping_price = session()->get('shipping_price') ? 
+            $this->shipping_prices->where('id', session()->get('shipping_price') )->first() 
+            : $this->shipping_prices->first()->id;
+
+        if(session()->get('shipping_address')){
+            $this->shipping_address = session()->get('shipping_address');
+            if(session()->get('billing_address')){
+                $this->billing_address = session()->get('billing_address');
+                $this->same_address = $this->shipping_address == $this->billing_address; 
+            }
+            else{
+                $this->billing_address = $this->shipping_address;
+                $this->same_address = true; 
+            }
             $this->confirmAddresses();
         }
-
-        $this->shipping_prices = \App\Models\ShippingPrice::all();
-        $this->shipping_price_id = session()->get('shipping_price') ?? $this->shipping_prices->first()->id;
-        if($this->shipping_price_id){
-            $this->shipping_price = $this->shipping_prices->where('id',$this->shipping_price_id)->first();
+        else{
+            if(Auth::user() && Auth::user()->defaultAddress){
+                $this->shipping_address = Auth::user()->defaultAddress;
+            }
+            else $this->shipping_address = new Address();
+            $this->same_address = true; 
+            $this->billing_address = $this->shipping_address;
+            
+            if((Auth::user() && Auth::user()->defaultAddress)){
+                $this->confirmAddresses();
+            }
         }
 
         $this->refreshTotals();
@@ -120,7 +136,8 @@ class Create extends Component
 
         if($this->same_address) $this->billing_address = $this->shipping_address;
         
-        //save both addresses in session
+        session()->put('shipping_address', $this->shipping_address);
+        session()->put('billing_address', $this->shipping_address);
 
         $this->addresses_confirmed = true;
     }
@@ -198,7 +215,7 @@ class Create extends Component
                 'coupon_discount' => $this->coupon ? $this->coupon->discount(Cart::instance('default')->subtotal()) : null,
                 'order_status_id' => $status_id,
                 'user_id' => auth()->user() ? auth()->user()->id : null,
-                'shipping_price_id' => $this->shipping_price_id,
+                'shipping_price_id' => $this->shipping_price->id,
                 'shipping_price' => $this->shipping_price->price,
             ]);
 
@@ -229,6 +246,8 @@ class Create extends Component
                 Cart::instance('default')->erase(auth()->user()->email);
             session()->forget('coupon');
             session()->forget('shipping_price');
+            session()->forget('shipping_address');
+            session()->forget('billing_address');
 
             $this->emit('orderCreated');
         }

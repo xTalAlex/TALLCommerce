@@ -681,7 +681,7 @@
 .ais-InfiniteHits-item {
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: start;
+  align-items: flex-start;
   background: #fff;
   -webkit-box-shadow: 0 0 0 1px rgba(35, 38, 59, 0.05), 0 1px 3px 0 rgba(35, 38, 59, 0.15);
   box-shadow: 0 0 0 1px rgba(35, 38, 59, 0.05), 0 1px 3px 0 rgba(35, 38, 59, 0.15);

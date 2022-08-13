@@ -165,9 +165,13 @@ return [
     */
 
     'attributes' => [
-        'full_name' => 'nome completo',
-        'company' => 'ragione sociale',
-        'address' => 'indirizzo',
+        'full_name' => 'Nome Completo',
+        'company' => 'Ragione Sociale',
+        'address' => 'Indirizzo',
+        'city' => 'Città',
+        'province' => 'Provincia',
+        'country_region' => 'Paese',
+        'postal_code' => 'Codice Postale'
     ],
 
     /*

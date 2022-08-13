@@ -6,3 +6,7 @@
 @import "keen-slider/keen-slider.css";
 
 @import "tailwindcss/utilities";
+
+[x-cloak] {
+    display: none !important; 
+}

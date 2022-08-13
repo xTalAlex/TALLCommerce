@@ -70,12 +70,14 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-jet-action-message class="mr-3" on="saved">
-            {{ __('Saved') }}
-        </x-jet-action-message>
+            <livewire:profile.delete-default-address-form :address='$address'/>
 
-        <x-jet-button wire:loading.attr="disabled" wire:target="photo">
-            {{ __('Save') }}
-        </x-jet-button>
+            <x-jet-action-message class="mr-3" on="saved">
+                {{ __('Saved') }}
+            </x-jet-action-message>
+
+            <x-jet-button wire:loading.attr="disabled" wire:target="photo">
+                {{ __('Save') }}
+            </x-jet-button>
     </x-slot>
 </x-jet-form-section>
