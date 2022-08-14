@@ -13,7 +13,7 @@
 
         <div class="w-full overflow-hidden bg-white shadow-xl md:flex sm:rounded-lg">
         
-            <div class="w-full md:w-2/3">
+            <div class="w-full md:1/2 lg:w-2/3">
 
                 <div class="px-8 pt-6 pb-12" 
                     x-data="{ 
@@ -307,7 +307,7 @@
                             >
                                 <div class="w-full p-6">
                                     <input @class([
-                                            "disabled:bg-gray-100  flex-1 px-8 py-4 mb-4 mr-6 font-bold placeholder-gray-400 border rounded-md md:flex-none sm:mr-0 md:mr-6 font-heading",
+                                            "disabled:bg-gray-100 w-full sm:w-auto flex-1 px-8 py-4 mb-4 font-bold placeholder-gray-400 border rounded-md md:flex-none sm:mr-0 md:mr-6 font-heading",
                                             "text-red-500" => $coupon_error
                                         ]) type="text" 
                                         placeholder="{{ __('Coupon Code') }}"
@@ -340,7 +340,7 @@
                 </div>
             </div>
 
-            <div class="w-full md:w-1/3">
+            <div class="w-full md:1/2 lg:w-1/3">
 
                 <div class="pl-8 md:pl-0 pr-8 pt-6 pb-12">
                     <x-price-total

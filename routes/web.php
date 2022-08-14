@@ -16,7 +16,7 @@ use Intervention\Image\Facades\Image;
 
 Route::get('/', function () {
     $featured_categories = App\Models\Category::featured()->take(5)->get();
-    $featured_products = App\Models\Product::featured()->inRandomOrder()->take(1)->get();
+    $featured_products = App\Models\Product::featured()->where('quantity')->inRandomOrder()->take(1)->get();
     $brands = App\Models\Brand::whereHas('media', fn($query)=>
             $query->whereCollectionName('logo')
         )->get();

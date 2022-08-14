@@ -9,7 +9,7 @@
 
         <div class="w-full overflow-hidden bg-white shadow-xl md:flex sm:rounded-lg">
 
-            <div class="w-full md:w-2/3">
+            <div class="w-full md:1/2 lg:w-2/3">
 
                 <div class="px-8 pt-6 pb-12" 
                         x-data="{ 
@@ -210,7 +210,7 @@
             </div>
         </div>
 
-        <div class="w-full md:w-1/3">
+        <div class="w-full md:1/2 lg:w-1/3">
 
             <div class="pl-8 md:pl-0 pr-8 pt-6 pb-12">
                 <x-price-total
