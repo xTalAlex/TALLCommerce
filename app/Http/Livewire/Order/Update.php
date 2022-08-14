@@ -6,9 +6,12 @@ use Livewire\Component;
 use App\Models\OrderStatus;
 use App\Models\{Order,Address};
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Update extends Component
 {
+    use AuthorizesRequests;
+    
     public Order $order;
     public Address $shipping_address;
     public Address $billing_address;
@@ -47,6 +50,8 @@ class Update extends Component
     
     public function mount(Order $order)
     {
+        $this->authorize('update', $this->order);
+        
         $this->order = $order;
         $this->same_address = false;
         $this->shipping_address = $order->shippingAddress();
@@ -89,6 +94,8 @@ class Update extends Component
 
     public function updateAddresses()
     {
+        $this->authorize('update', $this->order);
+
         if($this->addresses_confirmed){
             $this->addresses_confirmed=false;
         }
@@ -101,7 +108,7 @@ class Update extends Component
                     'billing_address' => $this->billing_address->toJson(),
                 ]);
                 $this->order->history()->create([
-                    'order_status_id' => $this->order->status_id,
+                    'order_status_id' => $this->order->order_status_id,
                     'description' => 'Addresses Updated',
                 ]);
                 $this->addresses_confirmed=true;

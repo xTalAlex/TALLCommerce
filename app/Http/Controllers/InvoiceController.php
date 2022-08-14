@@ -50,11 +50,7 @@ class InvoiceController extends Controller
      */
     public function show(Order $order)
     {
-        if( !Auth::user()->is($order->user) && Auth::user()->email != $order->email )
-            abort(403);
-
-        if(!$order->canBeInvoiced())
-            abort(403);
+        $this->authorize('viewInvoice' , $order);
         
         $customer = new Buyer([
             'name'          => 'John Doe',

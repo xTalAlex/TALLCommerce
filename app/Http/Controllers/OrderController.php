@@ -50,8 +50,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        if( !Auth::user()->is($order->user) && Auth::user()->email != $order->email )
-            abort(403);
+        $this->authorize('view', $order);
 
         return view('order.show', compact('order'));
     }

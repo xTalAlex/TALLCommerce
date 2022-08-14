@@ -100,6 +100,7 @@
     "Delete" : "Elimina",
     "Empty" : "Svuota",
     "Modify" : "Modifica",
+    "Edit" : "Modifica",
     "Change" : "Cambia",
     "Save" : "Salva",
     "Update" : "Aggiorna",
@@ -107,9 +108,9 @@
     "Enable" : "Abilita",
     "Disabled" : "Disabilita",
 
-    "Empty Cart" : "Svuota il carrello",
-    "Empty Wishlist" : "Svuota la wishlist",
-    "Cancel Order": "Anulla ordine",
+    "Empty Cart" : "Svuota il Carrello",
+    "Empty Wishlist" : "Svuota la Wishlist",
+    "Cancel Order": "Anulla Ordine",
 
     "Are you sure you want to empty your cart?" : "Sei sicuro di voler svuotare il tuo carrello?",
     "Are you sure you want to cancel this order?" : "Sei sicuro di voler annullare questo ordine?",

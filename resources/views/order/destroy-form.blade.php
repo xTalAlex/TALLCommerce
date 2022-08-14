@@ -1,5 +1,5 @@
-<div class="">
-    <div class="mt-4">
+<div>
+    <div class="">
         <x-jet-danger-button class="w-full text-center" wire:click="$toggle('confirmingOrderDeletion')" wire:loading.attr="disabled">
             {{ __('Cancel') }}
         </x-jet-danger-button>

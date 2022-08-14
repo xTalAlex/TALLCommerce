@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Order;
 
 use Livewire\Component;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DestroyForm extends Component
 {
-
+    use AuthorizesRequests;
+    
     public $order;
 
     public $confirmingOrderDeletion = false;
@@ -18,8 +20,7 @@ class DestroyForm extends Component
 
     public function deleteOrder()
     {
-        if(!auth()->user() || auth()->user()->id !== $this->order->user->id)
-            abort(403);
+        $this->authorize('delete', $this->order);
 
         if ($this->order->canBeDeleted()){
             $this->order->restock();

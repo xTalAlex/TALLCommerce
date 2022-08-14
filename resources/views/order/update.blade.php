@@ -4,222 +4,239 @@
     </h2>
 </x-slot>
 
-<div class="py-12"
->
+<div class="py-12">
     <div class="mx-auto md:flex max-w-7xl sm:px-6 lg:px-8">
 
-        <div class="w-full overflow-hidden bg-white shadow-xl md:w-2/3 sm:rounded-lg">
+        <div class="w-full overflow-hidden bg-white shadow-xl md:flex sm:rounded-lg">
 
-            <div>
+            <div class="w-full md:w-2/3">
+
+                <div class="px-8 pt-6 pb-12" 
+                        x-data="{ 
+                            selected: @js($addresses_confirmed ? null : 1),
+                            same_address : @entangle('same_address'),
+                            addresses_confirmed : @entangle('addresses_confirmed'),
+                        }"
+                        x-init="
+                            Livewire.on('addressesConfirmed', () => {
+                                if(selected != 4)
+                                    selected = null;
+                            });
+                        "
+                    >
                 
-                <x-jet-validation-errors class="my-4 mb-4" />
+                    <x-jet-validation-errors class="my-4 mb-4" />
 
-            @if(!$addresses_confirmed)
-            <form action="" method="POST">
-            @csrf
-                <div class="px-6 py-12" wire:key='shipping'               >
-                    <div class="grid xl:grid-cols-2 xl:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="shipping_address_full_name" id="shipping_address_full_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer" 
-                                wire:model.lazy="shipping_address.full_name" placeholder=" "  />
-                            <label for="shipping_address_full_full_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Full Name') }}</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="shipping_address_company" id="shipping_address_company" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                                wire:model.lazy="shipping_address.company" placeholder=" "/>
-                            <label for="shipping_address_company" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Company') }}</label>
-                        </div>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="shipping_address_address" id="shipping_address_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                            wire:model.lazy="shipping_address.address" placeholder=" "  />
-                        <label for="shipping_address_address" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >{{ __('Address') }}</label>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="shipping_address_address2" id="shipping_address_address2" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                            wire:model.lazy="shipping_address.address2" placeholder=" " />
-                        <label for="shipping_address_address2" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >{{ __('Address2') }}</label>
-                    </div>
-                    <div class="grid xl:grid-cols-2 xl:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="shipping_address_city" id="shipping_address_city" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer" 
-                                wire:model.lazy="shipping_address.city" placeholder=" " />
-                            <label for="shipping_address_city" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('City') }}</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="shipping_address_province" id="shipping_address_province" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                                wire:model.lazy="shipping_address.province" placeholder=" " />
-                            <label for="shipping_address_province" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Province') }}</label>
-                        </div>
-                    </div>
-                    <div class="grid xl:grid-cols-2 xl:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="shipping_address_country_region" id="shipping_address_country_region" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer" 
-                                wire:model.lazy="shipping_address.country_region" placeholder=" " />
-                            <label for="shipping_address_country_region" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Country/Region') }}</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="shipping_address_postal_code" id="shipping_address_postal_code" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                                wire:model.lazy="shipping_address.postal_code" placeholder=" " />
-                            <label for="shipping_address_postal_code" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Postal Code') }}</label>
-                        </div>
-                    </div>
+                    <form action="" method="POST">
+                    @csrf
 
-                    <div class="relative z-0 w-full mb-6 group">  
-                        <textarea id="note" name="note" rows="4" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer" 
-                            wire:model.lazy="note" placeholder=" "></textarea>
-                        <label for="note" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Note') }}</label>
-                    </div>
+                        <div class="relative border-b-2 border-gray-200">
+                            <button type="button" class="w-full py-6 text-left"
+                                x-bind:disabled="addresses_confirmed"
+                                @click="selected !== 1 ? selected = 1 : selected = null">
+                                <div class="flex items-center justify-between">
+                                    <span @class([
+                                            'text-lg font-semibold text-gray-900',
+                                            'text-red-500' => $errors->has('shipping_address.*'),
+                                        ])
+                                    >
+                                        {{ __('Shipping Address') }}
+                                        
+                                    </span>
+                                    <span
+                                        x-show="!addresses_confirmed"
+                                    >
+                                        <x-icons.plus/>
+                                    </span>
+                                </div>
 
-                    <div class="mt-6 md:flex md:justify-between">
-                        <div class="flex items-center mb-6">
-                            <input id="same_address" name="same_address" type="checkbox" class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                wire:model="same_address"  value=""
+                                
+                                @if($shipping_address->label)
+                                <div class="flex items-center p-2"
+                                    x-show="selected != 1"
+                                    x-transition:enter.delay.200ms
+                                    x-cloak
+                                >
+                                    {!! $shipping_address->label !!}
+                                </div>
+                                @endif
+                            </button>
+
+                            <div class="relative overflow-hidden transition-all duration-300 max-h-0" style=""
+                                x-ref="container1"
+                                x-bind:style="selected == 1 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''"
                             >
-                            <label for="same_address" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('Use as billing address') }}</label>
+                                <div class="p-6">
+                                <div @class([
+                                    'relative z-0 w-full mb-6 group',
+                                    'hidden' => Auth::check()
+                                    ])>
+                                    <x-input-floating label="{{ __('Email') }}" name="shipping_address_email" wire:model.lazy="shipping_address.email"/>
+                                </div>
+                                <div class="grid xl:grid-cols-2 xl:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('Full Name') }}" name="shipping_address_full_name" wire:model.lazy="shipping_address.full_name"/>
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('Company') }}" name="shipping_address_company" wire:model.lazy="shipping_address.company"/>
+                                    </div>
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <x-input-floating label="{{ __('Address') }}" name="shipping_address_address" wire:model.lazy="shipping_address.address"/>
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <x-input-floating label="{{ __('Address2') }}" name="shipping_address_address2" wire:model.lazy="shipping_address.address2"/>
+                                </div>
+                                <div class="grid xl:grid-cols-2 xl:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('City') }}" name="shipping_address_city" wire:model.lazy="shipping_address.city"/>
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('Province') }}" name="shipping_address_province" wire:model.lazy="shipping_address.province"/>
+                                    </div>
+                                </div>
+                                <div class="grid xl:grid-cols-2 xl:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('Country/Region') }}" name="shipping_address_country_region" wire:model.lazy="shipping_address.country_region"/>
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('Postal Code') }}" name="shipping_address_postal_code" wire:model.lazy="shipping_address.postal_code"/>
+                                    </div>
+                                </div>
+
+                                <div class="relative z-0 w-full mb-6 group">  
+                                    <textarea id="note" name="note" rows="4" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer" 
+                                        wire:model.lazy="note" placeholder=" "></textarea>
+                                    <label for="note" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                        >{{ __('Note') }}</label>
+                                </div>
+
+                                <div class="mt-6 md:flex md:justify-between">
+                                    <div class="flex items-center mb-6">
+                                        <input id="same_address" name="same_address" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            wire:model="same_address"  value=""
+                                        >
+                                        <label for="same_address" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ __('Use as billing address') }}</label>
+                                    </div>
+
+                                    @auth
+                                        <button type="button" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                            wire:click.prevent='updateDefaultAddress'
+                                        >{{ __('Save as default') }}</button>
+                                    @endauth
+                                    
+                                </div>
+                                </div>
+                            </div>
                         </div>
 
-                        @auth
-                            <button type="button" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                                wire:click.prevent='updateDefaultAddress'
-                            >{{ __('Save as default') }}</button>
-                        @endauth
-                        
-                    </div>
-                </div>
+                        <div class="relative border-b-2 border-gray-200">
 
-                @if(!$same_address)
-                <div class="px-6 py-12" wire:key='billing'
-                >
-                    <div class="grid xl:grid-cols-2 xl:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="full_name" id="full_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer" 
-                                wire:model.lazy="billing_address.full_name" placeholder=" "  />
-                            <label for="full_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Full Name') }}</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="company" id="company" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                                wire:model.lazy="billing_address.company" placeholder=" "/>
-                            <label for="company" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Company') }}</label>
-                        </div>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                            wire:model.lazy="billing_address.address" placeholder=" "  />
-                        <label for="address" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >{{ __('Address') }}</label>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="address2" id="address2" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                            wire:model.lazy="billing_address.address2" placeholder=" " />
-                        <label for="address2" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                        >{{ __('Address2') }}</label>
-                    </div>
-                    <div class="grid xl:grid-cols-2 xl:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="city" id="city" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer" 
-                                wire:model.lazy="billing_address.city" placeholder=" " />
-                            <label for="city" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('City') }}</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="province" id="province" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                                wire:model.lazy="billing_address.province" placeholder=" " />
-                            <label for="province" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Province') }}</label>
-                        </div>
-                    </div>
-                    <div class="grid xl:grid-cols-2 xl:gap-6">
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="country_region" id="country_region" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer" 
-                                wire:model.lazy="billing_address.country_region" placeholder=" " />
-                            <label for="country_region" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Country/Region') }}</label>
-                        </div>
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="postal_code" id="postal_code" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-primary-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                                wire:model.lazy="billing_address.postal_code" placeholder=" " />
-                            <label for="postal_code" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-600 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                            >{{ __('Postal Code') }}</label>
-                        </div>
-                    </div>
-                    
-                </div>
-                @endif
-                
-            </form>
-            @else
-                <div class="px-6 py-12">
-                        <div class="border-2 border-gray-900">
-                            {{ __('Shipping Address') }}
-                        </div>
-                        <div class="border-2 border-gray-900">
-                            {!! $shipping_address->label !!}
-                        </div>
-                   
-                        <div class="border-2 border-gray-900">
-                            {{ __('Billing Address') }}
-                        </div>
-                        <div class="border-2 border-gray-900">
-                            {!! $billing_address->label !!}
+                            <button type="button" class="w-full py-6 text-left"
+                                x-bind:disabled="same_address || addresses_confirmed"
+                                @click="selected !== 2 ? selected = 2 : selected = null">
+                                <div class="flex items-center justify-between">
+                                    <span @class([
+                                            'text-lg font-semibold text-gray-900',
+                                            'text-red-500' => $errors->has('billing_address.*'),
+                                        ])
+                                    >
+                                        {{ __('Billing Address') }}
+                                    </span>
+                                    <span
+                                        x-show="!same_address && !addresses_confirmed"
+                                    >
+                                        <x-icons.plus/>
+                                    </span>
+                                </div>
+                                                                  
+                                @if( ($same_address && $shipping_address->label) || $billing_address->label)  
+                                <div class="flex items-center p-2"
+                                    x-show="selected != 2"
+                                    x-transition:enter.delay.200ms
+                                    x-cloak
+                                > 
+                                    {!! $billing_address->label ?? $shipping_address->label !!}
+                                </div>
+                                @endif
+                            </button>
+                            
+                            <div class="relative overflow-hidden transition-all duration-300 max-h-0" style=""
+                                x-ref="container2"
+                                x-bind:style="selected == 2 ? 'max-height: ' + $refs.container2.scrollHeight + 'px' : ''"
+                            >
+                                <div class="p-6">
+                                <div class="grid xl:grid-cols-2 xl:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('Full Name') }}" name="billing_address_full_name" wire:model.lazy="billing_address.full_name"/>
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('Company') }}" name="billing_address_company" wire:model.lazy="billing_address.company"/>
+                                    </div>
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <x-input-floating label="{{ __('Address') }}" name="billing_address_address" wire:model.lazy="billing_address.address"/>
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <x-input-floating label="{{ __('Address2') }}" name="billing_address_address2" wire:model.lazy="billing_address.address2"/>
+                                </div>
+                                <div class="grid xl:grid-cols-2 xl:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('City') }}" name="billing_address_city" wire:model.lazy="billing_address.city"/>
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('Province') }}" name="billing_address_province" wire:model.lazy="billing_address.province"/>
+                                    </div>
+                                </div>
+                                <div class="grid xl:grid-cols-2 xl:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('Country/Region') }}" name="billing_address_country_region" wire:model.lazy="billing_address.country_region"/>
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <x-input-floating label="{{ __('Postal Code') }}" name="billing_address_postal_code" wire:model.lazy="billing_address.postal_code"/>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="mx-auto mt-5">
-                            <button type="button" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                        @if($addresses_confirmed)
+                        <button type="button" class="mt-5 text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                             wire:click.prevent="$set('addresses_confirmed',false)"
-                            >{{ __('Modify') }}</button>
-                        </div>
-                </div>
-                
-            @endif
+                        >{{ __('Edit') }}</button>
+                        @endif   
+                    </form>
             
             </div>
         </div>
 
-        <div class="w-full overflow-hidden bg-white shadow-xl md:w-1/3 sm:rounded-lg">
-            <div class="flex px-6 py-12"
-            >
-                <div class="flex flex-col w-full">
-                    <span>{{ __('Subtotal') }}: 
-                        <span>
-                            {{ $order->subtotal }}€
-                        </span>
-                    </span>
-                    <span>{{ __('Tax') }}: {{ $order->tax }}€
-                    </span>
-                    <span>{{ __('Total') }}: 
-                        <span>
-                            {{ $order->total }}€
-                        </span>
-                    </span>
-                </div>
-                
-                {{-- <x-jet-button type="submit">
-                    {{ __('Pay with Stripe') }}
-                </x-jet-button> --}}
-            </div>
+        <div class="w-full md:w-1/3">
 
-            <div class="flex flex-col items-center justify-center space-y-4">
-                @if($order->canBeEdited())
-                    <button type="button" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                        wire:click.prevent='updateAddresses'
-                    >{{ __('Update Addresses') }}</button>
-                @endif
-                @if($addresses_confirmed && $order->canBePaied())
-                    <livewire:checkout :total="$order->total" update="true"/>
-                @endif
+            <div class="pl-8 md:pl-0 pr-8 pt-6 pb-12">
+                <x-price-total
+                    :subtotal="$order->subtotal"
+                    :discounted-subtotal="$order->discounted_subtotal"
+                    :tax="$order->tax"
+                    :total="$order->total"
+                    :coupon="$order->coupon"
+                    :shipping="$order->shippingPrice"
+                    :shipping-price="$order->shipping_price"
+                >
+                    <x-slot:actions>
+                        <div class="flex justify-center">
+                            @if(!$addresses_confirmed && $order->canBeEdited())
+                                <button type="button" class=" w-full text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                    wire:click.prevent='updateAddresses'
+                                >{{ __('Update Addresses') }}</button>
+                            @endif
+                            @if($addresses_confirmed && $order->canBePaied())
+                                <livewire:checkout :total="$order->total" update="true"/>
+                            @endif
+                        </div>
+                    </x-slot>
+                </x-price-total>
             </div>
+        
         </div>
     
     </div>

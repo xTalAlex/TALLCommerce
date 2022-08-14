@@ -34,8 +34,7 @@
                         <a href="{{ route('order.login') }}">{{ __('Already registered?') }}</a>
                     @endif
 
-                    <form action="" method="POST"
-                    >
+                    <form action="" method="POST">
                     @csrf
                             
                         <div class="relative border-b-2 border-gray-200">
@@ -330,18 +329,14 @@
                             </div>
                         </div>
 
-                        
-                        
                         @if($addresses_confirmed)
                         <button type="button" class="mt-5 text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                             wire:click.prevent="$set('addresses_confirmed',false)"
-                        >{{ __('Modify') }}</button>
+                        >{{ __('Edit') }}</button>
                         @endif
 
                     </form>
-
                     
-
                 </div>
             </div>
 
