@@ -110,7 +110,8 @@ class LatestOrders extends BaseWidget
                         ->label(__('Message'))
                         ->required(),
                 ]),
-            Tables\Actions\EditAction::make(),
+            Tables\Actions\EditAction::make()
+                ->url(fn (Order $record): string => route('filament.resources.orders.edit', ['record' => $record]))
         ];
     }
 }

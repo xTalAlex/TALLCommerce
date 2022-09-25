@@ -66,7 +66,8 @@ class LatestReviews extends BaseWidget
     protected function getTableActions(): array
     {
         return [
-            Tables\Actions\EditAction::make(),
+            Tables\Actions\EditAction::make()
+                ->url(fn (Review $record): string => route('filament.resources.reviews.edit', ['record' => $record])),
         ];
     }
 }
