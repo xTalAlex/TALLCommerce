@@ -67,7 +67,7 @@ class LatestReviews extends BaseWidget
     {
         return [
             Tables\Actions\EditAction::make()
-                ->url(fn (Review $record): string => route('filament.resources.reviews.edit', ['record' => $record])),
+                ->url(fn (Review $record): string => route('filament.resources.reviews.index', ['record' => $record])),
         ];
     }
 }
