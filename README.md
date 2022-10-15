@@ -1,5 +1,5 @@
 # TALLCommerce
-Una soluzione di ecommerce per chi vuole portare la proprià attivtà italiana online.
+Una soluzione di ecommerce per chi vuole portare la proprià attività italiana online.
 
 ## Funzionalità
 * Ottimizzazione **SEO**.
@@ -72,7 +72,7 @@ Per sviluppare e mettere in produzione il sito web, ho bisogno dei seguenti serv
 * [Google Analytics](https://analytics.google.com/): per le statistiche 
 * [GitHub](https://github.com/): per gestire il codice sorgente.
 
-*Fornisco l'assistenza necessaria per imparare le basi di utilizzo di ciascuno di questi servizi, in particolare per Stripe che è l'unico servizio che il cliente deve obbligatoriamente imparare a gestire autonomamente*
+*Fornisco l'assistenza necessaria per imparare le basi di utilizzo di ciascuno di questi servizi, in particolare per Stripe che è l'unico servizio che il cliente deve obbligatoriamente imparare a gestire autonomamente.*
 
 <!--
     cron per pulizia payment_failed
