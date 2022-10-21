@@ -114,11 +114,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
      */
     protected function defaultProfilePhotoUrl()
     {
-        // $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
-        //     return mb_substr($segment, 0, 1);
-        // })->join(' '));
-        // return 'https://ui-avatars.com/api/?name='.urlencode($name).'&color=8B5CF6&background=F97316&bold=true';
-        
-        return 'https://www.gravatar.com/avatar/'.md5(Str::lower($this->email)).'?d=robohash';
+        return 'https://robohash.org/'.md5(Str::lower($this->email)).'.png?bgset=bg1';
     }
 }
