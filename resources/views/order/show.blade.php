@@ -111,7 +111,7 @@
                                 <x-price-total
                                     :heading="__('Payment Details')"
                                     :subtotal="$order->subtotal"
-                                    :discounted-subtotal="$order->discounted_subtotal"
+                                    :discounted-subtotal="number_format($order->subtotal - $order->coupon_discount,2)"
                                     :tax="$order->tax"
                                     :total="$order->total"
                                     :coupon="$order->coupon"

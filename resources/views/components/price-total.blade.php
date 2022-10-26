@@ -1,4 +1,4 @@
-<div class="py-6 px-6 md:px-4 lg:px-6 bg-primary-300 md:p-12">
+<div class="px-6 py-6 md:px-4 lg:px-6 bg-primary-300 md:p-12">
 
     <h2 class="mb-6 text-4xl font-bold text-white font-heading">{{ isset($heading) ? $heading :  __('Total') }}</h2>
 
@@ -8,7 +8,7 @@
     </div>
     @if($coupon)
     <div class="flex items-center justify-between pb-5">
-        <span class="text-primary-50">-{{ $coupon->label }} {{ $coupon->code ?? '' }}</span>
+        <span class="text-primary-50">{{ $coupon->label }} {{ $coupon->code ?? '' }}</span>
         <span class="text-xl font-bold text-white font-heading">-{{ number_format( $subtotal - $discountedSubtotal , 2) }}€</span>
     </div>
     <div class="flex items-center justify-between pb-5">

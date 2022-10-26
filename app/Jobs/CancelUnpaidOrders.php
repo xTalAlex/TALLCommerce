@@ -35,29 +35,29 @@ class CancelUnpaidOrders implements ShouldQueue
     public function handle()
     {
         $failed_status = OrderStatus::where('name','like','payment_failed')->first();
-        $canceled_status = OrderStatus::where('name','like','canceled')->first();
-        if($failed_status && $canceled_status)
+        $cancelled_status = OrderStatus::where('name','like','cancelled')->first();
+        if($failed_status && $cancelled_status)
         {
             $orders = Order::where('order_status_id', $failed_status->id )
                 ->whereDate('updated_at', '<=' , Carbon::now()->sub('days',2))->get();
             foreach($orders as $order)
             {
-                $order->status()->associate($canceled_status->id);
+                $order->status()->associate($cancelled_status->id);
                 $order->save();
                 $order->history()->create([
-                    'order_status' => $canceled_status->id,
+                    'order_status' => $cancelled_status->id,
                 ]);
                 $order->restock();
             }
         }
         else
         {
-            if(!$failed_status && !$canceled_status)
-                Log::error('OrderStatuses payment_failed and canceled not found.');
+            if(!$failed_status && !$cancelled_status)
+                Log::error('OrderStatuses payment_failed and cancelled not found.');
             elseif(!$failed_status)
                 Log::error('OrderStatus payment_failed not found.');
             else
-                Log::error('OrderStatus canceled not found.');
+                Log::error('OrderStatus cancelled not found.');
         }
     }
 }

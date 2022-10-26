@@ -50,23 +50,33 @@ class InvoiceController extends Controller
      */
     public function show(Order $order)
     {
-        $this->authorize('viewInvoice' , $order);
-        
+        $this->authorize('viewInvoice', $order);
+
         $customer = new Buyer([
-            'name'          => 'John Doe',
+            'name'          => $order->billingAddress()->full_name,
             'custom_fields' => [
-                'email' => 'test@example.com',
+                'email' => $order->billingAddress()->email ?? $order->email,
             ],
         ]);
 
-        $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
+        $items = [];
+        foreach ($order->products as $product) {
+            array_push(
+                $items,
+                (new InvoiceItem())
+                    ->title($product->name)
+                    ->pricePerUnit($product->pivot->price)
+                    ->quantity($product->pivot->quantity)
+            );
+        }
 
         $invoice = Invoice::make()
             ->buyer($customer)
-            ->discountByPercent(10)
-            ->taxRate(15)
-            ->shipping(1.99)
-            ->addItem($item);
+            ->taxRate(config('cart.tax'))
+            ->shipping($order->shipping_price)
+            ->addItems($items);
+        
+        if($order->coupon_discount) $invoice->totalDiscount($order->coupon_discount);
 
         return $invoice->stream();
     }

@@ -101,6 +101,7 @@ class BrandResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('logo')->label(__('Logo'))
+                    ->width(64)
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
                     ->sortable()
