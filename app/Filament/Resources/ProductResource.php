@@ -84,8 +84,7 @@ class ProductResource extends Resource
                             Forms\Components\MultiSelect::make('categories')->label(__('Categories'))
                                 ->relationship('categories','name',
                                     fn (Builder $query, callable $get) => 
-                                        $query->whereNotIn('id', $get('categories'))
-                                                ->where(fn ($query) =>
+                                        $query->where(fn ($query) =>
                                                     $query->whereNull('parent_id')
                                                         ->orWhereIn('parent_id', $get('categories'))
                                                 )
@@ -94,7 +93,6 @@ class ProductResource extends Resource
                                 ->reactive()
                                 ->afterStateUpdated(function(callable $get, callable $set){
                                     $selectedCategories = \App\Models\Category::findMany($get('categories'));
-                                    $removed = false;
                                     do{
                                         $removed = false;
                                         foreach ($selectedCategories as $category) {

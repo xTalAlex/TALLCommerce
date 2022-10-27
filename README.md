@@ -25,7 +25,7 @@ Una soluzione di ecommerce per chi vuole portare la proprià attività italiana 
 * **IVA acquirente** assengabile al singolo utente (per B2B).
 
 ## Gestione da Admin
-Dal pannello di controllo, oltre che ad avere la possibilità di visualizzare e interagire con alcuni widget che forniscono riepiloghi e informazioni flash, è possibile gestire:
+Dal pannello di controllo, oltre che ad avere la possibilità di visualizzare e interagire con alcuni **widget** che forniscono riepiloghi e informazioni flash, è possibile gestire:
 * **UTENTI** con i loro Ordini, Recensioni e Indirizzi associati.
 * **ORDINI** di cui si può cambiare lo Stato (es. segnare come rimborsato o in lavorazione/spedizione nel caso non ci sia un sistema automatico),
 o assegnare  un codice di spedizione (sempre nel caso non ci sia un servizio di spedizione configurato).
@@ -83,3 +83,7 @@ Per sviluppare e mettere in produzione il sito web, ho bisogno dei seguenti serv
 
     non aggiungere piú valori dello stesso attributo a un singolo prodotto
 -->
+
+## Funzionalità minori
+
+Immagine di default dei prodotti, quantità dei prodotti, validazione carrello (check quantità e prezzi correnti), annullamento periodico ordini non pagati, cronologia cambio di stato degli ordini, slug personalizzabili, admin global search, URL sincronizzato con filtri di ricerca prodotti
