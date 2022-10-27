@@ -4,21 +4,23 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
-use App\Models\Scopes\NotHiddenScope;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
+use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Product extends Model implements Buyable , HasMedia
+class Product extends Model implements Buyable, HasMedia
 {
     use HasFactory, InteractsWithMedia, SoftDeletes, Searchable;
 
     const PATH = "products";
-    
+
     protected $fillable = [
         'name',
         'slug',
@@ -62,6 +64,18 @@ class Product extends Model implements Buyable , HasMedia
             ->useDisk(config('media-library.disk_name'));
     }
 
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        if (config('custom.use_watermark')) {
+            $this->addMediaConversion('watermarked')
+                ->watermark(public_path('img/watermark.png'))
+                ->watermarkOpacity(50)
+                ->watermarkHeight(128, Manipulations::UNIT_PIXELS)
+                ->watermarkPadding(20)
+                ->performOnCollections('gallery');
+        }
+    }
+
     /**
      * The "booted" method of the model.
      *
@@ -80,37 +94,44 @@ class Product extends Model implements Buyable , HasMedia
     public function scopeFilter($query, array $filters)
     {
         $query->whereNull('variant_id');
-        
+
         $query->with('categories');
 
-        $query->when($filters['category'] ?? false, fn ($query) =>
-            $query->whereHas('categories', fn($query) =>
-                $query->where('category_id',$filters['category'])
+        $query->when(
+            $filters['category'] ?? false,
+            fn ($query) =>
+            $query->whereHas(
+                'categories',
+                fn ($query) =>
+                $query->where('category_id', $filters['category'])
             )
         );
 
-        $query->when($filters['keyword'] ?? false, fn ($query) =>
-            $query->where('name', 'like', '%'.$filters['keyword'].'%')
-                ->orWhere('short_description', 'like', '%'.$filters['keyword'].'%')
-                ->orWhere('description', 'like', '%'.$filters['keyword'].'%')
+        $query->when(
+            $filters['keyword'] ?? false,
+            fn ($query) =>
+            $query->where('name', 'like', '%' . $filters['keyword'] . '%')
+                ->orWhere('short_description', 'like', '%' . $filters['keyword'] . '%')
+                ->orWhere('description', 'like', '%' . $filters['keyword'] . '%')
         );
 
-        if($filters['orderby'] ?? false){
-            switch($filters['orderby']){    
-                case('price_asc'):
-                    $query->orderBy('selling_price','asc');
+        if ($filters['orderby'] ?? false) {
+            switch ($filters['orderby']) {
+                case ('price_asc'):
+                    $query->orderBy('selling_price', 'asc');
                     break;
-                case('price_desc'):
-                    $query->orderBy('selling_price','desc');
+                case ('price_desc'):
+                    $query->orderBy('selling_price', 'desc');
                     break;
                 default:
-                    $query->orderBy('created_at','desc');
+                    $query->orderBy('created_at', 'desc');
                     break;
             }
         }
     }
 
-    public function categories(){
+    public function categories()
+    {
         return $this->belongsToMany(Category::class);
     }
 
@@ -121,17 +142,17 @@ class Product extends Model implements Buyable , HasMedia
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class)->withPivot('price','quantity');
+        return $this->belongsToMany(Order::class)->withPivot('price', 'quantity');
     }
 
     public function variants()
     {
-        return $this->hasMany(Product::class,'variant_id');
+        return $this->hasMany(Product::class, 'variant_id');
     }
 
     public function defaultVariant()
     {
-        return $this->belongsTo(Product::class,'variant_id')->withoutGlobalScopes();
+        return $this->belongsTo(Product::class, 'variant_id')->withoutGlobalScopes();
     }
 
     public function brand()
@@ -160,28 +181,32 @@ class Product extends Model implements Buyable , HasMedia
         return \App\Models\Attribute::findMany($attributeIds);
     }
 
-    public function getBuyableIdentifier($options = null){
+    public function getBuyableIdentifier($options = null)
+    {
         return $this->id;
     }
 
-    public function getBuyableDescription($options = null){
+    public function getBuyableDescription($options = null)
+    {
         return $this->name;
     }
 
-    public function getBuyablePrice($options = null){
+    public function getBuyablePrice($options = null)
+    {
         return $this->price;
     }
 
-    public function getBuyableWeight($options = null){
+    public function getBuyableWeight($options = null)
+    {
         return $this->weight ?? 0;
     }
 
     public function setSlugAttribute($value)
     {
-        if (static::withoutGlobalScopes()->whereNot('id',$this->id)->whereSlug($slug = Str::slug($value))->exists())
+        if (static::withoutGlobalScopes()->whereNot('id', $this->id)->whereSlug($slug = Str::slug($value))->exists())
             $slug = "{$slug}-{$this->id}";
         $this->attributes['slug'] = $slug;
-    } 
+    }
 
     public function isLowStock()
     {
@@ -191,18 +216,13 @@ class Product extends Model implements Buyable , HasMedia
 
     public function getStockStatusAttribute()
     {
-        
-        if($this->quantity < 1)
-        {
+
+        if ($this->quantity < 1) {
             $status = __('Out of Stock');
-        }
-        elseif($this->isLowStock())
-        {
+        } elseif ($this->isLowStock()) {
             $status = __('Low Stock');
-        }
-        else
-        {
-            $status = trans_choice('Avaiable',1);
+        } else {
+            $status = trans_choice('Avaiable', 1);
         }
 
         return $status;
@@ -210,7 +230,7 @@ class Product extends Model implements Buyable , HasMedia
 
     public function getAvgRatingAttribute()
     {
-        return $this->reviews()->avg('rating') ? round($this->reviews()->avg('rating'),1) : null;
+        return $this->reviews()->avg('rating') ? round($this->reviews()->avg('rating'), 1) : null;
     }
 
     public function getImageAttribute()
@@ -226,7 +246,7 @@ class Product extends Model implements Buyable , HasMedia
         //         $image = $this->defaultVariant->image : $image = asset('img/no_image.jpg');
         // }
 
-        return $this->hasImage() ? $this->getFirstMediaUrl('gallery') : asset('img/no_image.jpg');
+        return $this->hasImage() ? $this->getFirstMediaUrl('gallery', config('custom.use_watermark') ? 'watermarked' : 'default') : asset('img/no_image.jpg');
     }
 
     public function getGalleryAttribute()
@@ -241,7 +261,7 @@ class Product extends Model implements Buyable , HasMedia
         //     $gallery = $this->defaultVariant->gallery;
         // }
 
-        return $this->getMedia('gallery')->map( fn($media) => $media->getFullUrl() );
+        return $this->getMedia('gallery')->map(fn ($media) => $media->getAvailableFullUrl(config('custom.use_watermark') ? ['watermarked','default'] : ['default']));
     }
 
     public function setGalleryAttribute($value)
@@ -263,7 +283,7 @@ class Product extends Model implements Buyable , HasMedia
     {
         return Attribute::make(
             set: function ($value) {
-                return number_format( $value , 2);
+                return number_format($value, 2);
             },
         );
     }
@@ -277,7 +297,7 @@ class Product extends Model implements Buyable , HasMedia
             },
             set: function ($value, $attributes) {
                 return $value ?
-                    number_format(  $value , 2)
+                    number_format($value, 2)
                     : $attributes['original_price'];
             },
         );
@@ -286,9 +306,9 @@ class Product extends Model implements Buyable , HasMedia
     protected function price(): Attribute
     {
         return Attribute::make(
-            get: function ($value,$attributes) {
-                return $attributes['selling_price'] && $attributes['selling_price']!=$attributes['original_price'] ?
-                            $attributes['selling_price'] : $attributes['original_price'];
+            get: function ($value, $attributes) {
+                return $attributes['selling_price'] && $attributes['selling_price'] != $attributes['original_price'] ?
+                    $attributes['selling_price'] : $attributes['original_price'];
             },
         );
     }
@@ -296,9 +316,9 @@ class Product extends Model implements Buyable , HasMedia
     public function getDiscountAttribute($value)
     {
         $difference = $this->selling_price && ($this->selling_price < $this->original_price) ? $this->original_price - $this->selling_price : 0;
-        if($difference) 
+        if ($difference)
             $percent = round($this->original_price / $difference, 2);
-        else 
+        else
             $percent = 0;
         return $percent;
     }
@@ -308,10 +328,10 @@ class Product extends Model implements Buyable , HasMedia
         $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
         if ($defaultVariant->variants()->exists()) {
             $attributeValues = $defaultVariant->attributeValues
-                                        ->pluck('id')->unique()->sort()->toArray();
+                ->pluck('id')->unique()->sort()->toArray();
             $variantsAttributeValues = $defaultVariant->variants()->with('attributeValues')->get()
-                                                ->pluck('attributeValues.*.id')->collapse()->unique()->sort()->toArray();
-                            
+                ->pluck('attributeValues.*.id')->collapse()->unique()->sort()->toArray();
+
             $attributeValues = array_merge($attributeValues, $variantsAttributeValues);
 
             return AttributeValue::findMany($attributeValues)->sortBy('attribute_id');
@@ -323,12 +343,11 @@ class Product extends Model implements Buyable , HasMedia
         $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
         if ($defaultVariant->variants()->exists()) {
             $attributeSet = $defaultVariant->attributeValues
-                                        ->pluck('id','attribute_id')->unique()->sort()->toArray();
+                ->pluck('id', 'attribute_id')->unique()->sort()->toArray();
             $attributeSet = array($attributeSet);
-            foreach($defaultVariant->variants as $variant)
-            {
+            foreach ($defaultVariant->variants as $variant) {
                 $variantsAttributeSet = $variant->attributeValues
-                                            ->pluck('id','attribute_id')->unique()->sort()->toArray();
+                    ->pluck('id', 'attribute_id')->unique()->sort()->toArray();
                 $attributeSet = array_merge($attributeSet, array($variantsAttributeSet));
             }
 
@@ -343,25 +362,21 @@ class Product extends Model implements Buyable , HasMedia
         $hasMoreLevels = $allCategories != null ? true : false;
         $level = 0;
         $hierarchicalCategories[$level] = array();
-        
-        while($hasMoreLevels){
+
+        while ($hasMoreLevels) {
             $levelCategories = array();
             $hasMoreLevels = false;
-            foreach($allCategories as $category)
-            {
-                if($level != 0 )
-                {
-                    if ($hierarchicalCategories[$level-1][$category->parent_id] ?? false) {
+            foreach ($allCategories as $category) {
+                if ($level != 0) {
+                    if ($hierarchicalCategories[$level - 1][$category->parent_id] ?? false) {
                         $levelCategories[$category->id] = [
-                                $category->name, 
-                                $category->parent_id, 
-                                $hierarchicalCategories[$level-1][$category->parent_id][2]. ">".$category->name
-                            ];
+                            $category->name,
+                            $category->parent_id,
+                            $hierarchicalCategories[$level - 1][$category->parent_id][2] . ">" . $category->name
+                        ];
                         $hasMoreLevels = true;
                     }
-                }
-                else
-                {
+                } else {
                     if ($category->parent_id == null) {
                         $levelCategories[$category->id] = [$category->name, $category->parent_id, $category->name];
                         $hasMoreLevels = true;
@@ -370,21 +385,21 @@ class Product extends Model implements Buyable , HasMedia
             }
             if ($hasMoreLevels) {
                 $hierarchicalCategories[$level] = $levelCategories;
-                $level ++;
+                $level++;
             }
         };
 
         return $hierarchicalCategories;
-     }
+    }
 
-    public function pricePerQuantity(int $quantity, float $newPrice = null )
+    public function pricePerQuantity(int $quantity, float $newPrice = null)
     {
-        return number_format( ($newPrice ?? $this->price) * $quantity , 2) ;
+        return number_format(($newPrice ?? $this->price) * $quantity, 2);
     }
 
     public function shouldBeSearchable()
     {
-        return ( !$this->attributes['hidden'] ) && ( !$this->variant_id || ($this->variant_id == $this->id) );
+        return (!$this->attributes['hidden']) && (!$this->variant_id || ($this->variant_id == $this->id));
     }
 
     /**
@@ -414,23 +429,21 @@ class Product extends Model implements Buyable , HasMedia
         $array['image'] = $this->image;
         $array['has_variants'] = $this->defaultVariant()->exists() || $this->variants()->exists();
         $array['avg_rating'] = $this->avg_rating;
-        $array['brand'] = $this->brand ? collect($this->brand->toArray())->only(['id','name','logo']) : null;
+        $array['brand'] = $this->brand ? collect($this->brand->toArray())->only(['id', 'name', 'logo']) : null;
         $array['collections'] = $this->collections->map(function ($collection) {
-                                    return $collection['name'];
-                                })->toArray();
+            return $collection['name'];
+        })->toArray();
 
         $array['hierarchicalCategories'] = [];
-        foreach($this->hierarchicalCategories() as $level=>$categories)
-        { 
-            $array['hierarchicalCategories']['lvl'.$level] = array();
-            foreach($categories as $category){
-                array_push($array['hierarchicalCategories']['lvl'.$level],$category[2]);
+        foreach ($this->hierarchicalCategories() as $level => $categories) {
+            $array['hierarchicalCategories']['lvl' . $level] = array();
+            foreach ($categories as $category) {
+                array_push($array['hierarchicalCategories']['lvl' . $level], $category[2]);
             }
         };
 
         $array['url'] = route('product.show', $this);
- 
+
         return $array;
     }
-
 }

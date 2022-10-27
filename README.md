@@ -5,6 +5,7 @@ Una soluzione di ecommerce per chi vuole portare la proprià attività italiana 
 * Ottimizzazione **SEO**.
 * Layout completamente **responsive**.
 * Prodotti suddivisibili e ricercabili tramite **categorie** e **sottocategorie**.
+* **Watermark** applicabile alle immagini dei prodotti.
 * **Ricerca istantanea** con tracciamento delle parole chiave tramite **Algolia** (strumenti di ricerca utile per UX e Marketing)
 * **Ricerca vocale** e con **cronologia** delle ultime ricerche.
 * **Slider** delle immagini dei prodotti.
@@ -86,4 +87,4 @@ Per sviluppare e mettere in produzione il sito web, ho bisogno dei seguenti serv
 
 ## Funzionalità minori
 
-Immagine di default dei prodotti, quantità dei prodotti, validazione carrello (check quantità e prezzi correnti), annullamento periodico ordini non pagati, cronologia cambio di stato degli ordini, slug personalizzabili, admin global search, URL sincronizzato con filtri di ricerca prodotti
+Immagine di default dei prodotti, gestione stock prodotti, validazione carrello (check quantità e prezzi correnti), annullamento periodico ordini non pagati, cronologia cambio di stato degli ordini, slug personalizzabili, admin global search, URL sincronizzato con filtri di ricerca prodotti

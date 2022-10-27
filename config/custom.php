@@ -24,4 +24,6 @@ return [
     'monthyear_format' => 'n/y',
 
     'stock_threshold' => 3,
+
+    'use_watermark' => false,
 ];
