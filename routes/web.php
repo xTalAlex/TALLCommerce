@@ -83,4 +83,7 @@ Route::middleware([
 
 });
 
+Route::get('/auth/google/redirect', [App\Http\Controllers\SocialiteController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('/auth/google/callback', [App\Http\Controllers\SocialiteController::class, 'handleGoogleCallBack']);
+
 Route::stripeWebhooks('stripe-webhook');

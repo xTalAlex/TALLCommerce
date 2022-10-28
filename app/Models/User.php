@@ -33,6 +33,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'email',
         'password',
         'is_admin',
+        'socialite_provider',
+        'socialite_id'
     ];
 
     /**
@@ -45,6 +47,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'socialite_provider',
+        'socialite_id'
     ];
 
     /**
@@ -114,6 +118,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
      */
     protected function defaultProfilePhotoUrl()
     {
-        return 'https://robohash.org/'.md5(Str::lower($this->email)).'.png?bgset=bg1';
+        return 'https://robohash.org/'.md5(urlencode(Str::lower($this->email))).'.png?bgset=bg1';
     }
 }

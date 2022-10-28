@@ -25,4 +25,6 @@ return [
     "payment.not_found" => "Error while fetching payment info",
 
     "product.not_found" => "Product not avaiable",
+
+    "socialite.no_user" => "Unexpected error. Please, try again later.",
 ];

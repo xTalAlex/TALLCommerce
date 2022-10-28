@@ -25,4 +25,6 @@ return [
     "payment.not_found" => "Errore durante il recupero delle informazioni di pagamento",
 
     "product.not_found" => "Il prodotto non è più disponibile",
+
+    "socialite.no_user" => "Si è verificato un errore. Per favore, riprova più tardi.",
 ];
