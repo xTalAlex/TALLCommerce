@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Closure;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Order;
@@ -9,6 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use Illuminate\Support\HtmlString;
 use Filament\Tables\Filters\Layout;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,7 +25,17 @@ class OrderResource extends Resource
 
     public static function getGlobalSearchResultTitle(Model $record): string
     {
-        return '#'.$record->number;
+        return '#' . $record->number;
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['number', 'invoice_serial_number'];
+    }
+
+    public static function getGlobalSearchResultUrl(Model $record): string
+    {
+        return OrderResource::getUrl('view', ['record' => $record]);
     }
 
     public static function getLabel(): string
@@ -45,16 +57,25 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
-    public static function canCreate(): bool { return false; }
+    public static function canCreate(): bool
+    {
+        return false;
+    }
 
-    public static function canDelete(Model $record): bool { return false; }
+    public static function canDelete(Model $record): bool
+    {
+        return false;
+    }
 
-    public static function canDeleteAny(): bool { return false; }
+    public static function canDeleteAny(): bool
+    {
+        return false;
+    }
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([ 
+            ->schema([
 
                 Forms\Components\Placeholder::make('note')->label(__('Note'))
                     ->hidden(fn (?Order $record) => $record->note == null)
@@ -68,7 +89,7 @@ class OrderResource extends Resource
                         Forms\Components\Group::make()
                             ->schema([
                                 Forms\Components\Placeholder::make('number')->label(__('Number'))
-                                    ->content(fn (?Order $record): string => $record ? $record->number : '-'),  
+                                    ->content(fn (?Order $record): string => $record ? $record->number : '-'),
                                 Forms\Components\TextInput::make('tracking_number')->label(__('Tracking Number')),
                             ])
                             ->columns([
@@ -76,13 +97,13 @@ class OrderResource extends Resource
                             ])
                             ->columnSpan('full'),
 
-                        
+
                         Forms\Components\Fieldset::make('shipping')->label(__('Shipping Details'))
                             ->schema([
                                 Forms\Components\RichEditor::make('shipping_label')->label(__('Shipping Label'))
                                     ->columnSpan(2),
                                 Forms\Components\Placeholder::make('shippingPrice.name')->label(__('Shipping'))
-                                    ->content(fn (?Order $record): string => $record && $record->shippingPrice ? $record->shippingPrice->name : '-'),                                    
+                                    ->content(fn (?Order $record): string => $record && $record->shippingPrice ? $record->shippingPrice->name : '-'),
                             ])
                             ->visibleOn(Pages\ViewOrder::class),
 
@@ -114,14 +135,14 @@ class OrderResource extends Resource
 
                                         Forms\Components\TextInput::make('shipping_price')->label(__('Shipping'))
                                             ->prefix('€'),
-                               
+
                                         Forms\Components\TextInput::make('total')->label(__('Total'))
                                             ->prefix('€'),
 
                                         Forms\Components\Fieldset::make('coupon')->label(__('Coupon'))
                                             ->schema([
                                                 Forms\Components\Select::make('coupon')->label(__('Code'))
-                                                    ->relationship('coupon','code')
+                                                    ->relationship('coupon', 'code')
                                                     ->placeholder('-'),
                                                 Forms\Components\TextInput::make('coupon_discount')->label(__('Discount'))
                                                     ->prefix('€'),
@@ -146,32 +167,34 @@ class OrderResource extends Resource
 
                     ])
                     ->columnSpan(2),
-                    
-                    Forms\Components\Group::make()
-                        ->schema([
-                            Forms\Components\Card::make()
-                                ->schema([
-                                    Forms\Components\Select::make('user.id')->label(__('User'))
-                                        ->relationship('user','name')
-                                        ->placeholder('-'),
-                                    Forms\Components\TextInput::make('email')->label(__('Email'))
-                                        ->email(),
-                                    Forms\Components\TextInput::make('phone')->label(__('Telefono')),
-                                ]),
-                            Forms\Components\Card::make()
-                                ->schema([
-                                    Forms\Components\Placeholder::make('status')->label(__('Status'))
-                                        ->content(fn (?Order $record): string => $record ? $record->status->label : '-'),
-                                ])->columns(1),
-                            Forms\Components\Card::make()
-                                ->schema([
-                                    Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
-                                        ->content(fn (?Order $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
-                                    Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
-                                        ->content(fn (?Order $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
-                                ]),
-                        ])
-                        ->columnSpan(1),
+
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\Select::make('user.id')->label(__('User'))
+                                    ->relationship('user', 'name')
+                                    ->placeholder('-'),
+                                Forms\Components\TextInput::make('email')->label(__('Email'))
+                                    ->email(),
+                                Forms\Components\TextInput::make('phone')->label(__('Telefono')),
+                            ]),
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\Placeholder::make('status')->label(__('Status'))
+                                    ->content(fn (?Order $record): string => $record ? $record->status->label : '-'),
+                                Forms\Components\Placeholder::make('invoice')->label(__('Invoice Number'))
+                                    ->content(fn (?Order $record): string => $record && $record->invoice_serial_number ? $record->invoice_serial_number : '-'),
+                            ])->columns(1),
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
+                                    ->content(fn (?Order $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
+                                Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
+                                    ->content(fn (?Order $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
+                            ]),
+                    ])
+                    ->columnSpan(1),
             ])
             ->columns([
                 'md' => 3,
@@ -189,18 +212,19 @@ class OrderResource extends Resource
                 Tables\Columns\BadgeColumn::make('status.label')->label(__('Status'))
                     ->colors([
                         'secondary',
-                        'primary' => fn ($state): bool => 
-                                        $state === __('general.order_statuses.shipped') || 
-                                        $state === __('general.order_statuses.preparing'),
+                        'primary' => fn ($state): bool =>
+                        $state === __('general.order_statuses.shipped') ||
+                            $state === __('general.order_statuses.preparing'),
                         'success' => __('general.order_statuses.completed'),
                         'warning' => __('general.order_statuses.paied'),
                         'danger' => __('general.order_statuses.cancelled'),
                     ]),
                 Tables\Columns\TextColumn::make('user.name')->label(__('Name'))
                     ->searchable()
-                    ->url(fn (Order $record): string => 
+                    ->url(
+                        fn (Order $record): string =>
                         $record->user ?
-                            route('filament.resources.users.view', $record->user->id )
+                            route('filament.resources.users.view', $record->user->id)
                             : route('filament.resources.users.index')
                     )
                     ->toggleable(),
@@ -209,6 +233,10 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('total')->label(__('Total'))
                     ->money('eur')
                     ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('invoice_serial_number')->label(__('Invoice Number'))
+                    ->sortable()
+                    ->searchable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
                     ->dateTime(config('custom.datetime_format'))
@@ -219,26 +247,27 @@ class OrderResource extends Resource
                     ->sortable()
                     ->toggleable(),
             ])
-            ->defaultSort('created_at','desc')
-            ->filters([
-                Tables\Filters\SelectFilter::make('status')
-                    ->label(__('Status'))
-                    ->relationship('status', 'name')
-                    ->options(fn() => \App\Models\OrderStatus::all()->pluck('label','id')),
-                Tables\Filters\Filter::make('total')
-                    ->form([
-                        Forms\Components\TextInput::make('total')
-                            ->label(__('Total'))
-                            ->numeric()
-                            ->suffix(__('or more')),
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['total'],
-                                fn (Builder $query, $total): Builder => $query->where('total', '>=', $total),
-                            );
-                    }),
+            ->defaultSort('created_at', 'desc')
+            ->filters(
+                [
+                    Tables\Filters\SelectFilter::make('status')
+                        ->label(__('Status'))
+                        ->relationship('status', 'name')
+                        ->options(fn () => \App\Models\OrderStatus::all()->pluck('label', 'id')),
+                    Tables\Filters\Filter::make('total')
+                        ->form([
+                            Forms\Components\TextInput::make('total')
+                                ->label(__('Total'))
+                                ->numeric()
+                                ->suffix(__('or more')),
+                        ])
+                        ->query(function (Builder $query, array $data): Builder {
+                            return $query
+                                ->when(
+                                    $data['total'],
+                                    fn (Builder $query, $total): Builder => $query->where('total', '>=', $total),
+                                );
+                        }),
                 ],
                 layout: Layout::AboveContent,
             )
@@ -253,7 +282,7 @@ class OrderResource extends Resource
                     ->form([
                         Forms\Components\TextInput::make('subject')
                             ->label(__('Subject'))
-                            ->default(fn(Order $record) => __('Order Update'). " " . $record->number )
+                            ->default(fn (Order $record) => __('Order Update') . " " . $record->number)
                             ->required(),
                         Forms\Components\RichEditor::make('message')
                             ->label(__('Message'))
@@ -262,7 +291,7 @@ class OrderResource extends Resource
                 Tables\Actions\EditAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
@@ -277,7 +306,7 @@ class OrderResource extends Resource
             OrderResource\Widgets\OrdersOverview::class,
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [

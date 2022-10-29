@@ -27,6 +27,7 @@ class OrderObserver
     public function updated(Order $order)
     {
         $order->number = $order->number;
+        $order->invoice_serial_number = $order->invoice_serial_number;
         $order->saveQuietly();
     }
 

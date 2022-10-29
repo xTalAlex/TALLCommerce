@@ -124,7 +124,8 @@
     "Already registered?" : "Sei già registrato?",
 
     "Pay Now" : "Paga Ora",
-    "Invoice" : "Fattura",
+    "Invoice" : "Ricevuta",
+    "Invoice Number": "Numero Ricevuta",
 
     "Confirm Addresses" : "Conferma Indirizzi",
     "Update Addresses" : "Aggiorna Indirizzi",

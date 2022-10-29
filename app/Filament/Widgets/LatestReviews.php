@@ -25,6 +25,11 @@ class LatestReviews extends BaseWidget
         return Review::withoutGlobalScopes([ ApprovedScope::class ])->latest()->limit(50);
     }
 
+    protected function getTableRecordUrlUsing(): Closure
+    {
+        return fn (Review $record): string => route('filament.resources.reviews.index');
+    }
+
     protected function getTableColumns(): array
     {
         return [
@@ -66,8 +71,8 @@ class LatestReviews extends BaseWidget
     protected function getTableActions(): array
     {
         return [
-            Tables\Actions\EditAction::make()
-                ->url(fn (Review $record): string => route('filament.resources.reviews.index', ['record' => $record])),
+            // Tables\Actions\EditAction::make()
+            //     ->url(fn (Review $record): string => route('filament.resources.reviews.index', ['record' => $record])),
         ];
     }
 }

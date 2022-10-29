@@ -5,7 +5,7 @@ return [
         /*
          * Carbon date format
          */
-        'format' => 'Y-m-d',
+        'format' => 'd-m-Y',
         /*
          * Due date for payment since invoice's date.
          */
@@ -19,12 +19,12 @@ return [
          * Sequence will be padded accordingly, for ex. 00001
          */
         'sequence_padding' => 5,
-        'delimiter'        => '.',
+        'delimiter'        => '-',
         /*
          * Supported tags {SERIES}, {DELIMITER}, {SEQUENCE}
          * Example: AA.00001
          */
-        'format' => '{SERIES}{DELIMITER}{SEQUENCE}',
+        'format' => '{SEQUENCE}{DELIMITER}{SERIES}',
     ],
 
     'currency' => [

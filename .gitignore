@@ -14,3 +14,5 @@ yarn-error.log
 /.vscode
 package-lock.json
 public/build
+public/sitemap_index.xml
+public/sitemap

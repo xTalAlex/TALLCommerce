@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -39,6 +40,7 @@ class Order extends Model
         'shipping_label',
         'billing_label',
         'number ',
+        'invoice_serial_number',
     ];
 
     /**
@@ -125,9 +127,11 @@ class Order extends Model
         return $this->id + 1000;
     }
 
-    public function getOriginalSubtotalAttribute($value)
+    public function getInvoiceSerialNumberAttribute($value)
     {
-        return number_format( $this->subtotal + $this->coupon_discount, 2);
+        return $this->invoice_sequence ? str_pad($this->invoice_sequence, config('invoices.serial_number.sequence_padding') , '0', STR_PAD_LEFT) 
+            . config('invoices.serial_number.delimiter') 
+            . $this->invoice_series : null;
     }
 
     // protected function number(): Attribute
@@ -193,6 +197,28 @@ class Order extends Model
     public function canBeInvoiced()
     {
         return strtolower($this->status->name) !='pending' && strtolower($this->status->name) !='payment_failed';
+    }
+
+    public function setAsPaied()
+    {
+        $res = false;
+
+        DB::transaction(function () {
+            $status = OrderStatus::where('name','paied')->first();
+            if ($status) {
+                $lastInvoiceSequence= optional(Order::where('invoice_series', today()->format('y'))->max('invoice_sequence'))->invoice_sequence ?? 0;
+                $this->status()->associate($status);
+                $this->invoice_sequence = $lastInvoiceSequence + 1;
+                $this->invoice_series = today()->format('y');
+                $this->save();
+                $this->history()->create([
+                    'order_status_id' => $status->id,
+                ]);
+                $res = true;
+            }
+        });
+
+        return $res;
     }
 
     public function restock()

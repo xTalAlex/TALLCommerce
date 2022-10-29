@@ -36,6 +36,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->string('invoice_series')->nullable();
+            $table->string('invoice_sequence')->nullable();
+            $table->string('invoice_serial_number')->nullable();
             $table->timestamps();
 
             $table->foreign('order_status_id')->references('id')->on('order_statuses')

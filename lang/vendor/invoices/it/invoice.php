@@ -35,4 +35,6 @@ return [
     'shipping'               => 'Spedizione',
     'paid'                   => 'Pagato',
     'due'                    => 'Causale',
+    'email'                  => 'Email',
+    'order_number'           => 'Numero ordine',
 ];

@@ -60,12 +60,7 @@ class EditOrder extends EditRecord
         {
             $paied= Action::make('paied')->label(__('Set as Paied'))
                 ->action(function (array $data): void {
-                    $status_id = \App\Models\OrderStatus::where('name', 'like','paied')->first()->id;
-                    $this->record->status()->associate($status_id);
-                    $this->record->save();
-                    $this->record->history()->create([
-                        'order_status_id' => $status_id,
-                    ]);
+                    $this->record->setAsPaied();
                     $this->redirect(route('filament.resources.orders.view', $this->record));
                     $this->notify('success',__('general.order_statuses.changes.paied'));
                 })

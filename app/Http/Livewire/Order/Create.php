@@ -196,10 +196,7 @@ class Create extends Component
         }
         
         if ($avaiable) {
-            if($gateway == 'paypal')
-                $status_id = OrderStatus::where('name', 'paied')->first()->id;
-            else
-                $status_id = OrderStatus::where('name', 'pending')->first()->id;
+            $status_id = OrderStatus::where('name', 'pending')->first()->id;
             $this->order = Order::firstOrCreate([
                 'payment_gateway' => $gateway,
                 'payment_id' => $payment_id,
@@ -249,6 +246,9 @@ class Create extends Component
             session()->forget('shipping_price');
             session()->forget('shipping_address');
             session()->forget('billing_address');
+
+            if($gateway == 'paypal')
+                $this->order->setAsPaied();
 
             $this->emit('orderCreated');
         }

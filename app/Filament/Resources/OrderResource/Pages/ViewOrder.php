@@ -14,7 +14,17 @@ class ViewOrder extends ViewRecord
 
     protected function getActions(): array
     {
-        return [
+        $actions = [];
+        if ($this->record->canBeInvoiced()) {
+            array_push(
+                $actions,
+                Actions\Action::make(__('Invoice'))
+                    ->url(route('invoice.show', ['order' => $this->record]))
+                    ->openUrlInNewTab()
+            );
+        }
+        array_push(
+            $actions,
             Actions\Action::make('Email')
                 ->color('success')
                 ->icon('heroicon-o-mail')
@@ -25,14 +35,15 @@ class ViewOrder extends ViewRecord
                 ->form([
                     \Filament\Forms\Components\TextInput::make('subject')
                         ->label(__('Subject'))
-                        ->default(fn(Order $record) => __('Order Update'). " " . $record->number )
+                        ->default(fn (Order $record) => __('Order Update') . " " . $record->number)
                         ->required(),
                     \Filament\Forms\Components\RichEditor::make('message')
                         ->label(__('Message'))
                         ->required(),
-                ]),
-            Actions\EditAction::make(),
-        ];
+                ])
+        );
+        array_push($actions,Actions\EditAction::make());
+
+        return $actions;
     }
-    
 }

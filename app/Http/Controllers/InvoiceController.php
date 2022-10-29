@@ -55,7 +55,8 @@ class InvoiceController extends Controller
         $customer = new Buyer([
             'name'          => $order->billingAddress()->full_name,
             'custom_fields' => [
-                'email' => $order->billingAddress()->email ?? $order->email,
+                'email' => $order->email,
+                'order_number' => '#'.$order->number,
             ],
         ]);
 
@@ -71,6 +72,8 @@ class InvoiceController extends Controller
         }
 
         $invoice = Invoice::make()
+            ->series($order->invoice_series)
+            ->sequence($order->invoice_sequence)
             ->buyer($customer)
             ->taxRate(config('cart.tax'))
             ->shipping($order->shipping_price)

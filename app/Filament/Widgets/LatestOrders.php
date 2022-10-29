@@ -7,6 +7,7 @@ use Filament\Forms;
 use Filament\Tables;
 use App\Models\Order;
 use Filament\Facades\Filament;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Widgets\TableWidget as BaseWidget;
 
@@ -24,6 +25,11 @@ class LatestOrders extends BaseWidget
     protected function getTableQuery(): Builder
     {
         return Order::query()->latest()->limit(50);
+    }
+
+    protected function getTableRecordUrlUsing(): Closure
+    {
+        return fn (Order $record): string => route('filament.resources.orders.view', ['record' => $record]);
     }
 
     protected function getTableColumns(): array
@@ -55,6 +61,10 @@ class LatestOrders extends BaseWidget
                 Tables\Columns\TextColumn::make('total')->label(__('Total'))
                     ->money('eur')
                     ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('invoice_serial_number')->label(__('Invoice Number'))
+                    ->sortable()
+                    ->searchable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
                     ->dateTime(config('custom.datetime_format'))

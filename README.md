@@ -17,7 +17,7 @@ Una soluzione di ecommerce per chi vuole portare la proprià attività italiana 
 * **Varianti** degli articoli.
 * **Articoli in evidenza**.
 * Sistema di **recensioni**.
-* **Coupon** (con sconti fissi o in percentuale, senza scadenza, con data di scadenza o con numero di riscatti limitati).
+* **Coupon** (con sconti fissi o in percentuale, senza scadenza, con data di scadenza o con numero di riscatti limitati) applicabili sia dal carrello che durante il checkout.
 * Funzionalità di autenticazione a 2 fattori (**2FA**).
 * Inserimento di **indirizzi di spedizione e fatturazione** da parte dell'utente. 
 * Nel caso B2C: possibilità di **acquisto come Ospite** utilizzando un email e **recuperare lo storico degli acquisti** iscrivendosi tramite quest'ultima.
@@ -75,16 +75,27 @@ Per sviluppare e mettere in produzione il sito web, ho bisogno dei seguenti serv
 
 *Fornisco l'assistenza necessaria per imparare le basi di utilizzo di ciascuno di questi servizi, in particolare per Stripe che è l'unico servizio che il cliente deve obbligatoriamente imparare a gestire autonomamente.*
 
-<!--
-    cron per pulizia payment_failed
-
-    utilizzo di un codice coupon alla volta
-
-    prodotti con varianti > nella ricerca vengono mostrati prezzo, quantità e foto della variante principale
-
-    non aggiungere piú valori dello stesso attributo a un singolo prodotto
--->
-
 ## Funzionalità minori
 
-Immagine di default dei prodotti, gestione stock prodotti, validazione carrello (check quantità e prezzi correnti), annullamento periodico ordini non pagati, cronologia cambio di stato degli ordini, slug personalizzabili, admin global search, URL sincronizzato con filtri di ricerca prodotti
+* Immagine di default dei prodotti
+* Gestione stock prodotti
+* Validazione carrello (check quantità e prezzi correnti)
+* Annullamento periodico ordini non pagati
+* Cronologia cambio di stato degli ordini
+* Slug personalizzabili
+* Ricerca globale da admin panel
+* URL sincronizzato con filtri di ricerca prodotti
+* Login con google
+* Sitemap
+
+
+<!--
+## 
+
+cron per pulizia payment_failed
+utilizzo di un codice coupon alla volta
+mask price > visualizzare zeri per prezzi interi
+filament e media library > medialibrary header CacheControl no-cache
+prodotti con varianti > nella ricerca vengono mostrati prezzo, quantità e foto della variante principale
+non aggiungere piú valori dello stesso attributo a un singolo prodotto
+-->
