@@ -47,6 +47,7 @@ class CategoryResource extends Resource
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\TextInput::make('name')->label(__('Name'))
+                            ->unique(ignorable: fn (?Category $record): ?Category => $record) 
                             ->required(),
                         Forms\Components\Select::make('parent_id')->label(__('Parent'))
                             ->relationship('parent', 'name', fn(?Category $record, $query) => 

@@ -116,10 +116,12 @@ class ProductsRelationManager extends RelationManager
                     Tables\Filters\TrashedFilter::make(),
                 ],
             )->actions([
+                Tables\Actions\DetachAction::make(),
                 Tables\Actions\RestoreAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
+                Tables\Actions\DetachBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
                 Tables\Actions\DeleteBulkAction::make(),
                 Tables\Actions\ForceDeleteBulkAction::make(),

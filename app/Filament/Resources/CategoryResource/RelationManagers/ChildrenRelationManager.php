@@ -43,6 +43,7 @@ class ChildrenRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')->label(__('Name'))
+                    ->unique(ignorable: fn (?Category $record): ?Category => $record)
                     ->required(),
                 Forms\Components\Toggle::make('featured')->label(__('Featured')),
                 Forms\Components\Textarea::make('description')->label(__('Description'))
@@ -77,6 +78,7 @@ class ChildrenRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AssociateAction::make()
+                    ->recordSelectOptionsQuery(fn (Builder $query, Category $model) => $query->whereNot('id', $model->id) )
                     ->preloadRecordSelect(true),
                 Tables\Actions\CreateAction::make(),
             ])
