@@ -32,6 +32,8 @@ class GenerateSitemap extends Command
      */
     public function handle()
     {
+        $disk = config('media-library.disk_name');
+
         SitemapIndex::create()
             ->add('/sitemap/pages_sitemap.xml')
             ->add('/sitemap/products_sitemap.xml')
@@ -39,22 +41,22 @@ class GenerateSitemap extends Command
             ->add('/sitemap/brands_sitemap.xml')
             ->add('/sitemap/collections_sitemap.xml')
             ->add('/sitemap/tags_sitemap.xml')
-            ->writeToFile(public_path('sitemap_index.xml'));
+            ->writeToDisk($disk,'sitemap_index.xml');
 
         Sitemap::create(config('app.url'))
             ->add(Url::create(route('home')))
             ->add(Url::create(route('product.index')))
-            ->writeToFile(public_path('/sitemap/pages_sitemap.xml'));
+            ->writeToDisk($disk,'/sitemap/pages_sitemap.xml');
         Sitemap::create(config('app.url'))
             ->add(Product::all())
-            ->writeToFile(public_path('/sitemap/products_sitemap.xml'));
+            ->writeToDisk($disk,'/sitemap/products_sitemap.xml');
         Sitemap::create(config('app.url'))
-            ->writeToFile(public_path('/sitemap/categories_sitemap.xml'));
+            ->writeToDisk($disk,'/sitemap/categories_sitemap.xml');
         Sitemap::create(config('app.url'))
-            ->writeToFile(public_path('/sitemap/brands_sitemap.xml'));
+            ->writeToDisk($disk,'/sitemap/brands_sitemap.xml');
         Sitemap::create(config('app.url'))
-            ->writeToFile(public_path('/sitemap/collections_sitemap.xml'));
+            ->writeToDisk($disk,'/sitemap/collections_sitemap.xml');
         Sitemap::create(config('app.url'))
-            ->writeToFile(public_path('/sitemap/tags_sitemap.xml'));
+            ->writeToDisk($disk,'/sitemap/tags_sitemap.xml');
     }
 }

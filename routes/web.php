@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,3 +88,11 @@ Route::get('/auth/google/redirect', [App\Http\Controllers\SocialiteController::c
 Route::get('/auth/google/callback', [App\Http\Controllers\SocialiteController::class, 'handleGoogleCallBack']);
 
 Route::stripeWebhooks('stripe-webhook');
+
+Route::get('sitemap_index.xml', fn() => 
+    response(
+        Storage::disk(config('media-library.disk_name'))->get('sitemap_index.xml'), 
+        200,
+        ['Content-Type' => 'application/xml']
+    )
+);
