@@ -96,3 +96,10 @@ Route::get('sitemap_index.xml', fn() =>
         ['Content-Type' => 'application/xml']
     )
 );
+Route::get('sitemap/{filename}', fn($filename) => 
+    response(
+        Storage::disk(config('media-library.disk_name'))->get('sitemap/'.$filename), 
+        200,
+        ['Content-Type' => 'application/xml']
+    )
+);
