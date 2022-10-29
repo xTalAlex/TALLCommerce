@@ -115,6 +115,7 @@ return [
         'id' => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
         'client' => env('ALGOLIA_CLIENT', ''),
+        'settings_path' => 'algolia'
     ],
 
     /*

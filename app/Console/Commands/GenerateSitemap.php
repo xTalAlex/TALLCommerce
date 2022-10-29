@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Product;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
 use Illuminate\Console\Command;
 use Spatie\Sitemap\SitemapIndex;
 use Spatie\Sitemap\SitemapGenerator;
@@ -32,20 +35,26 @@ class GenerateSitemap extends Command
         SitemapIndex::create()
             ->add('/sitemap/pages_sitemap.xml')
             ->add('/sitemap/products_sitemap.xml')
-            ->add('/sitemap/collections_sitemap.xml')
             ->add('/sitemap/categories_sitemap.xml')
+            ->add('/sitemap/brands_sitemap.xml')
+            ->add('/sitemap/collections_sitemap.xml')
             ->add('/sitemap/tags_sitemap.xml')
             ->writeToFile(public_path('sitemap_index.xml'));
 
-        SitemapGenerator::create(config('app.url'))
+        Sitemap::create(config('app.url'))
+            ->add(Url::create(route('home')))
+            ->add(Url::create(route('product.index')))
             ->writeToFile(public_path('/sitemap/pages_sitemap.xml'));
-        SitemapGenerator::create(config('app.url'))
+        Sitemap::create(config('app.url'))
+            ->add(Product::all())
             ->writeToFile(public_path('/sitemap/products_sitemap.xml'));
-        SitemapGenerator::create(config('app.url'))
-            ->writeToFile(public_path('/sitemap/collections_sitemap.xml'));
-        SitemapGenerator::create(config('app.url'))
+        Sitemap::create(config('app.url'))
             ->writeToFile(public_path('/sitemap/categories_sitemap.xml'));
-        SitemapGenerator::create(config('app.url'))
+        Sitemap::create(config('app.url'))
+            ->writeToFile(public_path('/sitemap/brands_sitemap.xml'));
+        Sitemap::create(config('app.url'))
+            ->writeToFile(public_path('/sitemap/collections_sitemap.xml'));
+        Sitemap::create(config('app.url'))
             ->writeToFile(public_path('/sitemap/tags_sitemap.xml'));
     }
 }

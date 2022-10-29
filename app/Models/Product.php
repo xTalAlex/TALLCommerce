@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Support\Str;
+use Spatie\Sitemap\Tags\Url;
 use Laravel\Scout\Searchable;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
@@ -15,9 +19,9 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Product extends Model implements Buyable, HasMedia
+class Product extends Model implements Buyable, HasMedia, Sitemapable
 {
-    use HasFactory, InteractsWithMedia, SoftDeletes, Searchable;
+    use HasFactory, InteractsWithMedia, SoftDeletes, Searchable, HasSEO;
 
     const PATH = "products";
 
@@ -74,6 +78,15 @@ class Product extends Model implements Buyable, HasMedia
                 ->watermarkPadding(20)
                 ->performOnCollections('gallery');
         }
+    }
+
+    public function getDynamicSEOData(): SEOData
+    {
+        return new SEOData(
+            title: $this->name,
+            description: $this->description,
+            image: $this->image
+        );
     }
 
     /**
@@ -261,7 +274,7 @@ class Product extends Model implements Buyable, HasMedia
         //     $gallery = $this->defaultVariant->gallery;
         // }
 
-        return $this->getMedia('gallery')->map(fn ($media) => $media->getAvailableFullUrl(config('custom.use_watermark') ? ['watermarked','default'] : ['default']));
+        return $this->getMedia('gallery')->map(fn ($media) => $media->getAvailableFullUrl(config('custom.use_watermark') ? ['watermarked', 'default'] : ['default']));
     }
 
     public function setGalleryAttribute($value)
@@ -445,5 +458,10 @@ class Product extends Model implements Buyable, HasMedia
         $array['url'] = route('product.show', $this);
 
         return $array;
+    }
+
+    public function toSitemapTag(): Url | string | array
+    {
+        return route('product.show', $this);
     }
 }

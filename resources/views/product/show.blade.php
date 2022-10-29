@@ -1,3 +1,7 @@
+<x-slot name="seo">
+    {!! seo($product) !!}
+</x-slot>
+
 <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
         {{ $product->name }}
@@ -30,9 +34,9 @@
                             }"
                     >
 
-                        <div class="h-64 w-full lg:w-1/2 lg:h-96 rounded mx-auto">
+                        <div class="w-full h-64 mx-auto rounded lg:w-1/2 lg:h-96">
                             <a :href="curImage">
-                            <img alt="{{ $product->name }}" class="m-auto cursor-zoom-in hover:scale-150 transition-all ease-in object-contain object-center h-full max-h-full"
+                            <img alt="{{ $product->name }}" class="object-contain object-center h-full max-h-full m-auto transition-all ease-in cursor-zoom-in hover:scale-150"
                                 :src="curImage"
                                 x-transition.duration.500ms
                                 x-show = "show ">
@@ -167,7 +171,7 @@
 
                             <div class="flex">
                                 @if($product->quantity)
-                                    <button class="flex px-6 py-2 ml-auto text-white bg-primary-500 border-0 rounded focus:outline-none hover:bg-primary-600"
+                                    <button class="flex px-6 py-2 ml-auto text-white border-0 rounded bg-primary-500 focus:outline-none hover:bg-primary-600"
                                         wire:click="addToCart"
                                     >{{ __('Add to cart') }}<x-icons.cart class="ml-1" /></button>
                                 @else
