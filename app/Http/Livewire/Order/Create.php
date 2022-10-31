@@ -78,7 +78,7 @@ class Create extends Component
         $this->addresses_confirmed = false;
         $this->email = Auth::user() ? Auth::user()->email : null;
 
-        $this->shipping_prices = ShippingPrice::all();
+        $this->shipping_prices = ShippingPrice::active()->get();
 
         $this->shipping_price = session()->get('shipping_price') ? 
             $this->shipping_prices->where('id', session()->get('shipping_price') )->first() 

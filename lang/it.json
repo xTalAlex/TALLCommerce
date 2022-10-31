@@ -274,5 +274,13 @@
 
     "Go" : "Vai",
     "Our Brands" : "I Nostri Brand",
-    "Learn More" : "Scopri"
+    "Learn More" : "Scopri",
+
+    "Shipping Price": "Opzione di Spedizione",
+    "Shipping Prices": "Opzioni di Spedizione",
+    "Delivery Time": "Tempi di consegna",
+    "Min": "Minimo",
+    "Max": "Massimo",
+    "Days": "Giorni",
+    "Day": "Giorno"
 } 

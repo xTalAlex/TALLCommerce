@@ -90,7 +90,7 @@ class ReviewsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('description')->label(__('Description'))
                     ->limit(100)
                     ->wrap(),
-                Tables\Columns\BooleanColumn::make('approved')->label(__('Approved'))
+                Tables\Columns\IconColumn::make('approved')->label(__('Approved'))
                     ->trueColor('success')
                     ->falseColor('danger')
                     ->sortable(),

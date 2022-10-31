@@ -106,7 +106,7 @@ class BrandResource extends Resource
                 Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
                     ->sortable()
                     ->toggleable(),
-                Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
+                Tables\Columns\IconColumn::make('featured')->label(__('Featured'))
                     ->trueColor('primary')
                     ->falseColor('secondary')
                     ->toggleable(),

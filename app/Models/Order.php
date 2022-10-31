@@ -82,7 +82,7 @@ class Order extends Model
 
     public function shippingPrice()
     {
-        return $this->belongsTo(ShippingPrice::class);
+        return $this->belongsTo(ShippingPrice::class)->withoutGlobalScopes();
     }
 
     public function shippingAddress()

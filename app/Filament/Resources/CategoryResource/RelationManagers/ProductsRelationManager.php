@@ -54,14 +54,14 @@ class ProductsRelationManager extends RelationManager
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('price')->label(__('Price'))
                     ->money('eur')
-                    ->sortable(['selling_price','original_price']),
+                    ->sortable(['selling_price', 'original_price']),
                 Tables\Columns\TextColumn::make('quantity')->label(__('Quantity'))
                     ->sortable(),
-                Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
+                Tables\Columns\IconColumn::make('featured')->label(__('Featured'))
                     ->trueColor('primary')
                     ->falseColor('secondary')
                     ->toggleable(),
-                Tables\Columns\BooleanColumn::make('hidden')->label(__('Hidden'))
+                Tables\Columns\IconColumn::make('hidden')->label(__('Hidden'))
                     ->trueColor('primary')
                     ->falseColor('secondary')
                     ->toggleable(),
@@ -70,24 +70,27 @@ class ProductsRelationManager extends RelationManager
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                    Tables\Filters\MultiSelectFilter::make('categories')->label(__('Categories'))
-                        ->options(\App\Models\Category::all()->pluck('name','id'))
+            ->filters(
+                [
+                    Tables\Filters\SelectFilter::make('categories')->label(__('Categories'))
+                        ->multiple()
+                        ->options(\App\Models\Category::all()->pluck('name', 'id'))
                         ->query(function (Builder $query, array $data): Builder {
                             return $query
                                 ->when(
                                     $data['values'],
-                                    fn (Builder $query, $values): Builder => 
-                                        $query->whereHas('categories', fn($query) => $query->whereIn('categories.id', $values)),
+                                    fn (Builder $query, $values): Builder =>
+                                    $query->whereHas('categories', fn ($query) => $query->whereIn('categories.id', $values)),
                                 );
                         }),
-                    Tables\Filters\MultiSelectFilter::make('attributes')->label(__('Attributes'))
-                        ->options(\App\Models\AttributeValue::all()->sortBy('attribute_id')->pluck('label','id'))
+                    Tables\Filters\SelectFilter::make('attributes')->label(__('Attributes'))
+                        ->multiple()
+                        ->options(\App\Models\AttributeValue::all()->sortBy('attribute_id')->pluck('label', 'id'))
                         ->query(function (Builder $query, array $data): Builder {
                             $values = $data['values'];
-                            if($values){
-                                $query->whereHas('attributeValues', function($query) use ($values) {
-                                    foreach($values as $value)
+                            if ($values) {
+                                $query->whereHas('attributeValues', function ($query) use ($values) {
+                                    foreach ($values as $value)
                                         $query->where('attribute_values.id', $value);
                                     return $query;
                                 });
@@ -98,7 +101,7 @@ class ProductsRelationManager extends RelationManager
                         ->query(fn (Builder $query): Builder => $query->where('featured', true)),
                     Tables\Filters\Filter::make('hidden')->label(__('Hidden'))
                         ->query(fn (Builder $query): Builder => $query->where('hidden', true)),
-                    Tables\Filters\Filter::make('discounted')->label(trans_choice('Discounted',1))
+                    Tables\Filters\Filter::make('discounted')->label(trans_choice('Discounted', 1))
                         ->query(fn (Builder $query): Builder => $query->whereColumn('selling_price', '<', 'original_price')),
                     Tables\Filters\Filter::make('quantity')
                         ->form([
@@ -126,8 +129,8 @@ class ProductsRelationManager extends RelationManager
                 Tables\Actions\DeleteBulkAction::make(),
                 Tables\Actions\ForceDeleteBulkAction::make(),
             ]);
-    }  
-    
+    }
+
     protected function getTableQuery(): Builder
     {
         return parent::getTableQuery()

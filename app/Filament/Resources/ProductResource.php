@@ -33,7 +33,7 @@ class ProductResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['slug','tags.name'];
+        return ['slug', 'tags.name'];
     }
 
     public static function getLabel(): string
@@ -58,209 +58,223 @@ class ProductResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-        ->schema([
-            Forms\Components\Group::make()
-                ->schema([
-                    Forms\Components\Card::make()
-                        ->schema([
-                            Forms\Components\Group::make()
-                                ->schema([
-                                    Forms\Components\TextInput::make('name')->label(__('Name'))
-                                        ->required()
-                                        ->columnSpan([
-                                            'md' => 2,
-                                        ]), 
-                                    Forms\Components\Select::make('brand')->label(__('Brand'))
-                                        ->relationship('brand','name'), 
-                                ])
-                                ->columns([
-                                    'md' => 3,    
-                                ]),
-                            Forms\Components\TextInput::make('short_description')->label(__('Short Description'))
-                                ->maxLength(255),
-                            Forms\Components\RichEditor::make('description')->label(__('Description'))
-                                ->disableToolbarButtons([
-                                    'attachFiles',
-                                ]),
-                            Forms\Components\MultiSelect::make('categories')->label(__('Categories'))
-                                ->relationship('categories','name',
-                                    fn (Builder $query, callable $get) => 
-                                        $query->where(fn ($query) =>
-                                                    $query->whereNull('parent_id')
-                                                        ->orWhereIn('parent_id', $get('categories'))
-                                                )
-                                )
-                                ->preload(true)
-                                ->reactive()
-                                ->afterStateUpdated(function(callable $get, callable $set){
-                                    $selectedCategories = \App\Models\Category::findMany($get('categories'));
-                                    do{
-                                        $removed = false;
-                                        foreach ($selectedCategories as $category) {
-                                            if ($category->parent && !$selectedCategories->contains($category->parent)) {
-                                                $selectedCategories = $selectedCategories->filter(
-                                                    fn ($selectedCategory) =>
-                                                    $selectedCategory->id!=$category->id
-                                                );
-                                                $removed = true;
-                                            }
-                                        }
-                                    }while($removed);
-                                    $set('categories',$selectedCategories->pluck('id')->toArray());
-                                })
-                                ->columnSpan('full'),
-                            Forms\Components\MultiSelect::make('tags')->label(__('Tags'))
-                                ->relationship('tags', 'name')
-                                ->preload(true),
-
-                        ])
-                        ->columnSpan('full'),
-
-                    Forms\Components\Card::make()
-                        ->schema([
-                            Forms\Components\Fieldset::make('pricing')->label(__('Pricing'))
+            ->schema([
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Card::make()
                             ->schema([
-                                Forms\Components\TextInput::make('original_price')->label(__('Original Price'))
-                                        ->required()
-                                        ->prefix('€')
-                                        ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                            ->numeric()
-                                            ->decimalPlaces(2)
-                                            ->decimalSeparator('.')
-                                            ->mapToDecimalSeparator([',','.'])
-                                            ->thousandsSeparator(',')
-                                            ->maxValue(999999)
+                                Forms\Components\Group::make()
+                                    ->schema([
+                                        Forms\Components\TextInput::make('name')->label(__('Name'))
+                                            ->required()
+                                            ->columnSpan([
+                                                'md' => 2,
+                                            ]),
+                                        Forms\Components\Select::make('brand')->label(__('Brand'))
+                                            ->relationship('brand', 'name'),
+                                    ])
+                                    ->columns([
+                                        'md' => 3,
+                                    ]),
+                                Forms\Components\TextInput::make('short_description')->label(__('Short Description'))
+                                    ->maxLength(255),
+                                Forms\Components\RichEditor::make('description')->label(__('Description'))
+                                    ->disableToolbarButtons([
+                                        'attachFiles',
+                                    ]),
+                                Forms\Components\Select::make('categories')->label(__('Categories'))
+                                    ->multiple()
+                                    ->relationship(
+                                        'categories',
+                                        'name',
+                                        fn (Builder $query, callable $get) =>
+                                        $query->where(
+                                            fn ($query) =>
+                                            $query->whereNull('parent_id')
+                                                ->orWhereIn('parent_id', $get('categories'))
                                         )
-                                        ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('taxed_original_price',$product->applyTax($get('original_price'))) )
-                                        ->lazy(),
-                                Forms\Components\TextInput::make('selling_price')->label(__('Selling Price'))
-                                        ->prefix('€')
-                                        ->lte('original_price')
-                                        ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                            ->numeric()
-                                            ->decimalPlaces(2)
-                                            ->decimalSeparator('.')
-                                            ->mapToDecimalSeparator([',','.'])
-                                            ->thousandsSeparator(',')
-                                            ->maxValue(999999)
-                                        )
-                                        ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('taxed_selling_price',$product->applyTax($get('selling_price'))) )
-                                        ->lazy(),
-                                Forms\Components\TextInput::make('taxed_original_price')->label(__('Taxed Original Price'))
-                                        ->prefix('€')
-                                        ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                            ->numeric()
-                                            ->decimalPlaces(2)
-                                            ->decimalSeparator('.')
-                                            ->mapToDecimalSeparator([',','.'])
-                                            ->thousandsSeparator(',')
-                                            ->maxValue(999999)
-                                        )
-                                        ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('original_price',$product->removeTax($get('taxed_original_price'))) )
-                                        ->lazy()
-                                        ->dehydrated(false),
-                                Forms\Components\TextInput::make('taxed_selling_price')->label(__('Taxed Selling Price'))
-                                        ->prefix('€')
-                                        ->lte('taxed_original_price')
-                                        ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                            ->numeric()
-                                            ->decimalPlaces(2)
-                                            ->decimalSeparator('.')
-                                            ->mapToDecimalSeparator([',','.'])
-                                            ->thousandsSeparator(',')
-                                            ->maxValue(999999)
-                                        )
-                                        ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('selling_price',$product->removeTax($get('taxed_selling_price'))) )
-                                        ->lazy()
-                                        ->dehydrated(false),
-                            ]),
-                        ])
-                        ->columnSpan('full'),
+                                    )
+                                    ->preload(true)
+                                    ->reactive()
+                                    ->afterStateUpdated(function (callable $get, callable $set) {
+                                        $selectedCategories = \App\Models\Category::findMany($get('categories'));
+                                        do {
+                                            $removed = false;
+                                            foreach ($selectedCategories as $category) {
+                                                if ($category->parent && !$selectedCategories->contains($category->parent)) {
+                                                    $selectedCategories = $selectedCategories->filter(
+                                                        fn ($selectedCategory) =>
+                                                        $selectedCategory->id != $category->id
+                                                    );
+                                                    $removed = true;
+                                                }
+                                            }
+                                        } while ($removed);
+                                        $set('categories', $selectedCategories->pluck('id')->toArray());
+                                    })
+                                    ->columnSpan('full'),
+                                Forms\Components\Select::make('tags')->label(__('Tags'))
+                                    ->multiple()
+                                    ->relationship('tags', 'name')
+                                    ->preload(true),
 
-                    Forms\Components\Card::make()
-                        ->schema([
-                            Forms\Components\TextInput::make('SKU')->label(__('SKU')),   
-                            Forms\Components\Select::make('variant')->label(__('Variant Of'))
-                                ->relationship('defaultVariant', 'slug', fn(?Product $record, $query) => 
-                                    $query->withoutGlobalScopes([SoftDeletingScope::class,NotHiddenScope::class])->whereNull('variant_id')
-                                        ->when($record, fn($query) => $query->whereNot('id', $record->id))
-                                )
-                                ->disabled(fn(?Product $record) => $record ? $record->variants()->exists() : false )
-                                ->searchable(),
-                            Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
-                                ->required()
-                                ->numeric()
-                                ->default(0),    
-                            Forms\Components\TextInput::make('weight')->label(__('Weight'))
-                                ->prefix('Kg')
-                                ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                            ])
+                            ->columnSpan('full'),
+
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\Fieldset::make('pricing')->label(__('Pricing'))
+                                    ->schema([
+                                        Forms\Components\TextInput::make('original_price')->label(__('Original Price'))
+                                            ->required()
+                                            ->prefix('€')
+                                            ->mask(
+                                                fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                                    ->numeric()
+                                                    ->decimalPlaces(2)
+                                                    ->decimalSeparator('.')
+                                                    ->mapToDecimalSeparator([',', '.'])
+                                                    ->thousandsSeparator(',')
+                                                    ->maxValue(999999)
+                                            )
+                                            ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('taxed_original_price', $product->applyTax($get('original_price'))))
+                                            ->lazy(),
+                                        Forms\Components\TextInput::make('selling_price')->label(__('Selling Price'))
+                                            ->prefix('€')
+                                            ->lte('original_price')
+                                            ->mask(
+                                                fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                                    ->numeric()
+                                                    ->decimalPlaces(2)
+                                                    ->decimalSeparator('.')
+                                                    ->mapToDecimalSeparator([',', '.'])
+                                                    ->thousandsSeparator(',')
+                                                    ->maxValue(999999)
+                                            )
+                                            ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('taxed_selling_price', $product->applyTax($get('selling_price'))))
+                                            ->lazy(),
+                                        Forms\Components\TextInput::make('taxed_original_price')->label(__('Taxed Original Price'))
+                                            ->prefix('€')
+                                            ->mask(
+                                                fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                                    ->numeric()
+                                                    ->decimalPlaces(2)
+                                                    ->decimalSeparator('.')
+                                                    ->mapToDecimalSeparator([',', '.'])
+                                                    ->thousandsSeparator(',')
+                                                    ->maxValue(999999)
+                                            )
+                                            ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('original_price', $product->removeTax($get('taxed_original_price'))))
+                                            ->lazy()
+                                            ->dehydrated(false),
+                                        Forms\Components\TextInput::make('taxed_selling_price')->label(__('Taxed Selling Price'))
+                                            ->prefix('€')
+                                            ->lte('taxed_original_price')
+                                            ->mask(
+                                                fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                                    ->numeric()
+                                                    ->decimalPlaces(2)
+                                                    ->decimalSeparator('.')
+                                                    ->mapToDecimalSeparator([',', '.'])
+                                                    ->thousandsSeparator(',')
+                                                    ->maxValue(999999)
+                                            )
+                                            ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('selling_price', $product->removeTax($get('taxed_selling_price'))))
+                                            ->lazy()
+                                            ->dehydrated(false),
+                                    ]),
+                            ])
+                            ->columnSpan('full'),
+
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('SKU')->label(__('SKU')),
+                                Forms\Components\Select::make('variant')->label(__('Variant Of'))
+                                    ->relationship(
+                                        'defaultVariant',
+                                        'slug',
+                                        fn (?Product $record, $query) =>
+                                        $query->withoutGlobalScopes([SoftDeletingScope::class, NotHiddenScope::class])->whereNull('variant_id')
+                                            ->when($record, fn ($query) => $query->whereNot('id', $record->id))
+                                    )
+                                    ->disabled(fn (?Product $record) => $record ? $record->variants()->exists() : false)
+                                    ->searchable(),
+                                Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
+                                    ->required()
                                     ->numeric()
-                                    ->decimalPlaces(2)
-                                    ->decimalSeparator('.')
-                                    ->mapToDecimalSeparator([',','.'])
-                                    ->thousandsSeparator(',')
-                                    ->maxValue(999999)
-                                ),
-                        ])
-                        ->columns([
-                            'md' => 2,
-                        ])
-                        ->columnSpan('full'),
-    
-                ])
-                ->columns([
-                    'md' => 2,
-                ])
-                ->columnSpan(2),
-            
-            Forms\Components\Group::make()
-                ->schema([
-                    Forms\Components\Card::make()
-                        ->schema([
-                            Forms\Components\SpatieMediaLibraryFileUpload::make('gallery')->label(__('Gallery'))
-                                ->collection('gallery')
-                                ->multiple()
-                                ->enableReordering()
-                                ->panelLayout('circular')
-                                ->panelAspectRatio('5:6'),
-                        ]),
-                    Forms\Components\Section::make(__('Settings'))
-                        ->schema([
-                            Forms\Components\TextInput::make('slug')->label(__('Slug'))
-                                ->unique(ignorable: fn (?Product $record): ?Product => $record), 
-                            Forms\Components\Toggle::make('featured')->label(__('Featured')),
-                            Forms\Components\Toggle::make('hidden')->label(__('Hidden'))
-                                ->default(true),
-                            Forms\Components\TextInput::make('tax')->label(__('Tax'))
-                                ->placeholder(config('cart.tax'))
-                                ->numeric()
-                                ->suffix('%')
-                                ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                    ->default(0),
+                                Forms\Components\TextInput::make('weight')->label(__('Weight'))
+                                    ->prefix('Kg')
+                                    ->mask(
+                                        fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                            ->numeric()
+                                            ->decimalPlaces(2)
+                                            ->decimalSeparator('.')
+                                            ->mapToDecimalSeparator([',', '.'])
+                                            ->thousandsSeparator(',')
+                                            ->maxValue(999999)
+                                    ),
+                            ])
+                            ->columns([
+                                'md' => 2,
+                            ])
+                            ->columnSpan('full'),
+
+                    ])
+                    ->columns([
+                        'md' => 2,
+                    ])
+                    ->columnSpan(2),
+
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\SpatieMediaLibraryFileUpload::make('gallery')->label(__('Gallery'))
+                                    ->collection('gallery')
+                                    ->multiple()
+                                    ->enableReordering()
+                                    ->panelLayout('circular')
+                                    ->panelAspectRatio('5:6'),
+                            ]),
+                        Forms\Components\Section::make(__('Settings'))
+                            ->schema([
+                                Forms\Components\TextInput::make('slug')->label(__('Slug'))
+                                    ->unique(ignorable: fn (?Product $record): ?Product => $record),
+                                Forms\Components\Toggle::make('featured')->label(__('Featured')),
+                                Forms\Components\Toggle::make('hidden')->label(__('Hidden'))
+                                    ->default(true),
+                                Forms\Components\TextInput::make('tax')->label(__('Tax'))
+                                    ->placeholder(config('cart.tax'))
                                     ->numeric()
-                                    ->decimalPlaces(2)
-                                    ->decimalSeparator('.')
-                                    ->mapToDecimalSeparator([','])
-                                    ->thousandsSeparator(',')
-                                    ->maxValue(99)
-                                ),
-                            Forms\Components\TextInput::make('low_stock_threshold')->label(__('Low Stock Threshold'))
-                                ->placeholder(config('custom.stock_threshold'))
-                                ->numeric(),
-                        ]),
-                    Forms\Components\Card::make()
-                        ->schema([
-                            Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
-                                ->content(fn (?Product $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
-                            Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
-                                ->content(fn (?Product $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
-                        ]),
-                ])
-                ->columnSpan(1),
-        ])
-        ->columns([
-            'md' => 3,
-            'lg' => null,
-        ]);
+                                    ->suffix('%')
+                                    ->mask(
+                                        fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                            ->numeric()
+                                            ->decimalPlaces(2)
+                                            ->decimalSeparator('.')
+                                            ->mapToDecimalSeparator([','])
+                                            ->thousandsSeparator(',')
+                                            ->maxValue(99)
+                                    ),
+                                Forms\Components\TextInput::make('low_stock_threshold')->label(__('Low Stock Threshold'))
+                                    ->placeholder(config('custom.stock_threshold'))
+                                    ->numeric(),
+                            ]),
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
+                                    ->content(fn (?Product $record): string => $record ? $record->created_at->format(config('custom.datetime_format')) : '-'),
+                                Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
+                                    ->content(fn (?Product $record): string => $record ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
+                            ]),
+                    ])
+                    ->columnSpan(1),
+            ])
+            ->columns([
+                'md' => 3,
+                'lg' => null,
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -278,17 +292,17 @@ class ProductResource extends Resource
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('price')->label(__('Price'))
                     ->money('eur')
-                    ->sortable(['selling_price','original_price']),
+                    ->sortable(['selling_price', 'original_price']),
                 Tables\Columns\TextColumn::make('taxed_price')->label(__('Taxed Price'))
                     ->money('eur')
-                    ->sortable(['selling_price','original_price']),
+                    ->sortable(['selling_price', 'original_price']),
                 Tables\Columns\TextColumn::make('quantity')->label(__('Quantity'))
                     ->sortable(),
-                Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
+                Tables\Columns\IconColumn::make('featured')->label(__('Featured'))
                     ->trueColor('primary')
                     ->falseColor('secondary')
                     ->toggleable(),
-                Tables\Columns\BooleanColumn::make('hidden')->label(__('Hidden'))
+                Tables\Columns\IconColumn::make('hidden')->label(__('Hidden'))
                     ->trueColor('primary')
                     ->falseColor('secondary')
                     ->toggleable(),
@@ -296,38 +310,42 @@ class ProductResource extends Resource
                     ->dateTime(config('custom.datetime_format'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                
+
             ])
-            ->defaultSort('created_at','desc')
-            ->filters([
+            ->defaultSort('created_at', 'desc')
+            ->filters(
+                [
                     Tables\Filters\TrashedFilter::make(),
-                    Tables\Filters\MultiSelectFilter::make('categories')->label(__('Categories'))
-                        ->options(\App\Models\Category::all()->pluck('name','id'))
+                    Tables\Filters\SelectFilter::make('categories')->label(__('Categories'))
+                        ->multiple()
+                        ->options(\App\Models\Category::all()->pluck('name', 'id'))
                         ->query(function (Builder $query, array $data): Builder {
                             return $query
                                 ->when(
                                     $data['values'],
-                                    fn (Builder $query, $values): Builder => 
-                                        $query->whereHas('categories', fn($query) => $query->whereIn('categories.id', $values)),
+                                    fn (Builder $query, $values): Builder =>
+                                    $query->whereHas('categories', fn ($query) => $query->whereIn('categories.id', $values)),
                                 );
                         }),
-                    Tables\Filters\MultiSelectFilter::make('tags')->label(__('Tags'))
-                        ->options(\App\Models\Tag::all()->pluck('name','id'))
+                    Tables\Filters\SelectFilter::make('tags')->label(__('Tags'))
+                        ->multiple()
+                        ->options(\App\Models\Tag::all()->pluck('name', 'id'))
                         ->query(function (Builder $query, array $data): Builder {
                             return $query
                                 ->when(
                                     $data['values'],
-                                    fn (Builder $query, $values): Builder => 
-                                        $query->whereHas('tags', fn($query) => $query->whereIn('tags.id', $values)),
+                                    fn (Builder $query, $values): Builder =>
+                                    $query->whereHas('tags', fn ($query) => $query->whereIn('tags.id', $values)),
                                 );
                         }),
-                    Tables\Filters\MultiSelectFilter::make('attributes')->label(__('Attributes'))
-                        ->options(\App\Models\AttributeValue::all()->sortBy('attribute_id')->pluck('label','id'))
+                    Tables\Filters\SelectFilter::make('attributes')->label(__('Attributes'))
+                        ->multiple()
+                        ->options(\App\Models\AttributeValue::all()->sortBy('attribute_id')->pluck('label', 'id'))
                         ->query(function (Builder $query, array $data): Builder {
                             $values = $data['values'];
-                            if($values){
-                                $query->whereHas('attributeValues', function($query) use ($values) {
-                                    foreach($values as $value)
+                            if ($values) {
+                                $query->whereHas('attributeValues', function ($query) use ($values) {
+                                    foreach ($values as $value)
                                         $query->where('attribute_values.id', $value);
                                     return $query;
                                 });
@@ -347,13 +365,13 @@ class ProductResource extends Resource
                                     fn (Builder $query, $quantity): Builder => $query->where('quantity', '<=', $quantity),
                                 );
                         }),
-                    Tables\Filters\Filter::make('discounted')->label(trans_choice('Discounted',1))
+                    Tables\Filters\Filter::make('discounted')->label(trans_choice('Discounted', 1))
                         ->query(fn (Builder $query): Builder => $query->whereColumn('selling_price', '<', 'original_price')),
                     Tables\Filters\Filter::make('featured')->label(__('Featured'))
                         ->query(fn (Builder $query): Builder => $query->where('featured', true)),
                     Tables\Filters\Filter::make('hidden')->label(__('Hidden'))
                         ->query(fn (Builder $query): Builder => $query->where('hidden', true)),
-            
+
                 ],
                 //Tables\Filters\Layout::AboveContent
             )->actions([
@@ -374,16 +392,16 @@ class ProductResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkAction::make('collection')->label(__('Add to Collection'))
                     ->icon('heroicon-o-database')
-                    ->action(function ( \Illuminate\Database\Eloquent\Collection $records, array $data): void {
+                    ->action(function (\Illuminate\Database\Eloquent\Collection $records, array $data): void {
                         foreach ($records as $record) {
                             $record->collections()->syncWithoutDetaching($data['collectionId']);
                             $record->save();
                         }
-                        \Filament\Facades\Filament::notify('success', __('filament-support::actions/attach.multiple.messages.attached') );
+                        \Filament\Facades\Filament::notify('success', __('filament-support::actions/attach.multiple.messages.attached'));
                     })
                     ->form([
                         Forms\Components\Select::make('collectionId')->label(__('Collection'))
-                            ->options(\App\Models\Collection::query()->withoutGlobalScopes([ NotHiddenScope::class ])->pluck('name', 'id'))
+                            ->options(\App\Models\Collection::query()->withoutGlobalScopes([NotHiddenScope::class])->pluck('name', 'id'))
                             ->required(),
                     ]),
                 Tables\Actions\RestoreBulkAction::make(),
@@ -391,7 +409,7 @@ class ProductResource extends Resource
                 Tables\Actions\ForceDeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [

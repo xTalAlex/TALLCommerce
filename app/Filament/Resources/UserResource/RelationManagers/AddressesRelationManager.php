@@ -50,7 +50,7 @@ class AddressesRelationManager extends RelationManager
                         'primary' => 0,
                         'secondary' => 1,
                     ]),
-                Tables\Columns\BooleanColumn::make('default')->label(__('Default Address'))
+                Tables\Columns\IconColumn::make('default')->label(__('Default Address'))
                     ->trueColor('primary')
                     ->falseColor('secondary')
                     ->sortable(),

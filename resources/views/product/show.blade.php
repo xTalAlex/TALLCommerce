@@ -158,9 +158,9 @@
 
                         <div class="flex">
                             @if($product->discount)
-                            <span class="mr-2 text-2xl font-medium text-gray-600 line-through title-font">{{$product->original_price}}€</span>
+                            <span class="mr-2 text-2xl font-medium text-gray-600 line-through title-font">{{$product->taxed_original_price}}€</span>
                             @endif
-                            <span class="text-2xl font-medium text-gray-900 title-font">{{$product->selling_price}}€</span>
+                            <span class="text-2xl font-medium text-gray-900 title-font">{{$product->taxed_selling_price}}€</span>
                             @if($product->quantity && $product->quantity < config('custom.stock_threshold'))
                                 <span class="p-2 ml-4 text-red-500 rounded">{{ __('Low Stock') }}</span>
                             @endif

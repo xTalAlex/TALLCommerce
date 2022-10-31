@@ -16,8 +16,12 @@ return new class extends Migration
         Schema::create('shipping_prices', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->decimal('price',8,2);
+            $table->unsignedInteger('min_days')->nullable();
+            $table->unsignedInteger('max_days')->nullable();
+            $table->boolean('active')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
 

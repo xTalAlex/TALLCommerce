@@ -109,11 +109,11 @@ class CollectionResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('products_count')->label(__('Products Count'))
                     ->sortable(),
-                Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
+                Tables\Columns\IconColumn::make('featured')->label(__('Featured'))
                     ->trueColor('primary')
                     ->falseColor('secondary')
                     ->toggleable(),
-                Tables\Columns\BooleanColumn::make('hidden')->label(__('Hidden'))
+                Tables\Columns\IconColumn::make('hidden')->label(__('Hidden'))
                     ->trueColor('primary')
                     ->falseColor('secondary')
                     ->toggleable(),
