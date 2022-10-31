@@ -24,7 +24,7 @@ class LatestOrders extends BaseWidget
 
     protected function getTableQuery(): Builder
     {
-        return Order::query()->latest()->limit(50);
+        return Order::query()->latest('updated_at')->limit(50);
     }
 
     protected function getTableRecordUrlUsing(): Closure
@@ -36,8 +36,7 @@ class LatestOrders extends BaseWidget
     {
         return [
             Tables\Columns\TextColumn::make('number')->label(__('Number'))
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
                 Tables\Columns\BadgeColumn::make('status.label')->label(__('Status'))
                     ->colors([
                         'secondary',
@@ -60,19 +59,15 @@ class LatestOrders extends BaseWidget
                     ->searchable(),
                 Tables\Columns\TextColumn::make('total')->label(__('Total'))
                     ->money('eur')
-                    ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('invoice_serial_number')->label(__('Invoice Number'))
-                    ->sortable()
                     ->searchable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
                     ->dateTime(config('custom.datetime_format'))
-                    ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('updated_at')->label(__('Updated at'))
                     ->dateTime(config('custom.datetime_format'))
-                    ->sortable()
                     ->toggleable(),
         ];
     }

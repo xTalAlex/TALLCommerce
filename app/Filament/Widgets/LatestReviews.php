@@ -22,7 +22,7 @@ class LatestReviews extends BaseWidget
 
     protected function getTableQuery(): Builder
     {
-        return Review::withoutGlobalScopes([ ApprovedScope::class ])->latest()->limit(50);
+        return Review::withoutGlobalScopes([ ApprovedScope::class ])->latest('updated_at')->limit(50);
     }
 
     protected function getTableRecordUrlUsing(): Closure
@@ -34,27 +34,22 @@ class LatestReviews extends BaseWidget
     {
         return [
             Tables\Columns\TextColumn::make('user.email')->label(__('User'))
-                ->searchable(['name', 'email'])
-                ->sortable(),
+                ->searchable(['name', 'email']),
             Tables\Columns\TextColumn::make('product.name')->label(__('Product'))
                 ->url( fn (Review $record): string => route('filament.resources.products.edit', ['record' => $record->product]) )
                 ->searchable()
-                ->sortable()
                 ->toggleable(),
             Tables\Columns\ImageColumn::make('product.image')->label(__('Image'))
                 ->toggleable(),
-            Tables\Columns\TextColumn::make('rating')->label(__('Rating'))
-                ->sortable(),
+            Tables\Columns\TextColumn::make('rating')->label(__('Rating')),
             Tables\Columns\TextColumn::make('description')->label(__('Description'))
                 ->limit(100)
                 ->wrap(),
             Tables\Columns\IconColumn::make('approved')->label(__('Approved'))
                 ->trueColor('success')
-                ->falseColor('danger')
-                ->sortable(),
+                ->falseColor('danger'),
             Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
-                ->dateTime(config('custom.datetime_format'))
-                ->sortable(),
+                ->dateTime(config('custom.datetime_format')),
         ];
     }
 

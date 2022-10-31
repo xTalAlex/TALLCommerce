@@ -71,6 +71,7 @@ class VariantsRelationManager extends RelationManager
     protected function getTableQuery(): Builder
     {
         return parent::getTableQuery()
+            //->whereColumn('id','!=','variant_id')
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
                 NotHiddenScope::class,

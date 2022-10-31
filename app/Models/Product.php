@@ -92,8 +92,8 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
     public function getDynamicSEOData(): SEOData
     {
         return new SEOData(
-            title: $this->name,
-            description: $this->description,
+            title: $this->seo->title ?? $this->name,
+            description: $this->seo->description ?? $this->description,
             image: $this->image
         );
     }
@@ -469,7 +469,8 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
 
     public function shouldBeSearchable()
     {
-        return (!$this->attributes['hidden']) && (!$this->variant_id || ($this->variant_id == $this->id));
+        //&& (!$this->variant_id || ($this->variant_id == $this->id))
+        return (!$this->attributes['hidden']);
     }
 
     /**
@@ -500,6 +501,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         $array['low_stock_threshold'] = $this->low_stock_threshold;
         $array['stock_status'] = $this->stock_status;
         $array['image'] = $this->image;
+        $array['variant_id'] = $this->defaultVariant->id ?? $this->id;
         $array['has_variants'] = $this->defaultVariant()->exists() || $this->variants()->exists();
         $array['avg_rating'] = $this->avg_rating;
         $array['brand'] = $this->brand ? collect($this->brand->toArray())->only(['id', 'name', 'logo']) : null;
