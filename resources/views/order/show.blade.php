@@ -87,7 +87,7 @@
                                         </div>
                                     </div>
                                     <div class="hidden px-4 lg:block lg:w-2/12">
-                                        <p class="text-lg font-bold text-primary-500 font-heading">{{ $product->pivot->price }}€</p>
+                                        <p class="text-lg font-bold text-primary-500 font-heading">{{ $product->applyTax($product->pivot->price) }}€</p>
                                         {{-- <span class="text-xs text-gray-500 line-through">$33.69</span> --}}
                                     </div>
                                     <div class="w-auto px-8 text-center md:px-auto md:w-1/6 lg:w-2/12"
@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="w-auto px-4 text-right md:w-1/6 lg:w-2/12">
                                         <p class="text-lg font-bold text-primary-500 font-heading">
-                                            {{ $product->pricePerQuantity($product->pivot->quantity,$product->pivot->price) }}€
+                                            {{ $product->pricePerQuantity($product->pivot->quantity,$product->applyTax($product->pivot->price)) }}€
                                         </p>
                                     </div>
                                 </div>

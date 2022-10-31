@@ -97,10 +97,6 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        $this->authorize('delete', $review );
-
-        $review->delete();
-        
-        return back();
+        //
     }
 }

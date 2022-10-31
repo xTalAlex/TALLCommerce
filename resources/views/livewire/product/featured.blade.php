@@ -1,5 +1,5 @@
 <section class="text-gray-600 lg:px-32 body-font">
-  <div class="container flex flex-col items-center py-12 px-5 mx-auto md:flex-row">
+  <div class="container flex flex-col items-center px-5 py-12 mx-auto md:flex-row">
     
     <div class="flex flex-col items-center mb-16 text-center lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:items-start md:text-left md:mb-0">
       
@@ -25,14 +25,14 @@
 
         <div class="mb-8 leading-relaxed">
             @if($product->discount)
-            <span class="text-xl text-gray-900 line-through dark:text-white">{{ $product->original_price }}€</span>
+            <span class="text-xl text-gray-900 line-through dark:text-white">{{ $product->taxed_original_price }}€</span>
             @endif
-            <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ $product->price }}€</span>
+            <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ $product->taxed_price }}€</span>
         </div>
 
         <div class="flex justify-center">
             @if($product->quantity)
-            <button class="inline-flex px-6 py-2 text-lg text-white bg-primary-500 border-0 rounded focus:outline-none hover:bg-primary-600"
+            <button class="inline-flex px-6 py-2 text-lg text-white border-0 rounded bg-primary-500 focus:outline-none hover:bg-primary-600"
                 wire:click='addToCart'
             >
                 {{ __('Add to cart') }}<x-icons.cart class="ml-1" />

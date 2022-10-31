@@ -40,9 +40,9 @@
     </div>
 
     <div class="flex items-center justify-center w-full px-4 md:w-1/5">
-        <p class="text-lg font-bold text-primary-500 font-heading">{{ $product->price }}€</p>
+        <p class="text-lg font-bold text-primary-500 font-heading">{{ $product->taxed_price }}€</p>
         @if($product->discount)
-        <span class="text-xs text-gray-500 line-through">{{ $product->original_price}}€</span>
+        <span class="text-xs text-gray-500 line-through">{{ $product->taxed_original_price}}€</span>
         @endif
     </div>
 

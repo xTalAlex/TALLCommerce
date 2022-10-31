@@ -22,7 +22,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('original_price',8,2);
             $table->decimal('selling_price',8,2)->nullable();
-            $table->decimal('discount',8,2)->storedAs('original_price - selling_price');
+            $table->boolean('discount_is_fixed_amount')->nullable();
+            $table->decimal('discount_amount',6,2)->nullable();
             $table->decimal('tax',4,2)->nullable();
             $table->unsignedInteger('quantity')->default(0);
             $table->unsignedInteger('low_stock_threshold')->nullable();

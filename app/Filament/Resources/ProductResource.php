@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Closure;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Product;
@@ -129,7 +130,9 @@ class ProductResource extends Resource
                                             ->mapToDecimalSeparator([',','.'])
                                             ->thousandsSeparator(',')
                                             ->maxValue(999999)
-                                        ),
+                                        )
+                                        ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('taxed_original_price',$product->applyTax($get('original_price'))) )
+                                        ->lazy(),
                                 Forms\Components\TextInput::make('selling_price')->label(__('Selling Price'))
                                         ->prefix('€')
                                         ->lte('original_price')
@@ -140,7 +143,36 @@ class ProductResource extends Resource
                                             ->mapToDecimalSeparator([',','.'])
                                             ->thousandsSeparator(',')
                                             ->maxValue(999999)
-                                        ),
+                                        )
+                                        ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('taxed_selling_price',$product->applyTax($get('selling_price'))) )
+                                        ->lazy(),
+                                Forms\Components\TextInput::make('taxed_original_price')->label(__('Taxed Original Price'))
+                                        ->prefix('€')
+                                        ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                            ->numeric()
+                                            ->decimalPlaces(2)
+                                            ->decimalSeparator('.')
+                                            ->mapToDecimalSeparator([',','.'])
+                                            ->thousandsSeparator(',')
+                                            ->maxValue(999999)
+                                        )
+                                        ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('original_price',$product->removeTax($get('taxed_original_price'))) )
+                                        ->lazy()
+                                        ->dehydrated(false),
+                                Forms\Components\TextInput::make('taxed_selling_price')->label(__('Taxed Selling Price'))
+                                        ->prefix('€')
+                                        ->lte('taxed_original_price')
+                                        ->mask(fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                            ->numeric()
+                                            ->decimalPlaces(2)
+                                            ->decimalSeparator('.')
+                                            ->mapToDecimalSeparator([',','.'])
+                                            ->thousandsSeparator(',')
+                                            ->maxValue(999999)
+                                        )
+                                        ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('selling_price',$product->removeTax($get('taxed_selling_price'))) )
+                                        ->lazy()
+                                        ->dehydrated(false),
                             ]),
                         ])
                         ->columnSpan('full'),
@@ -153,7 +185,8 @@ class ProductResource extends Resource
                                     $query->withoutGlobalScopes([SoftDeletingScope::class,NotHiddenScope::class])->whereNull('variant_id')
                                         ->when($record, fn($query) => $query->whereNot('id', $record->id))
                                 )
-                                ->disabled(fn(?Product $record) => $record ? $record->variants()->exists() : false ),
+                                ->disabled(fn(?Product $record) => $record ? $record->variants()->exists() : false )
+                                ->searchable(),
                             Forms\Components\TextInput::make('quantity')->label(__('Quantity'))
                                 ->required()
                                 ->numeric()
@@ -246,6 +279,9 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('price')->label(__('Price'))
                     ->money('eur')
                     ->sortable(['selling_price','original_price']),
+                Tables\Columns\TextColumn::make('taxed_price')->label(__('Taxed Price'))
+                    ->money('eur')
+                    ->sortable(['selling_price','original_price']),
                 Tables\Columns\TextColumn::make('quantity')->label(__('Quantity'))
                     ->sortable(),
                 Tables\Columns\BooleanColumn::make('featured')->label(__('Featured'))
@@ -325,7 +361,6 @@ class ProductResource extends Resource
                     ->excludeAttributes([
                         'slug',
                         'sku',
-                        'discount'
                     ])
                     ->beforeReplicaSaved(function (Product $replica, array $data): void {
                         $data['hidden'] = true;

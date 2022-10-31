@@ -65,7 +65,6 @@ Route::middleware([
     Route::get('/order/create/login', fn() => redirect()->route('order.create') )->name('order.login');
 
     Route::post('review/{product}/store', [App\Http\Controllers\ReviewController::class , 'store'] )->name('review.store');
-    Route::post('review/{review}/destroy', [App\Http\Controllers\ReviewController::class , 'destroy'] )->name('review.destroy');
 });
 
 Route::middleware([

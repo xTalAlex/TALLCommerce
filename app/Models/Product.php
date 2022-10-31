@@ -33,6 +33,8 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         'description',
         'original_price',
         'selling_price',
+        'discount_is_fixed_amount',
+        'discount_amount',
         'tax',
         'quantity',
         'weight',
@@ -47,6 +49,9 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         'original_price' => 'decimal:2',
         'selling_price' => 'decimal:2',
         'price'         => 'decimal:2',
+        'taxed_price' => 'decimal:2',
+        'taxed_original_price' => 'decimal:2',
+        'taxed_selling_price' => 'decimal:2',
         'avg_rating' => 'decimal:1',
         'tags' => 'array',
         'hidden' => 'boolean',
@@ -60,6 +65,10 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
     protected $appends = [
         'image',
         'gallery',
+        'taxed_price',
+        'taxed_original_price',
+        'taxed_selling_price',
+        'discount'
     ];
 
     public function registerMediaCollections(): void
@@ -155,7 +164,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class)->withPivot('price', 'quantity');
+        return $this->belongsToMany(Order::class)->withPivot('price', 'quantity', 'discount');
     }
 
     public function variants()
@@ -326,6 +335,54 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         );
     }
 
+    public function applyTax($price, $tax = null)
+    {
+        $tax = $tax ?? config('cart.tax');
+        return number_format(round($price + round($price * ($tax / 100), 2),2),2);
+    }
+
+    public function removeTax($price, $tax = null)
+    {
+        $tax = $tax ?? config('cart.tax');
+        return number_format(round($price / ( ($tax + 100)/100 ),2),2);
+    }
+
+    protected function taxedOriginalPrice(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                return $attributes['taxed_original_price'] ?? $this->applyTax($attributes['original_price']);
+            },
+        );
+    }
+
+    protected function taxedSellingPrice(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                return $attributes['taxed_selling_price'] ?? $this->applyTax($attributes['selling_price']);
+            },
+        );
+    }
+
+    protected function prova(): Attribute
+    {
+        return Attribute::make(
+            get: function($value,$attributes) {
+                return $this->applyTax($attributes['selling_price']);
+            },
+        );
+    }
+
+    protected function taxedPrice(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                return $this->applyTax($this->price);
+            },
+        );
+    }
+
     public function getDiscountAttribute($value)
     {
         $difference = $this->selling_price && ($this->selling_price < $this->original_price) ? $this->original_price - $this->selling_price : 0;
@@ -432,6 +489,9 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         $array['selling_price'] = $this->selling_price;
         $array['discount'] = $this->discount;
         $array['price'] =  $this->price;
+        $array['taxed_original_price'] = $this->applyTax($this->original_price);
+        $array['taxed_selling_price'] = $this->applyTax($this->selling_price);
+        $array['taxed_price'] =  $this->applyTax($this->price);
         $array['original_price_float'] = (float) $this->original_price;
         $array['selling_price_float'] = (float) $this->selling_price;
         $array['price_float'] =  (float) $this->price;

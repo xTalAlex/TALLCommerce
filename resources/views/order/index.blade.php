@@ -55,7 +55,7 @@
                                                     >{{ $product->name }}</h3>
                                                 </a>
                                                 <p class="text-gray-500">
-                                                    {{ $product->pivot->price}}€
+                                                    {{ $product->applyTax($product->pivot->price)}}€
                                                 </p>
                                                 <p class="text-gray-500">
                                                     {{ __('Quantity') }} : {{ $product->pivot->quantity}}
@@ -67,27 +67,27 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-col items-center w-full space-y-1 px-5 py-4 mt-8 bg-gray-100 rounded md:mx-4 md:px-12 md:w-1/3">
+                            <div class="flex flex-col items-center w-full px-5 py-4 mt-8 space-y-1 bg-gray-100 rounded md:mx-4 md:px-12 md:w-1/3">
                             
                                 <form class="w-full" action="{{ route('order.show', $order) }}" method="GET">
-                                    <x-jet-button type="submit" class="w-full justify-center"
+                                    <x-jet-button type="submit" class="justify-center w-full"
                                     s>{{ __('Details') }}</x-jet-button>
                                 </form>
                                 @if($order->canBePaied())
                                     <div class="w-full">
-                                        <a href="{{ route('order.update', $order ) }}" class="inline-flex items-center justify-center w-full px-4 py-2 text-xs uppercase font-medium text-white border rounded-md border-primary-200 bg-primary-500 hover:bg-primary-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-primary-200 focus:text-primary-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                        <a href="{{ route('order.update', $order ) }}" class="inline-flex items-center justify-center w-full px-4 py-2 text-xs font-medium text-white uppercase border rounded-md border-primary-200 bg-primary-500 hover:bg-primary-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-primary-200 focus:text-primary-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                         {{ __('Pay Now') }}</a>
                                     </div>
                                 @endif
                                 @if($order->canBeEdited())
                                     <form class="w-full" action="{{ route('order.update', $order ) }}" method="GET">
-                                        <x-jet-secondary-button type="submit" class="w-full justify-center"
+                                        <x-jet-secondary-button type="submit" class="justify-center w-full"
                                         >{{__('Edit') }}</x-jet-secondary-button>
                                     </form>
                                 @endif
                                 @if($order->canBeInvoiced())
                                     <form class="w-full" action="{{ route('invoice.show', $order ) }}" method="GET">
-                                        <x-jet-secondary-button type="submit" class="w-full justify-center"
+                                        <x-jet-secondary-button type="submit" class="justify-center w-full"
                                         >
                                             {{ __('Invoice') }}
                                             <x-icons.document-download class="w-4 h-4"/>

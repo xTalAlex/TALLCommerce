@@ -62,7 +62,7 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('price', 'quantity')->withoutGlobalScopes();
+        return $this->belongsToMany(Product::class)->withPivot('price', 'quantity', 'discount')->withoutGlobalScopes();
     }
 
     public function user()
@@ -206,7 +206,7 @@ class Order extends Model
         DB::transaction(function () {
             $status = OrderStatus::where('name','paied')->first();
             if ($status) {
-                $lastInvoiceSequence= optional(Order::where('invoice_series', today()->format('y'))->max('invoice_sequence'))->invoice_sequence ?? 0;
+                $lastInvoiceSequence= Order::where('invoice_series', today()->format('y'))->max('invoice_sequence') ?? 0;
                 $this->status()->associate($status);
                 $this->invoice_sequence = $lastInvoiceSequence + 1;
                 $this->invoice_series = today()->format('y');

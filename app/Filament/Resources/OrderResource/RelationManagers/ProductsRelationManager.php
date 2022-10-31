@@ -22,21 +22,6 @@ class ProductsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected function getTableQuery(): Builder
-    {
-        $query = parent::getTableQuery()
-            ->select('products.*',
-                    'order_product.product_id',
-                    'order_product.order_id',
-                    'order_product.price as pivot_price',
-                    'order_product.quantity as pivot_quantity',
-                    'order_product.discount as pivot_discount',
-                    'order_product.total',
-                );
-                
-        return $query;
-    }
-
     protected function getTableRecordUrlUsing(): Closure
     {
         return fn (Model $record): string => route('filament.resources.products.edit', ['record' => $record]);
@@ -74,15 +59,30 @@ class ProductsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('name')->label(__('Name')),
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')->label(__('Image'))
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('pivot_quantity')->label(__('Quantity')),
-                Tables\Columns\TextColumn::make('pivot_price')->label(__('Price'))
+                Tables\Columns\TextColumn::make('pivot.quantity')->label(__('Quantity')),
+                Tables\Columns\TextColumn::make('pivot.price')->label(__('Price'))
                     ->money('eur')
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('pivot_discount')->label(__('Discount'))
+                Tables\Columns\TextColumn::make('taxed_price')->label(__('Taxed Price'))
+                    ->getStateUsing(function (Model $record){
+                        return $record->applyTax($record->pivot->price);
+                    })
+                    ->money('eur',false)
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('pivot.discount')->label(__('Discount'))
                     ->money('eur')
-                    ->default(0)
+                    ->default(null)
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('subtotal')->label(__('Subtotal'))
+                    ->getStateUsing(function (Model $record){
+                        return $record->pricePerQuantity($record->pivot->quantity, $record->pivot->price);
+                    })
+                    ->money('eur')
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('total')->label(__('Total'))
+                    ->getStateUsing(function (Model $record){
+                        return $record->pricePerQuantity($record->pivot->quantity, $record->applyTax($record->pivot->price));
+                    })
                     ->money('eur')
                     ->toggleable(),
             ])

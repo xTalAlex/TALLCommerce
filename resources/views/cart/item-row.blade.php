@@ -34,7 +34,7 @@
         </a>
     </div>
     <div class="hidden px-4 lg:block lg:w-2/12">
-        <p class="text-lg font-bold text-primary-500 font-heading">{{ $product->price }}€</p>
+        <p class="text-lg font-bold text-primary-500 font-heading">{{ $product->taxed_price }}€</p>
         {{-- <span class="text-xs text-gray-500 line-through">$33.69</span> --}}
     </div>
     <div class="w-auto text-center md:w-1/6 lg:w-2/12"
@@ -92,7 +92,7 @@
     </div>
     <div class="w-auto px-4 text-right md:w-1/6 lg:w-2/12">
         <p class="text-lg font-bold text-primary-500 font-heading">
-            {{ $product->pricePerQuantity($item['qty']!='' ? $item['qty'] : 1) }}€
+            {{ $product->pricePerQuantity($item['qty']!='' ? $item['qty'] : 1, $product->taxed_price) }}€
         </p>
     </div>
     <a href="#" class="absolute top-0 right-0 font-medium text-primary-600 dark:text-primary-500 hover:underline"

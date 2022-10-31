@@ -96,7 +96,7 @@
                                     }
                                   </div>
                                   <div class='text-base text-right'>
-                                    ${item.price}€
+                                    ${item.taxed_price}€
                                   </div>
                                 </div>
                                 

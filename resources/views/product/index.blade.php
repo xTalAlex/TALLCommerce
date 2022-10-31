@@ -345,11 +345,11 @@
                         <div class="relative flex flex-col">
                             @{{#discount}}
                                 <span class="absolute ml-4 text-base text-gray-900 line-through -right-2 -top-4 dark:text-white">
-                                    @{{original_price}}€
+                                    @{{taxed_original_price}}€
                                 </span>
                             @{{/discount}}
                             <span class='font-bold'>
-                                @{{price}}€
+                                @{{taxed_price}}€
                             </span>
                         </div>
                     </div>

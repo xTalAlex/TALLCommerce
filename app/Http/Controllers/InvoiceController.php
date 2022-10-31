@@ -79,7 +79,7 @@ class InvoiceController extends Controller
             ->shipping($order->shipping_price)
             ->addItems($items);
         
-        if($order->coupon_discount) $invoice->totalDiscount($order->coupon_discount);
+        if($order->coupon_discount > 0) $invoice->totalDiscount($order->coupon_discount);
 
         return $invoice->stream();
     }

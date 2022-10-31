@@ -52,9 +52,8 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
             $table->decimal('price',6,2);
-            $table->decimal('discount',6,2)->nullable();
             $table->unsignedInteger('quantity');
-            $table->decimal('total',8,2)->storedAs('price * quantity');
+            $table->decimal('discount',6,2)->nullable();
 
             $table->foreign('order_id')->references('id')->on('orders')
                 ->onDelete('cascade')->onUpdate('cascade');
