@@ -30,7 +30,7 @@ class ViewOrder extends ViewRecord
                 ->icon('heroicon-o-mail')
                 ->action(function (Order $record, array $data): void {
                     $record->notify(new \App\Notifications\AdminMessage($data['subject'], $data['message']));
-                    Filament::notify('success', 'Email sent');
+                    Filament::notify('success', __('Email sent'));
                 })
                 ->form([
                     \Filament\Forms\Components\TextInput::make('subject')

@@ -12,6 +12,7 @@
     "Created on" : "Creato il",
     "Admin" : "Amministratore",
     "Admin Panel" : "Admin Panel",
+    "Email sent": "Email inviata",
 
     "Address" : "Indirizzo",
     "Addresses" : "Indirizzi",
@@ -226,6 +227,10 @@
     "Variants" : "Varianti",
     "Variant Of" : "Variante di",
     "Unique Name" : "Nome Univoco",
+    "Exclude Variants": "Escludi Varianti",
+    "Set As Default Variant": "Imposta Come Variante Principale",
+    "Default Variant": "Variante Principale",
+    "Variants updated": "Varianti aggiornate",
 
     "Attribute" : "Attributo",
     "Attributes" : "Attributi",

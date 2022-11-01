@@ -105,7 +105,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
      */
     protected static function booted()
     {
-        //static::addGlobalScope(new NotHiddenScope);
+        static::addGlobalScope(new NotHiddenScope);
     }
 
     public function scopeFeatured($query)
@@ -365,15 +365,6 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         );
     }
 
-    protected function prova(): Attribute
-    {
-        return Attribute::make(
-            get: function($value,$attributes) {
-                return $this->applyTax($attributes['selling_price']);
-            },
-        );
-    }
-
     protected function taxedPrice(): Attribute
     {
         return Attribute::make(
@@ -397,22 +388,21 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
     {
         $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
         if ($defaultVariant->variants()->exists()) {
-            $attributeValues = $defaultVariant->attributeValues
+            $attributeValues = $defaultVariant->deleted_at || $defaultVariant->attributes['hidden'] ? [] : $defaultVariant->attributeValues
                 ->pluck('id')->unique()->sort()->toArray();
             $variantsAttributeValues = $defaultVariant->variants()->with('attributeValues')->get()
                 ->pluck('attributeValues.*.id')->collapse()->unique()->sort()->toArray();
 
             $attributeValues = array_merge($attributeValues, $variantsAttributeValues);
-
             return AttributeValue::findMany($attributeValues)->sortBy('attribute_id');
         }
     }
 
     public function variantsAttributeSets()
-    {
+    { 
         $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
         if ($defaultVariant->variants()->exists()) {
-            $attributeSet = $defaultVariant->attributeValues
+            $attributeSet = $defaultVariant->deleted_at || $defaultVariant->attributes['hidden'] ? [] : $defaultVariant->attributeValues
                 ->pluck('id', 'attribute_id')->unique()->sort()->toArray();
             $attributeSet = array($attributeSet);
             foreach ($defaultVariant->variants as $variant) {
@@ -423,6 +413,18 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
 
             return $attributeSet;
         }
+    }
+
+    public function setAsDefaultVariant()
+    {
+        $old = $this->defaultVariant;
+        $this->defaultVariant->variants()->withTrashed()->whereNot('id',$this->id)->update([
+            'variant_id' => $this->id
+        ]);
+        $old->defaultVariant()->associate($this->id);
+        $old->save();
+        $this->variant_id = null;
+        $this->save();
     }
 
     public function hierarchicalCategories()

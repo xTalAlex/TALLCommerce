@@ -10,6 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use App\Models\Scopes\NotHiddenScope;
+use Filament\Forms\Components\Actions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProductResource\Pages;
@@ -194,7 +195,11 @@ class ProductResource extends Resource
                                         'defaultVariant',
                                         'slug',
                                         fn (?Product $record, $query) =>
-                                        $query->withoutGlobalScopes([SoftDeletingScope::class, NotHiddenScope::class])->whereNull('variant_id')
+                                        $query->withoutGlobalScopes([SoftDeletingScope::class, NotHiddenScope::class])
+                                            ->where( fn($query) => 
+                                                $query->whereNull('variant_id')
+                                                    ->orWhereColumn('id','variant_id')
+                                            )
                                             ->when($record, fn ($query) => $query->whereNot('id', $record->id))
                                     )
                                     ->disabled(fn (?Product $record) => $record ? $record->variants()->exists() : false)
@@ -371,6 +376,8 @@ class ProductResource extends Resource
                         ->query(fn (Builder $query): Builder => $query->where('featured', true)),
                     Tables\Filters\Filter::make('hidden')->label(__('Hidden'))
                         ->query(fn (Builder $query): Builder => $query->where('hidden', true)),
+                    Tables\Filters\Filter::make('exlude_variants')->label(__('Exclude Variants'))
+                        ->query( fn (Builder $query): Builder => $query->where('variant_id', null)->orWhereColumn('id','variant_id') ),
 
                 ],
                 //Tables\Filters\Layout::AboveContent
