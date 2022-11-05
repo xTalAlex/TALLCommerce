@@ -30,6 +30,7 @@ return new class extends Migration
             $table->boolean('featured')->default(false);
             $table->boolean('hidden')->default(false);
             $table->decimal('weight',8,2)->nullable();
+            $table->date('avaiable_from')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -219,6 +219,7 @@ class ProductResource extends Resource
                                             ->thousandsSeparator(',')
                                             ->maxValue(999999)
                                     ),
+                                Forms\Components\DatePicker::make('avaiable_from')->label(__('Avaiable From')),
                             ])
                             ->columns([
                                 'md' => 2,
@@ -303,6 +304,9 @@ class ProductResource extends Resource
                     ->sortable(['selling_price', 'original_price']),
                 Tables\Columns\TextColumn::make('quantity')->label(__('Quantity'))
                     ->sortable(),
+                Tables\Columns\IconColumn::make('avaiable_from')->label(__('Avaiable From'))
+                    ->boolean()
+                    ->toggleable(),
                 Tables\Columns\IconColumn::make('featured')->label(__('Featured'))
                     ->trueColor('primary')
                     ->falseColor('secondary')

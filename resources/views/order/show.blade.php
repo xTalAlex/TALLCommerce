@@ -126,6 +126,19 @@
 
                     <div class="w-full px-8 md:w-1/3 md:px-4">
 
+                        @if($order->avaiable_from)
+                        <div class="w-full mb-4">
+                            <div>
+                                <h4 class="mb-2 font-bold">{{ __('Advance Sale') }}</h4>
+                                <p>
+                                    {{ __('This order contains an advanced sale. Shipping will days will be countet starting from :date', 
+                                        [ 'date' => $order->avaiable_from->format(config('custom.date_format')) ]
+                                    ) }}
+                                </p>
+                            </div>
+                        </div>
+                        @endif
+
                         <div class="w-full mb-4">
                             <div><h4 class="mb-2 font-bold">{{ __('Shipping Address') }}</h4><p>{!! $order->shippingAddress()->label !!}</p></div>
                         </div>

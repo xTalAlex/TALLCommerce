@@ -186,9 +186,11 @@ class Create extends Component
 
         //CHECK PRODUCT AVAIABILITY
         $avaiable = true;
+        $max_avaiable_from = null;
         foreach(Cart::instance('default')->content() as $key=>$item)
         {
             if($item->model->quantity < $item->qty) $avaiable = false;
+            if($item->model->avaiable_from > $max_avaiable_from && $item->model->avaiable_from > today()) $max_avaiable_from = $item->model->avaiable_from;
         }
         if(!$avaiable)
         {
@@ -215,6 +217,7 @@ class Create extends Component
                 'user_id' => auth()->user() ? auth()->user()->id : null,
                 'shipping_price_id' => $this->shipping_price->id,
                 'shipping_price' => $this->shipping_price->price,
+                'avaiable_from' => $max_avaiable_from,
             ]);
 
             $pivots = [];

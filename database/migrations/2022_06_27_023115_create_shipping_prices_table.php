@@ -28,7 +28,8 @@ return new class extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->unsignedBigInteger('shipping_price_id')->nullable();
             $table->decimal('shipping_price',8,2)->nullable();
-
+            $table->date('avaiable_from')->nullable();
+        
             $table->foreign('shipping_price_id')->references('id')->on('shipping_prices')
                 ->onDelete('restrict')->onUpdate('cascade');
         });

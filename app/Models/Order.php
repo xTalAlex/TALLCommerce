@@ -28,7 +28,8 @@ class Order extends Model
         'coupon_id',
         'coupon_discount',
         'shipping_price_id',
-        'shipping_price'
+        'shipping_price',
+        'avaiable_from'
     ];
 
     /**
@@ -51,6 +52,7 @@ class Order extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'avaiable_from' => 'date',
         'total'      => 'decimal:2',
         'shipping_price' => 'decimal:2',
     ];

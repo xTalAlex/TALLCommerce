@@ -17,6 +17,7 @@ Una soluzione di ecommerce per chi vuole portare la proprià attività italiana 
 * **Varianti** degli articoli.
 * **Articoli in evidenza**.
 * Sistema di **recensioni**.
+* Inserimento data disponibilità dei prodotti per le **prevendite**.
 * **Coupon** (con sconti fissi o in percentuale, senza scadenza, con data di scadenza o con numero di riscatti limitati) applicabili sia dal carrello che durante il checkout.
 * Funzionalità di autenticazione a 2 fattori (**2FA**).
 * Inserimento di **indirizzi di spedizione e fatturazione** da parte dell'utente. 

@@ -65,6 +65,9 @@ class ProductsRelationManager extends RelationManager
                     ->sortable(['selling_price', 'original_price']),
                 Tables\Columns\TextColumn::make('quantity')->label(__('Quantity'))
                     ->sortable(),
+                Tables\Columns\IconColumn::make('avaiable_from')->label(__('Avaiable From'))
+                    ->boolean()
+                    ->toggleable(),
                 Tables\Columns\IconColumn::make('featured')->label(__('Featured'))
                     ->trueColor('primary')
                     ->falseColor('secondary')

@@ -43,6 +43,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         'hidden',
         'variant_id',
         'brand_id',
+        'avaiable_from'
     ];
 
     protected $casts = [
@@ -55,6 +56,9 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         'avg_rating' => 'decimal:1',
         'tags' => 'array',
         'hidden' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'avaiable_from' => 'date',
     ];
 
     /**

@@ -31,6 +31,14 @@
                                 <time class="block mb-4 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
                                     >{{ __('Created on') }} {{ $order->created_at->format(config('custom.date_format')) }}</time>
 
+                                @if($order->avaiable_from)
+                                <p>
+                                    {{ __('This order contains an advanced sale. Shipping will days will be countet starting from :date', 
+                                        [ 'date' => $order->avaiable_from->format(config('custom.date_format')) ]
+                                    ) }}
+                                </p>
+                                @endif
+
                                 <p class="mb-4 text-base font-normal text-gray-900 dark:text-white"
                                 >{{ __('Total') }}: {{ $order->total }}€</p>
 
