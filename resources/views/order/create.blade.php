@@ -342,7 +342,7 @@
 
             <div class="w-full md:1/2 lg:w-1/3">
 
-                <div class="pl-8 md:pl-0 pr-8 pt-6 pb-12">
+                <div class="pt-6 pb-12 pl-8 pr-8 md:pl-0">
                     <x-price-total
                         :subtotal="$subtotal"
                         :discounted-subtotal="$discounted_subtotal"

@@ -2,6 +2,8 @@
 
 return [
 
+    'unexpected_error' => 'Errore inatteso. Per favore, riprova più tardi.',
+
     'previous' => 'Precedente|Precedenti',
     'next' => 'Successivo|Successivi',
     'no_results' => 'Nessun risultato trovato',

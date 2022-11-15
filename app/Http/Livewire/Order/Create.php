@@ -79,6 +79,14 @@ class Create extends Component
         $this->email = Auth::user() ? Auth::user()->email : null;
 
         $this->shipping_prices = ShippingPrice::active()->get();
+        if(!$this->shipping_prices) $this->shipping_prices = ShippingPrice::first();
+        if(!$this->shipping_prices)
+        {
+            session()->flash('flash.banner', __('general.unexpected_error') );
+            session()->flash('flash.bannerStyle', 'danger');
+
+            $this->redirect(route('cart.index'));
+        } 
 
         $this->shipping_price = session()->get('shipping_price') ? 
             $this->shipping_prices->where('id', session()->get('shipping_price') )->first() 

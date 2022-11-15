@@ -18,19 +18,22 @@ class ShippingPricesTableSeeder extends Seeder
         ShippingPrice::create([
             'name'          => 'Standard',
             'description'   => '7 days',
-            'price'         => 2.00,  
+            'price'         => 2.00, 
+            'active'         => true,  
         ]);
 
         ShippingPrice::create([
             'name'          => 'Fast',
             'description'   => '2-3 days',
             'price'         => 5.00,  
+            'active'         => true, 
         ]);
 
         ShippingPrice::create([
             'name'          => 'Express',
             'description'   => '1 day',
             'price'         => 10.00,  
+            'active'         => true, 
         ]);
     }
 }

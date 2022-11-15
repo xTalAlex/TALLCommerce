@@ -2,6 +2,8 @@
 
 return [
 
+    'unexpected_error' => 'Unexpect error. Please, try again later.',
+
     'previous' => 'Previous',
     'next' => 'Next',
     'no_results' => 'No results',

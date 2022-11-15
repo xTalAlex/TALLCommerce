@@ -134,11 +134,16 @@ class ProductResource extends Resource
                                                     ->numeric()
                                                     ->decimalPlaces(2)
                                                     ->decimalSeparator('.')
-                                                    ->mapToDecimalSeparator([',', '.'])
+                                                    ->mapToDecimalSeparator([',','.'])
                                                     ->thousandsSeparator(',')
                                                     ->maxValue(999999)
+                                                    ->normalizeZeros()
+                                                    ->padFractionalZeros()
                                             )
-                                            ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('taxed_original_price', $product->applyTax($get('original_price'))))
+                                            ->afterStateUpdated(function (Closure $get, Closure $set, Product $product) {
+                                                if($get('original_price') == "" ) $set('original_price', $product->removeTax($get('taxed_original_price')));
+                                                else $set('taxed_original_price', str_replace(",","",$product->applyTax($get('original_price'))));
+                                            })
                                             ->lazy(),
                                         Forms\Components\TextInput::make('selling_price')->label(__('Selling Price'))
                                             ->prefix('€')
@@ -148,11 +153,16 @@ class ProductResource extends Resource
                                                     ->numeric()
                                                     ->decimalPlaces(2)
                                                     ->decimalSeparator('.')
-                                                    ->mapToDecimalSeparator([',', '.'])
+                                                    ->mapToDecimalSeparator([',','.'])
                                                     ->thousandsSeparator(',')
                                                     ->maxValue(999999)
+                                                    ->normalizeZeros()
+                                                    ->padFractionalZeros()
                                             )
-                                            ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('taxed_selling_price', $product->applyTax($get('selling_price'))))
+                                            ->afterStateUpdated(function (Closure $get, Closure $set, Product $product) {                                          
+                                                if($get('selling_price') == "" ) $set('selling_price', $product->removeTax($get('taxed_selling_price')));
+                                                else $set('taxed_selling_price', str_replace(",","",$product->applyTax($get('selling_price'))));
+                                            })
                                             ->lazy(),
                                         Forms\Components\TextInput::make('taxed_original_price')->label(__('Taxed Original Price'))
                                             ->prefix('€')
@@ -161,11 +171,16 @@ class ProductResource extends Resource
                                                     ->numeric()
                                                     ->decimalPlaces(2)
                                                     ->decimalSeparator('.')
-                                                    ->mapToDecimalSeparator([',', '.'])
+                                                    ->mapToDecimalSeparator([',','.'])
                                                     ->thousandsSeparator(',')
                                                     ->maxValue(999999)
+                                                    ->normalizeZeros()
+                                                    ->padFractionalZeros()
                                             )
-                                            ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('original_price', $product->removeTax($get('taxed_original_price'))))
+                                            ->afterStateUpdated(function (Closure $get, Closure $set, Product $product) {
+                                                if($get('taxed_original_price') == "" ) $set('taxed_original_price', $product->applyTax($get('original_price')));
+                                                else $set('original_price', str_replace(",","",$product->removeTax($get('taxed_original_price'))));
+                                            })
                                             ->lazy()
                                             ->dehydrated(false),
                                         Forms\Components\TextInput::make('taxed_selling_price')->label(__('Taxed Selling Price'))
@@ -176,11 +191,16 @@ class ProductResource extends Resource
                                                     ->numeric()
                                                     ->decimalPlaces(2)
                                                     ->decimalSeparator('.')
-                                                    ->mapToDecimalSeparator([',', '.'])
+                                                    ->mapToDecimalSeparator([',','.'])
                                                     ->thousandsSeparator(',')
                                                     ->maxValue(999999)
+                                                    ->normalizeZeros()
+                                                    ->padFractionalZeros()
                                             )
-                                            ->afterStateUpdated(fn (Closure $get, Closure $set, Product $product) => $set('selling_price', $product->removeTax($get('taxed_selling_price'))))
+                                            ->afterStateUpdated(function (Closure $get, Closure $set, Product $product) {
+                                                if($get('taxed_selling_price') == "" ) $set('taxed_selling_price', $product->applyTax($get('selling_price')));
+                                                else $set('selling_price', str_replace(",","",$product->removeTax($get('taxed_selling_price'))));
+                                            })
                                             ->lazy()
                                             ->dehydrated(false),
                                     ]),
@@ -215,9 +235,11 @@ class ProductResource extends Resource
                                             ->numeric()
                                             ->decimalPlaces(2)
                                             ->decimalSeparator('.')
-                                            ->mapToDecimalSeparator([',', '.'])
+                                            ->mapToDecimalSeparator([',','.'])
                                             ->thousandsSeparator(',')
                                             ->maxValue(999999)
+                                            ->normalizeZeros()
+                                            ->padFractionalZeros()
                                     ),
                                 Forms\Components\DatePicker::make('avaiable_from')->label(__('Avaiable From')),
                             ])

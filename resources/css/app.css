@@ -4,6 +4,7 @@
 @import "algolia-autocomplete.css";
 @import "algolia-instant-search.css";
 @import "keen-slider/keen-slider.css";
+@import "trix/dist/trix.css";
 
 @import "tailwindcss/utilities";
 

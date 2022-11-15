@@ -348,7 +348,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
     public function removeTax($price, $tax = null)
     {
         $tax = $tax ?? config('cart.tax');
-        return number_format(round($price / ( ($tax + 100)/100 ),2),2);
+        return number_format(round($price / (1 + ($tax/100)),2),2);
     }
 
     protected function taxedOriginalPrice(): Attribute

@@ -16,6 +16,10 @@ import KeenSlider from 'keen-slider';
 
 window.KeenSlider = KeenSlider;
 
+import Trix from "trix";
+
+window.Trix = Trix;
+
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
