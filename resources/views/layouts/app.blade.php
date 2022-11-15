@@ -28,6 +28,8 @@
         <!-- Scripts -->
         @vite('resources/js/app.js')
         <script src="https://js.stripe.com/v3/"></script>
+
+        @stack('styles')
         
     </head>
     <body class="font-sans antialiased">
