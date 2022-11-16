@@ -5,6 +5,7 @@
 @import "algolia-instant-search.css";
 @import "keen-slider/keen-slider.css";
 @import "trix/dist/trix.css";
+@import "flatpickr/dist/themes/confetti.css";
 
 @import "tailwindcss/utilities";
 

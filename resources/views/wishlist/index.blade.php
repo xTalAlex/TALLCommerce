@@ -37,11 +37,11 @@
                         </h4>
 
                         <div class="py-12">
-                            <x-pikaday wire:model="user.email_verified_at"/>
+                            <x-flatpickr wire:model.lazy="user.email_verified_at"/>
+
+                            <p>{{ $user->email_verified_at }}</p>
 
                             <button class="p-2 ml-2 font-semibold text-white uppercase bg-green-500 rounded-md shadow-md" wire:click="save">Save</button>
-                            
-                            <p>{{ $user->email_verified_at->format(config('custom.date_format')) }}</p>
                         </div>
 
                         @if($count)

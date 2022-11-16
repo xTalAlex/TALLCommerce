@@ -29,8 +29,11 @@ class Index extends Component
     {
         $this->validate();
         $this->user->save();
+
         session()->flash('flash.banner', 'saved');
         session()->flash('flash.bannerStyle', 'success');
+
+        $this->redirect(route('wishlist.index'));
     }
 
     public function mount()
