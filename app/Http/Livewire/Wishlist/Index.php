@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Wishlist;
 
-use App\Models\User;
 use App\Models\Product;
 use Livewire\Component;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -19,26 +18,8 @@ class Index extends Component
         'updatedWishlist' => 'mount',
     ];
 
-    public User $user;
-
-    protected $rules = [
-        'user.email_verified_at' => 'required',
-    ];
-
-    public function save()
-    {
-        $this->validate();
-        $this->user->save();
-
-        session()->flash('flash.banner', 'saved');
-        session()->flash('flash.bannerStyle', 'success');
-
-        $this->redirect(route('wishlist.index'));
-    }
-
     public function mount()
     {  
-        $this->user = \App\Models\User::first();
         $this->checkProducts();
         $this->content = Cart::instance('wishlist')->content();
         $this->count = Cart::instance('wishlist')->count();

@@ -31,8 +31,6 @@
 
         @stack('styles')
 
-        <script src="https://cdn.jsdelivr.net/npm/luxon@3.1.0/build/global/luxon.min.js"></script>
-        
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />

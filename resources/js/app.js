@@ -25,8 +25,8 @@ import { DateTime } from "luxon";
 window.DateTime = DateTime;
 
 import flatpickr from "flatpickr";
-import { Italian } from "flatpickr/dist/l10n/it.js";
-flatpickr.localize(Italian);
+// import { Italian } from "flatpickr/dist/l10n/it.js";
+// flatpickr.localize(Italian);
 
 import Alpine from 'alpinejs';
 

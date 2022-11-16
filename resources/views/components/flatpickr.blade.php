@@ -21,5 +21,4 @@
         x-bind:value="value" 
         placeholder="{{ $attributes->get('placeholder') ?? '00/00/0000' }}"
     >
-    <p x-text="value"></p>
 </div>
