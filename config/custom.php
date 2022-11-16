@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'attribute_types' => [
         'select' => 'Select',
         'radio'  => 'Radio',

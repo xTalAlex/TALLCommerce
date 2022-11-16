@@ -36,6 +36,14 @@
                             {!! trans_choice('shopping_cart.wishlist.count', $count) !!}
                         </h4>
 
+                        <div class="py-12">
+                            <x-pikaday wire:model="user.email_verified_at"/>
+
+                            <button class="p-2 ml-2 font-semibold text-white uppercase bg-green-500 rounded-md shadow-md" wire:click="save">Save</button>
+                            
+                            <p>{{ $user->email_verified_at->format(config('custom.date_format')) }}</p>
+                        </div>
+
                         @if($count)
                         <div class="flex flex-wrap items-center -mx-4">
                             <div class="w-full px-4">
