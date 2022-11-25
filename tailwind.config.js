@@ -13,12 +13,12 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['DM Sans' , ...defaultTheme.fontFamily.sans],
+                sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
             },
-            colors: { 
+            colors: {
                 primary: colors.violet,
-                secondary : colors.orange,
-                gray : colors.zinc,
+                secondary: colors.orange,
+                gray: colors.zinc,
                 danger: colors.rose,
                 success: colors.green,
                 warning: colors.amber,
@@ -27,7 +27,15 @@ module.exports = {
     },
 
     plugins: [
-        require('@tailwindcss/forms'), 
+        require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
+        require('daisyui'),
     ],
+
+    daisyui: {
+        logs: false,
+        themes: [
+            "bumblebee",
+        ],
+    },
 };
