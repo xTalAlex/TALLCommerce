@@ -46,6 +46,11 @@ return [
         'client_id' => env('GOOGLE_CLIENT',''),
         'client_secret' => env('GOOGLE_SECRET',''),
         'redirect' => env('GOOGLE_CALLBACK', env('APP_URL').'/auth/google/callback'),
+        'analytics' => env('GOOGLE_ANALYTICS', ''),
+    ],
+
+    'tawkto' => [
+        'src' => env('TAWKTO_SRC',''),
     ],
 
 ];

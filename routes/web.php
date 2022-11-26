@@ -14,32 +14,8 @@ use Illuminate\Support\Facades\Storage;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    $featured_categories = App\Models\Category::featured()->take(5)->get();
-    $featured_products = App\Models\Product::featured()->where('quantity','>',0)->inRandomOrder()->take(1)->get();
-    $brands = App\Models\Brand::whereHas('media', fn($query)=>
-            $query->whereCollectionName('logo')
-        )->get();
-    if($brands->count())
-        $brands = $brands->mapWithKeys(fn($brand,$key) => [
-            $key => [
-                'logo' => $brand->logo_gray,
-                'url' => route('product.index', ['brand' => $brand->slug])
-            ]
-        ]);
-    $collections = App\Models\Collection::featured()->inRandomOrder()->take(3)->get();
-    if($collections->count())
-        $collections = $collections->mapWithKeys(fn($collection,$key) => [
-            $key => [
-                'hero' => $collection->hero,
-                'url' => route('product.index', ['collection' => $collection->slug]),
-                'name' => $collection->name,
-                'description' => $collection->description
-            ]
-        ]);
-    return view('welcome', compact('featured_categories','featured_products','brands','collections') );
-})->name('home');
+Route::get('/', fn () => view('welcome') );
+Route::get('/home', [App\Http\Controllers\HomeController::class , 'index'] )->name('home');
 
 Route::get('/shop', [App\Http\Controllers\ProductController::class , 'index'] )->name('product.index');
 Route::get('/shop/{product:slug}', App\Http\Livewire\Product\Show::class )->name('product.show');
