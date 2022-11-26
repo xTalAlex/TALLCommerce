@@ -79,7 +79,7 @@ class Create extends Component
         $this->email = Auth::user() ? Auth::user()->email : null;
 
         $this->shipping_prices = ShippingPrice::active()->get();
-        if(count($this->shipping_prices))
+        if(!count($this->shipping_prices))
         {
             session()->flash('flash.banner', __('general.unexpected_error') );
             session()->flash('flash.bannerStyle', 'danger');
