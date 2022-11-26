@@ -76,7 +76,11 @@ class Create extends Component
         }
 
         $this->addresses_confirmed = false;
-        $this->email = Auth::user() ? Auth::user()->email : null;
+
+
+        $this->email =  session()->get('email') ? 
+            session()->get('email') : 
+            (Auth::user() ? Auth::user()->email : null);
 
         $this->shipping_prices = ShippingPrice::active()->get();
         if(!count($this->shipping_prices))
@@ -143,6 +147,7 @@ class Create extends Component
 
         if($this->same_address) $this->billing_address = $this->shipping_address;
         
+        session()->put('email', $this->email);
         session()->put('shipping_address', $this->shipping_address);
         session()->put('billing_address', $this->shipping_address);
 
@@ -256,6 +261,7 @@ class Create extends Component
             session()->forget('shipping_price');
             session()->forget('shipping_address');
             session()->forget('billing_address');
+            session()->forget('email');
 
             if($gateway == 'paypal')
                 $this->order->setAsPaied();

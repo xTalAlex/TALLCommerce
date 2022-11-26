@@ -30,9 +30,9 @@
                 >
                     <x-jet-validation-errors class="my-4 mb-4" />
 
-                    @if($errors->has('email'))
+                    @guest
                         <a href="{{ route('order.login') }}">{{ __('Already registered?') }}</a>
-                    @endif
+                    @endguest
 
                     <form action="" method="POST">
                     @csrf
