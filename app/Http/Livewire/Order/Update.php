@@ -16,6 +16,7 @@ class Update extends Component
     public Address $shipping_address;
     public Address $billing_address;
     
+    public $email;
     public $same_address;
     public $addresses_confirmed;
 
@@ -26,6 +27,8 @@ class Update extends Component
     protected function rules()
     {
         return [
+            'email' => 'required|email'. ( auth()->user() ? '' : '|unique:users,email'),
+            
             'shipping_address.full_name' => '',        
             'shipping_address.company' => 'required_without:shipping_address.full_name',        
             'shipping_address.address' => 'required',        
@@ -57,6 +60,8 @@ class Update extends Component
         $this->shipping_address = $order->shippingAddress();
         $this->billing_address = $order->billingAddress();
         $this->addresses_confirmed = true;
+
+        $this->email = Auth::user() ? Auth::user()->email : null;
     }
 
     public function updateDefaultAddress()
@@ -106,6 +111,7 @@ class Update extends Component
                 $this->order->update([
                     'shipping_address' => $this->shipping_address->toJson(),
                     'billing_address' => $this->billing_address->toJson(),
+                    'email' => $this->email,
                 ]);
                 $this->order->history()->create([
                     'order_status_id' => $this->order->order_status_id,

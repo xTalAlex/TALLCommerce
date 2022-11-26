@@ -71,7 +71,7 @@
                                     'relative z-0 w-full mb-6 group',
                                     'hidden' => Auth::check()
                                     ])>
-                                    <x-input-floating label="{{ __('Email') }}" name="shipping_address_email" wire:model.lazy="shipping_address.email"/>
+                                    <x-input-floating label="{{ __('Email') }}" name="shipping_address_email" wire:model.lazy="email"/>
                                 </div>
                                 <div class="grid xl:grid-cols-2 xl:gap-6">
                                     <div class="relative z-0 w-full mb-6 group">
@@ -212,7 +212,7 @@
 
         <div class="w-full md:1/2 lg:w-1/3">
 
-            <div class="pl-8 md:pl-0 pr-8 pt-6 pb-12">
+            <div class="pt-6 pb-12 pl-8 pr-8 md:pl-0">
                 <x-price-total
                     :subtotal="$order->subtotal"
                     :discounted-subtotal="$order->discounted_subtotal"

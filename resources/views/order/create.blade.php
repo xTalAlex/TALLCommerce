@@ -78,7 +78,7 @@
                                     'relative z-0 w-full mb-6 group',
                                     'hidden' => Auth::check()
                                     ])>
-                                    <x-input-floating label="{{ __('Email') }}" name="shipping_address_email" wire:model.lazy="shipping_address.email"/>
+                                    <x-input-floating label="{{ __('Email') }}" name="shipping_address_email" wire:model.lazy="email"/>
                                 </div>
                                 <div class="grid xl:grid-cols-2 xl:gap-6">
                                     <div class="relative z-0 w-full mb-6 group">
