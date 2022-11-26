@@ -227,6 +227,7 @@
                                     </span>
                                 </div>
                                 
+                                @if($shipping_price)
                                 <div class="flex p-2"
                                     x-show="selected != 3"
                                     x-transition:enter.delay.200ms
@@ -239,6 +240,7 @@
                                         <p class="mt-2 text-right">{{ $shipping_price->price }}€</p>
                                     </div>
                                 </div>
+                                @endif
                                     
                             </button>
 
@@ -266,6 +268,7 @@
                                     @endforeach
                                 </div>
                             </div>
+                            
                         </div>
 
                         <div class="relative border-b-2 border-gray-200">
@@ -347,10 +350,10 @@
                         :subtotal="$subtotal"
                         :discounted-subtotal="$discounted_subtotal"
                         :tax="$tax"
-                        :total="number_format( $total + $shipping_price->price, 2)"
+                        :total="number_format( $total + (optional($shipping_price)->price ?? 0), 2)"
                         :coupon="$coupon"
                         :shipping="$shipping_price"
-                        :shipping-price="$shipping_price->price"
+                        :shipping-price="optional($shipping_price)->price"
                     >
                         <x-slot:actions>
                             <div class="flex justify-center">
