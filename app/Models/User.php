@@ -34,7 +34,9 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'password',
         'is_admin',
         'socialite_provider',
-        'socialite_id'
+        'socialite_id',
+        'fiscal_code',
+        'vat'
     ];
 
     /**

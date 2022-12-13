@@ -14,6 +14,8 @@ class Order extends Model
     protected $fillable = [
         'shipping_address',
         'billing_address',
+        'fiscal_code',
+        'vat',
         'note',
         'tracking_number',
         'payment_gateway',

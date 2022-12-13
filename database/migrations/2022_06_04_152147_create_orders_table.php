@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('number')->unique()->nullable();
             $table->json('shipping_address');
             $table->json('billing_address');
+            $table->string('fiscal_code')->nullable();
+            $table->string('vat')->nullable();
             $table->text('note')->nullable();
             $table->text('tracking_number')->nullable();
             $table->decimal('subtotal',8,2);

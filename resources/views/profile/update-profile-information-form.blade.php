@@ -65,6 +65,20 @@
             <x-jet-input id="email" type="email" class="block w-full mt-1" wire:model.defer="state.email" />
             <x-jet-input-error for="email" class="mt-2" />
         </div>
+
+        <!-- VAT -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="vat" value="{{ __('VAT') }}" />
+            <x-jet-input id="vat" type="text" class="block w-full mt-1" wire:model.defer="state.vat" />
+            <x-jet-input-error for="vat" class="mt-2" />
+        </div>
+
+        <!-- Fiscal Code -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="fiscal_code" value="{{ __('Fiscal Code') }}" />
+            <x-jet-input id="fiscal_code" type="text" class="block w-full mt-1" wire:model.defer="state.fiscal_code" />
+            <x-jet-input-error for="fiscal_code" class="mt-2" />
+        </div>
     </x-slot>
 
     <x-slot name="actions">
