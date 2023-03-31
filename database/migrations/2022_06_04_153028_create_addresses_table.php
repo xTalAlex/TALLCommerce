@@ -15,14 +15,10 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('full_name')->nullable();
-            $table->string('company')->nullable();
+            $table->string('full_name');
             $table->string('address');
-            $table->string('address2')->nullable();
             $table->string('city');
-            $table->string('province')->nullable();
+            $table->string('province');
             $table->string('country_region');
             $table->string('postal_code');
             $table->boolean('billing')->default(0);

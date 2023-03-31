@@ -10,6 +10,7 @@ trait WithCartTotals
 {
     public $subtotal;
     public $discounted_subtotal;
+    public $original_total;
     public $tax;
     public $shipping_price;
     public $total;
@@ -20,13 +21,17 @@ trait WithCartTotals
 
     public function checkCoupon()
     {
+        $this->coupon_code = $this->coupon_code ?? session()->get('coupon');
         if(Str::of($this->coupon_code)->trim()->isNotEmpty())
         {
             $coupon = Coupon::where('code', $this->coupon_code)->first();
             $error = null;
 
             if ($coupon) {
-                if ($coupon->max_redemptions && $coupon->max_redemptions <= $coupon->redemptions)
+                if ( 
+                    ($coupon->max_redemptions && $coupon->max_redemptions <= $coupon->redemptions) ||
+                    ($coupon->once_per_user && auth()->check() && $coupon->wasUsedBy(auth()->user()) )
+                )
                 {    
                     $this->coupon=null;
                     $error=__('Coupon Already Redeemed');
@@ -41,18 +46,21 @@ trait WithCartTotals
                     $this->coupon=null;
                     $error=__("Required minimum total of").' '.($coupon->min_total).'€';
                 }
+                elseif($coupon->once_per_user && !auth()->check())
+                {
+                    $this->coupon=null;
+                    $error=__('Invalid Coupon');
+                }
                 else
                 {
                     $this->coupon=$coupon;
                     $error=null;
-                    session()->put('coupon', $this->coupon->code);   
+                    session()->put('coupon', $this->coupon->code);
                 }
             } else {
                 $this->coupon=null;
                 $error=__('Invalid Coupon');
             }
-
-            $this->refreshTotals();
 
             $this->coupon_error = $error;
             if($error)
@@ -75,19 +83,28 @@ trait WithCartTotals
 
     public function refreshTotals()
     {
-        $this->coupon_code = $this->coupon_code ?? session()->get('coupon');
-        $this->coupon = Coupon::where('code',$this->coupon_code)->first();
-        
-        if ($this->coupon) {
-            $this->subtotal = Cart::instance('default')->subtotal(); 
-            $this->discounted_subtotal = number_format( Cart::instance('default')->subtotal() - $this->coupon->discount(Cart::instance('default')->subtotal()) , 2);
-            $this->tax = number_format( round(config('cart.tax')/100 * $this->discounted_subtotal, 2) , 2);
-            $this->total = number_format( $this->discounted_subtotal + $this->tax, 2);
-        }
-        else{
-            $this->subtotal = Cart::instance('default')->subtotal();
+        $this->checkCoupon();
+
+        $this->subtotal = Cart::instance('default')->subtotal(null,null,'');
+        if($this->coupon && !$this->coupon->applyBeforeTax() ){
             $this->tax = Cart::instance('default')->tax();
-            $this->total = Cart::instance('default')->total();
+            $this->original_total = Cart::instance('default')->total(null,null,'');
+            $this->total = $this->original_total - round($this->coupon->discount($this->original_total),2);
+        }
+        elseif ($this->coupon && $this->coupon->applyBeforeTax() ) {
+            $this->discounted_subtotal = round( (float) $this->subtotal - $this->coupon->discount(Cart::instance('default')->subtotal(null,null,'')) , 2);
+            $tax_total = 0;
+            foreach(Cart::instance('default')->content() as $item)
+            {
+                $tax_total += round( ( $item->price - $this->coupon->discount($item->price) ) * $item->qty * $item->taxRate/100 , 2 );
+            }
+           
+            $this->tax = round( $tax_total , 2);
+            $this->total = round( $this->discounted_subtotal + $this->tax, 2);
+        }
+        else {
+            $this->tax = Cart::instance('default')->tax();
+            $this->total = Cart::instance('default')->total(null,null,'');
         }
     }
 }

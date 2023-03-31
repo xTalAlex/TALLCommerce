@@ -26,14 +26,14 @@ class OrdersOverview extends BaseWidget
 
     protected function getCards(): array
     {
-        $included_statuses = [ 'paied', 'preparing', 'shipped' ];
+        $included_statuses = [ 'paid', 'preparing', 'shipped' ];
 
         $ctrData = $this->getCtrData();
 
         return [
             Card::make( 
                 trans('widgets.orders.stats.ctr'), 
-                Order::count()
+                Order::placed()->count()
             )
             ->chart( $ctrData->map(fn (TrendValue $value) => $value->aggregate)->toArray() )
             ->color( 'primary' ),
@@ -45,7 +45,7 @@ class OrdersOverview extends BaseWidget
 
             Card::make( 
                 trans('widgets.orders.stats.avg_total'), 
-                '€' . number_format( Order::avg('total') , 2)
+                '€' . number_format( Order::placed()->avg('total') , 2)
             ),
         ];
     }

@@ -14,6 +14,7 @@ class ShippingPrice extends Model
         'name',
         'description',
         'price',
+        'min_spend',
         'min_days',
         'max_days',
         'active'
@@ -27,6 +28,16 @@ class ShippingPrice extends Model
     public function scopeActive($query)
     {
         $query->where('active', true);
+    }
+
+    public function scopeFast($query)
+    {
+        $query->where('max_days','!=',null)->where('max_days','<=',2);
+    }
+
+    public function isFast()
+    {
+        return $this->max_days != null && $this->max_days <= 2;
     }
 
     public function orders()

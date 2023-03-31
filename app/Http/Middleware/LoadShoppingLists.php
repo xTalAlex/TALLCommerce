@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -22,13 +24,35 @@ class LoadShoppingLists
         {
             if( !session()->has('cart.default') )
             {
-                Cart::instance('default')->restore(Auth::User()->email);
-                Cart::instance('default')->store(Auth::User()->email);
+                try{
+                    Cart::instance('default')->restore(Auth::user()->email);
+                }
+                catch(Exception $e){
+                    Log::error("Error restoring cart in LoadShoppingLists [". Auth::user()->email ."]");
+                }
+                try{
+                    Cart::instance('default')->erase(Auth::user()->email);
+                    Cart::instance('default')->store(Auth::user()->email);
+                }
+                catch(Exception $e){
+                    Log::error("Error storing cart in LoadShoppingLists [". Auth::user()->email ."]");
+                }
             }
             if( !session()->has('cart.wishlist'))
             {
-                Cart::instance('wishlist')->restore(Auth::User()->email);
-                Cart::instance('wishlist')->store(Auth::User()->email);
+                try{
+                    Cart::instance('wishlist')->restore(Auth::user()->email);
+                }
+                catch(Exception $e){
+                    Log::error("Error restoring wishlist in LoadShoppingLists [". Auth::user()->email ."]");
+                }
+                try{
+                    Cart::instance('wishlist')->erase(Auth::user()->email);
+                    Cart::instance('wishlist')->store(Auth::user()->email);
+                }
+                catch(Exception $e){
+                    Log::error("Error storing wishlist in LoadShoppingLists [". Auth::user()->email ."]");
+                }
             }
         }
         

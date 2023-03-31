@@ -52,7 +52,7 @@ class UsersChart extends LineChartWidget
                     )
                     ->perDay()
                     ->count();
-                $labels = $data->map(fn (TrendValue $value) => \Carbon\Carbon::parse($value->date)->format(config('custom.datenoyear_format')) );
+                $labels = $data->map(fn (TrendValue $value) => \Carbon\Carbon::parse($value->date)->format(config('custom.datemonth_format')) );
                 break;
             case('month'):
                 $data = Trend::model(User::class)
@@ -62,7 +62,7 @@ class UsersChart extends LineChartWidget
                     )
                     ->perDay()
                     ->count();
-                $labels = $data->map(fn (TrendValue $value) => \Carbon\Carbon::parse($value->date)->format(config('custom.datenoyear_format')) );
+                $labels = $data->map(fn (TrendValue $value) => \Carbon\Carbon::parse($value->date)->format(config('custom.datemonth_format')) );
                 break;
             default:
                 $data = Trend::model(User::class)

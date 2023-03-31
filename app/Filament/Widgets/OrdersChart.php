@@ -33,7 +33,7 @@ class OrdersChart extends LineChartWidget
     {
         $activeFilter = $this->filter;
 
-        $excluded_statuses = [ 'payment_failed', 'refunded', 'cancelled' ];
+        $excluded_statuses = [ 'draft', 'payment_failed', 'refunded', 'cancelled' ];
 
         switch($activeFilter)
         {
@@ -55,7 +55,7 @@ class OrdersChart extends LineChartWidget
                     )
                     ->perDay()
                     ->count();
-                $labels = $data->map(fn (TrendValue $value) => \Carbon\Carbon::parse($value->date)->format(config('custom.datenoyear_format')) );
+                $labels = $data->map(fn (TrendValue $value) => \Carbon\Carbon::parse($value->date)->format(config('custom.datemonth_format')) );
                 break;
             case('month'):
                 $data = Trend::query(Order::whereDoesntHave('status', fn($query) => $query->whereIn('name', $excluded_statuses) ))
@@ -65,7 +65,7 @@ class OrdersChart extends LineChartWidget
                     )
                     ->perDay()
                     ->count();
-                $labels = $data->map(fn (TrendValue $value) => \Carbon\Carbon::parse($value->date)->format(config('custom.datenoyear_format')) );
+                $labels = $data->map(fn (TrendValue $value) => \Carbon\Carbon::parse($value->date)->format(config('custom.datemonth_format')) );
                 break;
             default:
                 $data = Trend::query(Order::whereDoesntHave('status', fn($query) => $query->whereIn('name', $excluded_statuses) ))

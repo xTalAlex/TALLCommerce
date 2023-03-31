@@ -3,6 +3,8 @@
 namespace App\Traits\Livewire;
 
 use App\Models\Product;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -18,11 +20,15 @@ trait WithShoppingLists
      * 
      **/
 
-    public function addToCart()
+    public function addToCart(?Product $product, $quantity = 1)
     {
-        if ($this->product->quantity)
+        $product = $product->id ? $product : $this->product;
+        if (config('custom.skip_quantity_checks') || $product->quantity)
         {
-            Cart::instance($this->cartInstance)->add($this->product, 1);
+            if(!config('custom.skip_quantity_checks'))
+                $quantity = $product->quantity >= $quantity ? $quantity : $product->quantity;
+            $item =Cart::instance($this->cartInstance)->add($product, $quantity);
+            if($product->tax_rate) Cart::instance($this->cartInstance)->setTax($item->rowId, $product->tax_rate);
             $this->persist($this->cartInstance);
             $this->notifyCart();
             $this->notifyBanner(__('shopping_cart.added.cart'));
@@ -33,10 +39,11 @@ trait WithShoppingLists
         }
     }
 
-    public function addToWishlist()
+    public function addToWishlist(?Product $product)
     {
-        if (!$this->wishlistContains($this->product)) {
-            Cart::instance($this->wishlistInstance)->add($this->product, 1);
+        $product = $product->id ? $product : $this->product;
+        if (!$this->wishlistContains($product)) {
+            Cart::instance($this->wishlistInstance)->add($product, 1);
             $this->persist($this->wishlistInstance);
             $this->notifyWishlist();
             $this->notifyBanner(__('shopping_cart.added.wishlist'));
@@ -53,7 +60,7 @@ trait WithShoppingLists
     public function updateCartProductQty($rowId, $qty)
     {
         $newQty=Cart::instance($this->cartInstance)->get($rowId)->qty;
-        if (Cart::instance($this->cartInstance)->get($rowId)->model->quantity >= $qty)
+        if (config('custom.skip_quantity_checks') || Cart::instance($this->cartInstance)->get($rowId)->model->quantity >= $qty)
         {
             Cart::instance($this->cartInstance)->update($rowId, $qty);
             $newQty = $qty;
@@ -81,8 +88,9 @@ trait WithShoppingLists
 
     public function moveToCart(Product $product)
     {
-        if ($product->quantity) {
-            Cart::instance($this->cartInstance)->add($product, 1);
+        if (config('custom.skip_quantity_checks') || $product->quantity) {
+            $item = Cart::instance($this->cartInstance)->add($product, 1);
+            if($product->tax_rate) Cart::instance($this->cartInstance)->setTax($item->rowId, $product->tax_rate);
             $this->removeFromWishlist($product);
 
             $this->persist($this->cartInstance);
@@ -202,10 +210,30 @@ trait WithShoppingLists
     public function persist($instance)
     {
         if(Auth::check()) {
-            Cart::instance($instance)->erase(Auth::user()->email);
-            Cart::instance($instance)->store(Auth::user()->email);
-            Cart::instance($instance)->restore(Auth::user()->email);
-            Cart::instance($instance)->store(Auth::user()->email);
+            try{
+                Cart::instance($instance)->erase(Auth::user()->email);
+            }
+            catch(Exception $e){
+                Log::error("Error erasing ".$instance." in WithSoppingLists [". Auth::user()->email ."]");
+            }
+            try{
+                Cart::instance($instance)->store(Auth::user()->email);
+            }
+            catch(Exception $e){
+                Log::error("Error storing (1) ".$instance." in WithSoppingLists [". Auth::user()->email ."]");
+            }
+            try{
+                Cart::instance($instance)->restore(Auth::user()->email);
+            }
+            catch(Exception $e){
+                Log::error("Error restoring ".$instance." in WithSoppingLists [". Auth::user()->email ."]");
+            }
+            try{
+                Cart::instance($instance)->store(Auth::user()->email);
+            }
+            catch(Exception $e){
+                Log::error("Error storing (2) ".$instance." in WithSoppingLists [". Auth::user()->email ."]");
+            }
         }
     }
 
@@ -231,6 +259,30 @@ trait WithShoppingLists
         return Cart::instance($instance)->search(function ($item, $row) use ($product) {
             return $item->id === $product->id;
         })->isNotEmpty();
-    } 
+    }
+
+    public function areCartProductsAvaiable()
+    {
+        $avaiable = true;
+        if (!config('custom.skip_quantity_checks')) {
+            foreach (Cart::instance($this->cartInstance)->content() as $key=>$item) {
+                if ($item->model->quantity < $item->qty) {
+                    $avaiable = false;
+                }
+            }
+        }
+        return $avaiable;
+    }
+
+    public function maxAvaiableFrom()
+    {
+        $max_avaiable_from = null;
+        foreach(Cart::instance($this->cartInstance)->content() as $key=>$item)
+        {
+            if($item->model->avaiable_from > $max_avaiable_from && $item->model->avaiable_from > today()) 
+                $max_avaiable_from = $item->model->avaiable_from;
+        }
+        return $max_avaiable_from;
+    }
 
 }

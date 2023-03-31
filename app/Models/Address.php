@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Address extends Model
@@ -11,12 +12,8 @@ class Address extends Model
     use HasFactory;
 
     protected $fillable = [
-        'email',
-        'phone',
         'full_name',
-        'company',
         'address',
-        'address2',
         'city',
         'province',
         'country_region',
@@ -41,6 +38,25 @@ class Address extends Model
         return $this->belongsTo(User::class);
     }
 
+    protected function province(): Attribute
+    {
+        return Attribute::make(
+            set: function ($value) {
+                return strtoupper($value);
+            },
+        );
+    }
+
+    public function sameAddress($otherAddress)
+    {
+        return $this->full_name == $otherAddress->full_name &&
+            $this->address == $otherAddress->address &&
+            $this->city == $otherAddress->city &&
+            $this->province == $otherAddress->province &&
+            $this->postal_code == $otherAddress->postal_code &&
+            $this->country_region == $otherAddress->country_region;
+    }
+
     /**
      * 
      *      Print with {!!  !!}
@@ -51,24 +67,15 @@ class Address extends Model
         $label=null;
         
         $label="$this->full_name";
-        if ($this->full_name && $this->company) {
-            $label.="($this->company)";
-        } elseif (!$this->full_name) {
-            $label.="$this->company";
-        }
 
         if(Str::length($label)) $label.="\n";
 
         $label.="$this->address";
-        if ($this->address2) {
-            $label.="($this->address2)";
-        }
-        $label.="";
 
         if(Str::length($label)) $label.="\n";
         $label.="$this->city";
         if($this->province)
-            $label.=" ($this->province)";
+            $label.=" (".$this->province.")";
         if($this->postal_code && ($this->city || $this->province))
             $label.=", ";
         $label.="$this->postal_code";

@@ -52,7 +52,7 @@ class ReviewPolicy
         $defaultVariant = $product->defaultVariant;
         $variants = $product->variants;
 
-        return  $user->orders()
+        return  $user->orders()->placed()
                     ->whereHas('products', fn($query) => 
                         $query->where('products.id',$product->id)
                             ->when($defaultVariant, fn($query) =>

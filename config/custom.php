@@ -4,12 +4,12 @@ return [
     'attribute_types' => [
         'select' => 'Select',
         'radio'  => 'Radio',
-        'color'  => 'Color'
+        //'color'  => 'Color'
     ],
 
     'payment_gateways' => [
         'stripe' => 'Stripe',
-        'paypal' => 'PayPal',
+        //'paypal' => 'PayPal',
     ],
 
     'reviews' => [
@@ -19,10 +19,14 @@ return [
     'datetime_format' => 'j/n/y H:i',
     'date_format' => 'j/n/y',
     'hour_format' => 'H:i',
-    'datenoyear_format' => 'j/n',
+    'datemonth_format' => 'j/n',
     'monthyear_format' => 'n/y',
 
+    'skip_quantity_checks' => true,
     'stock_threshold' => 3,
 
     'use_watermark' => false,
+
+    'discount_before_tax' => true
+
 ];

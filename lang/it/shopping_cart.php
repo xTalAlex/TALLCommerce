@@ -18,5 +18,9 @@ return [
     'wishlist.count' => '{0} Non ci sono prodotti nella wishlist|{1} C\'è 1 prodotto nella wishlist|[2,*] Ci sono :count prodotti nella wishlist',
     'move.wishlist' => 'Sposta nella wishlist',
     'move.cart' => 'Sposta nel carrello',
-
+    'remove.wishlist' => 'Rimuovi dalla wishlist',
+    'remove.cart' => 'Rimuovi dal carrello',
+    'add.wishlist' => 'Aggiungi alla wishlist',
+    'add.cart' => 'Aggiungi al carrello',
+    'checkout.min_spend' => 'Spesa minima :amount',
 ];

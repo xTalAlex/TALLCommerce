@@ -16,15 +16,16 @@ class OrderStatusesTableSeeder extends Seeder
     public function run()
     {
         $statuses = [
+            'draft',
             'pending',
             'payment_failed',
-            'paied',
+            'paid',
             'preparing',
             'shipped',
             'completed',
             'cancelled',
             'refunded',
-            'disputed'
+            // 'disputed'
         ];
 
         foreach($statuses as $status)

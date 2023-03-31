@@ -52,7 +52,7 @@ class OrdersRelationManager extends RelationManager
                                         $state === __('general.order_statuses.shipped') || 
                                         $state === __('general.order_statuses.preparing'),
                         'success' => __('general.order_statuses.completed'),
-                        'warning' => __('general.order_statuses.paied'),
+                        'warning' => __('general.order_statuses.paid'),
                         'danger' => __('general.order_statuses.cancelled'),
                     ]),
                 Tables\Columns\TextColumn::make('tracking_number')->label(__('Tracking Number'))
@@ -96,6 +96,9 @@ class OrdersRelationManager extends RelationManager
                             ->required(),
                         Forms\Components\RichEditor::make('message')
                             ->label(__('Message'))
+                            ->disableToolbarButtons([
+                                'attachFiles',
+                            ])
                             ->required(),
                     ]),
                 Tables\Actions\EditAction::make()

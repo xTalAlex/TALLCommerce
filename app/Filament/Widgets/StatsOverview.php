@@ -15,7 +15,7 @@ class StatsOverview extends BaseWidget
 
     protected function getRevenueData() : array
     {
-        $excluded_statuses = [ 'payment_failed', 'refunded', 'cancelled' ];
+        $excluded_statuses = [ 'draft', 'payment_failed', 'refunded', 'cancelled' ];
 
         $data = Trend::query(Order::whereDoesntHave('status', fn($query) => $query->whereIn('name', $excluded_statuses) ))
             ->between(
@@ -38,7 +38,7 @@ class StatsOverview extends BaseWidget
 
     protected function getOrdersData() : array
     {
-        $excluded_statuses = [ 'payment_failed', 'refunded', 'cancelled' ];
+        $excluded_statuses = [ 'draft', 'payment_failed', 'refunded', 'cancelled' ];
 
         $data = Trend::query(Order::whereDoesntHave('status', fn($query) => $query->whereIn('name', $excluded_statuses) ))
             ->between(

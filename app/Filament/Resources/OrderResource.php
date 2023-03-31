@@ -153,8 +153,9 @@ class OrderResource extends Resource
                                             ])
                                             ->columnSpan('full'),
 
-                                        Forms\Components\RichEditor::make('billing_label')->label(__('Billing Label'))
+                                        Forms\Components\RichEditor::make('billing_label')->label(__('Billing Address'))
                                             ->columnSpan('full'),
+    
                                     ])
                                     ->columns([
                                         'md' => 2
@@ -178,6 +179,10 @@ class OrderResource extends Resource
                                 Forms\Components\TextInput::make('email')->label(__('Email'))
                                     ->email(),
                                 Forms\Components\TextInput::make('phone')->label(__('Telefono')),
+
+                                Forms\Components\TextInput::make('fiscal_code')->label(__('Fiscal Code')),
+                                
+                                Forms\Components\TextInput::make('vat')->label(__('VAT')),
                             ]),
                         Forms\Components\Card::make()
                             ->schema([
@@ -216,7 +221,7 @@ class OrderResource extends Resource
                         $state === __('general.order_statuses.shipped') ||
                             $state === __('general.order_statuses.preparing'),
                         'success' => __('general.order_statuses.completed'),
-                        'warning' => __('general.order_statuses.paied'),
+                        'warning' => __('general.order_statuses.paid'),
                         'danger' => __('general.order_statuses.cancelled'),
                     ]),
                 Tables\Columns\TextColumn::make('user.name')->label(__('Name'))
@@ -229,7 +234,13 @@ class OrderResource extends Resource
                     )
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('email')->label(__('Email'))
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\BadgeColumn::make('shippingPrice.name')->label(__('Shipping'))
+                    ->colors([
+                        'secondary',
+                        'secondary' => fn ($state): bool => $state !== null,
+                    ]),
                 Tables\Columns\TextColumn::make('total')->label(__('Total'))
                     ->money('eur')
                     ->sortable()
@@ -268,6 +279,14 @@ class OrderResource extends Resource
                                     fn (Builder $query, $total): Builder => $query->where('total', '>=', $total),
                                 );
                         }),
+                    Tables\Filters\Filter::make('fast_shipping')->label(__('Fast Shipping'))
+                        ->query(fn (Builder $query): Builder => 
+                            $query->whereHas('shippingPrice', fn($query) => $query->fast())
+                        ),
+                    Tables\Filters\Filter::make('hide_drafts')->label(__('Hide Drafts'))
+                        ->query(fn (Builder $query): Builder => 
+                            $query->whereHas('status', fn($query) => $query->where('name','!=','draft'))
+                        )->default(),
                 ],
                 layout: Layout::AboveContent,
             )
@@ -286,6 +305,9 @@ class OrderResource extends Resource
                             ->required(),
                         Forms\Components\RichEditor::make('message')
                             ->label(__('Message'))
+                            ->disableToolbarButtons([
+                                'attachFiles',
+                            ])
                             ->required(),
                     ]),
                 Tables\Actions\EditAction::make(),

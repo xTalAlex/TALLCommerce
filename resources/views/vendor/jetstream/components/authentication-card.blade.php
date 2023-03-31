@@ -1,9 +1,21 @@
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-    <div>
-        {{ $logo }}
-    </div>
+@props([
+    'centered' => true,
+])
 
-    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-        {{ $slot }}
+<div class="grid place-items-center min-h-screen pt-6 sm:pt-0 bg-cover bg-right bg-[url('/public/img/homebanner.png')]">
+    <div @class([
+            'flex flex-col items-center justify-center w-full overflow-hidden bg-white shadow-md sm:bg-opacity-90 sm:max-w-md',
+            'sm:ml-20 sm:mr-auto' => $centered == false
+        ])
+    >
+        <div class="pt-6">
+            <a href="{{ route('home') }}">
+                {{ $logo }}
+            </a>
+        </div>
+
+        <div class="w-full px-6 py-4 mt-8 ">
+            {{ $slot }}
+        </div>
     </div>
 </div>

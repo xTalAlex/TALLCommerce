@@ -1,11 +1,10 @@
 <div class="w-full">
-    <div class="mt-1">
-        <x-jet-button class="justify-center rounded-[4px] w-full text-md py-4" wire:click="confirmPayment" wire:loading.attr="disabled">
-            {{ __('Complete Payment') }}
-        </x-jet-button>
-    </div>
 
-    <div class="mt-1"
+    <x-button class="w-full py-4 text-base" wire:click="confirmPayment" wire:loading.attr="disabled">
+        {{ __('Complete Payment') }}
+    </x-button>
+
+    {{-- <div class="mt-1"
         wire:ignore
         x-data="{
             total : {{ $total }}
@@ -27,6 +26,7 @@
                             color:  'gold',
                             shape:  'rect',
                             label:  'pay',
+                            height: 52
                         },
 
                         createOrder: (data, actions) => {
@@ -39,42 +39,31 @@
                                 purchase_units: [{
                                     amount: {
                                         value: total,
-                                    },
-
-                                    shipping: {
-                                        shipping_detail : {
-                                            name: {
-                                                full_name: 'Hans Muller'
-                                            },
-                                            address: {
-                                                address_line_1: 'MyStreet 12',
-                                                admin_area_2: 'New York',
-                                                postal_code: '10001',
-                                                country_code: 'US',
-                                            }
-                                        }
-                                    }
-                                    
+                                    },                                    
                                 }]
                             });
                         },
 
                         onApprove: (data, actions) => {
-                            return actions.order.capture()
+                            return {
+                                //check if products are avaiable
+                                //get total
+                                actions.order.capture()
                                 .then(function(orderData) {
                                     if(orderData.status=='COMPLETED'){
                                         $wire.set('gateway','paypal');
                                         $wire.set('intent.id',orderData.id);
-                                        $wire.submitPayment();
+                                        $wire.storePayment();
                                     }
                                     else{
                                         return actions.restart();
                                     }
                                 });
+                            }
                         },
 
                         onError: function (err) {
-                            console.log('qualcosa non torna :'+err);
+                            console.log('PayPal payment error :'+err);
                         },
                         
                     })
@@ -92,7 +81,7 @@
         "
     >
         <div id="paypal-buttons" class="relative z-0 w-full"></div>
-    </div>
+    </div> --}}
 
     @if($gateway=='stripe' && $intent)
     <!-- Delete User Confirmation Modal -->
@@ -111,17 +100,16 @@
                         elements : null,
                         errorMessage : null,
                         async submit(){
-                            error = (await this.stripe.confirmPayment({
+                            res = (await this.stripe.confirmPayment({
                                 elements : this.elements,
-                                confirmParams: {
-                                    return_url: '{{ route('stripe.handle.checkout.response') }}',
-                                },
-                            })).error;
-                            if(error) {
-                                this.errorMessage = error.message;
-                                @this.set('submitDisabled', false);
+                                confirmParams: {},
+                                redirect: 'if_required'
+                            }));
+                            if(res.error) {
+                                this.errorMessage = res.error.message;
+                                $wire.set('submitDisabled', false);
                             } else {
-                                console.log('qualcosa non torna');
+                                $wire.storePayment();
                             }
                         }
                     }"
@@ -130,9 +118,12 @@
                         options = {
                             clientSecret: '{{ $intent['client_secret'] }}',
                             appearance : {
-                                theme: 'stripe',
+                                theme: 'flat',
                                 labels: 'floating',
                                 variables: {
+                                    colorPrimary: '#F6787C',
+                                    colorDanger: '#C83030',
+                                    borderRadius: '0px',
                                 },
                             },
                             loader : 'always',
@@ -140,7 +131,7 @@
                         elements = stripe.elements(options);
                         paymentElement = elements.create('payment');
                         paymentElement.mount('#payment-element');
-                        Livewire.on('paymentConfirmed', () =>{
+                        Livewire.on('submitPayment', () =>{
                             submit();
                         });
                     "
@@ -149,20 +140,24 @@
                     <div id="payment-element">
                         <!-- Elements will create form elements here -->
                     </div>
-                    <div id="error-message" x-text="errorMessage">
+                    <div class="mt-2 text-sm text-danger-500" id="error-message" x-text="errorMessage">
                         <!-- Display error message to your customers here -->
                     </div>
                 </form>
             </x-slot>
 
             <x-slot name="footer">
-                <x-jet-secondary-button wire:click="$toggle('confirmingPayment')" wire:loading.attr="disabled">
+                <x-secondary-button wire:click="$toggle('confirmingPayment')" wire:loading.attr="disabled">
                     {{ __('Cancel') }}
-                </x-jet-secondary-button>
+                </x-secondary-button>
 
-                <x-jet-danger-button wire:click="submitPayment" :disabled="$submitDisabled" class="ml-3" wire:loading.attr="disabled">
+                <x-button wire:click="attemptSubmit" :disabled="$submitDisabled" class="ml-3" wire:loading.attr="disabled">
                     {{ __('Confirm') }}
-                </x-jet-danger-button>
+                    <x-icons.spinner @class([
+                        'w-4 h-4 ml-1 text-white',
+                        'hidden' => !$submitDisabled
+                    ])/>
+                </x-button>
             </x-slot>
         </div>
     </x-jet-dialog-modal>

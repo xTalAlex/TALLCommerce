@@ -209,7 +209,8 @@ class ProductResource extends Resource
 
                         Forms\Components\Card::make()
                             ->schema([
-                                Forms\Components\TextInput::make('SKU')->label(__('SKU')),
+                                Forms\Components\TextInput::make('sku')->label(__('SKU'))
+                                    ->unique(ignorable: fn (?Product $record): ?Product => $record),
                                 Forms\Components\Select::make('variant')->label(__('Variant Of'))
                                     ->relationship(
                                         'defaultVariant',
@@ -229,18 +230,20 @@ class ProductResource extends Resource
                                     ->numeric()
                                     ->default(0),
                                 Forms\Components\TextInput::make('weight')->label(__('Weight'))
-                                    ->prefix('Kg')
-                                    ->mask(
-                                        fn (Forms\Components\TextInput\Mask $mask) => $mask
-                                            ->numeric()
-                                            ->decimalPlaces(2)
-                                            ->decimalSeparator('.')
-                                            ->mapToDecimalSeparator([',','.'])
-                                            ->thousandsSeparator(',')
-                                            ->maxValue(999999)
-                                            ->normalizeZeros()
-                                            ->padFractionalZeros()
-                                    ),
+                                    ->prefix('Gr')
+                                    // ->mask(
+                                    //     fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                    //         ->numeric()
+                                    //         ->decimalPlaces(2)
+                                    //         ->decimalSeparator('.')
+                                    //         ->mapToDecimalSeparator([',','.'])
+                                    //         ->thousandsSeparator(',')
+                                    //         ->maxValue(999999)
+                                    //         ->normalizeZeros()
+                                    //         ->padFractionalZeros()
+                                    // )
+                                    ->numeric()
+                                    ->maxValue(99999),
                                 Forms\Components\DatePicker::make('avaiable_from')->label(__('Avaiable From')),
                             ])
                             ->columns([
@@ -262,8 +265,10 @@ class ProductResource extends Resource
                                     ->collection('gallery')
                                     ->multiple()
                                     ->enableReordering()
+                                    ->enableDownload()
                                     ->panelLayout('circular')
-                                    ->panelAspectRatio('5:6'),
+                                    ->panelAspectRatio('5:6')
+                                    ->maxSize(config('media-library.max_file_size')/1024),
                             ]),
                         Forms\Components\Section::make(__('Settings'))
                             ->schema([
@@ -272,7 +277,7 @@ class ProductResource extends Resource
                                 Forms\Components\Toggle::make('featured')->label(__('Featured')),
                                 Forms\Components\Toggle::make('hidden')->label(__('Hidden'))
                                     ->default(true),
-                                Forms\Components\TextInput::make('tax')->label(__('Tax'))
+                                Forms\Components\TextInput::make('tax_rate')->label(__('Tax'))
                                     ->placeholder(config('cart.tax'))
                                     ->numeric()
                                     ->suffix('%')
@@ -311,24 +316,26 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label(__('Name'))
                     ->sortable()
-                    ->searchable(['name', 'slug']),
+                    ->searchable(['name', 'slug', 'sku']),
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')->label(__('Image'))
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('orders_count')->label(__('Orders'))
+                Tables\Columns\TextColumn::make('paid_orders_count')->label(__('Orders'))
                     ->counts('orders')
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('price')->label(__('Price'))
                     ->money('eur')
-                    ->sortable(['selling_price', 'original_price']),
+                    ->sortable(['selling_price', 'original_price'])
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('taxed_price')->label(__('Taxed Price'))
                     ->money('eur')
-                    ->sortable(['selling_price', 'original_price']),
+                    ->sortable(['selling_price', 'original_price'])
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('quantity')->label(__('Quantity'))
                     ->sortable(),
                 Tables\Columns\IconColumn::make('avaiable_from')->label(__('Avaiable From'))
                     ->boolean()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make('featured')->label(__('Featured'))
                     ->trueColor('primary')
                     ->falseColor('secondary')
@@ -343,10 +350,11 @@ class ProductResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
             ])
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('updated_at', 'desc')
             ->filters(
                 [
                     Tables\Filters\TrashedFilter::make(),
+                    Tables\Filters\TernaryFilter::make('hidden')->label(__('Hidden')),
                     Tables\Filters\SelectFilter::make('categories')->label(__('Categories'))
                         ->multiple()
                         ->options(\App\Models\Category::all()->pluck('name', 'id'))
@@ -400,8 +408,6 @@ class ProductResource extends Resource
                         ->query(fn (Builder $query): Builder => $query->whereColumn('selling_price', '<', 'original_price')),
                     Tables\Filters\Filter::make('featured')->label(__('Featured'))
                         ->query(fn (Builder $query): Builder => $query->where('featured', true)),
-                    Tables\Filters\Filter::make('hidden')->label(__('Hidden'))
-                        ->query(fn (Builder $query): Builder => $query->where('hidden', true)),
                     Tables\Filters\Filter::make('exlude_variants')->label(__('Exclude Variants'))
                         ->query( fn (Builder $query): Builder => $query->where('variant_id', null)->orWhereColumn('id','variant_id') ),
 

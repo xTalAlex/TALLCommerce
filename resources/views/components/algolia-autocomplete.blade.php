@@ -78,7 +78,7 @@
                                             indexName: '{{ config('scout.prefix') }}products',
                                             query,
                                             params: {
-                                                hitsPerPage: 5,
+                                                hitsPerPage: 20,
                                                 attributesToSnippet: [
                                                     'name:10',
                                                     'short_description:35'

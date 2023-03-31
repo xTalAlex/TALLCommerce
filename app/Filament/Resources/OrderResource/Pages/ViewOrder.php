@@ -21,6 +21,7 @@ class ViewOrder extends ViewRecord
                 Actions\Action::make(__('Invoice'))
                     ->url(route('invoice.show', ['order' => $this->record]))
                     ->openUrlInNewTab()
+                    ->icon('heroicon-o-document-download')
             );
         }
         array_push(
@@ -39,6 +40,9 @@ class ViewOrder extends ViewRecord
                         ->required(),
                     \Filament\Forms\Components\RichEditor::make('message')
                         ->label(__('Message'))
+                        ->disableToolbarButtons([
+                            'attachFiles',
+                        ])
                         ->required(),
                 ])
         );

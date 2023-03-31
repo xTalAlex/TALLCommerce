@@ -74,7 +74,9 @@ class CollectionResource extends Resource
                                     ->collection('hero')
                                     ->panelLayout('circular')
                                     ->imageCropAspectRatio('16:9')
-                                    ->panelAspectRatio('16:9'),
+                                    ->panelAspectRatio('16:9')
+                                    ->enableDownload()
+                                    ->maxSize(config('media-library.max_file_size')/1024),
                             ]),
                         Forms\Components\Section::make(__('Settings'))
                             ->schema([   

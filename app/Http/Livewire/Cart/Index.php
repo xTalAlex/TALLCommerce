@@ -12,9 +12,10 @@ class Index extends Component
 {
     use WithShoppingLists, WithCartTotals;
     
-    public $invalid_quantity_row_ids;
+    public $invalid_quantity_row_ids = [];
     public $content;
     public $count;
+    public $randomProduct;
 
     protected $listeners = [
         'updatedCart' => 'mount',
@@ -26,6 +27,7 @@ class Index extends Component
         $this->count = Cart::instance('default')->count();
         $this->updatePrices();
         $this->refreshTotals();
+        $this->randomProduct = Product::inRandomOrder()->first();
     }
 
     public function updatePrices()
@@ -65,7 +67,7 @@ class Index extends Component
 
     public function render()
     {       
-        $this->checkProductsQuantity();
+        if(!config('custom.skip_quantity_checks')) $this->checkProductsQuantity();
 
         return view('cart.index');
     }

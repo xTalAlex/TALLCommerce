@@ -51,7 +51,8 @@ class ChildrenRelationManager extends RelationManager
                     ->maxLength(255)
                     ->autosize(true),
                 Forms\Components\SpatieMediaLibraryFileUpload::make('hero')->label(__('Hero'))
-                    ->collection('hero'),
+                    ->collection('hero')
+                    ->enableDownload(),
             ])
             ->columns(1);
     }

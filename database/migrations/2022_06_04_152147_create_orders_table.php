@@ -30,9 +30,9 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->text('tracking_number')->nullable();
             $table->decimal('subtotal',8,2);
-            $table->decimal('tax',4,2)->nullable();
+            $table->decimal('tax',8,2)->nullable();
             $table->decimal('total',8,2);
-            $table->string('payment_gateway');
+            $table->string('payment_gateway')->nullable();
             $table->string('payment_id')->nullable();
             $table->unsignedBigInteger('order_status_id');
             $table->unsignedBigInteger('user_id')->nullable();
@@ -41,6 +41,18 @@ return new class extends Migration
             $table->string('invoice_series')->nullable();
             $table->string('invoice_sequence')->nullable();
             $table->string('invoice_serial_number')->nullable();
+            $table->string('shipping_address_full_name');
+            $table->string('shipping_address_address');
+            $table->string('shipping_address_city');
+            $table->string('shipping_address_province');
+            $table->string('shipping_address_country_region');
+            $table->string('shipping_address_postal_code');
+            $table->string('billing_address_full_name')->nullable();
+            $table->string('billing_address_address')->nullable();
+            $table->string('billing_address_city')->nullable();
+            $table->string('billing_address_province')->nullable();
+            $table->string('billing_address_country_region')->nullable();
+            $table->string('billing_address_postal_code')->nullable();
             $table->timestamps();
 
             $table->foreign('order_status_id')->references('id')->on('order_statuses')
@@ -54,6 +66,7 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
             $table->decimal('price',6,2);
+            $table->decimal('tax_rate',4,2)->nullable();
             $table->unsignedInteger('quantity');
             $table->decimal('discount',6,2)->nullable();
 

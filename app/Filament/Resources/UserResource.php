@@ -52,13 +52,35 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Toggle::make('is_admin')->label(__('Is Admin')),
-                    ])
-                    ->columnSpan(2),
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('fiscal_code')->label(__('Fiscal Code')), 
+                                Forms\Components\TextInput::make('vat')->label(__('VAT')), 
+                                Forms\Components\TextInput::make('phone')->label(__('Phone Number'))
+                                    ->tel(), 
+                            ])->columns([
+                                'md' => 2,
+                            ]),  
+                    ])->columnSpan(2),
                 Forms\Components\Group::make()
                     ->schema([
-                        //
-                    ])->columnSpan(1),
+                        Forms\Components\Section::make(__('Settings'))
+                            ->schema([
+                                Forms\Components\Toggle::make('is_admin')->label(__('Is Admin'))
+                                    ->columnSpan('full'),
+                            ]),
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\Placeholder::make('last_seen')->label(__('Last seen'))
+                                    ->content(fn (?User $record): string => $record?->last_seen ? $record->last_seen->format(config('custom.datetime_format')) : '-'),
+                                Forms\Components\Placeholder::make('created_at')->label(__('Created at'))
+                                    ->content(fn (?User $record): string => $record?->created_at ? $record->created_at->format(config('custom.datetime_format')) : '-'),
+                                Forms\Components\Placeholder::make('updated_at')->label(__('Updated at'))
+                                    ->content(fn (?User $record): string => $record?->updated_at ? $record->updated_at->format(config('custom.datetime_format')) : '-'),
+                            ]),
+                    ])
+                    ->columnSpan(1),    
+
             ])
             ->columns([
                 'md' => 3,
@@ -85,13 +107,17 @@ class UserResource extends Resource
                     ])
                     ->dateTime(config('custom.datetime_format'))
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('orders_count')->label(__('Orders Count'))
-                    ->counts('orders')
+                Tables\Columns\TextColumn::make('placed_orders_count')->label(__('Orders Count'))
+                    ->counts('placedOrders')
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('last_seen')->label(__('Last seen'))
+                    ->dateTime(config('custom.datetime_format'))
+                    ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')->label(__('Created at'))
                     ->dateTime(config('custom.datetime_format'))
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('created_at','desc')
             ->filters([
@@ -105,7 +131,7 @@ class UserResource extends Resource
                     ->icon('heroicon-o-mail')
                     ->action(function (User $record, array $data): void {
                         $record->notify(new \App\Notifications\AdminMessage($data['subject'], $data['message']));
-                        Filament::notify('success', 'Email sent');
+                        Filament::notify('success', __('Email sent'));
                     })
                     ->form([
                         Forms\Components\TextInput::make('subject')
@@ -113,6 +139,9 @@ class UserResource extends Resource
                             ->required(),
                         Forms\Components\RichEditor::make('message')
                             ->label(__('Message'))
+                            ->disableToolbarButtons([
+                                'attachFiles',
+                            ])
                             ->required(),
                     ]),
                 Tables\Actions\EditAction::make(),

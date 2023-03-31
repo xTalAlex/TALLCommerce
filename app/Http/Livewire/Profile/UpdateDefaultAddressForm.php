@@ -12,14 +12,12 @@ class UpdateDefaultAddressForm extends Component
     public $address;
 
     protected $rules = [
-        'address.full_name' => '',        
-        'address.company' => '',        
-        'address.address' => 'required',        
-        'address.address2' => '',        
+        'address.full_name' => 'required',
+        'address.address' => 'required',   
         'address.city' => 'required',
-        'address.province' => 'required',
+        'address.province' => 'required|size:2',
         'address.country_region' => 'required',
-        'address.postal_code' => 'required|min:5',
+        'address.postal_code' => 'required|min:5|max:5',
     ];
 
     protected $listeners = ['defaultAddressDeleted' => 'defaultAddressDeleted'];
@@ -39,9 +37,7 @@ class UpdateDefaultAddressForm extends Component
             'user_id' => $this->user->id,
         ],[
             'full_name' => $this->address->full_name,
-            'company' => $this->address->company,
             'address' => $this->address->address,
-            'address2' => $this->address->address2,
             'city' => $this->address->city,
             'province' => $this->address->province,
             'country_region' => $this->address->country_region,

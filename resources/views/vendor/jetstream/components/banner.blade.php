@@ -2,7 +2,7 @@
 
 <div x-data="{{ json_encode(['show' => true, 'style' => $style, 'message' => $message]) }}"
             class="fixed inset-x-0 z-50 top-16"
-            :class="{ 'bg-primary-500': style == 'success', 'bg-red-700': style == 'danger', 'bg-gray-500': style != 'success' && style != 'danger' }"
+            :class="{ 'bg-success-500': style == 'success', 'bg-danger-500': style == 'danger', 'bg-warning-500': style == 'warning' , 'bg-secondary-500': style!= 'warning' && style != 'success' && style != 'danger' }"
             style="display: none;"
             x-show="show && message"
             x-on:click="show = false"
@@ -20,7 +20,7 @@
     <div class="max-w-screen-xl px-3 py-2 mx-auto sm:px-6 lg:px-8">
         <div class="flex flex-wrap items-center justify-between">
             <div class="flex items-center flex-1 w-0 min-w-0">
-                <span class="flex p-2 rounded-lg" :class="{ 'bg-primary-600': style == 'success', 'bg-red-600': style == 'danger' }">
+                <span class="flex p-2">
                     <svg x-show="style == 'success'" class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -32,14 +32,14 @@
                     </svg>
                 </span>
 
-                <p class="ml-3 text-sm font-medium text-white truncate" x-text="message"></p>
+                <p class="ml-3 text-sm text-white truncate select-none" x-text="message"></p>
             </div>
 
             <div class="shrink-0 sm:ml-3">
                 <button
                     type="button"
-                    class="flex p-2 -mr-1 transition rounded-md focus:outline-none sm:-mr-2"
-                    :class="{ 'hover:bg-primary-600 focus:bg-primary-600': style == 'success', 'hover:bg-red-600 focus:bg-red-600': style == 'danger' }"
+                    class="flex p-2 -mr-1 transition focus:outline-none sm:-mr-2"
+                    :class="{ 'hover:bg-success-600 focus:bg-success-600': style == 'success', 'hover:bg-danger-600 focus:bg-danger-600': style == 'danger' }"
                     aria-label="Dismiss"
                     x-on:click="show = false">
                     <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

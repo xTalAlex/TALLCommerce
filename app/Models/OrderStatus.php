@@ -31,4 +31,27 @@ class OrderStatus extends Model
         return __('general.order_statuses.'.($this->name));
     }
 
+    public function color()
+    {
+        $color = 'secondary';
+        switch($this->name){
+            case('pending'):
+                $color = 'warning';
+                break;
+            case('payment_failed'):
+                $color = 'danger';
+                break;
+            case('paid'):
+            case('preparing'):
+            case('shipped'):
+            case('completed'): 
+                $color = 'primary';
+                break; 
+            default:
+                $color = 'secondary';
+                break;
+        }
+        return $color;
+    }
+
 }

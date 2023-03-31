@@ -14,6 +14,7 @@ return [
     'buyer'                  => 'Buyer',
     'address'                => 'Address',
     'code'                   => 'Code',
+    'fiscal_code'            => 'Fiscal code',
     'vat'                    => 'VAT code',
     'phone'                  => 'Phone',
     'description'            => 'Description',
@@ -37,4 +38,5 @@ return [
     'due'                    => 'Due',
     'email'                  => 'Email',
     'order_number'           => 'Order Number',
+    'SWIFT'                  => 'SWIFT'
 ];

@@ -1,57 +1,84 @@
-<div class="px-6 py-6 md:px-4 lg:px-6 bg-primary-300 md:p-12">
+@props([
+    'theme' => 'secondary'
+])
 
-    <h2 class="mb-6 text-4xl font-bold text-white font-heading">{{ isset($heading) ? $heading :  __('Total') }}</h2>
+<div @class([
+    'px-6 py-12 space-y-4 text-white',
+    'bg-secondary-500' => $theme == 'secondary',
+    'bg-primary-500' => $theme == 'primary'
+])>
 
-    <div class="flex items-center justify-between pb-5">
-        <span class="text-primary-50">{{ __('Subtotal') }}</span>
-        <span class="text-xl font-bold text-white font-heading">{{ $subtotal }}€</span>
+    <div class="mb-2 text-3xl font-bold">{{ isset($heading) ? $heading :  __('Summary') }}</div>
+
+    @if($products)
+    <div class="flex flex-col pb-6 border-b border-white">
+        @foreach($products as $rowId=>$product)
+            <div class="flex items-center justify-between space-y">
+                <span class="text-sm">{{ $product['name'] }} x{{ $product['qty'] }}</span>
+                <span class="text-lg font-bold">{{ $product['pricePerQuantity'] }}€</span>
+            </div>
+        @endforeach
     </div>
-    @if($coupon)
-    <div class="flex items-center justify-between pb-5">
-        <span class="text-primary-50">{{ $coupon->label }} {{ $coupon->code ?? '' }}</span>
-        <span class="text-xl font-bold text-white font-heading">-{{ number_format( $subtotal - $discountedSubtotal , 2) }}€</span>
+    @endif
+
+    <div class="flex items-center justify-between">
+        <div class="">{{ __('Total') }}<div class="inline ml-1 text-xs">({{ __('Without Tax') }})</div></div>
+        <span class="text-xl font-bold">{{ number_format( $subtotal ,2) }}€</span>
     </div>
-    <div class="flex items-center justify-between pb-5">
-        <span class="text-primary-50"></span>
-        <span class="text-xl font-bold text-white font-heading">{{ $discountedSubtotal }}€</span>
+
+    @if($coupon && $coupon->applyBeforeTax())
+    <div class="flex items-center justify-between">
+        <span class="">{{ !$coupon->is_fixed_amount ? $coupon->label : '' }} {{ $coupon->code }}</span>
+        <span class="text-xl font-bold">-{{ number_format( $discount() , 2) }}€</span>
     </div>
+        @if($discountedSubtotal)
+        <div class="flex items-center justify-between">
+            <span class=""></span>
+            <span class="text-xl font-bold">{{ number_format($discountedSubtotal, 2) }}€</span>
+        </div>
+        @endif
     @endif
     
     @if($tax)
-    <div class="flex items-center justify-between pb-5">
-        <span class="text-primary-50">
+    <div class="flex items-center justify-between">
+        <span class="text-base">
             {{ __('Tax') }}
         </span>
-        <span class="text-xl font-bold text-white font-heading">{{ $tax }}€</span>
+        <span class="text-base font-bold">{{ number_format($tax, 2) }}€</span>
     </div>
+    @endif
+
+    @if($coupon && !$coupon->applyBeforeTax())
+    <div class="flex items-center justify-between">
+        <span class="">{{ !$coupon->is_fixed_amount ? $coupon->label : '' }} {{ $coupon->code }}</span>
+        <span class="text-xl font-bold">-{{ number_format( $discount() , 2) }}€</span>
+    </div>
+        @if($discountedSubtotal)
+        <div class="flex items-center justify-between">
+            <span class=""></span>
+            <span class="text-xl font-bold">{{ number_format($discountedSubtotal, 2) }}€</span>
+        </div>
+        @endif
     @endif
 
     @if(isset($shipping))
-    <div class="flex items-center justify-between pb-5">
-        <span class="text-primary-50">
+    <div class="flex items-center justify-between">
+        <span class="">
             {{ __('Shipping') }} : {{ $shipping->name }}
         </span>
-        <span class="text-xl font-bold text-white font-heading">{{ $shippingPrice }}€</span>
+        <span class="text-xl font-bold">{{ number_format($shippingPrice, 2) }}€</span>
     </div>
     @endif
 
-    {{-- <h4 class="mb-2 text-xl font-bold text-white font-heading">Shipping</h4>
-    <div class="flex items-center justify-between mb-2">
-        <span class="text-primary-50">Next day</span>
-        <span class="text-xl font-bold text-white font-heading">$11.00</span>
-    </div>
-    <div class="flex items-center justify-between mb-10">
-        <span class="text-primary-50">Shipping to United States</span>
-        <span class="text-xl font-bold text-white font-heading">-</span>
-    </div> --}}
-
-    <div class="flex items-center justify-between pt-8 mb-10 border-t border-primary-100">
-        <span class="text-xl font-bold text-white font-heading">{{ __('Total') }}</span>
-        <span class="text-xl font-bold text-white font-heading">{{ $total }}€</span>
+    <div class="flex items-center justify-between pt-8 pb-6 border-t border-white">
+        <div class="text-xl font-bold">{{ __('Total') }}<div class="inline ml-1 text-xs">({{ __('With Tax') }})</div></div>
+        <span class="text-xl font-bold">{{ number_format( $total, 2) }}€</span>
     </div>
 
     @if(isset($actions))
-        {{ $actions }}
+        <div class="pt-6">
+            {{ $actions }}
+        </div>
     @endif
 
 </div>

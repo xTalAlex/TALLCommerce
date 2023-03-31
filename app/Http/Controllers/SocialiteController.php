@@ -37,16 +37,23 @@ class SocialiteController extends Controller
             return redirect()->route('login');
         }
 
-        $user = User::firstOrCreate([
-            'socialite_provider' => 'google',
-            'email' => $googleUser->email,
-        ], [
-            'socialite_id' => $googleUser->id,
-            'name' => $googleUser->user['given_name'].' '.$googleUser->user['family_name'],
-            'password' => Hash::make(Str::random(10)),
-            // 'socialite_token' => $googleUser->token,
-            // 'socialite_refresh_token' => $googleUser->refreshToken,
-        ]);
+        $user = User::where('email', insensitiveLike(), $googleUser->email)->first();
+
+        if($user){
+            if($user->socialite_provider != 'google')
+                $user = null;
+        }
+        else{
+            $user = User::create([
+                'email' => $googleUser->email,
+                'socialite_provider' => 'google',
+                'socialite_id' => $googleUser->id,
+                'name' => $googleUser->user['given_name'].' '.$googleUser->user['family_name'],
+                'password' => Hash::make(Str::random(10)),
+                // 'socialite_token' => $googleUser->token,
+                // 'socialite_refresh_token' => $googleUser->refreshToken,
+            ]);
+        }
 
         if ($user) auth()->login($user, true);
         return $user ? redirect()->intended('/')

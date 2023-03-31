@@ -2,10 +2,16 @@
 
 namespace App\Models;
 
+use App\Notifications\OrderCancelled;
+use App\Notifications\OrderCompleted;
+use App\Notifications\OrderPaid;
+use App\Notifications\OrderPaymentFailed;
+use App\Notifications\OrderShipped;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Notification;
 
 class Order extends Model
 {
@@ -14,6 +20,18 @@ class Order extends Model
     protected $fillable = [
         'shipping_address',
         'billing_address',
+        'shipping_address_full_name',
+        'shipping_address_address',
+        'shipping_address_city',
+        'shipping_address_province',
+        'shipping_address_country_region',
+        'shipping_address_postal_code',
+        'billing_address_full_name',
+        'billing_address_address',
+        'billing_address_city',
+        'billing_address_province',
+        'billing_address_country_region',
+        'billing_address_postal_code',
         'fiscal_code',
         'vat',
         'note',
@@ -58,6 +76,13 @@ class Order extends Model
         'total'      => 'decimal:2',
         'shipping_price' => 'decimal:2',
     ];
+    
+    public function scopePlaced($query)
+    {
+        $excluded_statuses = [ 'draft' ];
+        
+        $query->whereDoesntHave('status', fn($query) => $query->whereIn('name', $excluded_statuses) );
+    }
 
     public function status()
     {
@@ -66,7 +91,7 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('price', 'quantity', 'discount')->withoutGlobalScopes();
+        return $this->belongsToMany(Product::class)->withPivot('price', 'quantity', 'discount','tax_rate')->withoutGlobalScopes();
     }
 
     public function user()
@@ -131,6 +156,24 @@ class Order extends Model
         return $this->id + 1000;
     }
 
+    protected function province(): Attribute
+    {
+        return Attribute::make(
+            set: function ($value) {
+                return strtoupper($value);
+            },
+        );
+    }
+
+    protected function fiscalCode(): Attribute
+    {
+        return Attribute::make(
+            set: function ($value) {
+                return strtoupper($value);
+            },
+        );
+    }
+
     public function getInvoiceSerialNumberAttribute($value)
     {
         return $this->invoice_sequence ? str_pad($this->invoice_sequence, config('invoices.serial_number.sequence_padding') , '0', STR_PAD_LEFT) 
@@ -154,20 +197,20 @@ class Order extends Model
             case('payment_failed'):
                 $can = $this->status->name == 'pending';
                 break;
-            case('paied'):
-                $can = $this->status->name == 'pending';
+            case('paid'):
+                $can = $this->status->name == 'pending' || $this->status->name == 'draft';
                 break;
             case('preparing'):
-                $can = $this->status->name == 'paied';
+                $can = $this->status->name == 'paid';
                 break;
             case('shipped'):
-                $can = $this->status->name == 'paied' || $this->status->name == 'preparing';
+                $can = $this->status->name == 'paid' || $this->status->name == 'preparing';
                 break;
             case('completed'):
-                $can = $this->status->name == 'paied' || $this->status->name == 'shipped';
+                $can = $this->status->name == 'paid' || $this->status->name == 'shipped';
                 break;
             case('refunded'):
-                $can = $this->status->name == 'completed' || $this->status->name == 'shipped'  || $this->status->name == 'paied';
+                $can = $this->status->name == 'completed' || $this->status->name == 'shipped'  || $this->status->name == 'paid';
                 break;
             case('cancelled'):
                 $can = $this->status->name == 'paid';
@@ -179,36 +222,64 @@ class Order extends Model
 
     public function canBeDeleted()
     {
-        $deletable_statuses = OrderStatus::whereIn('name',['payment_failed'])->get();
+        $deletable_statuses = collect(['payment_failed']);
 
-        return $deletable_statuses->contains($this->status);
+        return $deletable_statuses->contains($this->status->name);
     }
 
-    public function canBePaied()
+    public function canBePaid()
     {
-        $payable_statuses = OrderStatus::whereIn('name',['payment_failed'])->get();
+        $payable_statuses = collect(['payment_failed']);
 
-        return $payable_statuses->contains($this->status);
+        return $payable_statuses->contains($this->status->name);
     }
 
     public function canBeEdited()
     {
-        $editabled_statuses = OrderStatus::whereIn('name',['pending','payment_failed','paied'])->get();
+        $editable_statuses = collect(['pending','payment_failed','paid']);
 
-        return $editabled_statuses->contains($this->status);
+        return $editable_statuses->contains($this->status->name);
     }
 
     public function canBeInvoiced()
     {
-        return strtolower($this->status->name) !='pending' && strtolower($this->status->name) !='payment_failed';
+        return strtolower($this->status->name) !='draft' && strtolower($this->status->name) !='pending' && strtolower($this->status->name) !='payment_failed'
+            && strtolower($this->status->name) !='refunded' && strtolower($this->status->name) !='cancelled';
     }
 
-    public function setAsPaied()
+    public function isActive()
+    {
+        $active_statuses = collect(['pending','payment_failed','paid','preparing']);
+
+        return $active_statuses->contains($this->status->name);
+    }
+
+    public function setAsPaymentFailed()
     {
         $res = false;
 
-        DB::transaction(function () {
-            $status = OrderStatus::where('name','paied')->first();
+        DB::transaction(function () use(&$res) {
+            $status = OrderStatus::where('name','payment_failed')->first();
+            if ($status) {
+                $this->status()->associate($status);
+                $this->save();
+                $this->history()->create([
+                    'order_status_id' => $status->id,
+                ]);
+                Notification::route('mail', $this->user?->email ?? $this->email)->notify(new OrderPaymentFailed($this));
+                $res = true;
+            }
+        });
+
+        return $res;
+    }
+
+    public function setAsPaid()
+    {
+        $res = false;
+
+        DB::transaction(function () use(&$res) {
+            $status = OrderStatus::where('name','paid')->first();
             if ($status) {
                 $lastInvoiceSequence= Order::where('invoice_series', today()->format('y'))->max('invoice_sequence') ?? 0;
                 $this->status()->associate($status);
@@ -218,6 +289,72 @@ class Order extends Model
                 $this->history()->create([
                     'order_status_id' => $status->id,
                 ]);
+                Notification::route('mail', $this->user?->email ?? $this->email)
+                    ->route('slack', config('services.slack.webhook'))
+                    ->notify(new OrderPaid($this));
+                $res = true;
+            }
+        });
+
+        return $res;
+    }
+
+    public function setAsShipped($tracking_number = null)
+    {
+        $res = false;
+
+        DB::transaction(function () use(&$res, $tracking_number) {
+            $status = OrderStatus::where('name','shipped')->first();
+            if ($status) {
+                $status_id = \App\Models\OrderStatus::where('name', insensitiveLike(),'shipped')->first()->id;
+                $this->status()->associate($status_id);
+                $this->tracking_number = $tracking_number;
+                $this->save();
+                $this->history()->create([
+                    'order_status_id' => $status_id,
+                ]);
+                Notification::route('mail', $this->user?->email ?? $this->email)->notify(new OrderShipped($this));
+                $res = true;
+            }
+        });
+
+        return $res;
+    }
+
+    public function setAsCompleted()
+    {
+        $res = false;
+
+        DB::transaction(function () use(&$res) {
+            $status = OrderStatus::where('name','completed')->first();
+            if ($status) {
+                $this->status()->associate($status);
+                $this->save();
+                $this->history()->create([
+                    'order_status_id' => $status->id,
+                ]);
+                Notification::route('mail', $this->user?->email ?? $this->email)->notify(new OrderCompleted($this));
+                $res = true;
+            }
+        });
+
+        return $res;
+    }
+
+    public function setAsCancelled()
+    {
+        $res = false;
+
+        DB::transaction(function () use(&$res) {
+            $status = OrderStatus::where('name','cancelled')->first();
+            if ($status) {
+                $this->status()->associate($status);
+                $this->save();
+                $this->history()->create([
+                    'order_status_id' => $status->id,
+                ]);
+                $this->restock();
+                Notification::route('mail', $this->user?->email ?? $this->email)->notify(new OrderCancelled($this));
                 $res = true;
             }
         });
@@ -227,10 +364,11 @@ class Order extends Model
 
     public function restock()
     {
-        foreach($this->products as $product)
-        {
-            $product->quantity += $product->pivot->quantity;
-            $product->save();
+        if(config('custom.skip_quantity_checks')) {
+            foreach ($this->products as $product) {
+                $product->quantity += $product->pivot->quantity;
+                $product->save();
+            }
         }
 
         if($this->coupon)

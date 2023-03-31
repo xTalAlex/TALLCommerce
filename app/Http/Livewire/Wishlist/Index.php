@@ -13,6 +13,7 @@ class Index extends Component
     
     public $content;
     public $count;
+    public $randomProduct;
 
     protected $listeners = [
         'updatedWishlist' => 'mount',
@@ -23,6 +24,7 @@ class Index extends Component
         $this->checkProducts();
         $this->content = Cart::instance('wishlist')->content();
         $this->count = Cart::instance('wishlist')->count();
+        $this->randomProduct = Product::inRandomOrder()->first();
     }
 
     public function checkProducts()

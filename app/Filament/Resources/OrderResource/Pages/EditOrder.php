@@ -23,7 +23,7 @@ class EditOrder extends EditRecord
         {
             $prearing= Action::make('preparing')->label(__('Prepare for Shipping'))
                 ->action(function (array $data): void {
-                    $status_id = \App\Models\OrderStatus::where('name', 'like','preparing')->first()->id;
+                    $status_id = \App\Models\OrderStatus::where('name', insensitiveLike(),'preparing')->first()->id;
                     $this->record->status()->associate($status_id);
                     $this->record->save();
                     $this->record->history()->create([
@@ -38,13 +38,7 @@ class EditOrder extends EditRecord
         {
             $shipped= Action::make('shipped')->label(__('Set as Shipped'))
                 ->action(function (array $data): void {
-                    $status_id = \App\Models\OrderStatus::where('name', 'like','shipped')->first()->id;
-                    $this->record->status()->associate($status_id);
-                    $this->record->tracking_number= $data['tracking_number'];
-                    $this->record->save();
-                    $this->record->history()->create([
-                        'order_status_id' => $status_id,
-                    ]);
+                    $this->record->setAsShipped($data['tracking_number']);
                     $this->redirect(route('filament.resources.orders.view', $this->record));
                     $this->notify('success',__('general.order_statuses.changes.shipped'));
                 })
@@ -54,15 +48,25 @@ class EditOrder extends EditRecord
                 ]);
             array_push( $actions , $shipped);
         }
+        if($this->record->statusCanBecome('Completed'))
+        {
+            $completed= Action::make('completed')->label(__('Set as Completed'))
+                ->action(function (array $data): void {
+                    $this->record->setAsCompleted();
+                    $this->redirect(route('filament.resources.orders.view', $this->record));
+                    $this->notify('success',__('general.order_statuses.changes.completed'));
+                });
+            array_push( $actions , $completed);
+        }
         array_push($actions, ViewAction::make());
 
-        if ($this->record->statusCanBecome('Paied')) 
+        if ($this->record->statusCanBecome('Paid')) 
         {
-            $paied= Action::make('paied')->label(__('Set as Paied'))
+            $paid= Action::make('paid')->label(__('Set as Paid'))
                 ->action(function (array $data): void {
-                    $this->record->setAsPaied();
+                    $this->record->setAsPaid();
                     $this->redirect(route('filament.resources.orders.view', $this->record));
-                    $this->notify('success',__('general.order_statuses.changes.paied'));
+                    $this->notify('success',__('general.order_statuses.changes.paid'));
                 })
                 ->form([
                     Select::make('payment_gateway')->label(__('Payment Gateway'))
@@ -74,14 +78,14 @@ class EditOrder extends EditRecord
                         ->default($this->record->payment_id)
                         ->required(),
                 ]);
-            array_push($grouped_actions, $paied);
+            array_push($grouped_actions, $paid);
         }
         if($this->record->statusCanBecome('Refunded'))
         {
             $refunded= Action::make('refunded')->label(__('Set as Refunded'))
                 ->color('danger')
                 ->action(function (array $data): void {
-                    $status_id = \App\Models\OrderStatus::where('name', 'like','refunded')->first()->id;
+                    $status_id = \App\Models\OrderStatus::where('name', insensitiveLike(),'refunded')->first()->id;
                     $this->record->status()->associate($status_id);
                     $this->record->save();
                     $this->record->history()->create([

@@ -17,17 +17,17 @@
 
             <div>
                 <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
             <div class="mt-4">
                 <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block w-full mt-1" type="password" name="password" required autocomplete="current-password" />
+                <x-input id="password" class="block w-full mt-1" type="password" name="password" required autocomplete="current-password" />
             </div>
 
             <div class="flex justify-between mt-4">
                 <label for="remember_me" class="flex items-center">
-                    <x-jet-checkbox id="remember_me" name="remember" />
+                    <x-checkbox id="remember_me" name="remember" />
                     <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                 </label>
 
@@ -38,18 +38,19 @@
                 @endif
             </div>
 
-            <div class="mt-4">
-                <x-google-auth-button/>
+            <div class="py-2 mt-4 border-t border-gray-200">
+                <x-google-auth-button class="w-full"/>
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="text-sm text-gray-600 underline hover:text-gray-900" href="{{ route('register') }}">
-                    {{ __('Register') }}
+                <a href="{{ route('register') }}">
+                    <x-secondary-button type="button">
+                        {{ __('Register') }}
+                    </x-secondar-button>
                 </a>
-                
-                <x-jet-button class="ml-4">
+                <x-button class="ml-2">
                     {{ __('Log in') }}
-                </x-jet-button>
+                </x-button>
             </div>
         </form>
     </x-jet-authentication-card>

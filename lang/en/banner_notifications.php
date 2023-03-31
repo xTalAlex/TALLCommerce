@@ -15,6 +15,8 @@ return [
 
     "address.saved" => "Default address saved",
     "address.not_saved" => "Cannot update default address",
+    "billing_info.saved" => "Default billing info saved",
+    "billing_info.not_saved" => "Cannot update default billing info",
     "order.deleted" => "Order deleted",
     "order.not_deleted" => "Cannot delete this order",
 

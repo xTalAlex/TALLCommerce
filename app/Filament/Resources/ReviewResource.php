@@ -21,12 +21,12 @@ class ReviewResource extends Resource
 
     public static function getLabel(): string
     {
-        return __('Review');
+        return trans_choice('Review',1);
     }
 
     public static function getPluralLabel(): string
     {
-        return __('Reviews');
+        return trans_choice('Review',2);
     }
 
     public static function getNavigationGroup(): string

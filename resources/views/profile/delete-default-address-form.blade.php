@@ -1,8 +1,8 @@
 <div class="ml-0 mr-auto">
     <div class="">
-        <x-jet-danger-button wire:click="$toggle('confirmingAddressDeletion')" wire:loading.attr="disabled">
+        <x-danger-button wire:click="$toggle('confirmingAddressDeletion')" wire:loading.attr="disabled">
             {{ __('Delete') }}
-        </x-jet-danger-button>
+        </x-danger-button>
     </div>
 
     <x-jet-confirmation-modal wire:model="confirmingAddressDeletion">
@@ -15,13 +15,13 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="$toggle('confirmingAddressDeletion')" wire:loading.attr="disabled">
+            <x-secondary-button wire:click="$toggle('confirmingAddressDeletion')" wire:loading.attr="disabled">
                 {{ __('Cancel') }}
-            </x-jet-secondary-button>
+            </x-secondary-button>
 
-            <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
+            <x-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
                 {{ __('Delete') }}
-            </x-jet-danger-button>
+            </x-danger-button>
         </x-slot>
     </x-jet-confirmation-modal>
 </div>

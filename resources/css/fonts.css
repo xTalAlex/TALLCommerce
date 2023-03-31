@@ -1,0 +1,50 @@
+@font-face { 
+    font-family: DinPro;
+    font-weight: normal;
+    font-style: normal;
+    src: url('/public/fonts/DinPro/DINPro-Regular.otf') format("opentype");
+}
+
+@font-face { 
+    font-family: DinPro;
+    font-weight: light;
+    font-style: normal;
+    src: url('/public/fonts/DinPro/DINPro-Light.otf') format("opentype");
+}
+
+@font-face { 
+    font-family: DinPro;
+    font-weight: medium;
+    font-style: normal;
+    src: url('/public/fonts/DinPro/DINPro-Medium.otf') format("opentype");
+}
+
+@font-face { 
+    font-family: DinPro;
+    font-weight: bold;
+    font-style: normal;
+    src: url('/public/fonts/DinPro/DINPro-Bold.otf') format("opentype");
+}
+
+@font-face { 
+    font-family: DinPro;
+    font-weight: 900;
+    font-style: normal;
+    src: url('/public/fonts/DinPro/DINPro-Black.otf') format("opentype");
+}
+
+@font-face { 
+    font-family: RoxboroughCF;
+    font-weight: normal;
+    font-style: normal;
+    src: url('/public/fonts/RoxboroughCF/RoxboroughCF-Regular.woff') format("woff"),
+        url('/public/fonts/RoxboroughCF/RoxboroughCF-Regular.woff2') format("woff2");
+}
+
+@font-face { 
+    font-family: RoxboroughCF;
+    font-weight: bold;
+    font-style: normal;
+    src: url('/public/fonts/RoxboroughCF/RoxboroughCF-Heavy.woff') format("woff"),
+        url('/public/fonts/RoxboroughCF/RoxboroughCF-Heavy.woff2') format("woff2");
+}

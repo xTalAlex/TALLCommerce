@@ -3,25 +3,42 @@
 namespace App\Exports;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\OrderStatus;
-use Maatwebsite\Excel\Concerns\FromQuery;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class OrdersExport implements FromQuery
+class OrdersExport implements FromView
 {
+    protected $shipping;
     protected $from;
-    protected $paied_status_id;
+    protected $to;
+    protected $statuses;
 
-    public function __construct($from = null)
+    public function __construct($from = null, $to = null, $statuses = [])
     {
+        $this->shipping = Product::withoutGlobalScopes()->where('name',insensitiveLike(),'%consegna%')->first();
         $this->from = $from;
-        $this->paied_status_id = OrderStatus::where('name','paied')->first()->id;
+        $this->to = $to;
+        $this->statuses = count($statuses) ? $statuses : OrderStatus::all()->pluck('id');
     }
 
-    public function query()
+    /**
+    * @return Illuminate\Contracts\View\View
+    */
+    public function view(): View
     {
-        return Order::when($this->from, fn ($query) => 
-                $query->whereHas('history', fn ($query) => $query->where('order_status_id', $this->paied_status_id))
-                    ->where('updated_at','>=', $this->from)
-            );
+        return view('exports.orders', [
+            'shipping_sku' => $this->shipping?->sku ?? '00.CONSEGNA',
+            'orders' => Order::with(['products'])
+                ->when($this->from, fn ($query) => 
+                    $query->whereHas('history', fn ($query) => $query->whereIn('order_status_id', $this->statuses))
+                        ->where('updated_at','>=', $this->from) 
+                )
+                ->when($this->to, fn ($query) => 
+                    $query->whereHas('history', fn ($query) => $query->whereIn('order_status_id', $this->statuses))
+                        ->where('updated_at','<=', $this->to) 
+                )->get()
+        ]);
     }
 }

@@ -69,10 +69,6 @@ class ProductsRelationManager extends RelationManager
                     })
                     ->money('eur',false)
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('pivot.discount')->label(__('Discount'))
-                    ->money('eur')
-                    ->default(null)
-                    ->toggleable(),
                 Tables\Columns\TextColumn::make('subtotal')->label(__('Subtotal'))
                     ->getStateUsing(function (Model $record){
                         return $record->pricePerQuantity($record->pivot->quantity, $record->pivot->price);
@@ -81,9 +77,13 @@ class ProductsRelationManager extends RelationManager
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('total')->label(__('Total'))
                     ->getStateUsing(function (Model $record){
-                        return $record->pricePerQuantity($record->pivot->quantity, $record->applyTax($record->pivot->price));
+                        return $record->applyTax( $record->pricePerQuantity($record->pivot->quantity, $record->pivot->price) ) ;
                     })
                     ->money('eur')
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('pivot.discount')->label(__('Discount'))
+                    ->money('eur')
+                    ->default(null)
                     ->toggleable(),
             ])
             ->filters([

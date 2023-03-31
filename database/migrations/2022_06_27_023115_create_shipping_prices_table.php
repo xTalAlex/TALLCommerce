@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->decimal('price',8,2);
+            $table->decimal('min_spend',8,2)->nullable();
             $table->unsignedInteger('min_days')->nullable();
             $table->unsignedInteger('max_days')->nullable();
             $table->boolean('active')->default(0);

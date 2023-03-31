@@ -20,12 +20,12 @@ class ReviewsRelationManager extends RelationManager
 
     public static function getTitle(): string
     {
-        return __('Reviews');
+        return trans_choice('Review',2);
     }
     
     public static function getRecordTitle(?Model $record): ?string
     {
-        return __('Review');
+        return trans_choice('Review',1);
     }
 
     public static function form(Form $form): Form

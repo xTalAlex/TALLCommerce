@@ -2,16 +2,17 @@
 
 namespace App\Providers;
 
-use App\Actions\Jetstream\DeleteUser;
-use App\Actions\PrepareShoppingListsSession;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Request;
+use Laravel\Fortify\Fortify;
 use Laravel\Jetstream\Jetstream;
+use App\Actions\Jetstream\DeleteUser;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
+use App\Actions\PrepareShoppingListsSession;
 use Laravel\Fortify\Actions\AttemptToAuthenticate;
 use Laravel\Fortify\Actions\EnsureLoginIsNotThrottled;
 use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
-use Laravel\Fortify\Fortify;
-use Illuminate\Http\Request;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -22,7 +23,8 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Laravel\Jetstream\Http\Livewire\NavigationMenu', 'App\Http\Livewire\NavigationMenu');
     }
 
     /**

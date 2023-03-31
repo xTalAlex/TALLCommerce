@@ -49,6 +49,7 @@ class CouponResource extends Resource
                             ->schema([
                                 Forms\Components\TextInput::make('code')->label(__('Code'))
                                     ->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()'])
+                                    ->unique(ignorable: fn (?Coupon $record): ?Coupon => $record)
                                     ->required(),
                                 Forms\Components\TextInput::make('amount')->label(__('Amount'))
                                     ->prefix(fn (Closure $get) => $get('is_fixed_amount') ? '€' : null )
@@ -67,7 +68,8 @@ class CouponResource extends Resource
                             ])->columnSpan('full'),
                         Forms\Components\Toggle::make('is_fixed_amount')->label(__('Is Fixed Amount'))
                             ->reactive()
-                            ->columnSpan('full'),
+                            ->columnSpan('full')
+                            ->hiddenOn('edit'),
 
                         Forms\Components\Fieldset::make('restrictions')->label(__('Restrictions'))
                             ->schema([
@@ -81,6 +83,7 @@ class CouponResource extends Resource
                                         ->thousandsSeparator(',')
                                         ->maxValue(999999)
                                     ),
+                                Forms\Components\Toggle::make('once_per_user')->label(__('Once Per User')),
                                 Forms\Components\TextInput::make('max_redemptions')->label(__('Max Redemptions'))
                                     ->numeric()
                                     ->minValue(1),
@@ -88,7 +91,7 @@ class CouponResource extends Resource
                                     ->displayFormat(config('custom.date_format')),
                             ])
                             ->columns([
-                                'md' => 3,
+                                'md' => 2,
                                 'lg' => null,
                             ])
                             ->columnSpan('full'),

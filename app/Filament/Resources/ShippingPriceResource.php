@@ -51,10 +51,21 @@ class ShippingPriceResource extends Resource
                         Forms\Components\Card::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')->label(__('Name'))
-                                    ->required()
-                                    ->unique(ignorable: fn (?ShippingPrice $record): ?ShippingPrice => $record),
+                                    ->required(),
+                                    //->unique(ignorable: fn (?ShippingPrice $record): ?ShippingPrice => $record),
                                 Forms\Components\TextInput::make('price')->label(__('Price'))
                                     ->required()
+                                    ->prefix('€')
+                                    ->mask(
+                                        fn (Forms\Components\TextInput\Mask $mask) => $mask
+                                            ->numeric()
+                                            ->decimalPlaces(2)
+                                            ->decimalSeparator('.')
+                                            ->mapToDecimalSeparator([',', '.'])
+                                            ->thousandsSeparator(',')
+                                            ->maxValue(999999)
+                                    ),
+                                Forms\Components\TextInput::make('min_spend')->label(__('Minimum Spend'))
                                     ->prefix('€')
                                     ->mask(
                                         fn (Forms\Components\TextInput\Mask $mask) => $mask

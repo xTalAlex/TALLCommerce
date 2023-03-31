@@ -17,7 +17,8 @@ class Coupon extends Model
         'redemptions',
         'max_redemptions',
         'expires_on',
-        'min_total'
+        'min_total',
+        'once_per_user'
     ];
 
     /**
@@ -59,13 +60,18 @@ class Coupon extends Model
         return ($this->is_fixed_amount ? '€' : '').$this->amount.($this->is_fixed_amount ? '' : '%');
     }
 
+    public function applyBeforeTax()
+    {
+        return config('custom.discount_before_tax') && !$this->is_fixed_amount;
+    }
+
     public function discount($total)
     {
         $discount = 0;
 
         if($this->is_fixed_amount)
         {
-            $discount = $this->total > $this->amount ? $this->amount : $total;
+            $discount = $total > $this->amount ? $this->amount : $total;
         }
         else
         {
@@ -73,5 +79,12 @@ class Coupon extends Model
         }
 
         return $discount;
+    }
+
+    public function wasUsedBy(User $user)
+    {
+        return $this->orders()
+            ->whereHas('status', fn($query) => $query->whereNotIn('name',['draft','cancelled']) )
+            ->whereHas('user', fn($query) => $query->where('id',$user->id))->exists();
     }
 }

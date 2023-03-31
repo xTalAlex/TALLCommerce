@@ -12,10 +12,11 @@ use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements FilamentUser, HasAvatar
+class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -35,8 +36,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'is_admin',
         'socialite_provider',
         'socialite_id',
+        'phone',
         'fiscal_code',
-        'vat'
+        'vat',
+        'last_seen'
     ];
 
     /**
@@ -62,6 +65,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'email_verified_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'last_seen' => 'datetime'
     ];
 
     /**
@@ -75,7 +79,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function canAccessFilament(): bool
     {
-        return $this->is_admin;
+        return $this->is_admin ?? false;
     }
 
     public function getFilamentAvatarUrl(): ?string
@@ -100,7 +104,12 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function defaultAddress()
     {
-        return $this->hasOne(Address::class)->where('default',1)->latest();
+        return $this->hasOne(Address::class)->where('default',1)->where('billing',false)->latest();
+    }
+
+    public function defaultBillingAddress()
+    {
+        return $this->hasOne(Address::class)->where('default',1)->where('billing',true)->latest();
     }
 
     public function orders()
@@ -108,9 +117,31 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return $this->hasMany(Order::class);
     }
 
+    public function placedOrders()
+    {
+        return $this->hasMany(Order::class)->placed();
+    }
+
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    protected function email(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => strtolower($value),
+            set: fn ($value) => strtolower($value),
+        );
+    }
+
+    protected function fiscalCode(): Attribute
+    {
+        return Attribute::make(
+            set: function ($value) {
+                return strtoupper($value);
+            },
+        );
     }
 
     /**

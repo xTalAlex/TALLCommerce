@@ -1,6 +1,7 @@
 @props(['register' => false])
 <a href="{{ route('google.login') }}"
-    class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-full hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25">
+    {{ $attributes->merge(['class' => 'inline-flex justify-center items-center px-4 py-4 text-sm font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25']) }}    
+>
     <svg class="w-4 h-4 mr-2 fill-current" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg">
         <path
             d="M533.5 278.4c0-18.5-1.5-37.1-4.7-55.3H272.1v104.8h147c-6.1 33.8-25.7 63.7-54.4 82.7v68h87.7c51.5-47.4 81.1-117.4 81.1-200.2z"

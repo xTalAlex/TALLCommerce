@@ -78,11 +78,11 @@ return [
          * Default attributes for Seller::class
          */
         'attributes' => [
-            'name'          => 'Towne, Smith and Ebert',
-            'address'       => '89982 Pfeffer Falls Damianstad, CO 66972-8160',
-            'code'          => '41-1985581',
-            'vat'           => '123456789',
-            'phone'         => '760-355-3930',
+            'name'          => 'DolciFollie di Politi Pier Silvio',
+            'address'       => 'Via Marco D\'Agrate 14, Milano 20139',
+            'code'          => 'SUBM70N',
+            'vat'           => '09350380961',
+            'phone'         => '366 212 11 89',
             'custom_fields' => [
                 /*
                  * Custom attributes for Seller::class
@@ -90,7 +90,6 @@ return [
                  * Used to display additional info on Seller section in invoice
                  * attribute => value
                  */
-                'SWIFT' => 'BANK101',
             ],
         ],
     ],

@@ -20,10 +20,11 @@ return [
     ],
 
     'order_statuses' => [
+        'draft' => 'Bozza',
         'cancelled' => 'Annullato',
         'completed' => 'Completato',
         'disputed' => 'Contestato',
-        'paied' => 'Pagato',
+        'paid' => 'Pagato',
         'preparing' => 'In Lavorazione',
         'payment_failed' => 'Pagamento Fallito',
         'pending' => 'In Sospeso',
@@ -31,7 +32,7 @@ return [
         'shipped' => 'Spedito',
 
         'changes' => [
-            'paied' => 'Stato dell\'ordine aggiornato',
+            'paid' => 'Stato dell\'ordine aggiornato',
             'preparing' => 'Stato dell\'ordine aggiornato',
             'shipped' => 'Stato dell\'ordine aggiornato',
             'refunded' => 'Stato dell\'ordine aggiornato',

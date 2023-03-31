@@ -46,6 +46,10 @@ class GenerateSitemap extends Command
         Sitemap::create(config('app.url'))
             ->add(Url::create(route('home')))
             ->add(Url::create(route('product.index')))
+            ->add(Url::create(route('about-us')))
+            ->add(Url::create(route('delivery')))
+            ->add(Url::create(route('info')))
+            ->add(Url::create(route('contact-us')))
             ->writeToDisk($disk,'/sitemap/pages_sitemap.xml');
         Sitemap::create(config('app.url'))
             ->add(Product::all())

@@ -37,7 +37,7 @@ o assegnare  un codice di spedizione (sempre nel caso non ci sia un servizio di 
 * **RECENSIONI** che possono essere moderate
 * **BRAND**  (es mulino bianco)
 * **CATEGORIE** (es biscotti)
-* **ATTRIBUTI** dei prodotti (es. peso)
+* **ATTRIBUTI** dei prodotti (es peso)
 * **TAG** (es dolci natalizi)
 
 *E' possibile implementare se necessario anche altre entità che descrivono il prodotto: ad esempio l'entità per gli **INGREDIENTI** da assegnare a ciascun prodotto anzichè semplicemente elencarli nella descrizione, in modo da ottimizzare anche la ricerca per ingrediente.*
@@ -89,14 +89,13 @@ Per sviluppare e mettere in produzione il sito web, ho bisogno dei seguenti serv
 * Login con google
 * Sitemap
 
-
 <!--
-## 
-
-cron per pulizia payment_failed
-utilizzo di un codice coupon alla volta
-mask price > visualizzare zeri per prezzi interi
 filament e media library > medialibrary header CacheControl no-cache
 prodotti con varianti > nella ricerca vengono mostrati prezzo, quantità e foto della variante principale
 non aggiungere piú valori dello stesso attributo a un singolo prodotto
+non aggiungere sottovarianti alle varianti
+
+prima applicare price*quantity e poi calcolare tax
+
+quantitá di prodotti e utilizzi coupon vengono validati tra cart/checkout ma non da checkout/paid
 -->

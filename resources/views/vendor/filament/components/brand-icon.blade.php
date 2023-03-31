@@ -1,1 +1,1 @@
-<x-jet-application-mark/>
+<x-jet-application-mark class="h-12"/>

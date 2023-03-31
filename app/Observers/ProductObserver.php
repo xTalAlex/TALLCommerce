@@ -38,10 +38,7 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-        // if($product->orders()->doesntExist())
-        // {
-        //     $product->forceDelete();
-        // }
+        
     }
 
     /**
@@ -63,6 +60,9 @@ class ProductObserver
      */
     public function forceDeleted(Product $product)
     {
-        //
+        if($product->orders()->doesntExist())
+        {
+            $product->forceDelete();
+        }
     }
 }

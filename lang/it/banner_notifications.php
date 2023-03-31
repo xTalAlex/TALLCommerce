@@ -15,6 +15,8 @@ return [
 
     "address.saved" => "Indirizzo salvato come default",
     "address.not_saved" => "Indirizzo di default non salvato",
+    "billing_info.saved" => "Informazioni di fatturazione salvate",
+    "billing_info.not_saved" => "Informazioni di fatturazione non salvate",
     "order.deleted" => "Ordine eliminato",
     "order.not_deleted" => "Impossibile eliminare questo ordine",
 

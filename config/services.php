@@ -53,4 +53,8 @@ return [
         'src' => env('TAWKTO_SRC',''),
     ],
 
+    'slack' => [
+        'webhook' => env('NOTIFICATIONS_SLACK_WEBHOOK',''),
+    ],
+
 ];

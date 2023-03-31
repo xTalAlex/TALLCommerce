@@ -18,4 +18,9 @@ return [
     'wishlist.count' =>  '{0} No products in your wishlist|{1} There is 1 product in your wishlist|[2,*] There are :count products in your wishlist',
     'move.wishlist' => 'Move to wishlist',
     'move.cart' => 'Move to cart',
+    'remove.wishlist' => 'Remove from wishlist',
+    'remove.cart' => 'Remove from cart',
+    'add.wishlist' => 'Add to wishlist',
+    'add.cart' => 'Add to cart',
+    'checkout.min_spend' => 'Minium total :amount',
 ];

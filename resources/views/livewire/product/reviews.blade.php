@@ -1,113 +1,113 @@
-<div>
+<div class="grid md:grid-cols-2">
+    <div class="flex flex-col pb-12 my-4">
     @if($reviews->count())
-    <section class="text-gray-600 body-font">
-        <div class="flex flex-col w-full text-center">
-            <h1 class="mb-4 text-2xl font-medium text-gray-900 sm:text-3xl title-font">{{__('Reviews')}}</h1>
-        </div>
+    
+        @foreach($reviews as $review)
+        <div class="py-6 border-b last:border-none">
+            <div class="flex flex-col space-y-2">
 
-        <div class="container flex flex-wrap w-full py-12 mx-auto">
-            
-            <div class="flex flex-wrap w-full">
-                @foreach($reviews as $review)
-                <div class="w-full p-4">
-                    <div class="flex flex-col p-8 bg-white border-2 border-gray-200 border-opacity-50 rounded-lg sm:flex-row">
-                    <div class="inline-flex items-center justify-center flex-shrink-0 w-16 h-16 mb-4 rounded-full text-primary-500 bg-primary-100 sm:mr-8 sm:mb-0">
-                        <img src="{{ $review->user->profile_photo_url }}" class="rounded-full" />
-                    </div>
-                    <div class="flex-grow">
-                        <h2 class="text-lg font-medium text-gray-900 title-font">{{ $review->user->name }}</h2>
-                        <p class="text-xs text-gray-600">{{ $review->created_at->format(config('custom.datetime_format')) }}</p>
-                        <p class="inline-flex items-center mt-4 text-primary-500">
-                            @for ($i = 1; $i <= $review->rating; $i++) 
-                                <x-icons.star/>  
-                            @endfor
-                            @for ($i = 5; $i > $review->rating; $i--) 
-                                <x-icons.star-empty/>  
-                            @endfor
-                        </p>
-                        <p class="mt-4 text-base leading-relaxed">{{ $review->description }}</p>
-                        
-                        @can('delete', $review)
-                        <div class="flex justify-end ">
-                            <livewire:review.destroy-form :review='$review'/>
+                <div class="flex">
+                    @for ($i = 1; $i <= $review->rating; $i++) 
+                        <x-icons.star/>  
+                    @endfor
+                    @for ($i = 5; $i > $review->rating; $i--) 
+                        <x-icons.star-empty/>  
+                    @endfor
+                </div>
+
+                @if($review->description)
+                <div class="prose text-gray-600"
+                    style="overflow-wrap: anywhere;"
+                >
+                    {!! $review->description !!}
+                </div>
+                @endif
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <img class="w-8 h-8 rounded-full" src="{{ $review->user->profile_photo_url }}" />
+                        <div class="flex flex-col space-y-1">
+                            <div class="text-sm font-semibold">{{ $review->user->name }}</div>
+                            <span class="text-xs text-gray-500">{{ $review->created_at->format(config('custom.datetime_format')) }}</span>
                         </div>
+                    </div>
+                    
+                    
+                    <div>
+                        @can('delete', $review)
+                            <livewire:review.destroy-form :review='$review' key="delete-{{ $review->id }}"/>
                         @endcan
                     </div>
-                    </div>
                 </div>
-                @endforeach
-            </div>
 
-            <div class="w-full mt-6">
-                {{ $reviews->links() }}
             </div>
-
         </div>
-        
-    </section>
+        @endforeach
+
+        <div class="w-full mt-6">
+            {{ $reviews->links() }}
+        </div>
+    @else
+        <div class="text-gray-500">
+            {{ __('No reviews') }}
+        </div>
     @endif
+    </div>
 
     @can('create',[App\Models\Review::class,$product])
-    <section class="relative text-gray-600 body-font">
-        <div class="w-full px-8 py-12 mx-auto bg-white md:px-0">
+    <section class="relative md:pl-12 lg:pl-24">
+        <div class="w-full mx-auto mb-12 md:mb-0">
+
             <div class="flex flex-col w-full text-center">
-                <h1 class="mb-4 text-2xl font-medium text-gray-900 sm:text-3xl title-font">
-                {{__('Leave a Review')}}
-                </h1>
+                <div class="text-xl font-semibold">
+                    {{__('Leave a Review')}} 
+                </div>
             </div>
-            <div class="w-full mx-auto md:w-1/2">
-                <form action="{{ route('review.store', $product) }}" method="POST" >
-                @csrf
-                <div class="flex flex-wrap -m-2">
-                    <div class="w-1/2 p-2">
-                        <div class="relative"
-                            x-data="{
-                                rating : 5,
-                            }"
-                        >
-                            <label for="rating" class="text-sm leading-7 text-gray-600">{{ __('Rating') }}</label>
-                            <input type="number" id="rating" min="0" max="5" name="rating" class="hidden w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-200"
-                                x-bind:value="rating"
-                            >
-                            <div>
-                                <template x-for="i in rating">
-                                    <x-icons.star class="cursor-pointer"
-                                        x-on:click="rating = i"
-                                    />
-                                </template>
-                                <template x-for="i in 5-rating">
-                                    <x-icons.star-empty  class="cursor-pointer"
-                                        x-on:click="rating = rating + i"
-                                    />
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full p-2">
-                        <div class="relative"
-                            x-data="{
-                                    value : '',
-                                    max_chars : 500,
-                                }"
-                        >
-                            <textarea id="description" name="description" :maxlength="max_chars" class="w-full h-32 px-3 py-1 text-base leading-6 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none resize-none focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-200"
-                                x-model="value"
-                            ></textarea>
-                            <p class="text-xs"
-                                :class="(value.length < max_chars) ? 'text-gray-600' : 'text-red-500'"
-                            >
-                                <span x-text="value.length" ></span> 
-                                /
-                                <span x-text="max_chars" ></span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="w-full p-2">
-                        <button type="submit" class="flex px-8 py-2 mx-auto text-lg text-white border-0 rounded bg-primary-500 focus:outline-none hover:bg-primary-600">{{ __('Submit') }}</button>
+            
+            <form class="flex flex-col w-full mx-auto mt-4 space-y-2" action="{{ route('review.store', $product) }}" method="POST" >
+            @csrf
+                <div class="relative flex items-center space-x-1"
+                    x-data="{ rating : 5 }"
+                >
+                    <label for="rating" class="text-sm">{{ __('Rating') }}:</label>
+                    <input class="hidden" type="number" id="rating" min="0" max="5" name="rating"
+                        x-bind:value="rating"
+                    >
+                    <div class="-mt-1">
+                        <template x-for="i in rating">
+                            <x-icons.star class="cursor-pointer"
+                                x-on:click="rating = i"
+                            />
+                        </template>
+                        <template x-for="i in 5-rating">
+                            <x-icons.star-empty  class="cursor-pointer"
+                                x-on:click="rating = rating + i"
+                            />
+                        </template>
                     </div>
                 </div>
-                </form>
-            </div>
+
+                <div class="w-full" x-data="{ value : '',  max_chars : 500 }">
+                    <textarea class="w-full h-32 text-sm border-gray-300 shadow-sm resize-none focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
+                        id="description" name="description" x-bind:maxlength="max_chars" 
+                        x-model="value"
+                    ></textarea>
+                    <p class="text-xs"
+                        :class="(value.length < max_chars) ? 'text-gray-600' : 'text-red-500'"
+                    >
+                        <span x-text="value.length" ></span> 
+                        /
+                        <span x-text="max_chars" ></span>
+                    </p>
+                </div>
+
+                <div class="w-full pt-2">
+                    <x-button class="w-full">{{ __('Submit') }}</x-button>
+                </div>
+
+                <x-jet-validation-errors class="my-2" />
+            </form>
+            
         </div>
     </section>
     @endcan

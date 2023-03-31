@@ -24,7 +24,7 @@ class LatestOrders extends BaseWidget
 
     protected function getTableQuery(): Builder
     {
-        return Order::query()->latest('updated_at')->limit(50);
+        return Order::placed()->latest('updated_at')->limit(50);
     }
 
     protected function getTableRecordUrlUsing(): Closure
@@ -44,7 +44,7 @@ class LatestOrders extends BaseWidget
                                         $state === __('general.order_statuses.shipped') || 
                                         $state === __('general.order_statuses.preparing'),
                         'success' => __('general.order_statuses.completed'),
-                        'warning' => __('general.order_statuses.paied'),
+                        'warning' => __('general.order_statuses.paid'),
                         'danger' => __('general.order_statuses.cancelled'),
                     ]),
                 Tables\Columns\TextColumn::make('user.name')->label(__('Name'))
@@ -75,6 +75,10 @@ class LatestOrders extends BaseWidget
     protected function getTableFilters(): array
     {
         return [
+            Tables\Filters\Filter::make('fast_shipping')->label(__('Fast Shipping'))
+                ->query(fn (Builder $query): Builder => 
+                    $query->whereHas('shippingPrice', fn($query) => $query->where('max_days','!=',null)->where('max_days','<=',2))
+                ),
             Tables\Filters\SelectFilter::make('status')
                 ->label(__('Status'))
                 ->relationship('status', 'name')
@@ -113,6 +117,9 @@ class LatestOrders extends BaseWidget
                         ->required(),
                     Forms\Components\RichEditor::make('message')
                         ->label(__('Message'))
+                        ->disableToolbarButtons([
+                            'attachFiles',
+                        ])
                         ->required(),
                 ]),
             Tables\Actions\EditAction::make()

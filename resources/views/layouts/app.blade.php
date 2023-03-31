@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
     
     @include('layouts._head')
 
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased text-gray-900">
         <x-jet-banner />
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="bg-white">
             @livewire('navigation-menu')
     
-            <div class="pt-16">
+            <div class="flex flex-col min-h-screen pt-16">
                 <!-- Page Heading -->
                 @if (isset($header))
-                    <header class="bg-white shadow">
+                    <header class="">
                         <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                             {{ $header }}
                         </div>
@@ -20,11 +20,11 @@
                 @endif
 
                 <!-- Page Content -->
-                <main>
+                <main class="flex-1">
                     {{ $slot }}
                 </main>
 
-                @include('footer')
+                @include('layouts._footer')
             </div>
         </div>
 

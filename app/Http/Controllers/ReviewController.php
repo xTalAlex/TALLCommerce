@@ -42,8 +42,8 @@ class ReviewController extends Controller
             'description' => 'nullable|max:500',
         ]);
 
-        if($product->defaultVariant)
-            $product = $product->defaultVariant;
+        // if($product->defaultVariant)
+        //     $product = $product->defaultVariant;
 
         $product->reviews()->create([
             'user_id' => auth()->user()->id,
@@ -52,7 +52,9 @@ class ReviewController extends Controller
             'approved' => config('custom.reviews.approved_by_default') ?? false,
         ]);
 
-        return redirect()->route('product.show', compact('product'));
+        $tab = 1;
+
+        return redirect()->route('product.show', compact('product','tab'));
     }
 
     /**

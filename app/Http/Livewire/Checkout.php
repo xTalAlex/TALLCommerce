@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Order;
 use App\Models\Coupon;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ class Checkout extends Component
 {
     public $update;
 
+    public Order $order;
     public $intent;
     public $confirmingPayment;
     public $total;
@@ -19,26 +21,26 @@ class Checkout extends Component
     public $gateway;
 
     protected $listeners = [
-        'orderCreated',
-        'orderUpdated',
+        'orderPlaced' => 'redirectToSuccess',
+        'orderUpdated' => 'redirectToSuccess',
     ];
 
-    public function mount($total, $update = false)
+    public function mount(Order $order, $update = false)
     {
         $this->update = $update;
-        $this->total = $total;
+        $this->total = $order->total;
         $this->confirmingPayment = false;
         $this->submitDisabled = false;
     }
 
-    public function orderCreated()
+    public function attemptSubmit()
     {
-        $this->emit('paymentConfirmed');
-    }
-
-    public function orderUpdated()
-    {
-        $this->emit('paymentConfirmed');
+        $this->submitDisabled = true;
+        $this->order->update([
+            'payment_gateway' => $this->gateway,
+            'payment_id' => $this->intent['id'],
+        ]);
+        $this->emit('submitPayment');
     }
 
     public function confirmPayment()
@@ -46,7 +48,10 @@ class Checkout extends Component
         $this->confirmingPayment = true;
         $this->gateway = 'stripe';
 
-        $metadata = array();
+        $metadata = [
+            'order_id' => $this->order->id,
+            'order_number' => $this->order->number
+        ];
 
         $this->intent = Stripe::paymentIntents()->create([
             'amount' => $this->total,
@@ -58,25 +63,33 @@ class Checkout extends Component
         ]);
     }
 
-    public function submitPayment()
+    public function storePayment()
     {
-        $this->submitDisabled = true;
         if($this->update)
             $this->emit('updateOrder',$this->intent['id'],$this->gateway);
         else
-            $this->emit('createOrder',$this->intent['id'],$this->gateway);
+            $this->emit('placeOrder',$this->intent['id'],$this->gateway);
     }
 
     public function redirectToSuccess()
     {
-        $route_name=Auth::user() ? 'order.index' : 'cart.index';
+        if($this->gateway == 'stripe')
+        {
+            return redirect()->route('stripe.handle.checkout.response',[
+                'payment_intent' => $this->intent['id']
+            ]);
+        }
+        else
+        {
+            $route_name=Auth::user() ? 'order.index' : 'cart.index';
 
-        $banner_message=__('banner_notifications.payment.succeeded');
-        $banner_style="success";
-        session()->flash('flash.banner', $banner_message);
-        session()->flash('flash.bannerStyle', $banner_style);
+            $banner_message=__('banner_notifications.payment.succeeded');
+            $banner_style="success";
+            session()->flash('flash.banner', $banner_message);
+            session()->flash('flash.bannerStyle', $banner_style);
 
-        return redirect()->route($route_name);
+            return redirect()->route($route_name);
+        }
     }
 
     public function render()

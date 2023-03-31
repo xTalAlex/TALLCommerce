@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 /*
@@ -14,31 +14,47 @@ use Illuminate\Support\Facades\Storage;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', fn () => view('welcome') );
-Route::get('/home', [App\Http\Controllers\HomeController::class , 'index'] )->name('home');
+Route::get('/it', function(){ 
+    Session::put('locale', 'it');
+    return redirect()->back();
+} );
+Route::get('/en', function(){ 
+    Session::put('locale', 'en');
+    return redirect()->back();
+} );
 
-Route::get('/shop', [App\Http\Controllers\ProductController::class , 'index'] )->name('product.index');
+Route::get('/', [App\Http\Controllers\HomeController::class , 'index'] )->name('home');
+Route::get('/about-us', [App\Http\Controllers\HomeController::class , 'aboutUs'] )->name('about-us');
+Route::get('/delivery', [App\Http\Controllers\HomeController::class , 'delivery'] )->name('delivery');
+Route::get('/info', [App\Http\Controllers\HomeController::class , 'info'] )->name('info');
+Route::get('/contact-us', [App\Http\Controllers\HomeController::class , 'contactUs'] )->name('contact-us');
+
+Route::get('/shop', App\Http\Livewire\Product\Index::class )->name('product.index');
 Route::get('/shop/{product:slug}', App\Http\Livewire\Product\Show::class )->name('product.show');
-
-Route::get('/cart', App\Http\Livewire\Cart\Index::class )->name('cart.index');
-
-Route::get('/wishlist', App\Http\Livewire\Wishlist\Index::class )->name('wishlist.index');
-
-Route::get('/order/create', App\Http\Livewire\Order\Create::class )->name('order.create');
-Route::get('/order/{order:number}', [App\Http\Controllers\OrderController::class , 'show'] )->name('order.show');
-Route::get('/order/{order:number}/update', App\Http\Livewire\Order\Update::class )->name('order.update');
-
-Route::get('/order/{order:number}/invoice', [App\Http\Controllers\InvoiceController::class , 'show'] )->name('invoice.show');
 
 Route::get('/checkout/response/stripe', [App\Http\Controllers\StripeController::class , 'handleCheckoutResponse'] )->name('stripe.handle.checkout.response');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified'
+    //'verified'
 ])->group(function () {
+
+    Route::get('/cart', App\Http\Livewire\Cart\Index::class )->name('cart.index');
+
+    Route::get('/wishlist', App\Http\Livewire\Wishlist\Index::class )->name('wishlist.index');
+
+    Route::get('/shop/{product:slug}/login', fn(App\Models\Product $product) => redirect()->route('product.show', $product) )->name('product.login');
+    
+    Route::get('/order/create', App\Http\Livewire\Order\Create::class )->name('order.create');
+    Route::get('/order/{order:number}', [App\Http\Controllers\OrderController::class , 'show'] )->name('order.show');
+    Route::get('/order/{order:number}/update', App\Http\Livewire\Order\Update::class )->name('order.update');
+
+    Route::get('/order/{order:number}/invoice', [App\Http\Controllers\InvoiceController::class , 'show'] )->name('invoice.show');
+
     Route::get('/orders', [App\Http\Controllers\OrderController::class , 'index'] )->name('order.index');
     Route::get('/order/create/login', fn() => redirect()->route('order.create') )->name('order.login');
+    Route::get('/order/{order}/reorder', [App\Http\Controllers\OrderController::class , 'reorder'] )->name('order.reorder');
 
     Route::post('review/{product}/store', [App\Http\Controllers\ReviewController::class , 'store'] )->name('review.store');
 });
@@ -52,8 +68,8 @@ Route::middleware([
 ->group(function () {
     Route::get('login', fn() => redirect('login') )->name('filament.auth.login');
     Route::prefix('mail')->group( function() {
-        Route::get('order/placed', function() {
-            return "Email";
+        Route::get('admin', function() {
+            return (new App\Notifications\OrderCompleted(App\Models\Order::latest()->first()))->toMail('admin@admin.com');
         });
     });
 

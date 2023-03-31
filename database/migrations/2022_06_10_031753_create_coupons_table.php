@@ -22,13 +22,14 @@ return new class extends Migration
             $table->unsignedInteger('max_redemptions')->nullable();
             $table->decimal('min_total',8,2)->nullable();
             $table->dateTime('expires_on')->nullable();
+            $table->boolean('once_per_user')->default(false);
             $table->timestamps();
         });
 
         Schema::table('orders', function (Blueprint $table) {
             $table->unsignedBigInteger('coupon_id')->nullable();
             $table->decimal('coupon_discount',8,2)->nullable();
-            
+
             $table->foreign('coupon_id')->references('id')->on('coupons')
                 ->onDelete('restrict')->onUpdate('cascade');
         });

@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Product;
 
+use App\Models\AttributeValue;
+use App\Models\Review;
 use App\Models\Product;
 use Livewire\Component;
 use App\Traits\Livewire\WithShoppingLists;
@@ -15,10 +17,15 @@ class Show extends Component
     public $variantsAttributeSets;
     public $attributes;
     public $selection;
+    public $tab = 0;
+
+    protected $queryString = [
+        'tab' => ['except' => 0]
+    ];
 
     public function mount($product)
     {
-        if(!$this->product = Product::whereSlug($product)->first())
+        if(!$this->product = Product::with(['defaultVariant','variants','attributeValues'])->whereSlug($product)->first())
         {
             session()->flash('flash.banner', __('banner_notifications.product.not_found') );
             session()->flash('flash.bannerStyle', 'danger');
@@ -48,8 +55,8 @@ class Show extends Component
     public function updatedSelection($value)
     {
         $product = Product::where(fn($query) => $query->where('variant_id',$this->variant_id)->orWhere('id',$this->variant_id))
-                        ->withCount(['attributeValues' => fn($query) => $query->whereIn('id',$this->selection)])
-                        ->having('attribute_values_count','=',count($this->selection))->first();
+                        ->withCount(['attributeValues' => fn($query) => $query->whereIn('id',$this->selection)])->get();
+        $product = $product->where('attribute_values_count','=',count($this->selection))->first();
         if(!$product)
             $product = Product::where(fn($query) => $query->where('variant_id',$this->variant_id)->orWhere('id',$this->variant_id))
                         ->whereHas('attributeValues', fn($query) => $query->where('id',$value))->first();
@@ -69,7 +76,7 @@ class Show extends Component
         }
         else
         {
-            if($this->product->defaultVariant()->exists())
+            if($this->product->defaultVariant()->exists() && $this->product->defaultVariant->hasImage())
             {
                 $gallery = $this->product->defaultVariant->gallery;
             }
@@ -90,15 +97,12 @@ class Show extends Component
         return $description;
     }
 
-    public function getAvgRatingProperty()
+    public function getTagsProperty()
     {
-        return $this->product->variant_id == null || $this->product->variant_id == $this->id ? 
-                    $this->product->avg_rating : $this->product->defaultVariant->avg_rating;
-    }
-
-    public function getReviewsProperty()
-    {
-        return $this->product->defaultVaraint ? $this->product->defaultVariant->reviews : $this->product->reviews;
+        $tags = $this->product->tags()->get();
+        if(!$tags && $this->product->defaultVariant)
+            $tags = $this->product->defaultVariant->tags()->get();
+        return $tags;
     }
 
     public function shouldSelectVariantByImage()
@@ -113,8 +117,24 @@ class Show extends Component
                 && $this->variantsAttributeSets;
     }
 
+    public function getAttributeValueLabel($attributeName, $value)
+    {
+        return AttributeValue::getLabel($attributeName, $value);
+    }
+
     public function render()
     {
-        return view('product.show');
+        $related_products = Product::when( !$this->product->variant_id, fn($query) => 
+                $query->where('id', $this->product->id)
+                    ->orWhere('variant_id', $this->product->id)
+            )
+            ->when( $this->product->variant_id, fn($query) =>
+                $query->where('id', $this->product->variant_id)
+                    ->orWhere('variant_id', $this->product->variant_id)
+            )->get();
+
+        return view('product.show',[
+            'reviews' => Review::whereIn('product_id', $related_products->pluck('id'))
+        ]);
     }
 }

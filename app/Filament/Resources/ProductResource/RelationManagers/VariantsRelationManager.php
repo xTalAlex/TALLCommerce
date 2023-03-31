@@ -5,10 +5,13 @@ namespace App\Filament\Resources\ProductResource\RelationManagers;
 use Closure;
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Product;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
 
 class VariantsRelationManager extends RelationManager
@@ -58,7 +61,11 @@ class VariantsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                //Tables\Actions\AssociateAction::make()->preloadRecordSelect(),
+                Tables\Actions\AssociateAction::make()
+                    ->recordSelectOptionsQuery(fn (Builder $query) => 
+                        $query->withoutGlobalScopes([NotHiddenScope::class])
+                            ->whereDoesntHave('variants')                
+                ),
             ])
             ->actions([
                 Tables\Actions\DissociateAction::make(),

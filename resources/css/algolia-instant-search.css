@@ -109,7 +109,7 @@
 
 .ais-PoweredBy-logo {
   display: block;
-  height: 1.2em;
+  height: 0.75em;
   width: auto; }
 
 .ais-RatingMenu-starIcon {
@@ -1145,6 +1145,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 100%; }
+
 
 @media (min-width:  639px) {
   .ais-InfiniteHits-list {

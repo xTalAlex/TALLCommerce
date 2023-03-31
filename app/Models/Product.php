@@ -9,6 +9,7 @@ use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
@@ -35,7 +36,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         'selling_price',
         'discount_is_fixed_amount',
         'discount_amount',
-        'tax',
+        'tax_rate',
         'quantity',
         'weight',
         'low_stock_threshold',
@@ -95,9 +96,10 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
 
     public function getDynamicSEOData(): SEOData
     {
+        $description = $this->seo->description ?? $this->description;
         return new SEOData(
             title: $this->seo->title ?? $this->name,
-            description: $this->seo->description ?? $this->description,
+            description: strip_tags($description ?? ""),
             image: $this->image
         );
     }
@@ -121,7 +123,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
     {
         $query->whereNull('variant_id');
 
-        $query->with('categories');
+        $query->with(['categories','brand','collections']);
 
         $query->when(
             $filters['category'] ?? false,
@@ -129,16 +131,45 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
             $query->whereHas(
                 'categories',
                 fn ($query) =>
-                $query->where('category_id', $filters['category'])
+                $query->where('categories.id', (int) $filters['category'] )
+                    ->orWhere('categories.slug', insensitiveLike(), $filters['category'])
             )
         );
 
         $query->when(
-            $filters['keyword'] ?? false,
+            $filters['brand'] ?? false,
             fn ($query) =>
-            $query->where('name', 'like', '%' . $filters['keyword'] . '%')
-                ->orWhere('short_description', 'like', '%' . $filters['keyword'] . '%')
-                ->orWhere('description', 'like', '%' . $filters['keyword'] . '%')
+            $query->whereHas(
+                'brand',
+                fn ($query) =>
+                $query->whereIn('brands.id', collect($filters['brand'])->map( fn($i) => (int)$i )->toArray() )
+                    ->orWhereIn('brands.slug', $filters['brand'])
+            )
+        );
+
+        $query->when(
+            $filters['collection'] ?? false,
+            fn ($query) =>
+            $query->whereHas(
+                'collections',
+                fn ($query) =>
+                $query->whereIn('collections.id', collect($filters['collection'])->map( fn($i) => (int)$i )->toArray() )
+                    ->orWhereIn('collections.slug', $filters['collection'])
+            )
+        );
+
+        $query->when(
+            $filters['query'] ?? false,
+            fn ($query) =>
+            $query->where(fn($query) => 
+                $query->where('name', insensitiveLike(), '%' . $filters['query'] . '%')
+                ->orWhere('short_description', insensitiveLike(), '%' . $filters['query'] . '%')
+                ->orWhere('description', insensitiveLike(), '%' . $filters['query'] . '%')
+                ->orWhereHas('tags', fn($query) => $query->where('name', insensitiveLike(), '%' . $filters['query'] . '%' ))
+                ->orWhereHas('categories', fn($query) => $query->where('name', insensitiveLike(), '%' . $filters['query'] . '%' ))
+                ->orWhereHas('collections', fn($query) => $query->where('name', insensitiveLike(), '%' . $filters['query'] . '%' ))
+                ->orWhereHas('brand', fn($query) => $query->where('name', insensitiveLike(), '%' . $filters['query'] . '%' ))
+            )
         );
 
         if ($filters['orderby'] ?? false) {
@@ -168,7 +199,13 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class)->withPivot('price', 'quantity', 'discount');
+        return $this->belongsToMany(Order::class)->withPivot('price', 'quantity', 'discount','tax_rate');
+    }
+
+    public function paidOrders()
+    {
+        $validStatuses = OrderStatus::whereIn('name',['paid','completed'])->get()->pluck('id');
+        return $this->belongsToMany(Order::class)->whereIn('order_status_id', $validStatuses)->withPivot('price', 'quantity', 'discount', 'tax_rate');
     }
 
     public function variants()
@@ -256,7 +293,9 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
 
     public function getAvgRatingAttribute()
     {
-        return $this->reviews()->avg('rating') ? round($this->reviews()->avg('rating'), 1) : null;
+        $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
+        $avg = Review::where('product_id', $defaultVariant->id)->orWhereIn('product_id',$defaultVariant->variants()->pluck('id'))->avg('rating');
+        return $avg ? round($avg, 1) : null;
     }
 
     public function getImageAttribute()
@@ -272,7 +311,10 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         //         $image = $this->defaultVariant->image : $image = asset('img/no_image.jpg');
         // }
 
-        return $this->hasImage() ? $this->getFirstMediaUrl('gallery', config('custom.use_watermark') ? 'watermarked' : 'default') : asset('img/no_image.jpg');
+        // ( Storage::disk(config('media-library.disk_name'))->exists('data/import/immagini/'.$this->sku.'.jpg') ? Storage::disk(config('filesystem.default'))->url('data/import/immagini/'.$this->sku.'.jpg') : 
+
+        return $this->hasImage() ? $this->getFirstMediaUrl('gallery', config('custom.use_watermark') ? 'watermarked' : 'default') 
+            : asset('img/no_image.webp');
     }
 
     public function getGalleryAttribute()
@@ -314,6 +356,15 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         );
     }
 
+    protected function variantId(): Attribute
+    {
+        return Attribute::make(
+            set: function ($value, $attributes) {
+                return $value == $attributes['id'] ? null : $value;
+            },
+        );
+    }
+
 
     protected function sellingPrice(): Attribute
     {
@@ -339,16 +390,16 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         );
     }
 
-    public function applyTax($price, $tax = null)
+    public function applyTax($price, $tax_rate = null)
     {
-        $tax = $tax ?? config('cart.tax');
-        return number_format(round($price + round($price * ($tax / 100), 2),2),2);
+        if($tax_rate === null) $tax_rate = $this->attributes['tax_rate'] ?? config('cart.tax');
+        return number_format(round($price + round($price * ($tax_rate / 100), 2),2),2);
     }
 
-    public function removeTax($price, $tax = null)
+    public function removeTax($price, $tax_rate = null)
     {
-        $tax = $tax ?? config('cart.tax');
-        return number_format(round($price / (1 + ($tax/100)),2),2);
+        if($tax_rate === null) $tax_rate = $this->attributes['tax_rate'] ?? config('cart.tax');
+        return number_format(round($price / (1 + ($tax_rate/100)),2),2);
     }
 
     protected function taxedOriginalPrice(): Attribute
@@ -476,7 +527,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
     public function shouldBeSearchable()
     {
         //&& (!$this->variant_id || ($this->variant_id == $this->id))
-        return (!$this->attributes['hidden']);
+        return (isset($this->attributes['hidden']) && !$this->attributes['hidden']);
     }
 
     /**

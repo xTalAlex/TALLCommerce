@@ -52,34 +52,42 @@ class InvoiceController extends Controller
     {
         $this->authorize('viewInvoice', $order);
 
+        $addressString = $order->billing_address_address.', '.
+            $order->billing_address_city. ' ('.$order->billing_address_province.'), '.
+            $order->billing_address_postal_code.', '.$order->billing_address_country_region;
+
         $customer = new Buyer([
             'name'          => $order->billingAddress()->full_name,
-            'custom_fields' => [
-                'email' => $order->email,
+            'custom_fields' => [  
                 'order_number' => '#'.$order->number,
+                'email' => $order->billing_address_full_name,
+                'address' => $addressString,
+                'fiscal_code' => $order->fiscal_code ? $order->fiscal_code : '-',
+                'vat' => $order->vat ? $order->vat : '-',
             ],
         ]);
 
         $items = [];
         foreach ($order->products as $product) {
-            array_push(
-                $items,
-                (new InvoiceItem())
-                    ->title($product->name)
-                    ->pricePerUnit($product->pivot->price)
-                    ->quantity($product->pivot->quantity)
-            );
+            $newItem = (new InvoiceItem())
+                ->title($product->name)
+                ->pricePerUnit($product->pivot->price)
+                ->quantity($product->pivot->quantity)
+                ->tax( $product->pivot->tax_rate ?? config('cart.tax') , true);
+            if( $order->coupon && $order->coupon->applyBeforeTax() ) 
+                $newItem->discount($product->pivot->discount ?? 0);
+            array_push($items,$newItem);
         }
 
         $invoice = Invoice::make()
-            ->series($order->invoice_series)
-            ->sequence($order->invoice_sequence)
+            ->logo(public_path('img/logo.png'))
+            ->series($order->invoice_series ?? 'invalid')
+            ->sequence($order->invoice_sequence ?? 0)
             ->buyer($customer)
-            ->taxRate(config('cart.tax'))
             ->shipping($order->shipping_price)
             ->addItems($items);
         
-        if($order->coupon_discount > 0) $invoice->totalDiscount($order->coupon_discount);
+        if( $order->coupon && !$order->coupon->applyBeforeTax() )  $invoice->totalDiscount($order->coupon_discount);
 
         return $invoice->stream();
     }
