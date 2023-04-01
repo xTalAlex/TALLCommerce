@@ -8,7 +8,6 @@
         "php": "^8.0.2",
         "ext-gd": "*",
         "ext-intl": "*",
-        "algolia/algoliasearch-client-php": "^3.3.2",
         "bumbummen99/shoppingcart": "^4.2",
         "cartalyst/stripe-laravel": "^14.0",
         "doctrine/dbal": "^3.5.1",

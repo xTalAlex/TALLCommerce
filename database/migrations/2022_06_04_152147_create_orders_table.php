@@ -17,16 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-
         });
 
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('number')->unique()->nullable();
-            $table->json('shipping_address');
-            $table->json('billing_address');
-            $table->string('fiscal_code')->nullable();
-            $table->string('vat')->nullable();
             $table->text('note')->nullable();
             $table->text('tracking_number')->nullable();
             $table->decimal('subtotal',8,2);
@@ -38,6 +33,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->string('fiscal_code')->nullable();
+            $table->string('vat')->nullable();
             $table->string('invoice_series')->nullable();
             $table->string('invoice_sequence')->nullable();
             $table->string('invoice_serial_number')->nullable();
@@ -67,9 +64,9 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->decimal('price',6,2);
             $table->decimal('tax_rate',4,2)->nullable();
-            $table->unsignedInteger('quantity');
             $table->decimal('discount',6,2)->nullable();
-
+            $table->unsignedInteger('quantity');
+            
             $table->foreign('order_id')->references('id')->on('orders')
                 ->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('product_id')->references('id')->on('products')

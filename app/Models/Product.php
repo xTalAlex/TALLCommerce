@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatusEnum;
 use Illuminate\Support\Str;
 use Spatie\Sitemap\Tags\Url;
 use Laravel\Scout\Searchable;
@@ -384,7 +385,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
     {
         return Attribute::make(
             get: function ($value, $attributes) {
-                return $attributes['selling_price'] && $attributes['selling_price'] != $attributes['original_price'] ?
+                return isset($attributes['selling_price']) && $attributes['selling_price'] && $attributes['selling_price'] != $attributes['original_price'] ?
                     $attributes['selling_price'] : $attributes['original_price'];
             },
         );
@@ -415,7 +416,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
     {
         return Attribute::make(
             get: function ($value, $attributes) {
-                return $attributes['taxed_selling_price'] ?? $this->applyTax($attributes['selling_price']);
+                return $attributes['taxed_selling_price'] ?? $this->applyTax($attributes['selling_price'] ?? $attributes['original_price']);
             },
         );
     }

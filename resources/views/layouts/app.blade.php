@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth" data-theme="emerald">
     
     @include('layouts._head')
 
-    <body class="font-sans antialiased text-gray-900">
+    <body class="font-sans antialiased">
         <x-jet-banner />
 
         <div class="bg-white">

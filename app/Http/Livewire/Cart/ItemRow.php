@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Cart;
 use App\Models\Product;
 use Livewire\Component;
 use App\Traits\Livewire\WithShoppingLists;
-use Gloudemans\Shoppingcart\CartItem;
 
 class ItemRow extends Component
 {

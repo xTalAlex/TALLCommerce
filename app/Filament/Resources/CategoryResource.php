@@ -80,6 +80,8 @@ class CategoryResource extends Resource
                         ]),
                         Forms\Components\Section::make(__('Settings'))
                             ->schema([
+                                Forms\Components\TextInput::make('order')->label(__('Order'))
+                                    ->numeric(),
                                 Forms\Components\Toggle::make('featured')->label(__('Featured')),
                             ]),
                         Forms\Components\Card::make()

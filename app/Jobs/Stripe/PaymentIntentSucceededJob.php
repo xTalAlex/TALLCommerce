@@ -2,7 +2,7 @@
 
 namespace App\Jobs\Stripe;
 
-use App\Models\{Order, OrderStatus};
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;

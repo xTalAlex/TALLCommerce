@@ -4,15 +4,10 @@
         <div class="grid gap-2 place-items-start">
             <span class="mb-2 font-bold uppercase opacity-50">{{ __('Sitemap') }}</span>
             <a class="cursor-pointer hover:underline" href="{{ route('home') }}">{{ __('Home') }}</a>
-            <a class="cursor-pointer hover:underline" href="{{ route('about-us') }}">{{ __('About Us') }}</a>
-            <a class="cursor-pointer hover:underline" href="{{ route('delivery') }}">{{ __('Delivery') }}</a>
             <a class="cursor-pointer hover:underline" href="{{ route('product.index') }}">{{ __('Buy Online') }}</a>
-            <a class="cursor-pointer hover:underline" href="{{ route('info') }}">{{ __('Info') }}</a>
         </div>
         <div class="grid gap-2 place-items-start">
             <span class="mb-2 font-bold uppercase opacity-50">{{ __('Useful Links') }}</span>
-            <a class="cursor-pointer hover:underline" href="{{ route('contact-us') }}">{{ __('Contact Us') }}</a>
-            <a class="cursor-pointer hover:underline" href="{{ route('contact-us') . "#work-with-us" }}">{{ __('Work with us') }}</a>
             <a href="https://www.iubenda.com/privacy-policy/80514097" class="iubenda-white iubenda-noiframe iubenda-embed" title="Privacy Policy ">
                 {{ __('Privacy Policy') }}
             </a>

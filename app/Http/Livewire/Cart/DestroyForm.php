@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Cart;
 
 use Livewire\Component;
 use App\Traits\Livewire\WithShoppingLists;
-use Gloudemans\Shoppingcart\Facades\Cart;
 
 class DestroyForm extends Component
 {

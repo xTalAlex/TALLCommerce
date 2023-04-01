@@ -63,6 +63,11 @@ class Brand extends Model implements HasMedia
         $query->where('featured', true);
     }
 
+    public function scopeLogoed($query)
+    {
+        $query->whereHas('media', fn ($query) => $query->whereCollectionName('logo'));
+    }
+
     public function scopeFilterByProducts($query, array $filters)
     {
         $query->whereHas('products', function ($query) use ($filters) {

@@ -27,6 +27,8 @@ return [
 
     'use_watermark' => false,
 
-    'discount_before_tax' => true
+    'discount_before_tax' => true,
+
+    'categories_depth' => 2,
 
 ];

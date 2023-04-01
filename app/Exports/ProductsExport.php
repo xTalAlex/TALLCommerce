@@ -12,6 +12,6 @@ class ProductsExport implements FromQuery
     */
     public function query()
     {
-        return Product::withTrashed();
+        return Product::all();
     }
 }

@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{ Order, OrderStatus, Address, Coupon};
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Gloudemans\Shoppingcart\Facades\Cart;
 
 class StripeController extends Controller
 {

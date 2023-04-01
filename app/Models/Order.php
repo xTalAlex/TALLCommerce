@@ -131,6 +131,22 @@ class Order extends Model
             )->toArray()
         );
     }
+    
+    public function invoiceBuyer()
+    {
+        return [
+            'name'          => $this->billingAddress()->full_name,
+            'custom_fields' => [  
+                'order_number' => '#'.$this->number,
+                'email' => $this->billing_address_full_name,
+                'address' => $this->billing_address_address.', '.
+                    $this->billing_address_city. ' ('.$this->billing_address_province.'), '.
+                    $this->billing_address_postal_code.', '.$this->billing_address_country_region,
+                'fiscal_code' => $this->fiscal_code ? $this->fiscal_code : '-',
+                'vat' => $this->vat ? $this->vat : '-',
+            ],
+        ];
+    }
 
     public function getShippingLabelAttribute()
     {

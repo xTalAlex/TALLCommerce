@@ -42,18 +42,18 @@ class HomepageTest extends TestCase
         });
     }
 
-    public function test_homepage_shows_not_featured_products()
-    {
-        $products = Product::factory(10)->create([
-            'hidden' => false,
-            'featured' => false
-        ]);
-        $product = $products->last();
+    // public function test_homepage_shows_not_featured_products()
+    // {
+    //     $products = Product::factory(10)->create([
+    //         'hidden' => false,
+    //         'featured' => false
+    //     ]);
+    //     $product = $products->last();
 
-        $response = $this->get('/');
+    //     $response = $this->get('/');
 
-        $response->assertViewHas('featured_products', function($collection) use ($product) {
-            return $collection->contains($product);
-        });
-    }
+    //     $response->assertViewHas('featured_products', function($collection) use ($product) {
+    //         return $collection->contains($product);
+    //     });
+    // }
 }

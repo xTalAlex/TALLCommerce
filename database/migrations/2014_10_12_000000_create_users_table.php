@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('fiscal_code')->nullable();
             $table->string('vat')->nullable();
+            $table->timestamp('last_seen')->nullable();
             $table->timestamps();
         });
     }

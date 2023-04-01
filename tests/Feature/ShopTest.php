@@ -37,9 +37,7 @@ class ShopTest extends TestCase
 
     public function test_guest_cannot_see_taxed_prices()
     {
-        $product = Product::factory()->create([
-            'selling_price' => null,
-        ]);
+        $product = Product::factory()->create();
         
         $response = $this->get('/shop');
 

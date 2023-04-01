@@ -1,11 +1,16 @@
 @import "tailwindcss/base";
-@import "fonts.css";
 
 @import "tailwindcss/components";
+
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+
 @import "algolia-autocomplete.css";
 @import "algolia-instant-search.css";
-@import "keen-slider/keen-slider.css";
+
 @import "trix/dist/trix.css";
+
 @import "flatpickr/dist/themes/confetti.css";
 
 @import "tailwindcss/utilities";

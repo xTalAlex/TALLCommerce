@@ -12,60 +12,17 @@ use LaravelDaily\Invoices\Classes\InvoiceItem;
 class InvoiceController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function show(Order $order)
     {
         $this->authorize('viewInvoice', $order);
 
-        $addressString = $order->billing_address_address.', '.
-            $order->billing_address_city. ' ('.$order->billing_address_province.'), '.
-            $order->billing_address_postal_code.', '.$order->billing_address_country_region;
-
-        $customer = new Buyer([
-            'name'          => $order->billingAddress()->full_name,
-            'custom_fields' => [  
-                'order_number' => '#'.$order->number,
-                'email' => $order->billing_address_full_name,
-                'address' => $addressString,
-                'fiscal_code' => $order->fiscal_code ? $order->fiscal_code : '-',
-                'vat' => $order->vat ? $order->vat : '-',
-            ],
-        ]);
+        $customer = new Buyer($order->invoiceBuyer());
 
         $items = [];
         foreach ($order->products as $product) {
@@ -90,39 +47,5 @@ class InvoiceController extends Controller
         if( $order->coupon && !$order->coupon->applyBeforeTax() )  $invoice->totalDiscount($order->coupon_discount);
 
         return $invoice->stream();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

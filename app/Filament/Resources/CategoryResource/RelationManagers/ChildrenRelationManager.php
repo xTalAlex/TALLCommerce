@@ -45,6 +45,8 @@ class ChildrenRelationManager extends RelationManager
                 Forms\Components\TextInput::make('name')->label(__('Name'))
                     ->unique(ignorable: fn (?Category $record): ?Category => $record)
                     ->required(),
+                Forms\Components\TextInput::make('order')->label(__('Order'))
+                    ->numeric(),
                 Forms\Components\Toggle::make('featured')->label(__('Featured')),
                 Forms\Components\Textarea::make('description')->label(__('Description'))
                     ->rows(3)

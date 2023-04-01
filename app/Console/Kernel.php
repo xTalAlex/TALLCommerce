@@ -20,8 +20,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('export:daily-orders')->daily();
         $schedule->command('import:products')->daily();
-        $schedule->command('sitemap:generate')->daily();
-        
+        $schedule->command('sitemap:generate')->daily();       
     }
 
     /**

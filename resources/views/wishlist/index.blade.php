@@ -40,9 +40,11 @@
                     <form class="w-full sm:w-1/2" method="GET" action="{{ route('product.index') }}">
                         <x-button class="w-full h-full">{{ __('To Shop') }}</x-button>
                     </form>
-                    <form class="w-full sm:w-1/2" method="GET" action="{{  route('product.show', $randomProduct) }}">
-                        <x-secondary-button class="w-full h-full">{{ __('Random Product') }}</x-secondary-button>
-                    </form>
+                    @if($randomProduct)
+                        <form class="w-full sm:w-1/2" method="GET" action="{{  route('product.show', $randomProduct) }}">
+                            <x-secondary-button class="w-full h-full">{{ __('Random Product') }}</x-secondary-button>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
