@@ -19,7 +19,7 @@ class CategoriesTableSeeder extends Seeder
             'name' => 'Gastronomia',
             'featured' => true
         ]);
-        $gastronomia->addMediaFromUrl(asset('img/gastronomia.png'))->toMediaCollection('hero');
+        //$gastronomia->addMediaFromUrl(asset('img/gastronomia.png'))->toMediaCollection('hero');
         Category::create([
             'name' => 'Primi piatti',
             'parent_id' => $gastronomia->id,
@@ -34,12 +34,12 @@ class CategoriesTableSeeder extends Seeder
             'name' => 'Pasta fresca',
             'featured' => true
         ]);
-        $pasta->addMediaFromUrl(asset('img/pasta-fresca.jpg'))->toMediaCollection('hero');
+        //$pasta->addMediaFromUrl(asset('img/pasta-fresca.jpg'))->toMediaCollection('hero');
         $pasticceria = Category::create([
             'name' => 'Pasticceria',
             'featured' => true
         ]);
-        $pasticceria->addMediaFromUrl(asset('img/pasticceria.jpg'))->toMediaCollection('hero');
+        //$pasticceria->addMediaFromUrl(asset('img/pasticceria.jpg'))->toMediaCollection('hero');
         Category::create([
             'name' => 'Torte',
             'parent_id' => $pasticceria->id,

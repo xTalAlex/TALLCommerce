@@ -16,13 +16,6 @@ class BrandObserver
     public function created(Brand $brand)
     {
         $brand->update(['slug' => Str::slug($brand->name)]);
-
-        if($brand->products)
-        optional(
-            $brand->products->filter(function ($item) {
-                return $item->shouldBeSearchable();
-            })
-        )->searchable();
     }
 
     /**

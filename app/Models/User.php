@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\Hash;
 use Laravel\Jetstream\HasProfilePhoto;
-use Illuminate\Support\Facades\Storage;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
@@ -24,29 +22,19 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
-        'is_admin',
         'socialite_provider',
         'socialite_id',
+        'is_admin',
         'phone',
         'fiscal_code',
         'vat',
         'last_seen'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -56,25 +44,16 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         'socialite_id'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
+    protected $appends = [
+        'profile_photo_url',
+    ];
+
     protected $casts = [
         'email_verified_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'last_seen' => 'datetime'
-    ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'profile_photo_url',
+        'last_seen' => 'datetime',
+        'is_admin' => 'boolean'
     ];
 
     public function canAccessFilament(): bool
@@ -82,10 +61,17 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         return $this->is_admin ?? false;
     }
 
+    protected function defaultProfilePhotoUrl()
+    {
+        return 'https://robohash.org/'.md5(urlencode(Str::lower($this->email))).'.png?bgset=bg1';
+    }
+
     public function getFilamentAvatarUrl(): ?string
     {
         return $this->profile_photo_url;
     }
+
+    // Relationships
 
     public function addresses()
     {
@@ -127,6 +113,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
         return $this->hasMany(Review::class);
     }
 
+    // Accessors & Mutators
+
     protected function email(): Attribute
     {
         return Attribute::make(
@@ -142,15 +130,5 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
                 return strtoupper($value);
             },
         );
-    }
-
-    /**
-     * Get the default profile photo URL if no profile photo has been uploaded.
-     *
-     * @return string
-     */
-    protected function defaultProfilePhotoUrl()
-    {
-        return 'https://robohash.org/'.md5(urlencode(Str::lower($this->email))).'.png?bgset=bg1';
     }
 }

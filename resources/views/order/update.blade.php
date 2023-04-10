@@ -59,7 +59,7 @@
                         x-transition:enter.delay.200ms
                         x-cloak
                     >
-                        {!! $shipping_address->label !!}
+                        <x-address-label address="$shipping_address->label"></x-address-label>
                         <div>{{ $order->phone }}</div>
                         @if($order->note)
                             <div class="mt-2">"{{ $order->note }}"</div>
@@ -167,7 +167,7 @@
                             {{ __('VAT')}}: {{ $order->vat ? $order->vat : '-' }}
                         </div>
                         <div class="mt-2">
-                            {!! $billing_address->label !!}
+                            <x-address-label address="$billing_address->label"></x-address-label>
                         </div>
                     </div>
                     @endif

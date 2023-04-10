@@ -16,13 +16,6 @@ class TagObserver
     public function created(Tag $tag)
     {
         $tag->update(['slug' => Str::slug($tag->name)]);
-
-        if($tag->products)
-        optional(
-            $tag->products->filter(function ($item) {
-                return $item->shouldBeSearchable();
-            })
-        )->searchable();
     }
 
     /**

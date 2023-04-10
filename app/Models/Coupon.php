@@ -21,11 +21,6 @@ class Coupon extends Model
         'once_per_user'
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
     protected $appends = [
         'label',
     ];
@@ -37,16 +32,16 @@ class Coupon extends Model
         'min_total' => 'decimal:2',
     ];
 
+
+    // Relationships
+
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    /**
-     * Interact with the coupon's code.
-     *
-     * @return  \Illuminate\Database\Eloquent\Casts\Attribute
-     */
+    // Accessors & Mutators
+
     protected function code(): Attribute
     {
         return Attribute::make(
@@ -55,12 +50,16 @@ class Coupon extends Model
         );
     }
 
-    public function getLabelAttribute()
+    protected function label(): Attribute
     {
-        return ($this->is_fixed_amount ? '€' : '').$this->amount.($this->is_fixed_amount ? '' : '%');
+        return Attribute::make(
+            get: fn () => ($this->is_fixed_amount ? '€' : '').$this->amount.($this->is_fixed_amount ? '' : '%'),
+        );
     }
 
-    public function applyBeforeTax()
+    // Utility
+
+    public function appliesBeforeTax()
     {
         return config('custom.discount_before_tax') && !$this->is_fixed_amount;
     }

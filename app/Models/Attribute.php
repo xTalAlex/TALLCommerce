@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Attribute extends Model
 {
@@ -11,6 +11,7 @@ class Attribute extends Model
 
     protected $fillable = [
         'name',
+        'suffix',
         'type',
     ];
 
@@ -19,19 +20,7 @@ class Attribute extends Model
         'updated_at'    => 'datetime',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::saved(function ($model) {
-            \App\Models\Product::whereHas('attributeValues', fn($query) => 
-                $query->where('attribute_id', $model->id) )
-                ->get()
-                ->filter(function ($item) {
-                return $item->shouldBeSearchable();
-            })->searchable();
-        });
-    }
+    // Relationships
 
     public function values()
     {

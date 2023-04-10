@@ -68,7 +68,7 @@
                         x-transition:enter.delay.200ms
                         x-cloak
                     >
-                        {!! $shipping_address->label !!}
+                        <x-address-label address="$shipping_address->label"></x-address-label>
                         <div>{{ $phone }}</div>
                         @if($note)
                             <div class="mt-2">"{{ $note }}"</div>
@@ -176,7 +176,7 @@
                             {{ __('VAT')}}: {{ $vat ? $vat : '-' }}
                         </div>
                         <div class="mt-2">
-                            {!! $billing_address->label !!}
+                            <x-address-label address="$billing_address->label"></x-address-label>
                         </div>
                     </div>
                     @endif
@@ -301,8 +301,8 @@
                                 @if($option->description)
                                 <div class="text-sm text-gray-500">{{ $option->description }}</div>
                                 @endif
-                                @if($option->deliveryTimeLabel())
-                                <div class="text-sm text-gray-500">{{ $option->deliveryTimeLabel() }}</div>
+                                @if($option->delivery_time_label)
+                                <div class="text-sm text-gray-500">{{ $option->delivery_time_label }}</div>
                                 @endif
                                 @if($option->min_spend)
                                 <div class="text-sm text-gray-500">{{ __('Minimum spend :amount€',['amount' => $option->min_spend]) }}</div>
@@ -403,7 +403,7 @@
                             <livewire:checkout :order="$order"/>
                         @else
                             <div class="w-full px-2 py-4 text-base text-center cursor-pointer bg-danger-500">
-                                {{ trans_choice('shopping_cart.checkout.min_spend', null, [ 'amount' => number_format($shipping_price->min_spend,2).'€' ]) }}
+                                {{ trans_choice('shopping_cart.checkout.min_spend', null, [ 'amount' => priceLabel($shipping_price->min_spend) ]) }}
                             </div>
                         @endif
                     @else

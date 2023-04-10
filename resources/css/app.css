@@ -6,9 +6,6 @@
 @import "swiper/css/navigation";
 @import "swiper/css/pagination";
 
-@import "algolia-autocomplete.css";
-@import "algolia-instant-search.css";
-
 @import "trix/dist/trix.css";
 
 @import "flatpickr/dist/themes/confetti.css";

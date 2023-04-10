@@ -20,10 +20,18 @@ class ShippingPrice extends Model
         'active'
     ];
 
+    protected $appends = [
+        'delivery_time_label'
+    ];
+
     protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'price' => 'decimal:2',
         'active' => 'boolean',
     ];
+
+    // Scopes
 
     public function scopeActive($query)
     {
@@ -35,25 +43,35 @@ class ShippingPrice extends Model
         $query->where('max_days','!=',null)->where('max_days','<=',2);
     }
 
-    public function isFast()
-    {
-        return $this->max_days != null && $this->max_days <= 2;
-    }
+    // Relationships
 
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    public function deliveryTimeLabel()
+    //  Accessors & Mutators
+
+    protected function deliveryTimeLabel(): Attribute
     {
-        $label = null;
-        if($this->min_days)
-        {
-            $label = $this->min_days == $this->max_days ? 
-                $this->min_days . ' ' . ($this->min_days == 1 ? strtolower(__('Day')) : strtolower(__('Days')))  : 
-                $this->min_days . '-' . $this->max_days . ' ' . strtolower(__('Days')) ;
-        }
-        return $label;
+        return Attribute::make(
+            get: function () {
+                $label = null;
+                if($this->min_days)
+                {
+                    $label = $this->min_days == $this->max_days ? 
+                        $this->min_days . ' ' . ($this->min_days == 1 ? strtolower(__('Day')) : strtolower(__('Days')))  : 
+                        $this->min_days . '-' . $this->max_days . ' ' . strtolower(__('Days')) ;
+                }
+                return $label;
+            },
+        );
+    }
+
+    // Utility
+
+    public function isFast()
+    {
+        return $this->max_days != null && $this->max_days <= 2;
     }
 }

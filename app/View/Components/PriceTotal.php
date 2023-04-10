@@ -39,9 +39,9 @@ class PriceTotal extends Component
 
     public function discount()
     {
-        if($this->coupon && $this->coupon->applyBeforeTax())
+        if($this->coupon && $this->coupon->appliesBeforeTax())
             $discount = $this->subtotal - $this->discountedSubtotal;
-        elseif( $this->coupon && !$this->coupon->applyBeforeTax())
+        elseif( $this->coupon && !$this->coupon->appliesBeforeTax())
             $discount = $this->originalTotal - $this->total;
         return $discount;
     }

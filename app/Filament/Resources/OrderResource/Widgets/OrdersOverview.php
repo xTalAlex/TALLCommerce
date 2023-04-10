@@ -45,7 +45,7 @@ class OrdersOverview extends BaseWidget
 
             Card::make( 
                 trans('widgets.orders.stats.avg_total'), 
-                '€' . number_format( Order::placed()->avg('total') , 2)
+                priceLabel(Order::placed()->avg('total'))
             ),
         ];
     }

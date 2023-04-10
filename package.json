@@ -21,7 +21,6 @@
         "@paypal/paypal-js": "^5.*",
         "daisyui": "^2.51.5",
         "flatpickr": "^4.6.13",
-        "instantsearch.js": "^4.*",
         "luxon": "^3.1.0",
         "npm": "^9.*",
         "swiper": "^9.2.0",

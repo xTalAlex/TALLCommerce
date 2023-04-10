@@ -7,7 +7,7 @@
     />
     @if($province && $matchedProvince)
     <div class="mt-2">
-        @if($matchedProvince->isActive())
+        @if($matchedProvince->is_active)
             <span class="text-success-500">{{ __('Consegniamo nella provincia di :value', [ 'value' => $matchedProvince->name ]) }}</span>
         @else
             <span class="text-danger-500">{{ __('Non consegniamo nella provincia di :value', [ 'value' => $matchedProvince->name ]) }}</span>

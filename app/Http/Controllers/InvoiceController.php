@@ -31,7 +31,7 @@ class InvoiceController extends Controller
                 ->pricePerUnit($product->pivot->price)
                 ->quantity($product->pivot->quantity)
                 ->tax( $product->pivot->tax_rate ?? config('cart.tax') , true);
-            if( $order->coupon && $order->coupon->applyBeforeTax() ) 
+            if( $order->coupon && $order->coupon->appliesBeforeTax() ) 
                 $newItem->discount($product->pivot->discount ?? 0);
             array_push($items,$newItem);
         }
@@ -44,7 +44,7 @@ class InvoiceController extends Controller
             ->shipping($order->shipping_price)
             ->addItems($items);
         
-        if( $order->coupon && !$order->coupon->applyBeforeTax() )  $invoice->totalDiscount($order->coupon_discount);
+        if( $order->coupon && !$order->coupon->appliesBeforeTax() )  $invoice->totalDiscount($order->coupon_discount);
 
         return $invoice->stream();
     }

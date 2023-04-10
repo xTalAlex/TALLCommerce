@@ -86,12 +86,12 @@ trait WithCartTotals
         $this->checkCoupon();
 
         $this->subtotal = Cart::instance('default')->subtotal(null,null,'');
-        if($this->coupon && !$this->coupon->applyBeforeTax() ){
+        if($this->coupon && !$this->coupon->appliesBeforeTax() ){
             $this->tax = Cart::instance('default')->tax();
             $this->original_total = Cart::instance('default')->total(null,null,'');
             $this->total = $this->original_total - round($this->coupon->discount($this->original_total),2);
         }
-        elseif ($this->coupon && $this->coupon->applyBeforeTax() ) {
+        elseif ($this->coupon && $this->coupon->appliesBeforeTax() ) {
             $this->discounted_subtotal = round( (float) $this->subtotal - $this->coupon->discount(Cart::instance('default')->subtotal(null,null,'')) , 2);
             $tax_total = 0;
             foreach(Cart::instance('default')->content() as $item)

@@ -126,19 +126,19 @@ class Index extends Component
 
     public function render()
     {
-        $this->categories = Category::filterByProducts([
+        $this->categories = Category::productsFilter([
             'query' => $this->query,
             'collection' => $this->collection,
             'brand' => $this->brand,
         ])->orderBy('name')->get();
 
-        $this->collections = Collection::filterByProducts([
+        $this->collections = Collection::productsFilter([
             'query' => $this->query,
             'category' => $this->category,
             'brand' => $this->brand,
         ])->orderBy('name')->get();
 
-        $this->brands = Brand::filterByProducts([
+        $this->brands = Brand::productsFilter([
             'query' => $this->query,
             'category' => $this->category,
             'collection' => $this->collection,

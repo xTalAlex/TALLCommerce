@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class OrderHistory extends Model
 {
@@ -15,15 +15,12 @@ class OrderHistory extends Model
         'description'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    // Relationships
 
     public function order()
     {
@@ -35,16 +32,13 @@ class OrderHistory extends Model
        return $this->belongsTo(OrderStatus::class,'order_status_id'); 
     }
 
-    public function getDescriptionAttribute($value)
-    {
-        /**
-         * 
-         *  Addresses Updated
-         *  New Payment Intent
-         * 
-         * **/
+    // Accessors & Mutators
 
-        return __($value);
+    protected function description(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => __($value),
+        );
     }
 }
 

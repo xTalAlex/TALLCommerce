@@ -11,37 +11,26 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id',
-        'user_id',
         'rating',
         'description',
-        'approved'
+        'approved',
+        'product_id',
+        'user_id',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'approved' => 'boolean',
+    ];
 
-        static::saved(function ($model) {
-            if($model->products)
-                optional(
-                    $model->products->filter(function ($item) {
-                        return $item->shouldBeSearchable();
-                    })
-                )->searchable();
-        });
-    }
-
-    /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
     protected static function booted()
     {
         static::addGlobalScope(new ApprovedScope);
     }
 
+    // Relationships
+    
     public function product()
     {
         return $this->belongsTo(Product::class)->withoutGlobalScopes();

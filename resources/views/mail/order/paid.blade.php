@@ -16,19 +16,19 @@
 | {{__('Product')}} | {{__('Quantity')}} | {{ __('Price') }} |
 | ------------- |:-------------:| --------:|
 @foreach($order->products as $product)
-| {{ $product->name}} | x{{ $product->pivot->quantity }} | {{ number_format($product->pivot->price * $product->pivot->quantity,2) }}€ |
+| {{ $product->name}} | x{{ $product->pivot->quantity }} | {{ priceLabel($product->pivot->price * $product->pivot->quantity) }} |
 @endforeach
 </x-mail::table>
 
 @if($order->coupon_discount > 0)
-{{ __('Discount') }}: -{{ number_format($order->coupon_discount,2)}}€ 
+{{ __('Discount') }}: -{{ priceLabel($order->coupon_discount)}} 
 <br>
 @endif
-{{ __('Tax') }}: {{ number_format($order->tax,2)}}€ 
+{{ __('Tax') }}: {{ priceLabel($order->tax)}} 
 <br>
-{{ __('Shipping') }} {{ $order->shippingPrice->name }}: {{ number_format($order->shipping_price,2)}}€
+{{ __('Shipping') }} {{ $order->shippingPrice->name }}: {{ priceLabel($order->shipping_price)}}
 <br>
-{{ __('Total') }}: {{ number_format($order->total,2)}}€ 
+{{ __('Total') }}: {{ priceLabel($order->total)}} 
 </x-mail::panel>
 
 {{ __('Regards') }},<br>

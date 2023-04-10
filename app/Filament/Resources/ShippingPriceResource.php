@@ -132,8 +132,8 @@ class ShippingPriceResource extends Resource
                 Tables\Columns\TextColumn::make('price')->label(__('Price'))
                     ->money('eur')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('delivery_time')->label(__('Delivery Time'))
-                    ->getStateUsing(fn (ShippingPrice $record) => $record->deliveryTimeLabel())
+                Tables\Columns\TextColumn::make('delivery_time_label')->label(__('Delivery Time'))
+                    ->getStateUsing(fn (ShippingPrice $record) => $record->delivery_time_label)
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('description')->label(__('Description')),
                 Tables\Columns\TextColumn::make('updated_at')->label(__('Updated at'))

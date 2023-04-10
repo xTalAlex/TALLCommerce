@@ -22,14 +22,12 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('original_price',8,2);
             $table->decimal('selling_price',8,2)->nullable();
-            $table->boolean('discount_is_fixed_amount')->nullable();
-            $table->decimal('discount_amount',6,2)->nullable();
             $table->decimal('tax_rate',4,2)->nullable();
             $table->unsignedInteger('quantity')->default(0);
             $table->unsignedInteger('low_stock_threshold')->nullable();
+            $table->unsignedInteger('weight')->nullable();
             $table->boolean('featured')->default(false);
             $table->boolean('hidden')->default(false);
-            $table->unsignedInteger('weight')->nullable();
             $table->date('avaiable_from')->nullable();
             $table->softDeletes();
             $table->timestamps();

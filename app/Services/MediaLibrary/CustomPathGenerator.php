@@ -12,8 +12,8 @@ class CustomPathGenerator implements PathGenerator
      */
     public function getPath(Media $media): string
     {
-        return $media->model_type::PATH ?  
-                    $media->model_type::PATH.'/'.$media->model_id.'/'.$media->id.'/'
+        return $media->model_type::MEDIA_PATH ?  
+                    $media->model_type::MEDIA_PATH.'/'.$media->model_id.'/'.$media->id.'/'
                     : $this->getBasePath($media).'/';
     }
 

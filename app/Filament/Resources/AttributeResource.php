@@ -49,6 +49,7 @@ class AttributeResource extends Resource
                                 Forms\Components\TextInput::make('name')->label(__('Name'))
                                     ->required()
                                     ->unique(ignorable: fn (?Attribute $record): ?Attribute => $record), 
+                                Forms\Components\TextInput::make('suffix')->label(__('Suffix')), 
                                 Forms\Components\Select::make('type')->label(__('Type'))
                                     ->options( collect(config('custom.attribute_types'))->map(fn($option)=> __($option)) )
                                     ->default(array_key_first(config('custom.attribute_types')))

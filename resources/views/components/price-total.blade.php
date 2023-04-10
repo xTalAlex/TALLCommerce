@@ -23,18 +23,18 @@
 
     <div class="flex items-center justify-between">
         <div class="">{{ __('Total') }}<div class="inline ml-1 text-xs">({{ __('Without Tax') }})</div></div>
-        <span class="text-xl font-bold">{{ number_format( $subtotal ,2) }}€</span>
+        <span class="text-xl font-bold">{{ priceLabel($subtotal) }}</span>
     </div>
 
-    @if($coupon && $coupon->applyBeforeTax())
+    @if($coupon && $coupon->appliesBeforeTax())
     <div class="flex items-center justify-between">
         <span class="">{{ !$coupon->is_fixed_amount ? $coupon->label : '' }} {{ $coupon->code }}</span>
-        <span class="text-xl font-bold">-{{ number_format( $discount() , 2) }}€</span>
+        <span class="text-xl font-bold">-{{ priceLabel($discount) }}</span>
     </div>
         @if($discountedSubtotal)
         <div class="flex items-center justify-between">
             <span class=""></span>
-            <span class="text-xl font-bold">{{ number_format($discountedSubtotal, 2) }}€</span>
+            <span class="text-xl font-bold">{{ priceLabel($discountedSubtotal) }}</span>
         </div>
         @endif
     @endif
@@ -44,19 +44,19 @@
         <span class="text-base">
             {{ __('Tax') }}
         </span>
-        <span class="text-base font-bold">{{ number_format($tax, 2) }}€</span>
+        <span class="text-base font-bold">{{ priceLabel($tax) }}</span>
     </div>
     @endif
 
-    @if($coupon && !$coupon->applyBeforeTax())
+    @if($coupon && !$coupon->appliesBeforeTax())
     <div class="flex items-center justify-between">
         <span class="">{{ !$coupon->is_fixed_amount ? $coupon->label : '' }} {{ $coupon->code }}</span>
-        <span class="text-xl font-bold">-{{ number_format( $discount() , 2) }}€</span>
+        <span class="text-xl font-bold">-{{ priceLabel($discount) }}</span>
     </div>
         @if($discountedSubtotal)
         <div class="flex items-center justify-between">
             <span class=""></span>
-            <span class="text-xl font-bold">{{ number_format($discountedSubtotal, 2) }}€</span>
+            <span class="text-xl font-bold">{{ priceLabel($discountedSubtotal) }}</span>
         </div>
         @endif
     @endif
@@ -66,13 +66,13 @@
         <span class="">
             {{ __('Shipping') }} : {{ $shipping->name }}
         </span>
-        <span class="text-xl font-bold">{{ number_format($shippingPrice, 2) }}€</span>
+        <span class="text-xl font-bold">{{ priceLabel($shippingPrice) }}</span>
     </div>
     @endif
 
     <div class="flex items-center justify-between pt-8 pb-6 border-t border-white">
         <div class="text-xl font-bold">{{ __('Total') }}<div class="inline ml-1 text-xs">({{ __('With Tax') }})</div></div>
-        <span class="text-xl font-bold">{{ number_format( $total, 2) }}€</span>
+        <span class="text-xl font-bold">{{ priceLabel( $total) }}</span>
     </div>
 
     @if(isset($actions))

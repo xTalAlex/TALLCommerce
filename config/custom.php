@@ -1,6 +1,20 @@
 <?php
 
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Date & Time formats
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'datetime_format' => 'j/n/y H:i',
+    'date_format' => 'j/n/y',
+    'hour_format' => 'H:i',
+    'datemonth_format' => 'j/n',
+    'monthyear_format' => 'n/y',
+
     'attribute_types' => [
         'select' => 'Select',
         'radio'  => 'Radio',
@@ -15,12 +29,6 @@ return [
     'reviews' => [
         'approved_by_default' => true,
     ],
-
-    'datetime_format' => 'j/n/y H:i',
-    'date_format' => 'j/n/y',
-    'hour_format' => 'H:i',
-    'datemonth_format' => 'j/n',
-    'monthyear_format' => 'n/y',
 
     'skip_quantity_checks' => true,
     'stock_threshold' => 3,

@@ -2,15 +2,13 @@
 
 namespace App\Models;
 
-use App\Enums\OrderStatusEnum;
-use Illuminate\Support\Str;
+use App\Traits\WithSlug;
+use App\Traits\Featurable;
 use Spatie\Sitemap\Tags\Url;
-use Laravel\Scout\Searchable;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use App\Models\Scopes\NotHiddenScope;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
@@ -23,7 +21,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Product extends Model implements Buyable, HasMedia, Sitemapable
 {
-    use HasFactory, InteractsWithMedia, SoftDeletes, Searchable, HasSEO;
+    use HasFactory, InteractsWithMedia, SoftDeletes, HasSEO, Featurable, WithSlug;
 
     const PATH = "products";
 
@@ -35,39 +33,17 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         'description',
         'original_price',
         'selling_price',
-        'discount_is_fixed_amount',
-        'discount_amount',
         'tax_rate',
         'quantity',
-        'weight',
         'low_stock_threshold',
+        'weight',
         'featured',
         'hidden',
+        'avaiable_from',
         'variant_id',
         'brand_id',
-        'avaiable_from'
     ];
 
-    protected $casts = [
-        'original_price' => 'decimal:2',
-        'selling_price' => 'decimal:2',
-        'price'         => 'decimal:2',
-        'taxed_price' => 'decimal:2',
-        'taxed_original_price' => 'decimal:2',
-        'taxed_selling_price' => 'decimal:2',
-        'avg_rating' => 'decimal:1',
-        'tags' => 'array',
-        'hidden' => 'boolean',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'avaiable_from' => 'date',
-    ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
     protected $appends = [
         'image',
         'gallery',
@@ -75,6 +51,22 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         'taxed_original_price',
         'taxed_selling_price',
         'discount'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'avaiable_from' => 'date',
+        'original_price' => 'decimal:2',
+        'selling_price' => 'decimal:2',
+        'tax_rate' => 'decimal:2',
+        'price'         => 'decimal:2',
+        'taxed_price' => 'decimal:2',
+        'taxed_original_price' => 'decimal:2',
+        'taxed_selling_price' => 'decimal:2',
+        'avg_rating' => 'decimal:1',
+        'tags' => 'array',
+        'hidden' => 'boolean',
     ];
 
     public function registerMediaCollections(): void
@@ -105,26 +97,42 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         );
     }
 
-    /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
+    public function toSitemapTag(): Url | string | array
+    {
+        return route('product.show', $this);
+    }
+
+    public function getBuyableIdentifier($options = null)
+    {
+        return $this->id;
+    }
+
+    public function getBuyableDescription($options = null)
+    {
+        return $this->name;
+    }
+
+    public function getBuyablePrice($options = null)
+    {
+        return $this->price;
+    }
+
+    public function getBuyableWeight($options = null)
+    {
+        return $this->weight ?? 0;
+    }
+
     protected static function booted()
     {
         static::addGlobalScope(new NotHiddenScope);
     }
 
-    public function scopeFeatured($query)
-    {
-        $query->where('featured', true);
-    }
+    // Scopes
 
     public function scopeFilter($query, array $filters)
     {
-        $query->whereNull('variant_id');
-
-        $query->with(['categories','brand','collections']);
+        $query->with(['categories','brand','collections'])
+            ->whereNull('variant_id');
 
         $query->when(
             $filters['category'] ?? false,
@@ -188,6 +196,8 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         }
     }
 
+    // Relationships
+
     public function categories()
     {
         return $this->belongsToMany(Category::class);
@@ -239,133 +249,77 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         return $this->belongsToMany(AttributeValue::class);
     }
 
-    public function attributes()
+    // Accessors & Mutators
+
+    protected function stockStatus(): Attribute
     {
-        $attributeIds = $this->attributeValues()->with('attribute')->get()->pluck('attribute_id');
-        return \App\Models\Attribute::findMany($attributeIds);
+        return Attribute::make(
+            get: function () {
+                if ($this->quantity < 1) {
+                    $status = __('Out of Stock');
+                } elseif ($this->isLowStock()) {
+                    $status = __('Low Stock');
+                } else {
+                    $status = trans_choice('Avaiable', 1);
+                }
+        
+                return $status;
+            },
+        );
     }
 
-    public function getBuyableIdentifier($options = null)
+    protected function avgRating(): Attribute
     {
-        return $this->id;
+        return Attribute::make(
+            get: function () {
+                $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
+                $avg = Review::where('product_id', $defaultVariant->id)->orWhereIn('product_id',$defaultVariant->variants()->pluck('id'))->avg('rating');
+                return $avg ? round($avg, 1) : null;
+            },
+        );
     }
 
-    public function getBuyableDescription($options = null)
+    protected function image(): Attribute
     {
-        return $this->name;
+        return Attribute::make(
+            get: fn() =>  $this->hasImage() ? 
+                $this->getFirstMediaUrl(
+                    'gallery', 
+                    config('custom.use_watermark') ? 'watermarked' : 'default'
+                ) : asset('img/no_image.webp')
+        );
     }
 
-    public function getBuyablePrice($options = null)
+    protected function gallery(): Attribute
     {
-        return $this->price;
-    }
-
-    public function getBuyableWeight($options = null)
-    {
-        return $this->weight ?? 0;
-    }
-
-    public function setSlugAttribute($value)
-    {
-        if (static::withoutGlobalScopes()->whereNot('id', $this->id)->whereSlug($slug = Str::slug($value))->exists())
-            $slug = "{$slug}-{$this->id}";
-        $this->attributes['slug'] = $slug;
-    }
-
-    public function isLowStock()
-    {
-        $low_stock_threshold = $this->low_stock_threshold ?? config('custom.stock_threshold');
-        return $this->quantity >= 1 && $this->quantity <= $low_stock_threshold;
-    }
-
-    public function getStockStatusAttribute()
-    {
-
-        if ($this->quantity < 1) {
-            $status = __('Out of Stock');
-        } elseif ($this->isLowStock()) {
-            $status = __('Low Stock');
-        } else {
-            $status = trans_choice('Avaiable', 1);
-        }
-
-        return $status;
-    }
-
-    public function getAvgRatingAttribute()
-    {
-        $defaultVariant = $this->variant_id ?  $this->defaultVariant : $this;
-        $avg = Review::where('product_id', $defaultVariant->id)->orWhereIn('product_id',$defaultVariant->variants()->pluck('id'))->avg('rating');
-        return $avg ? round($avg, 1) : null;
-    }
-
-    public function getImageAttribute()
-    {
-        // $image = null;
-        // if($this->getFirstMediaUrl('gallery') !="")
-        // {
-        //     $image =  $this->getFirstMediaUrl('gallery');
-        // }
-        // else
-        // {
-        //     $this->defaultVariant()->exists() ?
-        //         $image = $this->defaultVariant->image : $image = asset('img/no_image.jpg');
-        // }
-
-        // ( Storage::disk(config('media-library.disk_name'))->exists('data/import/immagini/'.$this->sku.'.jpg') ? Storage::disk(config('filesystem.default'))->url('data/import/immagini/'.$this->sku.'.jpg') : 
-
-        return $this->hasImage() ? $this->getFirstMediaUrl('gallery', config('custom.use_watermark') ? 'watermarked' : 'default') 
-            : asset('img/no_image.webp');
-    }
-
-    public function getGalleryAttribute()
-    {
-        // $gallery = null;
-        // if($this->getMedia('gallery')->count() || $this->defaultVariant()->doesntExist())
-        // {
-        //     $gallery =  $this->getMedia('gallery')->map( fn($media) => $media->getFullUrl() );
-        // }
-        // else
-        // {
-        //     $gallery = $this->defaultVariant->gallery;
-        // }
-
-        return $this->getMedia('gallery')->map(fn ($media) => $media->getAvailableFullUrl(config('custom.use_watermark') ? ['watermarked', 'default'] : ['default']));
-    }
-
-    public function setGalleryAttribute($value)
-    {
-        if ($value) {
-            $fileAdders = $this->addMultipleMediaFromRequest($value);
-            foreach ($fileAdders as $fileAdder) {
-                $fileAdder->toMediaCollection('gallery');
-            }
-        }
-    }
-
-    public function hasImage()
-    {
-        return $this->getFirstMediaUrl('gallery') != "";
+        return Attribute::make(
+            get: fn() => $this->getMedia('gallery')->map(fn ($media) => 
+                    $media->getAvailableFullUrl(config('custom.use_watermark') ? ['watermarked', 'default'] : ['default'])
+                ),
+            set: function (mixed $value) {
+                if ($value) {
+                    $fileAdders = $this->addMultipleMediaFromRequest($value);
+                    foreach ($fileAdders as $fileAdder) {
+                        $fileAdder->toMediaCollection('gallery');
+                    }
+                }
+            } 
+        );
     }
 
     protected function originalPrice(): Attribute
     {
         return Attribute::make(
-            set: function ($value) {
-                return number_format($value, 2);
-            },
+            set: fn ($value) => number_format($value, 2),
         );
     }
 
     protected function variantId(): Attribute
     {
         return Attribute::make(
-            set: function ($value, $attributes) {
-                return $value == $attributes['id'] ? null : $value;
-            },
+            set: fn ($value, $attributes) => $value == $attributes['id'] ? null : $value,
         );
     }
-
 
     protected function sellingPrice(): Attribute
     {
@@ -389,18 +343,6 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
                     $attributes['selling_price'] : $attributes['original_price'];
             },
         );
-    }
-
-    public function applyTax($price, $tax_rate = null)
-    {
-        if($tax_rate === null) $tax_rate = $this->attributes['tax_rate'] ?? config('cart.tax');
-        return number_format(round($price + round($price * ($tax_rate / 100), 2),2),2);
-    }
-
-    public function removeTax($price, $tax_rate = null)
-    {
-        if($tax_rate === null) $tax_rate = $this->attributes['tax_rate'] ?? config('cart.tax');
-        return number_format(round($price / (1 + ($tax_rate/100)),2),2);
     }
 
     protected function taxedOriginalPrice(): Attribute
@@ -430,14 +372,54 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         );
     }
 
-    public function getDiscountAttribute($value)
+    protected function discount(): Attribute
     {
-        $difference = $this->selling_price && ($this->selling_price < $this->original_price) ? $this->original_price - $this->selling_price : 0;
-        if ($difference)
-            $percent = round($this->original_price / $difference, 2);
-        else
-            $percent = 0;
-        return $percent;
+        return Attribute::make(
+            get: function () {
+                $difference = $this->selling_price && ($this->selling_price < $this->original_price) ? $this->original_price - $this->selling_price : 0;
+                if ($difference)
+                    $percent = round($this->original_price / $difference, 2);
+                else
+                    $percent = 0;
+                return $percent;
+            },
+        );
+    }
+
+    // Utility
+
+    public function isLowStock()
+    {
+        $low_stock_threshold = $this->low_stock_threshold ?? config('custom.stock_threshold');
+        return $this->quantity >= 1 && $this->quantity <= $low_stock_threshold;
+    }
+
+    public function hasImage()
+    {
+        return $this->getFirstMediaUrl('gallery') != "";
+    }
+
+    public function applyTax($price, $tax_rate = null)
+    {
+        if($tax_rate === null) $tax_rate = $this->attributes['tax_rate'] ?? config('cart.tax');
+        return number_format(round($price + round($price * ($tax_rate / 100), 2),2),2);
+    }
+
+    public function removeTax($price, $tax_rate = null)
+    {
+        if($tax_rate === null) $tax_rate = $this->attributes['tax_rate'] ?? config('cart.tax');
+        return number_format(round($price / (1 + ($tax_rate/100)),2),2);
+    }
+
+    public function pricePerQuantity(int $quantity, float $newPrice = null)
+    {
+        return number_format(($newPrice ?? $this->price) * $quantity, 2);
+    }
+
+    public function attributes()
+    {
+        $attributeIds = $this->attributeValues()->with('attribute')->get()->pluck('attribute_id');
+        return \App\Models\Attribute::findMany($attributeIds);
     }
 
     public function variantsAttributeValues()
@@ -518,70 +500,5 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         };
 
         return $hierarchicalCategories;
-    }
-
-    public function pricePerQuantity(int $quantity, float $newPrice = null)
-    {
-        return number_format(($newPrice ?? $this->price) * $quantity, 2);
-    }
-
-    public function shouldBeSearchable()
-    {
-        //&& (!$this->variant_id || ($this->variant_id == $this->id))
-        return (isset($this->attributes['hidden']) && !$this->attributes['hidden']);
-    }
-
-    /**
-     * Get the indexable data array for the model.
-     *
-     * @return array
-     */
-    public function toSearchableArray()
-    {
-        $array = array();
-
-        $array['id'] = $this->id;
-        $array['name'] = $this->name;
-        $array['short_description'] = $this->short_description;
-        $array['description'] = $this->description;
-        $array['original_price'] = $this->original_price;
-        $array['selling_price'] = $this->selling_price;
-        $array['discount'] = $this->discount;
-        $array['price'] =  $this->price;
-        $array['taxed_original_price'] = $this->applyTax($this->original_price);
-        $array['taxed_selling_price'] = $this->applyTax($this->selling_price);
-        $array['taxed_price'] =  $this->applyTax($this->price);
-        $array['original_price_float'] = (float) $this->original_price;
-        $array['selling_price_float'] = (float) $this->selling_price;
-        $array['price_float'] =  (float) $this->price;
-        $array['featured'] = $this->featured;
-        $array['quantity'] = $this->quantity;
-        $array['low_stock_threshold'] = $this->low_stock_threshold;
-        $array['stock_status'] = $this->stock_status;
-        $array['image'] = $this->image;
-        $array['variant_id'] = $this->defaultVariant->id ?? $this->id;
-        $array['has_variants'] = $this->defaultVariant()->exists() || $this->variants()->exists();
-        $array['avg_rating'] = $this->avg_rating;
-        $array['brand'] = $this->brand ? collect($this->brand->toArray())->only(['id', 'name', 'logo']) : null;
-        $array['collections'] = $this->collections->map(function ($collection) {
-            return $collection['name'];
-        })->toArray();
-
-        $array['hierarchicalCategories'] = [];
-        foreach ($this->hierarchicalCategories() as $level => $categories) {
-            $array['hierarchicalCategories']['lvl' . $level] = array();
-            foreach ($categories as $category) {
-                array_push($array['hierarchicalCategories']['lvl' . $level], $category[2]);
-            }
-        };
-
-        $array['url'] = route('product.show', $this);
-
-        return $array;
-    }
-
-    public function toSitemapTag(): Url | string | array
-    {
-        return route('product.show', $this);
     }
 }

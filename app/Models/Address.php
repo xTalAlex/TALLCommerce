@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,23 +19,22 @@ class Address extends Model
         'postal_code',
         'billing',
         'default',
-        'user_id',
-        'label',
+        'user_id'
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'label',
+    protected $casts = [
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
     ];
+
+    // Relationships
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    //  Accessors & Mutators
 
     protected function province(): Attribute
     {
@@ -46,6 +44,8 @@ class Address extends Model
             },
         );
     }
+
+    // Utility
 
     public function sameAddress($otherAddress)
     {
@@ -57,32 +57,8 @@ class Address extends Model
             $this->country_region == $otherAddress->country_region;
     }
 
-    /**
-     * 
-     *      Print with {!!  !!}
-     * 
-     */
-    public function getLabelAttribute()
+    public function toString()
     {
-        $label=null;
-        
-        $label="$this->full_name";
-
-        if(Str::length($label)) $label.="\n";
-
-        $label.="$this->address";
-
-        if(Str::length($label)) $label.="\n";
-        $label.="$this->city";
-        if($this->province)
-            $label.=" (".$this->province.")";
-        if($this->postal_code && ($this->city || $this->province))
-            $label.=", ";
-        $label.="$this->postal_code";
-
-        if(Str::length($label)) $label.="\n";
-        $label.="$this->country_region";
-
-        return $label ? nl2br(e($label)) : null;
+        return $this->full_name.' | '.$this->address.', '.$this->city.' ('.$this->province.'), '.$this->postal_code.' '.$this->country_region; 
     }
 }

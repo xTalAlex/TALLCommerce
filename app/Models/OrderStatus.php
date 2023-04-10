@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class OrderStatus extends Model
 {
@@ -14,44 +14,32 @@ class OrderStatus extends Model
         'description'
     ];
 
+    protected $appends = [
+        'label',
+    ];
+
     public $timestamps = false;
+
+    // Relationships
 
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    public function getNameAttribute($value)
+    // Accessors & Mutators
+
+    protected function name(): Attribute
     {
-        return strtolower($value);
+        return Attribute::make(
+            get: fn($value) => strtolower($value),
+        );
     }
 
-    public function getLabelAttribute()
+    protected function label(): Attribute
     {
-        return __('general.order_statuses.'.($this->name));
+        return Attribute::make(
+            get: fn() => __('general.order_statuses.'.($this->name)),
+        );
     }
-
-    public function color()
-    {
-        $color = 'secondary';
-        switch($this->name){
-            case('pending'):
-                $color = 'warning';
-                break;
-            case('payment_failed'):
-                $color = 'danger';
-                break;
-            case('paid'):
-            case('preparing'):
-            case('shipped'):
-            case('completed'): 
-                $color = 'primary';
-                break; 
-            default:
-                $color = 'secondary';
-                break;
-        }
-        return $color;
-    }
-
 }
