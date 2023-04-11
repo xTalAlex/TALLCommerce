@@ -4,7 +4,7 @@
     @include('layouts._head')
     
     <body>
-        <div class="font-sans antialiased text-gray-900">
+        <div class="text-base-content">
             {{ $slot }}
         </div>
 

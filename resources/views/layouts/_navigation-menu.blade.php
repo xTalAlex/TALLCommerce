@@ -1,205 +1,160 @@
-<nav x-data="{ open: false }" class="fixed z-50 w-full h-16 bg-white border-b border-white">
-    <!-- Primary Navigation Menu -->
-    <div class="px-6 mx-auto xl:container">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="flex items-center shrink-0">
-                    <a href="{{ route('home') }}">
-                        <x-jet-application-mark class="block w-auto h-6" />
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="container hidden space-x-4 lg:-my-px lg:ml-10 lg:flex">
-                    <x-jet-nav-link accent href="{{ route('product.index') }}" :active="request()->routeIs('product.index')">
-                        {{ __('Buy Online') }}
-                    </x-jet-nav-link>
-                </div>
-            </div>
-
-            <div class="hidden lg:flex lg:items-center lg:ml-6">
-                <div class="space-x-3">
-                    <x-jet-nav-link href="{{ route('cart.index') }}" :active="request()->routeIs('cart.index')">
-                        <div class="relative w-6 h-6">
-                            <x-icons.cart/>
-                            <x-cart-counter class="absolute w-4 h-4 ml-1 text-[0.5rem] leading-4 font-medium text-center text-white rounded-full -top-1 -right-1 bg-primary-500"/>
-                        </div>
-                    </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('wishlist.index') }}" :active="request()->routeIs('wishlist.index')">
-                        <div class="relative w-6 h-6">
-                            <x-icons.heart red="false" filled="false"/>
-                            <x-wishlist-counter class="absolute w-4 h-4 ml-1 text-[0.5rem] leading-4 font-medium text-center text-white rounded-full -top-1 -right-1 bg-primary-500"/>
-                        </div>
-                    </x-jet-nav-link>
-                </div>
-
-                <!-- Settings Dropdown -->
-                <div class="relative ml-3">
-                    @auth
-                    <x-jet-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                <button class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-primary-500">
-                                    <img class="object-cover rounded-full w-9 h-9" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                                </button>
-                            @else
-                                <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-semibold leading-4 text-gray-500 transition bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none">
-                                        {{ Auth::user()->name }}
-
-                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            @endif
-                        </x-slot>
-
-                        <x-slot name="content">
-
-                            @if(Auth::user()->canAccessFilament())
-                                <div class="block px-4 py-2 text-xs text-gray-500">
-                                    {{ __('Admin') }}
-                                </div>
-                                <x-dropdown-link href="{{ route('filament.pages.dashboard') }}">
-                                    {{ __('Admin Panel') }}
-                                </x-dropdown-link>
-                            @endif
-
-                            <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-500">
-                                {{ __('Menu') }}
-                            </div>
-                            
-                            <x-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-
-                            <x-dropdown-link href="{{ route('order.index') }}">
-                                {{ __('My Orders') }}
-                            </x-dropdown-link>
-
-                            <div class="border-t border-secondary-50"></div>
-                            
-                            <form method="POST" action="{{ route('logout') }}" x-data>
-                                @csrf
-
-                                <x-dropdown-link href="{{ route('logout') }}"
-                                         @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-jet-dropdown>
-                    @else
-                    <x-jet-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
-                        {{ __('Login') }}
-                    </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
-                        {{ __('Register') }}
-                    </x-jet-nav-link>
-                    @endauth
-                </div>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="flex items-center -mr-2 space-x-2 lg:hidden">
-                <x-jet-nav-link class="relative" href="{{ route('cart.index') }}" :active="request()->routeIs('cart.index')">
-                    <x-icons.cart/>
-                    <x-cart-counter class="absolute top-0 right-0 w-4 h-4 ml-1 text-[0.5rem] leading-4 font-medium text-center text-white rounded-full bg-primary-500"/>
-                </x-jet-nav-link>
-
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 text-gray-500 transition hover:text-gray-900 focus:outline-none focus:text-gray-900">
-                    <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
+<div class="navbar bg-base-100">
+    <div class="navbar-start">
+        <label
+            tabindex="0"
+            for="my-drawer"
+            class="drawer-button btn btn-ghost btn-circle"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h7"></path></svg
+            >
+        </label>
     </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div class="absolute inset-x-0 z-10 overflow-y-auto bg-white shadow-md lg:hidden"
-        x-show="open"
-        x-cloak
-        x-transition:enter="transition transform ease-out origin-top duration-200"
-        x-transition:enter-start="opacity-50"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition transform ease-in origin-top duration-100"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        style="max-height: calc(100vh - 4rem);"
-    >
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-3">
-            <div class="flex items-center px-4 pb-1">
-                @auth
-                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                        <a href="{{ route('profile.show') }}" class="mr-3 shrink-0">
-                            <img class="object-cover rounded-full w-9 h-9" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                        </a>
-                    @endif
-
-                    <div>
-                        <div>
-                            <a href="{{ route('profile.show') }}" class="text-base font-semibold">{{ Auth::user()->name }}</a>
-                        </div>
-                        <div class="flex space-x-2">
-                            <div>
-                                <a class="text-sm font-semibold text-gray-500 underline" href="{{ route('profile.show') }}">
-                                    {{ __('Profile') }}
-                                </a>
-                            </div>
-                            @if(Auth::user()->canAccessFilament())
-                                <div>
-                                    <a class="text-sm font-semibold text-gray-500 underline" href="{{ route('filament.pages.dashboard') }}">
-                                        {{ __('Admin Panel') }}
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
-                            
+    <div class="navbar-center">
+        <a href="{{ route('home') }}">
+            <x-jet-application-mark class="block w-auto h-6" />
+        </a>
+    </div>
+    <div class="navbar-end">
+        <div class="dropdown dropdown-end">
+            <label
+                tabindex="0"
+                class="btn btn-ghost btn-circle"
+            >
+                <div class="indicator">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                        ></path></svg
+                    >
+                    {{-- <x-cart-counter class="absolute w-4 h-4 ml-1 text-[0.5rem] leading-4 font-medium text-center text-white rounded-full -top-1 -right-1 bg-primary-500"/> --}}
+                    <span class="badge badge-sm indicator-item"
+                        >8</span
+                    >
+                </div>
+            </label>
+            <div
+                tabindex="0"
+                class="mt-3 shadow card card-compact dropdown-content w-52 bg-base-100"
+            >
+                <div class="card-body">
+                    <span class="text-lg font-bold"
+                        >8 Items</span
+                    >
+                    <span class="text-info">Subtotal: $999</span
+                    >
+                    <div class="card-actions">
+                        <a href="{{ route('cart.index') }}"
+                            class="btn btn-primary btn-block"
+                            >View cart</a
+                        >
                     </div>
-                @endauth
-            </div>
-
-            <div class="px-4 pt-2 pb-1 space-y-1 border-t border-secondary-50">
-                @auth
-                    <x-dropdown-link href="{{ route('wishlist.index') }}">
-                        {{ __('Wishlist') }}
-                        <x-wishlist-counter class="inline-block w-4 h-4 text-[0.5rem] leading-4 font-medium text-center text-white rounded-full bg-primary-500"/>
-                    </x-dropdown-link>
-                    <x-dropdown-link href="{{ route('order.index') }}">
-                            {{ __('My Orders') }}
-                    </x-dropdown-link>
-                @endauth
-                <x-dropdown-link accent="true" href="{{ route('product.index') }}">
-                    {{ __('Buy Online') }}
-                </x-dropdown-link>
-                <div class="pt-2 pb-1 space-y-1 border-t border-secondary-50">
-
-                </div>
-                <div class="pt-2 pb-1 space-y-1 border-t border-secondary-50">
-                    @auth
-                        <form method="POST" action="{{ route('logout') }}" x-data>
-                                @csrf
-                                <x-dropdown-link href="{{ route('logout') }}"
-                                            @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                        </form>
-                    @else
-                        <x-dropdown-link href="{{ route('login') }}">
-                                {{ __('Login') }}
-                        </x-dropdown-link>
-                        <x-dropdown-link href="{{ route('register') }}">
-                                {{ __('Register') }}
-                        </x-dropdown-link>
-                    @endauth
                 </div>
             </div>
         </div>
+        <div class="dropdown dropdown-end">
+            <label
+                tabindex="0"
+                class="btn btn-ghost btn-circle"
+            >
+                <div class="indicator">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                        ></path></svg
+                    >
+                    {{-- <x-wishlist-counter class="absolute w-4 h-4 ml-1 text-[0.5rem] leading-4 font-medium text-center text-white rounded-full -top-1 -right-1 bg-primary-500"/> --}}
+                    <span class="badge badge-sm indicator-item"
+                        >8</span
+                    >
+                </div>
+            </label>
+            <div
+                tabindex="0"
+                class="mt-3 shadow card card-compact dropdown-content w-52 bg-base-100"
+            >
+                <div class="card-body">
+                    <span class="text-lg font-bold"
+                        >8 Items</span
+                    >
+                    <span class="text-info">Subtotal: $999</span
+                    >
+                    <div class="card-actions">
+                        <a href="{{ route('wishlist.index') }}"
+                            class="btn btn-primary btn-block"
+                            >View wishlist</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+        @auth
+        <div class="dropdown dropdown-end">
+            <label
+                tabindex="0"
+                class="btn btn-ghost btn-circle avatar"
+            >
+                <div class="w-10 rounded-full">
+                    <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}"/>
+                </div>
+            </label>
+            <ul
+                tabindex="0"
+                class="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+            >
+                <li>
+                    <a class="justify-between">
+                        Profile
+                        <span class="badge">New</span>
+                    </a>
+                </li>
+                @if(Auth::user()->canAccessFilament())
+                    <li>
+                        <a href="{{ route('filament.pages.dashboard') }}">
+                            {{ __('Admin Panel') }}
+                        </a>
+                    </li>
+                @endif
+                <li><a href="{{ route('profile.show') }}">{{ __('Profile') }}</a></li>
+                <li><a href="{{ route('order.index') }}">{{ __('My Orders') }}</a></li>
+                <li>
+                    <form method="POST" action="{{ route('logout') }}" x-data>
+                        @csrf
+                        <a href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                            {{ __('Log Out') }}
+                        </a>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        @else
+        <a href="{{ route('login') }}" class="btn btn-ghost">{{ __('Login') }}</a>
+        <a href="{{ route('register') }}" class="btn">{{ __('Register') }}</a>
+        @endauth
     </div>
-</nav>
+</div>

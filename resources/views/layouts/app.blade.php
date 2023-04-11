@@ -1,32 +1,43 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth" data-theme="emerald">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="emerald">
     
     @include('layouts._head')
 
-    <body class="font-sans antialiased">
-        <x-jet-banner />
+    <body>
+		<div class="drawer text-base-content">
+			<input id="my-drawer" type="checkbox" class="drawer-toggle" />
+			<div class="flex flex-col drawer-content scroll-smooth">
+                
+                <x-jet-banner />
 
-        <div class="bg-white">
-            @livewire('navigation-menu')
-    
-            <div class="flex flex-col min-h-screen pt-16">
-                <!-- Page Heading -->
-                @if (isset($header))
-                    <header class="">
-                        <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                            {{ $header }}
-                        </div>
-                    </header>
-                @endif
+				@livewire('navigation-menu')
+                
+				<main class="flex-1">
+                
+                    @if (isset($header))
+                        <header class="">
+                            <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+                                {{ $header }}
+                            </div>
+                        </header>
+                    @endif
 
-                <!-- Page Content -->
-                <main class="flex-1">
-                    {{ $slot }}
-                </main>
+					{{ $slot }}
+                    
+				</main>
 
                 @include('layouts._footer')
-            </div>
-        </div>
+                
+			</div>
+			<div class="drawer-side">
+				<label for="my-drawer" class="drawer-overlay"></label>
+				<div class="menu w-80 bg-base-100 text-base-content">
+
+                    @include('layouts._sidebar')
+                    
+				</div>
+			</div>
+		</div>
 
         @stack('modals')
 
@@ -35,5 +46,5 @@
         <x-tawkto-widget/>
         
         @livewireScripts
-    </body>
+	</body>
 </html>
