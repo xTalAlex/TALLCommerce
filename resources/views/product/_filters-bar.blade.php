@@ -10,7 +10,7 @@
         x-cloak
     ></div>
     <div class="px-6 lg:hidden">
-        <x-secondary-button x-on:click="open=true">
+        <x-button x-on:click="open=true">
             <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="14px" viewBox="0 0 18 14">
                 <g id="Group_36196" data-name="Group 36196" transform="translate(-925 -1122.489)">
                     <path id="Path_22590" data-name="Path 22590"
@@ -27,7 +27,7 @@
                         transform="translate(-1405.617 -646.936)" fill="currentColor"></path>
                 </g>
             </svg><span class="ml-1">{{ __('Filters') }}</span>
-        </x-secondary-button>
+        </x-button>
     </div>
 
     <div aria-label="Sidebar">
@@ -105,7 +105,7 @@
                         </template>
                     </div>
                 </div>
-                <x-voice-search class="mt-2" wire:change="voiceSearch"/>
+                <x-livewire.voice-search class="mt-2" wire:change="voiceSearch"/>
             </div>
 
             <div class="w-full p-2 mt-4 space-y-6">
@@ -183,9 +183,9 @@
                 <div class="mt-4 mb-4 text-xs text-center text-gray-500">
                     {{ $products->total() . ' ' .  __('results') }}
                 </div>
-                <x-secondary-button class="w-full" wire:click="resetFilters"
+                <x-button class="w-full" wire:click="resetFilters"
                     disabled="{{!$this->isSetFilters()}}"
-                >{{ __('Clear filters') }}</x-secondary-button>
+                >{{ __('Clear filters') }}</x-button>
             </div>
         </div>
     </div>

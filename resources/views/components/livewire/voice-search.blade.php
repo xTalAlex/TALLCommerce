@@ -57,15 +57,14 @@
     x-cloak
     {{ $attributes }}
 >
-    <button class="inline-flex items-center justify-center w-full h-full px-4 py-2 text-xs font-semibold tracking-widest transition focus:outline-none focus:ring disabled:opacity-25"
-        x-bind:class="listening ? 
-            'bg-white border active:text-white hover:text-white hover:bg-success-500 text-success-500 border-success-500 focus:ring-opacity-50 focus:border-success-500 active:bg-success-400 focus:ring-success-400' : 
-            'bg-white border active:text-white hover:text-white hover:bg-primary-500 text-primary-500 border-primary-500 focus:ring-opacity-50 focus:border-primary-500 active:bg-primary-400 focus:ring-primary-400'
+    <x-button class="w-full" x-bind:class="listening ? 
+            'btn-success' : 
+            'btn-primary'
         "
         x-on:click="startListening"
     >
         <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
         </svg>
-    </button>
+    </x-button>
 </div>

@@ -54,9 +54,12 @@ class UserResource extends Resource
                     ->schema([
                         Forms\Components\Card::make()
                             ->schema([
+                                Forms\Components\TextInput::make('email')->label(__('Email'))
+                                    ->disabled()
+                                    ->dehydrated(false), 
+                                Forms\Components\TextInput::make('phone')->label(__('Phone Number')),
                                 Forms\Components\TextInput::make('fiscal_code')->label(__('Fiscal Code')), 
-                                Forms\Components\TextInput::make('vat')->label(__('VAT')), 
-                                Forms\Components\TextInput::make('phone')->label(__('Phone Number'))
+                                Forms\Components\TextInput::make('vat')->label(__('VAT'))
                                     ->tel(), 
                             ])->columns([
                                 'md' => 2,

@@ -78,7 +78,7 @@ class ShippingPriceResource extends Resource
                                     ),
                                 Forms\Components\TextInput::make('description')->label(__('Description'))
                                     ->columnSpan('full'),
-                                Forms\Components\Fieldset::make('delivery_time')->label(__('Delivery Time'))
+                                Forms\Components\Fieldset::make('delivery_time_label')->label(__('Delivery Time'))
                                     ->schema([
                                         Forms\Components\TextInput::make('min_days')->label(__('Min'))
                                             ->lte('max_days')

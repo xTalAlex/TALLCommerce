@@ -12,7 +12,7 @@
 
         @stack('scripts')
 
-        <x-tawkto-widget/>
+        @include('layouts._tawkto-widget')
 
         @livewireScripts
     </body>

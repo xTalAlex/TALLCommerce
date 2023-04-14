@@ -147,9 +147,9 @@
             </x-slot>
 
             <x-slot name="footer">
-                <x-secondary-button wire:click="$toggle('confirmingPayment')" wire:loading.attr="disabled">
+                <x-button wire:click="$toggle('confirmingPayment')" wire:loading.attr="disabled">
                     {{ __('Cancel') }}
-                </x-secondary-button>
+                </x-button>
 
                 <x-button wire:click="attemptSubmit" :disabled="$submitDisabled" class="ml-3" wire:loading.attr="disabled">
                     {{ __('Confirm') }}

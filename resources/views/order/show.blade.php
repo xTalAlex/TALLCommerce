@@ -105,11 +105,11 @@
                                 @endif
                                 @if($order->canBeInvoiced())
                                     <form class="w-full" action="{{ route('invoice.show', $order ) }}" method="GET">
-                                        <x-secondary-button ghost="true" type="submit" class="justify-center w-full"
+                                        <x-button outline="true" type="submit" class="justify-center w-full"
                                         >
                                             {{ __('Invoice') }}
                                             <x-icons.document-download class="w-4 h-4"/>
-                                        </x-secondary-button>
+                                        </x-button>
                                     </form>
                                 @endif
                                 @if($order->canBeDeleted())

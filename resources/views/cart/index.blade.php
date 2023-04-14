@@ -58,11 +58,11 @@
                         x-on:input="$event.target.value=$event.target.value.toUpperCase()"
                     ></x-input>
                     @if($coupon)
-                    <x-secondary-button class="py-2 text-base" wire:click="removeCoupon"
-                    ><x-icons.x/></x-secondary-button>
+                    <x-button class="py-2 text-base" wire:click="removeCoupon"
+                    ><x-icons.x/></x-button>
                     @else
-                    <x-secondary-button class="py-2 text-base" wire:click="refreshTotals"
-                    >{{ __('Check') }}</x-secondary-button>
+                    <x-button class="py-2 text-base" wire:click="refreshTotals"
+                    >{{ __('Check') }}</x-button>
                     @endif
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     @if(!count($invalid_quantity_row_ids))
                     <form action="{{ route('order.create') }}" method="GET">
                     @csrf
-                        <x-button class="w-full py-4 text-base">
+                        <x-button class="w-full text-base">
                             {{ __('Checkout') }}
                         </x-button>
                     </form>
@@ -97,23 +97,7 @@
         
     </div>
     @else
-        <div class="grid place-items-center">
-            <div class="py-12">
-                <p>
-                    {{ __("Haven't found anything, yet?") }}
-                </p>
-                <div class="flex flex-col w-full mt-6 space-y-2 sm:space-y-0 sm:space-x-2 sm:flex-row">
-                    <form class="w-full sm:w-1/2" method="GET" action="{{ route('product.index') }}">
-                        <x-button class="w-full h-full">{{ __('To Shop') }}</x-button>
-                    </form>
-                    @if($randomProduct)
-                        <form class="w-full sm:w-1/2" method="GET" action="{{  route('product.show', $randomProduct) }}">
-                            <x-secondary-button class="w-full h-full">{{ __('Random Product') }}</x-secondary-button>
-                        </form>
-                    @endif
-                </div>
-            </div>
-        </div>
+    <x-product-suggestion />
     @endif
         
     {{-- @if($count)

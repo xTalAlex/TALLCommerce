@@ -12,6 +12,9 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
+            autoplay: {
+                delay: 1000,
+            },
         });
     "
 >
@@ -25,7 +28,7 @@
             <a class="w-full h-full"
                 href="{{ route('product.index', ['category' => $item->slug] ) }}"
             >
-                <img class="object-cover w-full h-full" src="{{$item->hero}}"/>
+                <img class="object-cover w-full h-full" src="{{$item->image}}"/>
                 <span class="absolute z-30 flex items-center justify-center w-full h-20 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 bg-gray-900 bg-opacity-50 top-1/2 left-1/2 sm:text-3xl">
                     {{ $item->name }}   
                 </span>

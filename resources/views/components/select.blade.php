@@ -1,7 +1,5 @@
 @props([
-    'type' => 'text',
     'label' => null,
-    'placeholder' => null,
     'name' => null,
     'disabled' => false,
 ])
@@ -13,12 +11,13 @@
     {{-- <span class="label-text-alt">Top Right label</span> --}}
   </label>
   @endif
-  <input type="{{ $type }}" class="w-full input input-bordered {{ $name && $errors->has($name) ? 'input-error' : ''}}" 
+  <select class="w-full select select-bordered {{ $name && $errors->has($name) ? 'select-error' : ''}}"
     {{ $attributes->except('class') }} 
     {{ $disabled ? 'disabled' : '' }}
-    {!! $name ? 'name="'.$name.'" id="'.$name.'"' : '' !!}
-    {!! $placeholder ? 'placeholder="'.$placeholder.'"' : '' !!}
-  />
+    {{ $name ? 'name="'.$name.'" id="'.$name.'"' : '' }}
+  >
+      {{ $slot }}
+    </select>
   @error($name)
   <label class="label">
     <span class="label-text-alt text-error">{{ $error }}</span>

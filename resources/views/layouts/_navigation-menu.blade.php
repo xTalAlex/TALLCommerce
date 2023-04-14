@@ -21,7 +21,7 @@
     </div>
     <div class="navbar-center">
         <a href="{{ route('home') }}">
-            <x-jet-application-mark class="block w-auto h-6" />
+            <x-jet-application-logo class="block w-auto h-10" />
         </a>
     </div>
     <div class="navbar-end">
@@ -44,10 +44,7 @@
                             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                         ></path></svg
                     >
-                    {{-- <x-cart-counter class="absolute w-4 h-4 ml-1 text-[0.5rem] leading-4 font-medium text-center text-white rounded-full -top-1 -right-1 bg-primary-500"/> --}}
-                    <span class="badge badge-sm indicator-item"
-                        >8</span
-                    >
+                    <x-cart-counter class="badge badge-sm indicator-item" />
                 </div>
             </label>
             <div
@@ -69,50 +66,15 @@
                 </div>
             </div>
         </div>
-        <div class="dropdown dropdown-end">
-            <label
-                tabindex="0"
-                class="btn btn-ghost btn-circle"
-            >
-                <div class="indicator">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        ><path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                        ></path></svg
-                    >
-                    {{-- <x-wishlist-counter class="absolute w-4 h-4 ml-1 text-[0.5rem] leading-4 font-medium text-center text-white rounded-full -top-1 -right-1 bg-primary-500"/> --}}
-                    <span class="badge badge-sm indicator-item"
-                        >8</span
-                    >
-                </div>
-            </label>
-            <div
-                tabindex="0"
-                class="mt-3 shadow card card-compact dropdown-content w-52 bg-base-100"
-            >
-                <div class="card-body">
-                    <span class="text-lg font-bold"
-                        >8 Items</span
-                    >
-                    <span class="text-info">Subtotal: $999</span
-                    >
-                    <div class="card-actions">
-                        <a href="{{ route('wishlist.index') }}"
-                            class="btn btn-primary btn-block"
-                            >View wishlist</a
-                        >
-                    </div>
-                </div>
+        <a
+            href="{{ route('wishlist.index') }}"
+            class="btn btn-ghost btn-circle"
+        >
+            <div class="indicator">
+                <x-icons.heart filled="false" red="false" />
+                <x-wishlist-counter class="badge badge-sm indicator-item" />
             </div>
-        </div>
+        </a>
         @auth
         <div class="dropdown dropdown-end">
             <label
@@ -127,16 +89,11 @@
                 tabindex="0"
                 class="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
-                <li>
-                    <a class="justify-between">
-                        Profile
-                        <span class="badge">New</span>
-                    </a>
-                </li>
                 @if(Auth::user()->canAccessFilament())
                     <li>
-                        <a href="{{ route('filament.pages.dashboard') }}">
+                        <a class="justify-between" href="{{ route('filament.pages.dashboard') }}">
                             {{ __('Admin Panel') }}
+                            <span class="badge">New</span>
                         </a>
                     </li>
                 @endif

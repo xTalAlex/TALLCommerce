@@ -1,3 +1,21 @@
-<input type="checkbox" {!! $attributes->merge(['class' => '
-        border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50
-    ']) !!}>
+@props([
+    'checked' => false,
+    'disabled' => false,
+    'size' => 'md',
+])
+
+@php
+$id = $id ?? md5($attributes->wire('model'));
+
+$size = [
+    'xs' => 'checkbox-xs',
+    'sm' => 'checkbox-sm',
+    'md' => 'checkbox-md',
+    'lg' => 'checkbox-lg',
+][$size ?? 'md'];
+@endphp
+
+<input type="checkbox"  {!! $attributes->merge(['class' => 'checkbox ' . $size]) !!}
+    {{ $checked ? 'checked' : '' }}
+    {{ $disabled ? 'disabled' : '' }}
+/>

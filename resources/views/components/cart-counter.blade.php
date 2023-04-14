@@ -1,7 +1,4 @@
-{{--
-    Use visible attribute to show even if cart is empty
---}}
-<div {{ $attributes->merge(['']) }}
+<span {{ $attributes->merge(['']) }}
     x-data="{
         count : {{ Cart::instance('default')->count() }},
         visible : {{ $attributes->get('visible') ?? 'false' }},
@@ -20,4 +17,4 @@
 
     style="display:none;"
 >
-</div>
+</span>

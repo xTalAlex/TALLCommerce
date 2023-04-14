@@ -19,7 +19,7 @@ class PrepareShoppingListsSession
             try {
                 Cart::instance('default')->erase(Auth::user()->email); 
             }catch (Throwable $e) {
-                //Log::warning('Attempted to delete cart on login failed');
+                //Log::warning('Attempt to delete cart on login failed');
             }
             Cart::instance('default')->store(Auth::user()->email);
         }

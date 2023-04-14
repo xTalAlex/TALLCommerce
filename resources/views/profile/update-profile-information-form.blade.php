@@ -38,14 +38,14 @@
                     </span>
                 </div>
 
-                <x-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
+                <x-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
                     {{ __('Select A New Photo') }}
-                </x-secondary-button>
+                </x-button>
 
                 @if ($this->user->profile_photo_path)
-                    <x-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
+                    <x-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
                         {{ __('Remove Photo') }}
-                    </x-secondary-button>
+                    </x-button>
                 @endif
 
                 <x-jet-input-error for="photo" class="mt-2" />
@@ -82,9 +82,7 @@
 
         <!-- Fiscal Code -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="fiscal_code" value="{{ __('Fiscal Code') }}" />
-            <x-input id="fiscal_code" type="text" class="block w-full mt-1" wire:model.defer="state.fiscal_code" />
-            <x-jet-input-error for="fiscal_code" class="mt-2" />
+            <x-input label="{{ __('Fiscal Code') }}" id="fiscal_code" type="text" class="block w-full mt-1" wire:model.defer="state.fiscal_code" />
         </div>
     </x-slot>
 

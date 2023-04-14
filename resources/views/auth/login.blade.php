@@ -44,9 +44,9 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a href="{{ route('register') }}">
-                    <x-secondary-button type="button">
+                    <x-button type="button">
                         {{ __('Register') }}
-                    </x-secondar-button>
+                    </x-button>
                 </a>
                 <x-button class="ml-2">
                     {{ __('Log in') }}

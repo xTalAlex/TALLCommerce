@@ -10,7 +10,7 @@ trait WithSlug
     protected function slug(): Attribute
     {
         return Attribute::make(
-            set: function(string $value) {
+            set: function(string|null $value) {
                 if (static::whereNot('id',$this->id)->whereSlug($slug = Str::slug($value))->exists())
                     $slug = "{$slug}-{$this->id}";
                 return [ 'slug' => $slug ];

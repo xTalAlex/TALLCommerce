@@ -12,7 +12,28 @@ module.exports = {
     ],
     darkMode: 'class',
     theme: {
+        fontFamily: {
+            'sans': ['Alegreya Sans SC',  ...defaultTheme.fontFamily.sans],
+            'serif': ['Charmonman',  ...defaultTheme.fontFamily.serif],
+        },
         extend: {
+            colors: {
+                primary: {
+                    "50": "#DBF3F5",
+                    "100": "#BDE8EB",
+                    "200": "#9FDDE0",
+                    "300": "#81D0D4",
+                    "400": "#65C3C8",
+                    "500": "#49B5BB",
+                    "600": "#3E989D",
+                    "700": "#347B7E",
+                    "800": "#2A5D60",
+                    "900": "#1E4143"
+                },
+                danger: colors.rose,
+                success: colors.green,
+                warning: colors.yellow,
+            },
             animation: {
                 shine: "shine 1s",
             },
@@ -29,7 +50,7 @@ module.exports = {
         require('daisyui'),
     ],
     daisyui: {
-        themes: ['emerald'],
+        themes: ['cupcake'],
         logs: false,
     },
 };

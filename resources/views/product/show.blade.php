@@ -155,7 +155,7 @@
 
                     @guest
                         <a class="w-full" href="{{ route('product.login', $product) }}">
-                            <x-secondary-button class="w-full text-base">{{ __('Login to view price') }}</x-secondary-button>
+                            <x-button class="w-full text-base">{{ __('Login to view price') }}</x-button>
                         </a>
                     @endguest
 
@@ -164,12 +164,12 @@
                     </x-button>
 
                     @if(!$this->wishlistContains($product))
-                        <x-button class="w-full text-base" wire:click="addToWishlist" ghost="true"
+                        <x-button class="w-full text-base" wire:click="addToWishlist" outline="true"
                         >
                             {{ __('Wishlist') }}<x-icons.heart class="ml-1" red="false" filled="false"/>
                         </x-button>
                     @else
-                        <x-button class="w-full text-base" ghost="true"
+                        <x-button class="w-full text-base" outline="true"
                             wire:click="removeFromWishlist"
                         >
                             {{ __('Wishlist') }}<x-icons.heart class="ml-1" red="false" filled="true"/>

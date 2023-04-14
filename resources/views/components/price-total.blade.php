@@ -3,9 +3,9 @@
 ])
 
 <div @class([
-    'px-6 py-12 space-y-4 text-white',
-    'bg-secondary-500' => $theme == 'secondary',
-    'bg-primary-500' => $theme == 'primary'
+    'px-6 py-12 space-y-4',
+    'bg-secondary text-secondary-content' => $theme == 'secondary',
+    'bg-primary text-primary-content' => $theme == 'primary'
 ])>
 
     <div class="mb-2 text-3xl font-bold">{{ isset($heading) ? $heading :  __('Summary') }}</div>

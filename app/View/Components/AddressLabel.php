@@ -8,6 +8,7 @@ use Illuminate\View\Component;
 class AddressLabel extends Component
 {
     public Address $address;
+    
     /**
      * Create a new component instance.
      *

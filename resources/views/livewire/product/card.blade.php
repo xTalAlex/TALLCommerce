@@ -48,9 +48,9 @@
                 </x-button>
             </form>
             @else
-                <x-secondary-button disabled class="px-1 py-2">
+                <x-button disabled class="px-1 py-2">
                     {{ __('Out of Stock') }}
-                </x-secondary-button>
+                </x-button>
             @endif
 
         </div>

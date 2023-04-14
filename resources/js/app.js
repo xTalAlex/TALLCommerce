@@ -12,9 +12,11 @@ import { DateTime } from "luxon";
 
 window.DateTime = DateTime;
 
-import Swiper from "swiper";
+import Swiper, { Navigation, Pagination, Autoplay } from 'swiper';
 
 window.Swiper = Swiper;
+
+window.Swiper.use([Navigation, Pagination, Autoplay]);
 
 import flatpickr from "flatpickr";
 // import { Italian } from "flatpickr/dist/l10n/it.js";

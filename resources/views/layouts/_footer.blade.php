@@ -25,7 +25,7 @@
     </footer>
     <footer class="p-4 footer footer-center bg-base-300 text-base-content">
     <div class="flex items-center">
-        <x-jet-application-mark class="block w-24 -mt-1" /> © {{ today()->format('Y') }} - 
+        <x-jet-application-mark class="block h-5 -mt-1" /> © {{ today()->format('Y') }} - 
         Developed by 
         <a href="https://talale.it" rel="noopener noreferrer" class="ml-1 text-gray-600" target="_blank">Alessandro Talamona</a>
     </div>

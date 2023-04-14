@@ -34,23 +34,17 @@
 
         <!-- Province -->
         <div class="col-span-6 sm:col-span-2">
-            <x-jet-label for="province" value="{{ __('Province') }}" />
-            <x-province-select id="province"  class="block w-full mt-1" wire:model.defer="address.province" autocomplete="province" active/>
-            <x-jet-input-error for="address.province" class="mt-2" />
+            <x-province-select label="{{ __('Province') }}" id="province"  class="block w-full mt-1" wire:model.defer="address.province" autocomplete="province" active/>
         </div>
 
         <!-- Postal Code -->
         <div class="col-span-6 sm:col-span-2">
-            <x-jet-label for="postal_code" value="{{ __('Postal Code') }}" />
-            <x-input id="postal_code" type="text" maxlength="5" class="block w-full mt-1" wire:model.defer="address.postal_code" autocomplete="postal_code" />
-            <x-jet-input-error for="address.postal_code" class="mt-2" />
+            <x-input label="{{ __('Postal Code') }}" id="postal_code" type="text" maxlength="5" class="block w-full mt-1" wire:model.defer="address.postal_code" autocomplete="postal_code" />
         </div>
         
         <!-- Country/Region -->
         <div class="col-span-6 sm:col-span-2">
-            <x-jet-label for="country_region" value="{{ __('Country/Region') }}" />
-            <x-country-select id="country_region" class="block w-full mt-1" wire:model.defer="address.country_region"/>
-            <x-jet-input-error for="address.country_region" class="mt-2" />
+            <x-country-select label="{{ __('Country/Region') }}" id="country_region" class="block w-full mt-1" wire:model.defer="address.country_region"/>
         </div>
         
     </x-slot>

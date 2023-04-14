@@ -9,7 +9,7 @@
             </form>
             @if($product)
             <form class="w-full sm:w-1/2" method="GET" action="{{ route('product.show', $product) }}">
-                <x-secondary-button class="w-full">{{ __('Random Product') }}</x-secondary-button>
+                <x-button class="w-full">{{ __('Random Product') }}</x-button>
             </form>
             @endif
         </div>

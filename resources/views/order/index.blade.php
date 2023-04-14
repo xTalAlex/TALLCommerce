@@ -99,22 +99,22 @@
                             </form>
                         @endif
                         <form class="w-full" action="{{ route('order.show', $order) }}" method="GET">
-                            <x-secondary-button type="submit" class="justify-center w-full"
-                            s>{{ __('Details') }}</x-secondary-button>
+                            <x-button type="submit" class="justify-center w-full"
+                            s>{{ __('Details') }}</x-button>
                         </form>
                         @if($order->canBeEdited())
                             <form class="w-full" action="{{ route('order.update', $order ) }}" method="GET">
-                                <x-secondary-button ghost="true" type="submit" class="justify-center w-full"
-                                >{{__('Edit') }}</x-secondary-button>
+                                <x-button outline="true" type="submit" class="justify-center w-full"
+                                >{{__('Edit') }}</x-button>
                             </form>
                         @endif
                         @if($order->canBeInvoiced())
                             <form class="w-full" action="{{ route('invoice.show', $order ) }}" method="GET">
-                                <x-secondary-button ghost="true" type="submit" class="justify-center w-full"
+                                <x-button outline="true" type="submit" class="justify-center w-full"
                                 >
                                     {{ __('Invoice') }}
                                     <x-icons.document-download class="w-4 h-4"/>
-                                </x-secondary-button>
+                                </x-button>
                             </form>
                         @endif
                         @if($order->canBeDeleted())
@@ -128,7 +128,7 @@
                 @endforeach
             </ol>
             @else
-            <x-product-suggestion></x-product-suggestion>
+            <x-product-suggestion />
             @endif
         </div>
 

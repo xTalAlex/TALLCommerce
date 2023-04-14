@@ -99,7 +99,7 @@ class Index extends Component
         if ($this->category)
         {
             $categoryModel = Category::where('id', (int) $this->category)->orWhere('slug', $this->category)->first();
-            $this->openMenus = Str::of($categoryModel->hierarchyPath())->explode('>');
+            if($categoryModel) $this->openMenus = Str::of($categoryModel->hierarchyPath())->explode('>');
         }
     }
 

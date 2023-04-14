@@ -23,7 +23,7 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
 {
     use HasFactory, InteractsWithMedia, SoftDeletes, HasSEO, Featurable, WithSlug;
 
-    const PATH = "products";
+    const MEDIA_PATH = "products";
 
     protected $fillable = [
         'name',
@@ -296,14 +296,14 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
             get: fn() => $this->getMedia('gallery')->map(fn ($media) => 
                     $media->getAvailableFullUrl(config('custom.use_watermark') ? ['watermarked', 'default'] : ['default'])
                 ),
-            set: function (mixed $value) {
-                if ($value) {
-                    $fileAdders = $this->addMultipleMediaFromRequest($value);
-                    foreach ($fileAdders as $fileAdder) {
-                        $fileAdder->toMediaCollection('gallery');
-                    }
-                }
-            } 
+            // set: function (mixed $value) {
+            //     if ($value) {
+            //         $fileAdders = $this->addMultipleMediaFromRequest($value);
+            //         foreach ($fileAdders as $fileAdder) {
+            //             $fileAdder->toMediaCollection('gallery');
+            //         }
+            //     }
+            // } 
         );
     }
 
