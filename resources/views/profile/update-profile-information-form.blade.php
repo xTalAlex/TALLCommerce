@@ -12,9 +12,10 @@
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
-                <input type="file" class="hidden"
+                <x-input type="file" class="hidden" label="{{ __('Photo') }}"
                             wire:model="photo"
                             x-ref="photo"
+                            id="photo"
                             x-on:change="
                                     photoName = $refs.photo.files[0].name;
                                     const reader = new FileReader();
@@ -23,8 +24,6 @@
                                     };
                                     reader.readAsDataURL($refs.photo.files[0]);
                             " />
-
-                <x-jet-label for="photo" value="{{ __('Photo') }}" />
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
@@ -54,35 +53,27 @@
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('Name') }}" />
-            <x-input id="name" type="text" class="block w-full mt-1" wire:model.defer="state.name" autocomplete="name" />
-            <x-jet-input-error for="name" class="mt-2" />
+            <x-input id="name" type="text" label="{{ __('Name') }}" class="block w-full" wire:model.defer="state.name" autocomplete="name" />
         </div>
 
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="email" value="{{ __('Email') }}" />
-            <x-input id="email" type="email" class="block w-full mt-1" wire:model.defer="state.email" />
-            <x-jet-input-error for="email" class="mt-2" />
+            <x-input id="email" type="email" label="{{ __('Email') }}" class="block w-full" wire:model.defer="state.email" />
         </div>
 
         <!-- Phone -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="phone" value="{{ __('Phone Number') }}" />
-            <x-input id="phone" type="text" class="block w-full mt-1" wire:model.defer="state.phone" />
-            <x-jet-input-error for="phone" class="mt-2" />
+            <x-input id="phone" type="text" label="{{ __('Phone Number') }}" class="block w-full" wire:model.defer="state.phone" />
         </div>
 
         <!-- VAT -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="vat" value="{{ __('VAT') }}" />
-            <x-input id="vat" type="text" class="block w-full mt-1" wire:model.defer="state.vat" />
-            <x-jet-input-error for="vat" class="mt-2" />
+            <x-input id="vat" type="text" label="{{ __('VAT') }}" class="block w-full" wire:model.defer="state.vat" />
         </div>
 
         <!-- Fiscal Code -->
         <div class="col-span-6 sm:col-span-4">
-            <x-input label="{{ __('Fiscal Code') }}" id="fiscal_code" type="text" class="block w-full mt-1" wire:model.defer="state.fiscal_code" />
+            <x-input label="{{ __('Fiscal Code') }}" id="fiscal_code" type="text" class="block w-full" wire:model.defer="state.fiscal_code" />
         </div>
     </x-slot>
 

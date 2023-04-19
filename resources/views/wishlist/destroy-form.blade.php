@@ -5,7 +5,7 @@
         </x-button>
     </div>
 
-    <x-jet-confirmation-modal wire:model="confirmingWishlistDeletion">
+    <x-jet-dialog-modal wire:model="confirmingWishlistDeletion">
         <x-slot name="title">
             {{ __('Empty Wishlist') }}
         </x-slot>
@@ -23,5 +23,5 @@
                 {{ __('Empty Wishlist') }}
             </x-button>
         </x-slot>
-    </x-jet-confirmation-modal>
+    </x-jet-dialog-modal>
 </div>

@@ -83,26 +83,25 @@
                 >
                     @if(!$addresses_confirmed)
                     <div class="py-6 space-y-2">
-                        <x-input @class(['hidden' => Auth::check()]) label="{{ __('Email') }}" name="email" wire:model.lazy="email"/>
+                        <x-input @class(['hidden' => Auth::check()]) label="{{ __('Email') }}" id="email" wire:model.lazy="email"/>
                         <div class="grid gap-2 xl:grid-cols-2 xl:gap-6">
-                            <x-input label="{{ __('Full Name') . ' / ' . __('Company') }}" name="shipping_address_full_name" wire:model.lazy="shipping_address.full_name"/>
-                            <x-input label="{{ __('Phone Number') }}" name="phone" wire:model.lazy="phone"/>
+                            <x-input label="{{ __('Full Name') . ' / ' . __('Company') }}" id="shipping_address_full_name" wire:model.lazy="shipping_address.full_name"/>
+                            <x-input label="{{ __('Phone Number') }}" id="phone" wire:model.lazy="phone"/>
                         </div>
                         <div>
-                            <x-input label="{{ __('Address') }}" name="shipping_address_address" wire:model.lazy="shipping_address.address"/>
+                            <x-input label="{{ __('Address') }}" id="shipping_address_address" wire:model.lazy="shipping_address.address"/>
                         </div>
                         <div class="grid gap-2 xl:grid-cols-2 xl:gap-6">
-                            <x-input label="{{ __('City') }}" name="shipping_address_city" wire:model.lazy="shipping_address.city"/>
-                            <x-province-select label="{{ __('Province') }}" name="shipping_address_province" wire:model.lazy="shipping_address.province"/>
+                            <x-input label="{{ __('City') }}" id="shipping_address_city" wire:model.lazy="shipping_address.city"/>
+                            <x-province-select label="{{ __('Province') }}" id="shipping_address_province" wire:model.lazy="shipping_address.province"/>
                         </div>
                         <div class="grid gap-2 xl:grid-cols-2 xl:gap-6">
-                            <x-input label="{{ __('Postal Code') }}" maxlength="5" name="shipping_address_postal_code" wire:model.lazy="shipping_address.postal_code"/>
-                            <x-country-select label="{{ __('Country/Region') }}" name="shipping_address_country_region" wire:model.lazy="shipping_address.country_region"/>
+                            <x-input label="{{ __('Postal Code') }}" maxlength="5" id="shipping_address_postal_code" wire:model.lazy="shipping_address.postal_code"/>
+                            <x-country-select label="{{ __('Country/Region') }}" id="shipping_address_country_region" wire:model.lazy="shipping_address.country_region"/>
                         </div>
 
                         <div class="mt-2">
-                            <x-textarea label="{{ __('Note') }}" resize="none" name="note" rows="4" maxlength="255" wire:model.lazy="note"></x-textarea>
-                            <x-jet-input-error class="mb-4" for="note"/>
+                            <x-textarea label="{{ __('Note') }}" resize="none" id="note" rows="4" maxlength="255" wire:model.lazy="note"></x-textarea>
                         </div>
 
                         <div class="items-center pt-4 space-x-2 md:flex md:justify-between">
@@ -170,22 +169,22 @@
                     @if(!$addresses_confirmed)
                     <div class="py-6 space-y-2">
                         <div class="grid gap-2 xl:grid-cols-2 xl:gap-6">
-                            <x-input label="{{ __('Full Name') . ' / ' . __('Company') }}" name="billing_address_full_name" wire:model.lazy="billing_address.full_name"/>
+                            <x-input label="{{ __('Full Name') . ' / ' . __('Company') }}" id="billing_address_full_name" wire:model.lazy="billing_address.full_name"/>
                         </div>
                         <div class="grid gap-2 xl:grid-cols-2 xl:gap-6">
-                            <x-input label="{{ __('Fiscal Code') }}" name="fiscal_code" wire:model.lazy="fiscal_code"/>
-                            <x-input label="{{ __('VAT') }}" name="vat" wire:model.lazy="vat"/>
+                            <x-input label="{{ __('Fiscal Code') }}" id="fiscal_code" wire:model.lazy="fiscal_code"/>
+                            <x-input label="{{ __('VAT') }}" id="vat" wire:model.lazy="vat"/>
                         </div>
                         <div>
-                            <x-input label="{{ __('Address') }}" name="billing_address_address" wire:model.lazy="billing_address.address"/>                     
+                            <x-input label="{{ __('Address') }}" id="billing_address_address" wire:model.lazy="billing_address.address"/>                     
                         </div>
                         <div class="grid gap-2 xl:grid-cols-2 xl:gap-6">
-                            <x-input label="{{ __('City') }}" name="billing_address_city" wire:model.lazy="billing_address.city"/>
-                            <x-province-select floating label="{{ __('Province') }}" name="billing_address_province" wire:model.lazy="billing_address.province"/>
+                            <x-input label="{{ __('City') }}" id="billing_address_city" wire:model.lazy="billing_address.city"/>
+                            <x-province-select floating label="{{ __('Province') }}" id="billing_address_province" wire:model.lazy="billing_address.province"/>
                         </div>
                         <div class="grid gap-2 xl:grid-cols-2 xl:gap-6">
-                            <x-input label="{{ __('Postal Code') }}" maxlength="5" name="billing_address_postal_code" wire:model.lazy="billing_address.postal_code"/>
-                            <x-country-select  label="{{ __('Country/Region') }}" name="billing_address_country_region" wire:model.lazy="billing_address.country_region"/>
+                            <x-input label="{{ __('Postal Code') }}" maxlength="5" id="billing_address_postal_code" wire:model.lazy="billing_address.postal_code"/>
+                            <x-country-select  label="{{ __('Country/Region') }}" id="billing_address_country_region" wire:model.lazy="billing_address.country_region"/>
                         </div>
 
                         <div class="items-center pt-4 md:flex md:justify-end">

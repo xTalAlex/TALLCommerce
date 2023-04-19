@@ -7,7 +7,7 @@
         Delete</button> --}}
     </div>
 
-    <x-jet-confirmation-modal wire:model="confirmingOrderDeletion">
+    <x-jet-dialog-modal wire:model="confirmingOrderDeletion">
         <x-slot name="title">
             {{ __('Cancel Order') }}
         </x-slot>
@@ -25,5 +25,5 @@
                 {{ __('Confirm') }}
             </x-button>
         </x-slot>
-    </x-jet-confirmation-modal>
+    </x-jet-dialog-modal>
 </div>

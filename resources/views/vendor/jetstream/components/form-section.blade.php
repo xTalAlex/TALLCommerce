@@ -6,18 +6,17 @@
         <x-slot name="description">{{ $description }}</x-slot>
     </x-jet-section-title>
 
-    <div class="mt-5 md:mt-0 md:col-span-2">
-        <form wire:submit.prevent="{{ $submit }}">
+    <div class="card md:col-span-2">
+        <form class="card-body" wire:submit.prevent="{{ $submit }}">
             <div class="px-4 py-5 bg-transparent border-l border-opacity-50 sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
                     {{ $form }}
                 </div>
             </div>
-
             @if (isset($actions))
-                <div class="flex items-center justify-end px-4 py-3 text-right border-l border-opacity-50 bg-gray-50 sm:px-6">
-                    {{ $actions }}
-                </div>
+            <div class="justify-end px-4 border-l border-opacity-50 sm:px-6 card-actions">
+                {{ $actions }}
+            </div>
             @endif
         </form>
     </div>

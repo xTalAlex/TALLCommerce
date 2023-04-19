@@ -105,7 +105,7 @@
                     <x-button class="w-full">{{ __('Submit') }}</x-button>
                 </div>
 
-                <x-jet-validation-errors class="my-2" />
+                <x-validation-errors class="my-2" />
             </form>
             
         </div>

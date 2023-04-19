@@ -1,4 +1,6 @@
 @props([
+    'label' => null,
+    'id' => null,
     'checked' => false,
     'disabled' => false,
     'size' => 'md',
@@ -15,7 +17,13 @@ $size = [
 ][$size ?? 'md'];
 @endphp
 
-<input type="checkbox"  {!! $attributes->merge(['class' => 'checkbox ' . $size]) !!}
-    {{ $checked ? 'checked' : '' }}
-    {{ $disabled ? 'disabled' : '' }}
-/>
+<div {!! $attributes->merge(['class' => 'form-control']) !!}>
+    <label class="label" {{ $id ? 'for="'.$id.'"' : '' }}>
+        <input type="checkbox" class="checkbox {{ $size }} {{ $id && $errors->has($id) ? 'checkbox-error' : ''}}"
+            {{ $checked ? 'checked' : '' }}
+            {{ $disabled ? 'disabled' : '' }}
+            {!! $id ? 'id="'.$id.'"' : '' !!}
+        />
+        <span class="ml-2 label-text">{{ $label ?? $slot }}</span>
+    </label>
+</div>

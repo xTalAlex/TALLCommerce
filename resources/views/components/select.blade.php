@@ -1,27 +1,29 @@
 @props([
     'label' => null,
-    'name' => null,
+    'id' => null,
     'disabled' => false,
 ])
 
 <div {!! $attributes->only('class')->merge(['class' => 'form-control' ]) !!}>
   @if($label)
-  <label class="label" {{ $name ? 'for="'.$name.'"' : '' }}>
+  <label class="label" {{ $id ? 'for="'.$id.'"' : '' }}>
     <span class="label-text">{{ $label }}</span>
     {{-- <span class="label-text-alt">Top Right label</span> --}}
   </label>
   @endif
-  <select class="w-full select select-bordered {{ $name && $errors->has($name) ? 'select-error' : ''}}"
+  <select class="w-full select select-bordered {{ $id && $errors->has($id) ? 'select-error' : ''}}"
     {{ $attributes->except('class') }} 
     {{ $disabled ? 'disabled' : '' }}
-    {{ $name ? 'name="'.$name.'" id="'.$name.'"' : '' }}
+    {!! $id ? 'id="'.$id.'"' : '' !!}
   >
       {{ $slot }}
     </select>
-  @error($name)
-  <label class="label">
-    <span class="label-text-alt text-error">{{ $error }}</span>
-    {{-- <span class="label-text-alt">Bottom Right label</span> --}}
-  </label>
-  @enderror
+  @if($id)
+    @error($id)
+    <label class="label">
+      <span class="label-text-alt text-error">{{ $message }}</span>
+      {{-- <span class="label-text-alt">Bottom Right label</span> --}}
+    </label>
+    @enderror
+  @endif
 </div>

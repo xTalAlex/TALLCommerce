@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100">
+<div class="fixed z-50 h-16 navbar bg-base-100">
     <div class="navbar-start">
         <label
             tabindex="0"
@@ -21,7 +21,7 @@
     </div>
     <div class="navbar-center">
         <a href="{{ route('home') }}">
-            <x-jet-application-logo class="block w-auto h-10" />
+            <x-application-logo />
         </a>
     </div>
     <div class="navbar-end">

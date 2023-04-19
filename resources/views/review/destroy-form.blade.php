@@ -7,7 +7,7 @@
         Delete</button> --}}
     </div>
 
-    <x-jet-confirmation-modal wire:model="confirmingReviewDeletion">
+    <x-jet-dialog-modal wire:model="confirmingReviewDeletion">
         <x-slot name="title">
             {{ __('Delete Review') }}
         </x-slot>
@@ -25,5 +25,5 @@
                 {{ __('Confirm') }}
             </x-button>
         </x-slot>
-    </x-jet-confirmation-modal>
+    </x-jet-dialog-modal>
 </div>

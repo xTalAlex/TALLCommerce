@@ -4,7 +4,7 @@
 
 <div class="grid place-items-center min-h-screen pt-6 sm:pt-0 bg-cover bg-right bg-[url('/public/img/homebanner.png')]">
     <div @class([
-            'flex flex-col items-center justify-center w-full overflow-hidden bg-white shadow-md sm:bg-opacity-90 sm:max-w-md',
+            'flex flex-col items-center justify-center w-full overflow-hidden bg-base-100 shadow-md sm:bg-opacity-90 sm:max-w-md',
             'sm:ml-20 sm:mr-auto' => $centered == false
         ])
     >

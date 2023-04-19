@@ -1,1 +1,1 @@
-<x-jet-application-mark class="h-6"/>
+<x-application-mark class="h-6"/>

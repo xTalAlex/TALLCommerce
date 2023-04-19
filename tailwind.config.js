@@ -19,6 +19,7 @@ module.exports = {
         extend: {
             colors: {
                 primary: {
+                    "DEFAULT": "#65C3C8",
                     "50": "#DBF3F5",
                     "100": "#BDE8EB",
                     "200": "#9FDDE0",
@@ -30,9 +31,18 @@ module.exports = {
                     "800": "#2A5D60",
                     "900": "#1E4143"
                 },
-                danger: colors.rose,
-                success: colors.green,
-                warning: colors.yellow,
+                danger: {
+                    "DEFAULT": "#F87272",
+                    ...colors.rose
+                },
+                success: {
+                    "DEFAULT": "#36D399",
+                    ...colors.green
+                },
+                warning: {
+                    "DEFAULT": "#FBBD23",
+                    ...colors.yellow
+                },
             },
             animation: {
                 shine: "shine 1s",
