@@ -52,7 +52,7 @@ class AttributeValuesRelationManager extends RelationManager
                             ->reactive()
                             ->dehydrated(false)
                             ->afterStateUpdated(fn(callable $set) => $set('recordId', null ) ),
-                        $action->getRecordSelect()->label(('Value'))
+                        $action->getRecordSelect()->label(__('Value'))
                             ->disableLabel(false)
                             ->options(function(callable $get) {
                                 $attribute = \App\Models\Attribute::find($get('attribute'));

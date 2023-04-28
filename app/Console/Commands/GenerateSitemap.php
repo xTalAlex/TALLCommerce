@@ -43,9 +43,14 @@ class GenerateSitemap extends Command
             ->add('/sitemap/tags_sitemap.xml')
             ->writeToDisk($disk,'sitemap_index.xml');
 
+        $allPages = [];
+        foreach(config('custom.sitemap.routes') as $routeName){
+           array_push($allPages, Url::create(route($routeName)));
+        }
+        if($allPages === []) $allPages = [Url::create('/')];
+        
         Sitemap::create(config('app.url'))
-            ->add(Url::create(route('home')))
-            ->add(Url::create(route('product.index')))
+            ->add($allPages)
             ->writeToDisk($disk,'/sitemap/pages_sitemap.xml');
         Sitemap::create(config('app.url'))
             ->add(Product::all())

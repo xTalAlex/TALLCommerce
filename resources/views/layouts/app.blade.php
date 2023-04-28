@@ -12,7 +12,7 @@
 
 				@livewire('navigation-menu')
                 
-				<main class="flex-1 pt-16">
+				<main class="flex-1">
                 
                     @if (isset($header))
                         <header class="">

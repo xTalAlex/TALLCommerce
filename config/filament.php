@@ -289,6 +289,8 @@ return [
             SubstituteBindings::class,
             DispatchServingFilamentEvent::class,
             MirrorConfigToSubpackages::class,
+            \App\Http\Middleware\LoadShoppingLists::class,
+            \App\Http\Middleware\LastSeen::class,
             \App\Http\Middleware\Localization::class,
         ],
     ],

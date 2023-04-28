@@ -20,22 +20,22 @@ class DatabaseSeeder extends Seeder
             $this->call([
                 OrderStatusesTableSeeder::class,
                 UsersTableSeeder::class,
-                ShippingPricesTableSeeder::class,
-                CategoriesTableSeeder::class,
-                AttributesTableSeeder::class,
-                TagsTableSeeder::class,
-                ProvincesTableSeeder::class
+                // ShippingPricesTableSeeder::class,
+                // CategoriesTableSeeder::class,
+                // AttributesTableSeeder::class,
+                // TagsTableSeeder::class,
+                // ProvincesTableSeeder::class
             ]);
         }
         else
         {
             $this->call([
                 OrderStatusesTableSeeder::class,
-                ShippingPricesTableSeeder::class,
-                CategoriesTableSeeder::class,
-                AttributesTableSeeder::class,
-                TagsTableSeeder::class,
-                ProvincesTableSeeder::class
+                //ShippingPricesTableSeeder::class,
+                //CategoriesTableSeeder::class,
+                //AttributesTableSeeder::class,
+                //TagsTableSeeder::class,
+                //ProvincesTableSeeder::class
             ]);
         }
 

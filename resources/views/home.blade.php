@@ -26,7 +26,7 @@
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="text-center hero-content text-neutral-content">
             <div class="max-w-md">
-                <h1 class="mb-5 text-5xl font-bold">Shop Market</h1>
+                <h1 class="mb-5 text-5xl font-bold">{{ config('app.name') }}</h1>
                 <p class="mb-5">Lo shop online sviluppato con Tailwind, Alpine, Laravel e Livewire</p>
                 <a href="{{ route('product.index') }}" class="btn btn-primary">Shop</a>
             </div>

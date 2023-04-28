@@ -338,9 +338,8 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
     protected function price(): Attribute
     {
         return Attribute::make(
-            get: function ($value, $attributes) {
-                return isset($attributes['selling_price']) && $attributes['selling_price'] && $attributes['selling_price'] != $attributes['original_price'] ?
-                    $attributes['selling_price'] : $attributes['original_price'];
+            get: function () {
+                return $this->selling_price;
             },
         );
     }
@@ -399,15 +398,17 @@ class Product extends Model implements Buyable, HasMedia, Sitemapable
         return $this->getFirstMediaUrl('gallery') != "";
     }
 
-    public function applyTax($price, $tax_rate = null)
+    public function applyTax($price = null, $tax_rate = null)
     {
         if($tax_rate === null) $tax_rate = $this->attributes['tax_rate'] ?? config('cart.tax');
+        if($price === null) $price = $this->price;
         return number_format(round($price + round($price * ($tax_rate / 100), 2),2),2);
     }
 
-    public function removeTax($price, $tax_rate = null)
+    public function removeTax($price = null, $tax_rate = null)
     {
         if($tax_rate === null) $tax_rate = $this->attributes['tax_rate'] ?? config('cart.tax');
+        if($price === null) $price = $this->price;
         return number_format(round($price / (1 + ($tax_rate/100)),2),2);
     }
 

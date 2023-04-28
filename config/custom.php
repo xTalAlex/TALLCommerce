@@ -39,4 +39,15 @@ return [
 
     'categories_depth' => 2,
 
+    'import' => [
+        'products_path' => '/data/import/articoliweb.csv',
+    ],
+
+    'sitemap' => [
+       'routes' => [
+            'home',
+            'product.index'
+       ], 
+    ]
+
 ];

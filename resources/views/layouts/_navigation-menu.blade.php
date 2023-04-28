@@ -1,4 +1,4 @@
-<div class="fixed z-50 h-16 navbar bg-base-100">
+<div class="navbar bg-base-100">
     <div class="navbar-start">
         <label
             tabindex="0"

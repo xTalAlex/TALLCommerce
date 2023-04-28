@@ -96,11 +96,12 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('profile_photo_url')->label(__('Profile Photo'))
-                    ->rounded()
+                    ->circular()
                     ->size(40)
                     ->url(fn (User $record): string => $record->profile_photo_url)
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('name')->label(__('Name'))
+                    ->limit(50)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')->label(__('Email'))
                     ->searchable(),

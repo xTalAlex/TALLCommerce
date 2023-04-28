@@ -117,11 +117,6 @@ class Show extends Component
                 && $this->variantsAttributeSets;
     }
 
-    public function getAttributeValueLabel($attributeName, $value)
-    {
-        return AttributeValue::getLabel($attributeName, $value);
-    }
-
     public function render()
     {
         $related_products = Product::when( !$this->product->variant_id, fn($query) => 

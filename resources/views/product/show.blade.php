@@ -106,6 +106,7 @@
                         @foreach($attributes as $id=>$name)
                             @if($product->attributeValues->pluck('attribute_id')->contains($id))
                                 <div class="py-1">
+                                    {{ $name }}
                                     <div class="relative flex space-x-1">
                                         @foreach ( $variantsAttributeValues->where('attribute.id',$id)->sortBy('value') as $attributeValue )
                                             <label @class([
@@ -113,7 +114,7 @@
                                                 'text-gray-500' => !$this->variantExists($id, $attributeValue->id),
                                                 'border-primary-500' => $this->selection[$id] == $attributeValue->id
                                             ])>
-                                                {{ $this->getAttributeValueLabel($name, $attributeValue->value) }}
+                                                {{ $attributeValue->value }}{{ $attributeValue->attribute->suffix }}
                                                 <input type="radio" class="hidden"
                                                     wire:model="selection.{{$id}}"
                                                     value="{{$attributeValue->id}}"

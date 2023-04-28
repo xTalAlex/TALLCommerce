@@ -165,6 +165,7 @@ return [
     */
 
     'attributes' => [
+        'name' => 'Nome',
         'full_name' => 'Nome Completo',
         'company' => 'Ragione Sociale',
         'address' => 'Indirizzo',
@@ -175,7 +176,8 @@ return [
         'vat' => 'Partita IVA',
         'fiscal_code' => 'Codice Fiscale',
         'phone' => 'Numero di telefono',
-        'phot' => 'L\'immagine'
+        'photo' => 'L\'immagine',
+        'value' => 'Valore'
     ],
 
     /*
